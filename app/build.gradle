@@ -1,0 +1,253 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-noarg'
+apply plugin: "kotlin-allopen"
+apply plugin: 'com.jakewharton.butterknife'
+apply from: './mob.gradle'
+
+static def releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+}
+
+android {
+
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+
+    defaultConfig {
+        applicationId = rootProject.applicationId
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+
+        versionCode 1
+        versionName "1.0"
+
+        multiDexEnabled true
+
+        flavorDimensions "versionCode" // 多维度打包
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        debug { storeFile file("../keystore/debug.keystore") }
+        release {
+            keyAlias 'key0'
+            keyPassword 'cloud.33'
+            storeFile file('../keystore/cloud.jks')
+            storePassword 'cloud.33'
+        }
+    }
+
+
+    buildTypes {
+
+        debug {
+            debuggable true
+            minifyEnabled false
+            signingConfig signingConfigs.release
+        }
+        release {
+            debuggable false
+            minifyEnabled false // 是否运行混淆
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+
+//        release {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//        }
+    }
+
+
+    productFlavors {
+        dev {
+
+
+            // 测试环境
+            buildConfigField "String", "SERVER_HOST_V3", SERVER_HOST_V3_TEST
+            buildConfigField "String", "SERVER_HOST_V2", SERVER_HOST_V2_TEST
+            buildConfigField "String", "H5_BASE_URL", H5_BASE_URL_TEST
+
+            buildConfigField "String", "WECHAT_APPID", WECHAT_APPID
+            buildConfigField "String", "WECHAT_APPSECRET", WECHAT_APPSECRET
+            buildConfigField "String", "BUGLY_APP_ID", '"1"'
+            buildConfigField "boolean", "BUGLY_ENABLE_DEBUG", 'false'
+        }
+
+        formal {
+
+            buildConfigField "String", "SERVER_HOST_V2", SERVER_HOST_V2_RELEASE
+            buildConfigField "String", "SERVER_HOST_V3", SERVER_HOST_V3_RELEASE
+            buildConfigField "String", "H5_BASE_URL", H5_BASE_URL_RELEASE
+
+            buildConfigField "String", "WECHAT_APPID", WECHAT_APPID
+            buildConfigField "String", "WECHAT_APPSECRET", WECHAT_APPSECRET
+            buildConfigField "String", "BUGLY_APP_ID", '"1"'
+            buildConfigField "boolean", "BUGLY_ENABLE_DEBUG", 'false'
+        }
+
+        sourceSets {
+            main {
+                jniLibs.srcDirs = ['src/main/jniLibs']
+                java.srcDirs = ['src/main/java', 'src/main/old']
+            }
+        }
+    }
+
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "App_${defaultConfig.versionName}_(${defaultConfig.versionCode})_${releaseTime()}.apk"
+        }
+    }
+
+    // 忽略lit提示
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+        disable 'MissingTranslation'
+    }
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+
+}
+
+dependencies {
+
+    // Android
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
+
+    // 第三方库
+    implementation project(':SwipeToLoadLayout')
+
+    // Dagger 2 支持
+    implementation "com.google.dagger:dagger:$rootProject.dagger2"
+    implementation "com.google.dagger:dagger-android:$rootProject.dagger2"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.dagger2"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.dagger2"
+    kapt "com.google.dagger:dagger-android-processor:$rootProject.dagger2"
+
+    // 注解ButterKnife
+    implementation 'com.jakewharton:butterknife:10.2.0'
+    kapt 'com.jakewharton:butterknife-compiler:10.2.0'
+
+    // RxJava
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjava"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroid"
+    implementation "com.tbruyelle.rxpermissions2:rxpermissions:$rootProject.rxpermissions"
+
+    // RxLifecycle
+    implementation "com.trello.rxlifecycle2:rxlifecycle:$rootProject.rxlifecycle"
+    implementation "com.trello.rxlifecycle2:rxlifecycle-android:$rootProject.rxlifecycle"
+    implementation "com.trello.rxlifecycle2:rxlifecycle-kotlin:$rootProject.rxlifecycle"
+    implementation "com.trello.rxlifecycle2:rxlifecycle-android-lifecycle-kotlin:$rootProject.rxlifecycle"
+
+    // 网络 Retrofit2
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit2"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofit2"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofit2"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.retrofitLogger"
+    implementation "me.jessyan:retrofit-url-manager:$rootProject.retrofitManager"
+
+    //工具类
+    implementation "com.blankj:utilcodex:$rootProject.utilcode"
+
+    // Glide
+    kapt "com.github.bumptech.glide:compiler:$rootProject.glide"
+    implementation "com.github.bumptech.glide:glide:$rootProject.glide"
+    implementation "com.github.bumptech.glide:okhttp3-integration:$rootProject.glide"
+    implementation "jp.wasabeef:glide-transformations:$rootProject.glideTrans"
+
+    // 多功能Tab
+    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2'
+
+    // 轮播
+    implementation 'com.youth.banner:banner:1.4.10'
+
+    // recycler
+    implementation 'com.jude:easyrecyclerview:4.4.3'
+
+    // 数据库
+    implementation 'androidx.room:room-runtime:2.2.5'
+    kapt 'androidx.room:room-compiler:2.2.5'
+
+    // viewpager bottom sheet
+    implementation 'biz.laenger.android:vpbs:0.0.5'
+
+    // TextView 折叠
+    implementation 'com.github.MZCretin:ExpandableTextView:v1.6.1'
+
+    // TextView 高亮
+    implementation 'com.isanwenyu.highlight:highlight:1.8.0'
+
+    // 自适应layout
+    implementation 'com.google.android:flexbox:1.0.0'
+
+    // tbs v43697(2019-08-08)
+    implementation 'com.tencent.tbs.tbssdk:sdk:43697'
+
+    // 刷新
+    implementation 'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'
+    implementation 'com.github.MZCretin:ExpandableTextView:v1.6.1'
+    implementation 'com.isanwenyu.highlight:highlight:1.8.0'
+
+    // 图片大图
+    implementation 'com.github.chrisbanes:PhotoView:2.1.4'
+    implementation 'com.github.SherlockGougou:BigImageViewPager:androidx-5.0.3'
+
+    // 自定义相册
+    implementation 'com.zhihu.android:matisse:0.5.2-beta3'
+
+    // 圆形进度条
+    implementation 'com.mikhaellopez:circularprogressbar:3.0.3'
+    implementation 'androidx.work:work-runtime:2.3.4'
+    implementation files('libs/wxselfshare/wechat-sdk-android-with-mta_5.0.8.jar')
+}
+noArg {
+    annotation("com.jz.cloud.activity.entity.kotlin.NoArg")
+}
+allOpen {
+    annotation("com.jz.cloud.activity.entity.kotlin.AllOpen")
+}
+
+androidExtensions {
+    experimental = true
+}
+
+// android x
+configurations.all {
+    resolutionStrategy {
+        eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == 'com.android.support'
+                    && (details.requested.name != "multidex" && details.requested.name != "multidex-instrumentation")) {
+                details.useVersion '27.1.0'
+            }
+        }
+    }
+}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tag_click_time" type="id"/>
+    <item name="swipe_refresh_header" type="id"/>
+    <item name="swipe_refresh_align" type="id"/>
+</resources>

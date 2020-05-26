@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+
+    <color name="colorFontGray">#FF727171</color>
+    <color name="colorLine">#FFE6E6E6</color>
+    <color name="white">#ffffff</color>
+    <color name="font_white">#ffffff</color>
+
+    <!-- 主副标题相关 -->
+    <color name="color_zero_level">#05020F</color>
+    <color name="color_first_level">#333333</color>
+    <color name="color_second_level">#555555</color>
+    <color name="color_third_level">#888888</color>
+    <color name="color_fourth_level">#AAAAAA</color>
+
+    <color name="color_blue_foreground">#4394FF</color>
+    <color name="color_blue_background">#F1F7FF</color>
+    <color name="color_red_foreground">#FE5E3D</color>
+    <color name="color_red_background">#FFF6F4</color>
+
+    <!-- 补色 -->
+    <color name="color_second_level_supplement">#C8C8C8</color>
+    <color name="color_lowest_supplement">#333333</color>
+
+    <color name="color_007aff">#007aff</color>
+    <color name="font_black">#212121</color>
+    <color name="colorFontHint">#bbbbbb</color>
+
+    <color name="split_line_color">#E6E6E6</color>
+
+    <color name="color_app_red">#ff0018</color>
+
+
+</resources>

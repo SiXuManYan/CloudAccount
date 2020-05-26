@@ -1,0 +1,27 @@
+1.shareSdk
+    Wechat
+                appId ""
+                appSecret ""
+                userName ""
+                path ""
+    QQ
+                appId ""
+                appKey ""
+
+    SinaWeibo
+
+                appKey ""
+                appSecret ""
+                callbackUri "http://www.cloud.com官网地址"
+    QZone
+                appId ""
+                appKey ""
+
+2.服务器地址
+            测试服：
+            正式服：
+            H5测试服：
+            H5正式服：
+3.推送
+
+4.

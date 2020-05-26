@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">CloudAccount</string>
+    <string name="slogan">  </string>
+
+
+
+    <string name="reload">重新加载</string>
+    <string name="error_network_load_failed">网络错误，请重新加载</string>
+
+
+    <string name="share_cancle">分享取消</string>
+    <string name="share_fail">分享失败</string>
+    <string name="share_success">分享成功</string>
+    <string name="wechat_noting">抱歉,您尚未安装微信</string>
+
+    <string name="save_photo_error">图片保存失败</string>
+    <string name="save_photo_success">图片保存成功</string>
+    <string name="save_photo_success2">操作成功，图片保存路径：</string>
+    <string name="save_photo_message">保存图片到本地 ?</string>
+
+    <string name="loading">正在加载&#8230;</string>
+    <string name="hint_data_no_found">暂无数据</string>
+    <string name="no_more_footer">亲，这次真的到底了哦～</string>
+    <string name="home">首页</string>
+    <string name="service">服务</string>
+    <string name="tab_news">资讯</string>
+    <string name="my">我的</string>
+
+
+</resources>

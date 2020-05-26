@@ -1,0 +1,56 @@
+apply plugin: 'com.mob.sdk'
+
+MobSDK {
+
+
+    appKey "11"
+    appSecret "11"
+
+    ShareSDK {
+        gui false
+
+        devInfo {
+
+            Wechat {
+                appId "1"
+                appSecret "1"
+                userName "gh_1"
+                path "pages/index/index"
+                withShareTicket true
+                miniprogramType 0
+                enable true
+            }
+
+            WechatMoments {
+                appId "1"
+                appSecret "1"
+                enable true
+            }
+
+            QQ {
+                appId "1"
+                appKey "1"
+                shareByAppClient true
+                enable true
+            }
+
+            SinaWeibo {
+                appKey "1"
+                appSecret "1"
+                callbackUri "http://www.cloud.com官网地址"
+                shareByAppClient true
+                enable true
+            }
+
+            QZone {
+                appId "11"
+                appKey "11"
+                shareByAppClient true
+                enable true
+            }
+
+        }
+        // wiki: http://wiki.mob.com/sdk-share-android-3-0-0/#map-2
+    }
+
+}

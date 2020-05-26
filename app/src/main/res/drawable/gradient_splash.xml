@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <gradient
+        android:angle="270"
+        android:endColor="#ff3035"
+        android:centerColor="#ff1827"
+        android:startColor="#ff0018" />
+
+<!--
+
+默认0，从左到右：
+270 由上到下
+
+-->
+
+
+
+</shape>

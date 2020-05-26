@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/refresh_footer_container_rl"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/font_white"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.account.view.loading.CommonProgressBar
+        android:id="@+id/common_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true" />
+
+    <TextView
+        android:id="@+id/refresh_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/common_progress"
+        android:text="加载中..."
+        android:textColor="@color/colorFontHint"
+        android:textSize="@dimen/font_size_12" />
+
+
+</RelativeLayout>
