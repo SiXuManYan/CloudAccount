@@ -72,8 +72,7 @@ android {
 
 
             // 测试环境
-            buildConfigField "String", "SERVER_HOST_V3", SERVER_HOST_V3_TEST
-            buildConfigField "String", "SERVER_HOST_V2", SERVER_HOST_V2_TEST
+            buildConfigField "String", "SERVER_HOST", SERVER_HOST_TEST
             buildConfigField "String", "H5_BASE_URL", H5_BASE_URL_TEST
 
             buildConfigField "String", "WECHAT_APPID", WECHAT_APPID
@@ -84,8 +83,7 @@ android {
 
         formal {
 
-            buildConfigField "String", "SERVER_HOST_V2", SERVER_HOST_V2_RELEASE
-            buildConfigField "String", "SERVER_HOST_V3", SERVER_HOST_V3_RELEASE
+            buildConfigField "String", "SERVER_HOST", SERVER_HOST_RELEASE
             buildConfigField "String", "H5_BASE_URL", H5_BASE_URL_RELEASE
 
             buildConfigField "String", "WECHAT_APPID", WECHAT_APPID

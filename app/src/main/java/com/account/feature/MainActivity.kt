@@ -15,7 +15,7 @@ import com.account.event.entity.TabRefreshEvent
 import com.account.feature.home.HomeFragment
 import com.account.feature.my.MyPageFragment
 import com.account.feature.news.NewsFragment
-import com.account.feature.services.ServiceFragment
+import com.account.feature.product.ProductFragment
 import com.blankj.utilcode.util.ToastUtils
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
@@ -75,7 +75,7 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
                 getString(R.string.service),
                 R.drawable.ic_tab_service_normal,
                 R.drawable.ic_tab_service_selected,
-                ServiceFragment::class.java
+                ProductFragment::class.java
             )
         )
         tabs.add(

@@ -1,4 +1,4 @@
-package com.account.feature.services
+package com.account.feature.product
 
 import dagger.Module
 import dagger.Provides
@@ -9,10 +9,10 @@ import dagger.Provides
  *
  */
 @Module
-class ServiceModule {
+class ProductModule {
 
     @Provides
-    fun viewProvider(fragment: ServiceFragment): ServiceView {
+    fun viewProvider(fragment: ProductFragment): ServiceView {
         return fragment
     }
 

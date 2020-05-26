@@ -1,4 +1,4 @@
-package com.account.feature.services
+package com.account.feature.product
 
 import android.view.View
 import com.account.R
@@ -9,7 +9,7 @@ import com.account.base.ui.BaseFragment
  * </br>
  *
  */
-class ServiceFragment: BaseFragment<ServicePresenter>(), ServiceView {
+class ProductFragment: BaseFragment<ProductPresenter>(), ServiceView {
     init {
         needMenuControl = true
     }

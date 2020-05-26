@@ -1,4 +1,4 @@
-package com.account.feature.services
+package com.account.feature.product
 
 import com.account.base.common.BaseView
 

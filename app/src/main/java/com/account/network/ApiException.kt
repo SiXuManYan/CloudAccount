@@ -8,6 +8,7 @@ import com.google.gson.internal.LinkedTreeMap
  * 接口错误处理
  */
 class ApiException(var code: Int, message: String?, data: LinkedTreeMap<String, String>? = null) :
+
     Exception(message) {
 
     override var message: String? = null

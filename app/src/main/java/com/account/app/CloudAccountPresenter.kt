@@ -25,7 +25,7 @@ class CloudAccountPresenter (val view: CloudAccountView) {
 
     fun addSubscribe(subscription: Disposable) {
         if (compositeDisposable == null) {
-            RetrofitUrlManager.getInstance().putDomain(ApiService.NEW_SERVICE, UrlUtil.SERVER_HOST_V3)
+//            RetrofitUrlManager.getInstance().putDomain(ApiService.NEW_SERVICE, UrlUtil.SERVER_HOST_V3)
             compositeDisposable = CompositeDisposable()
         }
         compositeDisposable?.add(subscription)

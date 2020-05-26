@@ -30,7 +30,6 @@ class User {
         @Synchronized
         fun get() = instance!!
 
-//        fun isLogon() = CommonUtils.getShareDefault().getBoolean(Constants.SP_LOGIN)
         fun isLogon():Boolean {
             val isLogin = CommonUtils.getShareDefault().getBoolean(Constants.SP_LOGIN)
             if (isLogin && get().id == null) {
@@ -88,7 +87,6 @@ class User {
      */
     var status: Int? = null
 
-    var alipay: String? = null
 
     @ColumnInfo(name = "push_code")
     var pushCode: String? = null
@@ -99,16 +97,7 @@ class User {
     @Ignore
     var logincode: String? = null
 
-    //支付宝真实姓名
-    @ColumnInfo(name = "real_name")
-    var realName: String? = null
 
-    /** 总收入 */
-    @ColumnInfo(name = "total_money")
-    var totalMoney: String? = null
-
-    @ColumnInfo(name = "is_pass")
-    var pass: Int = 1
 
     /**
      * 用户类型,0-普通用户, 1-认证商家, 2-益划官方认证, 10-小益 11 达人
@@ -116,19 +105,7 @@ class User {
     @ColumnInfo(name = "owner_level")
     var ownerLevel: Int? = null
 
-    /**
-     * 可提现收益
-     */
-    @ColumnInfo(name = "withdraw_money")
-    @TypeConverters
-    var withdrawMoney: BigDecimal? = null
 
-    /**
-     * 待入账收益
-     */
-    @ColumnInfo(name = "wait_withdraw_money")
-    @TypeConverters
-    var waitWithdrawMoney: BigDecimal? = null
 
     /** 用户头像 */
     var photo: String? = null
@@ -141,9 +118,6 @@ class User {
     @TypeConverters
     var money: BigDecimal? = null
 
-    /**  0：不可见兑换提现列表  1：可见兑换提现列表 */
-    @ColumnInfo(name = "bill_flag")
-    var billFlag: Int? = null
 
     /**
      * 可提现金额
@@ -151,43 +125,7 @@ class User {
     @ColumnInfo(name = "rechange_amount")
     var rechangeAmount: String? = null
 
-    /**
-     * 用户等级
-     */
-    @ColumnInfo(name = "user_grade")
-    var grade: Int? = null
-    /** 用户当前总经验值 */
-    @ColumnInfo(name = "total_exp_value")
-    var totalExpValue: Int? = null
-    /** 会员卡数量 */
-    @ColumnInfo(name = "member_card_count")
-    var memberCardCount: Int? = null
-    /** 红包数量 */
-    @ColumnInfo(name = "coupon_count")
-    var couponCount: Int? = null
-    /** 关注用户数 */
-    @ColumnInfo(name = "concern_count")
-    var concernCount: Int? = null
-    /** 赞 */
-    @ColumnInfo(name = "ex_praise_count")
-    var exPraiseCount: Int? = null
-    /** 赞 */
-    @ColumnInfo(name = "new_ex_praise_count")
-    var newExPraiseCount: Int? = null
-    @ColumnInfo(name = "feed_count")
-    var feedCount: Int? = null
-    /** 用户订单数 */
-    @ColumnInfo(name = "order_count")
-    var orderCount: Int? = null
-    @ColumnInfo(name = "no_publish_feed_count")
-    var noPublishFeedCount: Int = 0
-    @ColumnInfo(name = "topic_count")
-    var topicCount: Int? = null
-    /** 粉丝数 */
-    @ColumnInfo(name = "fans_count")
-    var fansCount: Int? = null
-    @ColumnInfo(name = "withdraw_flag")
-    var withdrawFlag: Boolean? = null
+
 
     /** 密码MD5 */
     @Ignore
@@ -208,42 +146,17 @@ class User {
     var photoSetFlag: Boolean = false
 
 
-    @ColumnInfo(name = "evaluate_count")
-    var evaluateCount: Int? = null
-    @ColumnInfo(name = "remain_evaluate_order_count")
-    var remainEvaluateOrderCount: Int? = null
 
 
-    // ### 登录接口迁移新增 2019 11-29
 
-    /**
-     * 是否弹起引流
-     * 2019-11-28 登录接口迁移时新增返回字段，只用一次，不做保存
-     */
-    @Ignore
-    var conductPopupFlag: Boolean = false
+
 
     /**
      * 是否绑定过微信(登录接口返回)
      */
     var bindWxFlag: Boolean = false
 
-    /**
-     * 是否有密码
-     * 2019-11-28 登录接口迁移新增，不再返回 pass 字段，
-     * 会在登录时给　pass　赋值
-     */
-    @SerializedName("isPassExist")
-    var passExist: Int = 0
 
-    // ################
 
-    // 分销优化新增 2019-12-13
-
-    /**
-     * 徒弟数量
-     */
-    @ColumnInfo(name = "apprentice_count")
-    var apprenticeCount: Int = 0
 
 }

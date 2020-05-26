@@ -28,14 +28,16 @@ import java.util.*
  * emptyView 会覆盖 headerView
  * 使用 emptyFooter 代替 accidentViewView
  */
-abstract class BaseRefreshListFragment2<T, P : BasePresenter> : BaseFragment<P>(),
-    BaseNoJsonListView2<T>, OnRefreshLoadMoreListener {
+abstract class BaseRefreshListFragment2<T, P : BasePresenter> : BaseFragment<P>(), BaseNoJsonListView2<T>,
+    OnRefreshLoadMoreListener {
 
 
     @BindView(R.id.parent_container)
     lateinit var parent_container: FrameLayout
+
     @BindView(R.id.swipe)
     lateinit var swipeLayout: SmartRefreshLayout
+
     @BindView(R.id.recycler)
     lateinit var easyRecyclerView: EasyRecyclerView
     lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
@@ -152,7 +154,12 @@ abstract class BaseRefreshListFragment2<T, P : BasePresenter> : BaseFragment<P>(
     abstract fun getRecyclerAdapter(): RecyclerArrayAdapter<T>
 
     open fun getItemDecoration(): androidx.recyclerview.widget.RecyclerView.ItemDecoration? {
-        val itemDecoration = DividerDecoration(ContextCompat.getColor(context!!, R.color.colorLine), SizeUtils.dp2px(0.5f), SizeUtils.dp2px(15f), 0)
+        val itemDecoration = DividerDecoration(
+            ContextCompat.getColor(context!!, R.color.colorLine),
+            SizeUtils.dp2px(0.5f),
+            SizeUtils.dp2px(15f),
+            0
+        )
         itemDecoration.setDrawHeaderFooter(false)
         return itemDecoration
     }

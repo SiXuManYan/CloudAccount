@@ -17,6 +17,7 @@ import android.provider.ContactsContract
 import android.text.TextUtils
 import android.view.View
 import android.view.animation.Interpolator
+import com.account.R
 //import com.amap.api.maps2d.AMapUtils
 //import com.amap.api.maps2d.model.LatLng
 import com.blankj.utilcode.constant.TimeConstants
@@ -748,22 +749,22 @@ object CommonUtils {
 //
 //    }
 
-//    fun isDoubleClick(view: View): Boolean {
-//        val nowTime = System.currentTimeMillis()
-//        val value = view.getTag(R.id.tag_click_time)
-//        if (value != null) {
-//            val lastTime = value as Long
-//            if (nowTime - lastTime >= Constants.CLICK_INTERVAL) {
-//                view.setTag(R.id.tag_click_time, nowTime)
-//                return false
-//            } else {
-//                return true
-//            }
-//        } else {
-//            view.setTag(R.id.tag_click_time, nowTime)
-//            return false
-//        }
-//    }
+    fun isDoubleClick(view: View): Boolean {
+        val nowTime = System.currentTimeMillis()
+        val value = view.getTag(R.id.tag_click_time)
+        if (value != null) {
+            val lastTime = value as Long
+            if (nowTime - lastTime >= Constants.CLICK_INTERVAL) {
+                view.setTag(R.id.tag_click_time, nowTime)
+                return false
+            } else {
+                return true
+            }
+        } else {
+            view.setTag(R.id.tag_click_time, nowTime)
+            return false
+        }
+    }
 
     /**
      * 判断用户选择的cityCode 是否和真实定位获取的cityCode一致

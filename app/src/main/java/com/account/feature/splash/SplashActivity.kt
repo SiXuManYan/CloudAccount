@@ -6,6 +6,7 @@ import com.account.feature.MainActivity
 import com.account.R
 import com.account.base.ui.BaseActivity
 import com.account.common.CommonUtils
+import com.account.entity.users.User
 import com.blankj.utilcode.util.BarUtils
 import kotlinx.android.synthetic.main.activity_splash.*
 
@@ -50,6 +51,7 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun afterAnimation() {
+
         startActivityClearTop(MainActivity::class.java, null)
         finish()
     }

@@ -123,7 +123,7 @@ open class BasePresenter constructor(private var view: BaseView?) {
                                     event: Lifecycle.Event,
                                     flowable: Flowable<Response<T>>,
                                     subscriber: BaseHttpSubscriber<T>) {
-        RetrofitUrlManager.getInstance().putDomain(ApiService.NEW_SERVICE, UrlUtil.SERVER_HOST_V3)
+//        RetrofitUrlManager.getInstance().putDomain(ApiService.NEW_SERVICE, UrlUtil.SERVER_HOST_V3)
         addSubscribe(flowable.bindUntilEvent(lifecycle, event)
                 .compose(flowableUICompose())
                 .subscribeWith(subscriber))
@@ -142,7 +142,7 @@ open class BasePresenter constructor(private var view: BaseView?) {
                                        flowable: Flowable<Response<K>>,
                                        mapper: Function<Response<K>, T>,
                                        subscriber: ResourceSubscriber<T>) {
-        RetrofitUrlManager.getInstance().putDomain(ApiService.NEW_SERVICE, UrlUtil.SERVER_HOST_V3)
+//        RetrofitUrlManager.getInstance().putDomain(ApiService.NEW_SERVICE, UrlUtil.SERVER_HOST_V3)
         addSubscribe(flowable.bindUntilEvent(lifecycle, event)
                 .compose(flowableCompose())
                 .map(mapper)
