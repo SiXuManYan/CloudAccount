@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Wangsw on 2019/10/10 16:40.
+ * Created by Wangsw on 2020/5/27 16:40.
  * </br>
  */
 public class CommonProgressBar extends FrameLayout {

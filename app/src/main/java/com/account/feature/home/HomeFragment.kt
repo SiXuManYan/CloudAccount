@@ -3,14 +3,19 @@ package com.account.feature.home
 import android.os.Handler
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
+import butterknife.OnClick
 import com.account.R
 import com.account.base.ui.BaseFragment
+import com.account.common.AndroidUtil
 import com.account.entity.home.Banners
 import com.account.entity.home.News
 import com.account.entity.home.Product
+import com.account.event.entity.TabRefreshEvent
 import com.account.feature.home.header.HomeHeader
 import com.account.feature.home.holder.NewsHolderPlural
 import com.account.feature.home.holder.NewsHolderSingle
@@ -27,7 +32,8 @@ import com.jz.yihua.activity.view.swipe.NoMoreItemView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
-import java.util.ArrayList
+import io.reactivex.functions.Consumer
+import java.util.*
 
 /**
  * Created by Wangsw on 2020/5/25 0025 16:41.
@@ -40,17 +46,15 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
         needMenuControl = true
     }
 
-
-    @BindView(R.id.parent_container)
-    lateinit var parent_container: FrameLayout
-
     @BindView(R.id.swipe)
     lateinit var swipeLayout: SmartRefreshLayout
 
     @BindView(R.id.recycler)
     lateinit var easyRecyclerView: EasyRecyclerView
-    lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
+    lateinit var recyclerView: RecyclerView
 
+    @BindView(R.id.share_iv)
+    lateinit var share_iv: ImageView
 
     private val handler = Handler()
     private var clickAble = true
@@ -64,7 +68,7 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
     var page = 0
 
 
-    override fun getLayoutId() = R.layout.fragment_refresh_list2
+    override fun getLayoutId() = R.layout.fragment_home
 
     override fun loadOnVisible() {
         if (mAdapter.footerCount > 0) {
@@ -79,7 +83,21 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
         initRecyclerView()
     }
 
-    private fun initEvent() = Unit
+    private fun initEvent(){
+        presenter.subsribeEventEntity<TabRefreshEvent>(Consumer {
+            if (it.clx == HomeFragment::class.java) {
+                if (isViewVisible) {
+                    if (isViewVisible) {
+                        recyclerView.scrollToPosition(0)
+                        swipeLayout.postDelayed({
+                            swipeLayout.autoRefresh()
+                        }, 200)
+                    }
+                }
+            }
+
+        })
+    }
 
     private fun initRecyclerView() {
 
@@ -107,6 +125,22 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
         // 列表
         mAdapter = getRecyclerAdapter()
         recyclerView = easyRecyclerView.recyclerView
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                when (newState) {
+                    RecyclerView.SCROLL_STATE_DRAGGING -> {
+                        share_iv.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fab_alpha_more_transparent))
+                    }
+                    RecyclerView.SCROLL_STATE_IDLE -> {
+                        share_iv.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fab_alpha_more_saturation))
+                    }
+                    else -> {
+                    }
+                }
+
+
+            }
+        })
         easyRecyclerView.apply {
             setLayoutManager(androidx.recyclerview.widget.LinearLayoutManager(context))
             setAdapterWithProgress(mAdapter)
@@ -164,7 +198,7 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
     }
 
 
-    private fun getItemDecoration(): androidx.recyclerview.widget.RecyclerView.ItemDecoration? {
+    private fun getItemDecoration(): RecyclerView.ItemDecoration? {
         val itemDecoration = DividerDecoration(
             ContextCompat.getColor(context!!, R.color.colorLine),
             SizeUtils.dp2px(0.5f),
@@ -247,6 +281,21 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
             mAdapter.removeAllFooter()
             mAdapter.addFooter(emptyRetryFooter)
         }
+    }
+
+    @OnClick(R.id.share_iv)
+    fun click(view: View) {
+        if (AndroidUtil.isDoubleClick(view)) {
+            return
+        }
+        when (view.id) {
+            R.id.share_iv -> {
+                ToastUtils.showShort("分享功能开发中")
+            }
+            else -> {
+            }
+        }
+
     }
 
 

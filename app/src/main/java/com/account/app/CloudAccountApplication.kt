@@ -8,6 +8,9 @@ import androidx.multidex.MultiDex
 import com.blankj.utilcode.util.LogUtils
 import com.account.data.CloudDataBase
 import com.account.network.ApiService
+import com.account.view.swipe.smart.CommonSmartAnimRefreshHeaderView
+import com.account.view.swipe.smart.CommonSmartRefreshFooter
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.tencent.smtt.sdk.QbSdk
 import dagger.android.AndroidInjector
 import dagger.android.HasActivityInjector
@@ -25,8 +28,8 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
 
 
     init {
-//        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout -> CommonSmartAnimRefreshHeaderView(context) }
-//        SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout -> CommonSmartRefreshFooter(context) }
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout -> CommonSmartAnimRefreshHeaderView(context) }
+        SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout -> CommonSmartRefreshFooter(context) }
 
     }
 
