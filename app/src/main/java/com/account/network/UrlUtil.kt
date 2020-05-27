@@ -25,7 +25,7 @@ object UrlUtil {
 
     val SERVER_HOST by lazy {
         if (BuildConfig.FLAVOR == "dev") {
-            URL_LIST[getdevUrlIndex()].second.second
+            URL_LIST[getdevUrlIndex()].second.first
         } else {
             BuildConfig.SERVER_HOST
         }
@@ -40,7 +40,7 @@ object UrlUtil {
     }
     val URL_LIST =
             listOf(
-                    Pair("测试服", Pair("https://www.baidu.com", "https://www.baidu.com")),
-                    Pair("正式服", Pair("https://www.baidu.com", "https://www.baidu.com"))
+                    Pair("测试服", Pair("http://192.168.1.139:8881", "https://www.baidu.com")),
+                    Pair("正式服", Pair("http://192.168.1.139:8881", "https://www.baidu.com"))
             )
 }

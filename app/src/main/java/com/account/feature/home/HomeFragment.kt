@@ -12,6 +12,7 @@ import com.account.entity.home.Banners
 import com.account.entity.home.News
 import com.account.entity.home.Product
 import com.account.feature.home.header.HomeHeader
+import com.account.feature.home.holder.NewsHolderPlural
 import com.account.feature.home.holder.NewsHolderSingle
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -31,7 +32,7 @@ import java.util.ArrayList
 /**
  * Created by Wangsw on 2020/5/25 0025 16:41.
  * </br>
- * 首页 混合信息
+ * 首页
  */
 open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoadMoreListener {
 
@@ -59,17 +60,17 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
     private var emptyImageFooter: EmptyImageFooter? = null
     private var emptyRetryFooter: EmptyRetryFooter? = null
     private var emptyLoadingFooter: EmptyLoadingFooter? = null
-    private var adapter: RecyclerArrayAdapter<News> = getRecyclerAdapter()
+    private var mAdapter: RecyclerArrayAdapter<News> = getRecyclerAdapter()
     var page = 0
 
 
     override fun getLayoutId() = R.layout.fragment_refresh_list2
 
     override fun loadOnVisible() {
-        if (adapter.footerCount > 0) {
-            adapter.removeAllFooter()
+        if (mAdapter.footerCount > 0) {
+            mAdapter.removeAllFooter()
         }
-        adapter.addFooter(emptyLoadingFooter)
+        mAdapter.addFooter(emptyLoadingFooter)
         onRefresh()
     }
 
@@ -78,12 +79,14 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
         initRecyclerView()
     }
 
+    private fun initEvent() = Unit
+
     private fun initRecyclerView() {
+
         // 刷新和加载
         swipeLayout.setOnRefreshLoadMoreListener(this)
         swipeLayout.setEnableLoadMore(false)
         swipeLayout.setEnableAutoLoadMore(true)
-
 
         // header 、 footer 空view (footer 代替 emptyView)
         noMoreItemView = NoMoreItemView()
@@ -102,11 +105,11 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
         }
 
         // 列表
-        adapter = getRecyclerAdapter()
+        mAdapter = getRecyclerAdapter()
         recyclerView = easyRecyclerView.recyclerView
         easyRecyclerView.apply {
             setLayoutManager(androidx.recyclerview.widget.LinearLayoutManager(context))
-            setAdapterWithProgress(adapter)
+            setAdapterWithProgress(mAdapter)
             showRecycler()
         }
         getItemDecoration()?.let {
@@ -115,13 +118,9 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
 
         //  首页Header
         homeHeader = HomeHeader(context!!)
-        adapter.addHeader(homeHeader)
+        mAdapter.addHeader(homeHeader)
     }
 
-
-    private fun initEvent() {
-
-    }
 
     private fun getRecyclerAdapter(): RecyclerArrayAdapter<News> {
 
@@ -129,8 +128,22 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
 
             override fun OnCreateViewHolder(parent: ViewGroup?, viewType: Int): BaseViewHolder<News> {
 
-                return NewsHolderSingle(parent)
+                return if (viewType == 0) {
+                    NewsHolderSingle(parent)
+                } else {
+                    NewsHolderPlural(parent)
+                }
             }
+
+            override fun getViewType(position: Int): Int {
+                val size = allData[position].imgUrls.size
+                return if (size <= 1) {
+                    0
+                } else {
+                    1
+                }
+            }
+
         }
 
         adapter.setOnItemClickListener {
@@ -178,11 +191,10 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
 
     override fun setHeaderDada(banners: ArrayList<Banners>, products: ArrayList<Product>) {
 
-
         homeHeader?.apply {
-            bannersData = banners
-            productData = products
-            adapter.notifyItemChanged(0)
+            setNewBannerData(banners)
+            setNewProductData(products)
+            mAdapter.notifyItemChanged(0)
         }
 
     }
@@ -193,13 +205,13 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
             if (swipeLayout.isRefreshing) {
                 swipeLayout.finishRefresh()
             }
-            adapter.clear()
+            mAdapter.clear()
             // 第一个，空View
-            if (adapter.footerCount > 0) {
-                adapter.removeAllFooter()
+            if (mAdapter.footerCount > 0) {
+                mAdapter.removeAllFooter()
             }
             if (list.isEmpty()) {
-                adapter.addFooter(emptyImageFooter)
+                mAdapter.addFooter(emptyImageFooter)
             }
         } else {
             if (swipeLayout.isLoading) {
@@ -213,13 +225,13 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
             }
         }
 
-        adapter.addAll(list)
+        mAdapter.addAll(list)
         swipeLayout.setEnableLoadMore(!isLastPage) // 是否可以上拉加载
 
         // 增加最后一页ite
-        if (isLastPage && adapter.allData!!.size > 0) {
-            if (adapter.footerCount > 0) adapter.removeAllFooter()
-            adapter.addFooter(noMoreItemView)
+        if (isLastPage && mAdapter.allData!!.size > 0) {
+            if (mAdapter.footerCount > 0) mAdapter.removeAllFooter()
+            mAdapter.addFooter(noMoreItemView)
         }
     }
 
@@ -231,9 +243,9 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
         if (swipeLayout.isLoading) {
             swipeLayout.finishLoadMore(false)
         }
-        if (adapter.allData?.size == 0) {
-            adapter.removeAllFooter()
-            adapter.addFooter(emptyRetryFooter)
+        if (mAdapter.allData?.size == 0) {
+            mAdapter.removeAllFooter()
+            mAdapter.addFooter(emptyRetryFooter)
         }
     }
 

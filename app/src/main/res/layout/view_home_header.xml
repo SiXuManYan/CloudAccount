@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/font_white"
     android:orientation="vertical">
 
@@ -20,11 +20,59 @@
     <include layout="@layout/layout_home_split" />
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/product_rv"
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/product_fbl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:nestedScrollingEnabled="false" />
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        app:flexDirection="row"
+        app:flexWrap="wrap">
+
+        <ImageView
+            android:id="@+id/product_0"
+            android:layout_width="168dp"
+            android:layout_height="112dp"
+            android:layout_marginRight="3dp"
+            android:scaleType="centerCrop"
+            app:layout_flexGrow="1"
+            tools:src="@tools:sample/avatars" />
+
+
+        <ImageView
+            android:id="@+id/product_1"
+            android:layout_width="168dp"
+            android:layout_height="112dp"
+            android:layout_marginLeft="3dp"
+            android:scaleType="centerCrop"
+            app:layout_flexGrow="1"
+            tools:src="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/product_2"
+            android:layout_width="168dp"
+            android:layout_height="112dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="3dp"
+            android:scaleType="centerCrop"
+            app:layout_flexGrow="1"
+            tools:src="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/product_3"
+            android:layout_width="168dp"
+            android:layout_height="112dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="6dp"
+            android:scaleType="centerCrop"
+            app:layout_flexGrow="1"
+            tools:src="@tools:sample/avatars" />
+
+
+    </com.google.android.flexbox.FlexboxLayout>
+
+
+    <include layout="@layout/layout_home_split2" />
 
 
 </LinearLayout>

@@ -1,19 +1,16 @@
 package com.account.feature.home.header
 
 import android.content.Context
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import android.widget.TextView
 import com.account.R
-import com.account.R2.id.recyclerview
 import com.account.common.CommonUtils
 import com.account.entity.home.Banners
 import com.account.entity.home.Product
-import com.account.extend.SpaceDecoration
+import com.account.view.banner.BannerSupport
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
@@ -23,9 +20,9 @@ import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
-import com.jude.easyrecyclerview.adapter.BaseViewHolder
+import com.google.android.flexbox.FlexboxLayout
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
-import com.youth.banner.Banner
+import com.youth.banner.BannerConfig
 import com.youth.banner.loader.ImageLoader
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
@@ -34,7 +31,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation
  * </br>
  *
  */
-class HomeHeader constructor(private var context: Context) : RecyclerArrayAdapter.ItemView {
+open class HomeHeader constructor(private var context: Context) : RecyclerArrayAdapter.ItemView {
 
 
     /**
@@ -42,19 +39,36 @@ class HomeHeader constructor(private var context: Context) : RecyclerArrayAdapte
      *     setData 后调用
      *    getAdapter()!!.notifyItemChanged(0)
      */
-    var bannersData: ArrayList<Banners> = ArrayList()
+    var mBannersData: ArrayList<Banners> = ArrayList()
 
     /**
      * 资讯 data
      */
-    var productData: ArrayList<Product> = ArrayList()
+    var mProductData: ArrayList<Product> = ArrayList()
 
-    lateinit var banner: Banner
-    lateinit var recyclerView: RecyclerView
-    private var staggeredGridDecoration: SpaceDecoration? = null
+    lateinit var banner: BannerSupport
+    lateinit var product_fbl: FlexboxLayout
+    lateinit var product_0: ImageView
+    lateinit var product_1: ImageView
+    lateinit var product_2: ImageView
+    lateinit var product_3: ImageView
 
-    private val handler = Handler()
-    private var clickAble = true
+
+    fun setNewBannerData(newDataList: List<Banners>) {
+        if (newDataList.isNullOrEmpty()) {
+            return
+        }
+        mBannersData.clear()
+        mBannersData.addAll(newDataList)
+    }
+
+    fun setNewProductData(newDataList: List<Product>) {
+        if (newDataList.isNullOrEmpty()) {
+            return
+        }
+        mProductData.clear()
+        mProductData.addAll(newDataList)
+    }
 
 
     override fun onBindView(headerView: View?) {
@@ -64,12 +78,11 @@ class HomeHeader constructor(private var context: Context) : RecyclerArrayAdapte
         }
 
         if (this::banner.isInitialized) {
-            setBannerData(bannersData)
+            updateBannerData(mBannersData)
         }
 
-        if (this::recyclerView.isInitialized) {
-            setHotProductData(productData)
-            productData.clear()
+        if (this::product_fbl.isInitialized) {
+            updateHotProductData(mProductData)
         }
 
     }
@@ -77,8 +90,17 @@ class HomeHeader constructor(private var context: Context) : RecyclerArrayAdapte
 
     override fun onCreateView(parent: ViewGroup?): View {
         val view = LayoutInflater.from(context).inflate(R.layout.view_home_header, parent, false)
-        banner = view.findViewById<Banner>(R.id.banner)
-        recyclerView = view.findViewById<RecyclerView>(R.id.product_rv)
+        banner = view.findViewById<BannerSupport>(R.id.banner)
+        product_fbl = view.findViewById<FlexboxLayout>(R.id.product_fbl)
+        product_0 = view.findViewById<ImageView>(R.id.product_0)
+        product_1 = view.findViewById<ImageView>(R.id.product_1)
+        product_2 = view.findViewById<ImageView>(R.id.product_2)
+        product_3 = view.findViewById<ImageView>(R.id.product_3)
+        view.findViewById<TextView>(R.id.more_product_tv).setOnClickListener {
+            // todo 更多点击
+            ToastUtils.showShort("更多功能开发中")
+
+        }
 
         // 宽高比 1.78
         val screenWidth = ScreenUtils.getScreenWidth()
@@ -105,6 +127,7 @@ class HomeHeader constructor(private var context: Context) : RecyclerArrayAdapte
                                 )
                             )
                         )
+                        .error(R.drawable.ic_error_image_load)
                         .into(imageView!!)
                 }
 
@@ -124,77 +147,84 @@ class HomeHeader constructor(private var context: Context) : RecyclerArrayAdapte
                 }
 
                 // todo 轮播图跳转事件
-                if (bannersData.isNotEmpty()) {
-                    ToastUtils.showShort("mold" + bannersData[it].mold)
+                if (mBannersData.isNotEmpty()) {
+                    ToastUtils.showShort("轮播图点击 mold == " + mBannersData[it].mold)
                 }
             }
 
-        }
-
-        recyclerView.apply {
-            setBackgroundColor(ColorUtils.getColor(R.color.font_white))
-            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-            adapter = getRecyclerAdapter()
-        }
-
-        staggeredGridDecoration = SpaceDecoration(SizeUtils.dp2px(8f)).apply {
-            setPaddingStart(true)// 是否在给第一行的item添加上padding(不包含header).默认true.
-            setPaddingEdgeSide(true)// 是否为左右2边添加padding.默认true.
-            setSpace(SizeUtils.dp2px(8f))
-            recyclerView.addItemDecoration(this)
         }
 
         return view
     }
 
 
-    private fun getRecyclerAdapter(): RecyclerArrayAdapter<Product> {
-
-        val adapter = object : RecyclerArrayAdapter<Product>(context) {
-
-            override fun OnCreateViewHolder(parent: ViewGroup?, viewType: Int): BaseViewHolder<Product> {
-                return HotProductHolder(parent)
-            }
-        }
-
-        adapter.setOnItemClickListener {
-            if (!clickAble) {
-                return@setOnItemClickListener
-            }
-            clickAble = false
-            handler.postDelayed({
-                clickAble = true
-            }, 1000)
-
-            // TODO 热门产品点击事件
-            val name = adapter.allData.get(it).name
-            ToastUtils.showShort("热门产品点击name = :$name")
-
-        }
-        return adapter
-    }
-
-
-
-    private fun setBannerData(bannersData: List<Banners>) {
+    private fun updateBannerData(bannersData: List<Banners>) {
 
         if (bannersData.isNullOrEmpty()) {
-            banner.visibility = View.GONE
             return
         }
-        banner.visibility = View.VISIBLE
+        banner.apply {
+            update(getBannerUrls(bannersData))
+            updateBannerStyle(BannerConfig.CIRCLE_INDICATOR)
+            visibility = View.VISIBLE
+        }
 
     }
 
-    private fun setHotProductData(productData: List<Product>) {
+    private fun updateHotProductData(productData: List<Product>) {
         if (productData.isNullOrEmpty()) {
-            recyclerView.visibility = View.GONE
             return
         }
-        recyclerView.visibility = View.VISIBLE
-        getRecyclerAdapter().apply {
-            clear()
-            addAll(productData)
+        product_fbl.visibility = View.VISIBLE
+
+        productData.forEachIndexed { index, product ->
+
+            if (index > 3) {
+                return@forEachIndexed
+            }
+            val indexImage = getIndexImage(index)
+            indexImage.setOnClickListener {
+
+                ToastUtils.showShort("资讯item点击 name == " + product.name)
+
+            }
+
+            Glide.with(context)
+                .load(product.imgUrl)
+                .apply(
+                    RequestOptions().transform(
+                        MultiTransformation(
+                            CenterCrop(),
+                            RoundedCornersTransformation(SizeUtils.dp2px(4f), 0, RoundedCornersTransformation.CornerType.TOP)
+                        )
+                    )
+                )
+                .error(R.drawable.ic_error_image_load)
+                .into(indexImage)
+
+
+        }
+
+
+    }
+
+
+    private fun getBannerUrls(listBean: List<Banners>): List<String> {
+        val urls = java.util.ArrayList<String>()
+        for (i in listBean.indices) {
+            urls.add(listBean[i].imgUrl)
+        }
+        return urls
+    }
+
+
+    private fun getIndexImage(index: Int): ImageView {
+
+        return when (index) {
+            0 -> product_0
+            1 -> product_1
+            2 -> product_2
+            else -> product_3
         }
 
     }

@@ -25,7 +25,7 @@ interface ApiService {
         /**
          * 首页相关接口前缀
          */
-        private const val HOME_API = "$API_URI/tHome"
+        private const val HOME_API = "$API_URI/tHome/"
 
         /**
          * 资讯相关接口前缀
@@ -37,7 +37,7 @@ interface ApiService {
     /**
      * 获取首页混合列表信息
      */
-    @GET("$HOME_API/v1/area/conditionList")
+    @GET(HOME_API)
     fun getHomeList(): Flowable<Response<HomeMix>>
 
 
