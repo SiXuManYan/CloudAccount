@@ -29,8 +29,6 @@ import java.util.*
 
 /**
  * 支持JavaScript的WebView
- * @author dengxh
- * @date 2018/11/2
  */
 @SuppressLint("SetJavaScriptEnabled")
 open class JsWebView @JvmOverloads constructor(context: Context?, attrs: AttributeSet? = null) : WebView(context, attrs) {

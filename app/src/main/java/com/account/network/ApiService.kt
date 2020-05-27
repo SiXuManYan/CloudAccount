@@ -1,5 +1,6 @@
 package com.account.network
 
+import com.account.entity.home.HomeMix
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import io.reactivex.Flowable
@@ -37,7 +38,7 @@ interface ApiService {
      * 获取首页混合列表信息
      */
     @GET("$HOME_API/v1/area/conditionList")
-    fun getHomeList(): Flowable<Response<JsonObject>>
+    fun getHomeList(): Flowable<Response<HomeMix>>
 
 
 }

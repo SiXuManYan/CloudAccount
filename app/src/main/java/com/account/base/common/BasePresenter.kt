@@ -50,9 +50,11 @@ open class BasePresenter constructor(private var view: BaseView?) {
         if (compositeDisposable == null) {
             compositeDisposable = CompositeDisposable()
         }
-        compositeDisposable?.add(RxBus.toFlowable(eventType).observeOn(AndroidSchedulers.mainThread()).subscribe(consumer, Consumer {
-            LogUtils.d(it)
-        }))
+        compositeDisposable?.add(
+            RxBus.toFlowable(eventType).observeOn(AndroidSchedulers.mainThread()).subscribe(consumer, Consumer {
+                LogUtils.d(it)
+            })
+        )
     }
 
     /**
@@ -61,7 +63,7 @@ open class BasePresenter constructor(private var view: BaseView?) {
     protected fun <T> flowableCompose(): FlowableTransformer<T, T> {
         return FlowableTransformer {
             it.subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
         }
     }
 
@@ -71,8 +73,8 @@ open class BasePresenter constructor(private var view: BaseView?) {
     protected fun <T> flowableUICompose(): FlowableTransformer<T, T> {
         return FlowableTransformer {
             it.subscribeOn(Schedulers.io())
-                    .unsubscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
         }
     }
 
@@ -83,14 +85,17 @@ open class BasePresenter constructor(private var view: BaseView?) {
      * @param flowable 请求Service
      * @param subscriber 订阅处理
      */
-    protected fun <T> requestApi(lifecycle: LifecycleOwner,
-                                 event: Lifecycle.Event,
-                                 flowable: Flowable<Response<T>>,
-                                 subscriber: BaseHttpSubscriber<T>
+    protected fun <T> requestApi(
+        lifecycle: LifecycleOwner,
+        event: Lifecycle.Event,
+        flowable: Flowable<Response<T>>,
+        subscriber: BaseHttpSubscriber<T>
     ) {
-        addSubscribe(flowable.bindUntilEvent(lifecycle, event)
+        addSubscribe(
+            flowable.bindUntilEvent(lifecycle, event)
                 .compose(flowableUICompose())
-                .subscribeWith(subscriber))
+                .subscribeWith(subscriber)
+        )
     }
 
     /**
@@ -100,55 +105,22 @@ open class BasePresenter constructor(private var view: BaseView?) {
      * @param flowable 请求Service
      * @param subscriber 订阅处理
      */
-    protected fun <T> requestApi(lifecycle: LifecycleOwner,
-                                 event: Lifecycle.Event,
-                                 flowable: Flowable<Response<JsonObject>>,
-                                 mapper: Function<Response<JsonObject>, T>,
-                                 subscriber: ResourceSubscriber<T>) {
-        addSubscribe(flowable.bindUntilEvent(lifecycle, event)
+    protected fun <T> requestApi(
+        lifecycle: LifecycleOwner,
+        event: Lifecycle.Event,
+        flowable: Flowable<Response<JsonObject>>,
+        mapper: Function<Response<JsonObject>, T>,
+        subscriber: ResourceSubscriber<T>
+    ) {
+        addSubscribe(
+            flowable.bindUntilEvent(lifecycle, event)
                 .compose(flowableCompose())
                 .map(mapper)
                 .compose(flowableUICompose())
-                .subscribeWith(subscriber))
+                .subscribeWith(subscriber)
+        )
     }
 
-    /**
-     * 掉新接口网络请求及处理
-     * @param lifecycle 绑定对象
-     * @param event 取消周期事件
-     * @param flowable 请求Service
-     * @param subscriber 订阅处理
-     */
-    protected fun <T> requestNewApi(lifecycle: LifecycleOwner,
-                                    event: Lifecycle.Event,
-                                    flowable: Flowable<Response<T>>,
-                                    subscriber: BaseHttpSubscriber<T>) {
-//        RetrofitUrlManager.getInstance().putDomain(ApiService.NEW_SERVICE, UrlUtil.SERVER_HOST_V3)
-        addSubscribe(flowable.bindUntilEvent(lifecycle, event)
-                .compose(flowableUICompose())
-                .subscribeWith(subscriber))
-    }
-
-    /**
-     * 掉新接口网络请求及处理
-     * @param lifecycle 绑定对象
-     * @param event 取消周期事件
-     * @param flowable 请求Service
-     * @param mapper 获取返回数据后处理
-     * @param subscriber 订阅处理
-     */
-    protected fun <K, T> requestNewApi(lifecycle: LifecycleOwner,
-                                       event: Lifecycle.Event,
-                                       flowable: Flowable<Response<K>>,
-                                       mapper: Function<Response<K>, T>,
-                                       subscriber: ResourceSubscriber<T>) {
-//        RetrofitUrlManager.getInstance().putDomain(ApiService.NEW_SERVICE, UrlUtil.SERVER_HOST_V3)
-        addSubscribe(flowable.bindUntilEvent(lifecycle, event)
-                .compose(flowableCompose())
-                .map(mapper)
-                .compose(flowableUICompose())
-                .subscribeWith(subscriber))
-    }
 
     /**
      * 订阅事件

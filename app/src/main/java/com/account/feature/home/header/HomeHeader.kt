@@ -57,7 +57,6 @@ class HomeHeader constructor(private var context: Context) : RecyclerArrayAdapte
     private var clickAble = true
 
 
-
     override fun onBindView(headerView: View?) {
 
         if (headerView == null) {
