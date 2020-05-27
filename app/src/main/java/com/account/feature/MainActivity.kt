@@ -72,7 +72,7 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
         )
         tabs.add(
             TabItem(
-                getString(R.string.service),
+                getString(R.string.produce),
                 R.drawable.ic_tab_service_normal,
                 R.drawable.ic_tab_service_selected,
                 ProductFragment::class.java
