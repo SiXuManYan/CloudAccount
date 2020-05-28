@@ -1,7 +1,6 @@
-package com.account.base.other
+package com.account.base.net
 
 import com.account.base.common.BaseView
-import com.account.base.net.BaseHttpSubscriber
 import com.account.network.Response
 import com.google.gson.JsonArray
 import java.lang.reflect.ParameterizedType

@@ -1,7 +1,6 @@
-package com.account.base.other
+package com.account.base.net
 
 import com.account.base.common.BaseView
-import com.account.base.net.BaseHttpSubscriber
 
 abstract class BackgroundSubscriber<T>(private var view: BaseView) : BaseHttpSubscriber<T>(view) {
 

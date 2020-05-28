@@ -1,5 +1,7 @@
 package com.account.entity.home
 
+import com.account.entity.product.Product
+
 /**
  * Created by Wangsw on 2020/5/26 11:39.
  * </br>

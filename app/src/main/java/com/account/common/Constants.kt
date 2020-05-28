@@ -125,5 +125,8 @@ object Constants {
     const val EVENT_MORE_TRANSPARENT = 0x94
     const val EVENT_MORE_SATURATION = 0x95
 
+    // 列表数据 key
+    const val KEY_DATA = "data"
+
 
 }

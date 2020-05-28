@@ -3,7 +3,7 @@ package com.account.feature.home
 import com.account.base.common.BaseView
 import com.account.entity.home.Banners
 import com.account.entity.home.News
-import com.account.entity.home.Product
+import com.account.entity.product.Product
 import java.util.ArrayList
 
 interface HomeView : BaseView {

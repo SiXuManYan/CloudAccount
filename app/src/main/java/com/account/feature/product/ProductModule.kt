@@ -12,7 +12,7 @@ import dagger.Provides
 class ProductModule {
 
     @Provides
-    fun viewProvider(fragment: ProductFragment): ServiceView {
+    fun viewProvider(fragment: ProductFragment): ProductView {
         return fragment
     }
 

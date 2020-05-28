@@ -1,7 +1,7 @@
 package com.account.entity.product
 
 /**
- * 产品
+ * 产品列表model
  */
 data class Product2(
     val id: String = "",

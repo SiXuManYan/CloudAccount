@@ -2,6 +2,7 @@ package com.account.base.ui.list
 
 import androidx.core.content.ContextCompat
 import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import butterknife.BindView
 import com.blankj.utilcode.util.SizeUtils
@@ -33,7 +34,7 @@ abstract class BaseRefreshListFragment2<T, P : BasePresenter> : BaseFragment<P>(
 
 
     @BindView(R.id.parent_container)
-    lateinit var parent_container: FrameLayout
+    lateinit var parent_container: ViewGroup
 
     @BindView(R.id.swipe)
     lateinit var swipeLayout: SmartRefreshLayout
@@ -50,6 +51,7 @@ abstract class BaseRefreshListFragment2<T, P : BasePresenter> : BaseFragment<P>(
 
     private var adapter: RecyclerArrayAdapter<T>? = null
     var page = 0
+    var pageSize = 10
 
     override fun getLayoutId() = R.layout.fragment_refresh_list2
 
@@ -173,11 +175,13 @@ abstract class BaseRefreshListFragment2<T, P : BasePresenter> : BaseFragment<P>(
 
         page = 0
         presenter.loadList(this, page)
+        presenter.loadListWithPageSize(this, page, pageSize)
     }
 
     open fun onLoadMore() {
         page++
         presenter.loadList(this, page)
+        presenter.loadListWithPageSize(this, page, pageSize)
     }
 
 

@@ -3,7 +3,7 @@
     android:id="@+id/parent_rl"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="@color/font_white"
+    android:background="@color/transparent"
     android:gravity="center"
     android:orientation="vertical">
 

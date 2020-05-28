@@ -6,11 +6,14 @@ import android.widget.ImageView
 import com.account.R
 import com.account.app.Glide
 import com.account.base.ui.list.BaseItemViewHolder
+import com.account.common.Common
 import com.account.common.TimeUtil
 import com.account.entity.home.News
+import com.account.extend.RoundTransFormation
 import com.blankj.utilcode.util.SizeUtils
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.android.extensions.LayoutContainer
@@ -55,12 +58,13 @@ class NewsHolderPlural(parent: ViewGroup?) : BaseItemViewHolder<News>(parent, R.
             val itemView = View.inflate(context, R.layout.item_news_pural_image, null)
             val image_iv = itemView.findViewById<ImageView>(R.id.image_iv)
             Glide.with(context)
-                .load(imgUrls[0])
+//                .load(imgUrls[0])
+                .load(Common.TEST_IMG_URL)
                 .apply(
                     RequestOptions().transform(
                         MultiTransformation(
                             CenterCrop(),
-                            RoundedCornersTransformation(SizeUtils.dp2px(4f), 0, RoundedCornersTransformation.CornerType.TOP)
+                            RoundTransFormation(context,4)
                         )
                     )
                 )

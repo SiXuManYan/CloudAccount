@@ -146,6 +146,16 @@ open class BasePresenter constructor(private var view: BaseView?) {
     open fun loadList(lifecycle: LifecycleOwner, page: Int) {}
 
     /**
+     * 使用PageSize的方式获取列表数据
+     * 注：当返回数据size < 分页数量时pageSize时 ，为最后一页
+     * @param lifecycle 绑定对象
+     * @param page 页码
+     * @param pageSize 请求的分页数量
+     *
+     */
+    open fun loadListWithPageSize(lifecycle: LifecycleOwner, page: Int, pageSize: Int) = Unit
+
+    /**
      * 添加订阅
      * @param subscription 订阅
      */
@@ -180,4 +190,5 @@ open class BasePresenter constructor(private var view: BaseView?) {
         view = null
         unSubscribe()
     }
+
 }

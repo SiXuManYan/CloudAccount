@@ -14,7 +14,7 @@ import com.account.base.ui.BaseFragment
 import com.account.common.AndroidUtil
 import com.account.entity.home.Banners
 import com.account.entity.home.News
-import com.account.entity.home.Product
+import com.account.entity.product.Product
 import com.account.event.entity.TabRefreshEvent
 import com.account.feature.home.header.HomeHeader
 import com.account.feature.home.holder.NewsHolderPlural
@@ -88,7 +88,7 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
             if (it.clx == HomeFragment::class.java) {
                 if (isViewVisible) {
                     if (isViewVisible) {
-                        recyclerView.scrollToPosition(0)
+                        recyclerView.smoothScrollToPosition(0)
                         swipeLayout.postDelayed({
                             swipeLayout.autoRefresh()
                         }, 200)

@@ -5,11 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import com.account.R
 import com.account.common.CommonUtils
 import com.account.entity.home.Banners
-import com.account.entity.home.Product
+import com.account.extend.RoundTransFormation
 import com.account.view.banner.BannerSupport
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ScreenUtils
@@ -20,7 +19,6 @@ import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.flexbox.FlexboxLayout
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import com.youth.banner.BannerConfig
 import com.youth.banner.loader.ImageLoader
@@ -69,7 +67,7 @@ open class ProductHeader constructor(private var context: Context) : RecyclerArr
 
 
     override fun onCreateView(parent: ViewGroup?): View {
-        val view = LayoutInflater.from(context).inflate(R.layout.view_home_header, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.view_product_header, parent, false)
         banner = view.findViewById<BannerSupport>(R.id.banner)
 
         // 宽高比 1.78
@@ -93,7 +91,7 @@ open class ProductHeader constructor(private var context: Context) : RecyclerArr
                             RequestOptions().transform(
                                 MultiTransformation(
                                     CenterCrop(),
-                                    RoundedCornersTransformation(SizeUtils.dp2px(4f), 0)
+                                    RoundTransFormation(context,4)
                                 )
                             )
                         )

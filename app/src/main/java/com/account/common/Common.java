@@ -18,4 +18,8 @@ public class Common {
     public static final String YH_IMAGE_SAVE_PATH = "/Cloud/Ima/";
     public static final String YH_LOGIN_PATH = "/Cloud/logo/";
     public static final String LOGO_URL = "http://down.yihuaapp.com/yihua_log_5.0.png";
+    public static final String TEST_IMG_URL = "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3053760994,2100393214&fm=26&gp=0.jpg";
+
+
+
 }

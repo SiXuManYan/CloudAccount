@@ -7,13 +7,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.account.R
+import com.account.common.Common
 import com.account.common.CommonUtils
 import com.account.entity.home.Banners
-import com.account.entity.home.Product
+import com.account.entity.product.Product
+import com.account.extend.RoundTransFormation
 import com.account.view.banner.BannerSupport
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ScreenUtils
-import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
@@ -24,7 +25,6 @@ import com.google.android.flexbox.FlexboxLayout
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import com.youth.banner.BannerConfig
 import com.youth.banner.loader.ImageLoader
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 /**
  * Created by Wangsw on 2020/5/26 16:46.
@@ -117,16 +117,9 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
                 override fun displayImage(context: Context?, obj: Any?, imageView: ImageView?) {
 
                     Glide.with(context!!)
-                        .load(obj)
+//                        .load(obj)
+                        .load(Common.TEST_IMG_URL)
                         .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE).dontAnimate())
-                        .apply(
-                            RequestOptions().transform(
-                                MultiTransformation(
-                                    CenterCrop(),
-                                    RoundedCornersTransformation(SizeUtils.dp2px(4f), 0)
-                                )
-                            )
-                        )
                         .error(R.drawable.ic_error_image_load)
                         .into(imageView!!)
                 }
@@ -190,15 +183,9 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
             }
 
             Glide.with(context)
-                .load(product.imgUrl)
-                .apply(
-                    RequestOptions().transform(
-                        MultiTransformation(
-                            CenterCrop(),
-                            RoundedCornersTransformation(SizeUtils.dp2px(4f), 0, RoundedCornersTransformation.CornerType.TOP)
-                        )
-                    )
-                )
+//                .load(product.imgUrl)
+                .load(Common.TEST_IMG_URL)
+                .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 8))))
                 .error(R.drawable.ic_error_image_load)
                 .into(indexImage)
 
