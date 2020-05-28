@@ -2,6 +2,7 @@ package com.account.common
 
 object Constants {
 
+
     const val PR_DEFAULT = "cloud"
     const val PR_LOCATION = "location"
 
@@ -93,8 +94,6 @@ object Constants {
             "a.tag {font-size:15px;text-decoration:none;background-color:#bbd6f3;border-bottom:2px solid #3E6D8E;border-right:2px solid #7F9FB6;color:#284a7b;margin:2px 2px 2px 0;padding:2px 4px;white-space:nowrap;}</style>"
 
 
-
-
     const val DEVICE_ANDROID = "1"
 
 
@@ -106,6 +105,7 @@ object Constants {
     const val PARAM_HANDLE_BACK = "param_handle_back" // 处理返回键
     const val PARAM_WEB_REFRESH = "param_web_refresh" // 是否可刷新
     const val PARAM_WEB_CHANGETITLE = "param_web_changetitle" // 自动改变标题
+    const val PARAM_PRODUCT_ID: String = "param_productId"// 产品ID
 
 
     /** RxBus Event */

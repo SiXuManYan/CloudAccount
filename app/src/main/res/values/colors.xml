@@ -12,7 +12,7 @@
     <color name="transparent">@android:color/transparent</color>
 
     <!-- 主副标题相关 -->
-    <color name="color_zero_level">#7F6CBD</color>
+    <color name="color_zero_level">#000000</color>
     <color name="color_first_level">#333333</color>
     <color name="color_second_level">#555555</color>
     <color name="color_third_level">#888888</color>

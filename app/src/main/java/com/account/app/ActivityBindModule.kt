@@ -2,6 +2,8 @@ package com.account.app
 
 import com.account.feature.MainActivity
 import com.account.feature.MainModule
+import com.account.feature.product.detail.ProductDetailActivity
+import com.account.feature.product.detail.ProductDetailModule
 import com.jz.yihua.activity.scope.ActivityScore
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -20,6 +22,10 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [FragmentBindModule::class, MainModule::class])
     abstract fun mainActivityInjector(): MainActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [ProductDetailModule::class])
+    abstract fun ProductDetailActivityInjector(): ProductDetailActivity
 
 
 }

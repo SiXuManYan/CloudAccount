@@ -1,6 +1,7 @@
 package com.account.network
 
 import com.account.entity.home.HomeMix
+import com.account.entity.product.ProductDetail
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import io.reactivex.Flowable
@@ -53,6 +54,12 @@ interface ApiService {
      */
     @GET(PRODUCT_API_PREFIX)
     fun getProductList(@Query("pageSize") pageSize: Int): Flowable<Response<JsonArray>>
+
+    /**
+     * 产品详情页
+     */
+    @GET("$PRODUCT_API_PREFIX/detail")
+    fun getProductDetail(@Query("productId") productId: String): Flowable<Response<ProductDetail>>
 
 
 }

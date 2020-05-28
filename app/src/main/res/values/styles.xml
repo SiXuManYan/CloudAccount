@@ -9,7 +9,6 @@
     </style>
 
 
-
     <!--dialog全屏显示-->
     <style name="DialogTransparent" parent="Dialog">
         <!--显示区域以外是否使用黑色半透明背景-->
@@ -77,6 +76,12 @@
 
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
+    </style>
+
+
+    <style name="MyCheckBox" parent="Theme.AppCompat.DayNight">
+        <item name="colorControlNormal">@color/color_list_gray_background</item>
+        <item name="colorControlActivated">@color/color_app_red</item>
     </style>
 
 </resources>

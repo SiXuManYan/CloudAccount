@@ -120,6 +120,12 @@
             android:theme="@style/LaunchTheme" />
 
 
+        <activity
+            android:name=".feature.product.detail.ProductDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/LaunchTheme" />
+
+
     </application>
 
 </manifest>

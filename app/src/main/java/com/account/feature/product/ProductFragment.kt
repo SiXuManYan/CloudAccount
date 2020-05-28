@@ -1,5 +1,6 @@
 package com.account.feature.product
 
+import android.content.Intent
 import android.os.Handler
 import android.view.View
 import android.view.ViewGroup
@@ -7,14 +8,18 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.account.R
 import com.account.base.ui.list.BaseRefreshListFragment2
+import com.account.common.CommonUtils
+import com.account.common.Constants
 import com.account.entity.product.Product2
 import com.account.feature.home.header.HomeHeader
+import com.account.feature.product.detail.ProductDetailActivity
 import com.account.feature.product.holder.ProductHolder
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import com.jude.easyrecyclerview.decoration.DividerDecoration
+import kotlinx.android.synthetic.main.fragment_product.*
 
 /**
  * Created by Wangsw on 2020/5/25 0025 16:42.
@@ -36,6 +41,12 @@ class ProductFragment : BaseRefreshListFragment2<Product2, ProductPresenter>(), 
 
     override fun initViews(parent: View) {
         super.initViews(parent)
+        title_tv.setOnClickListener {
+            if (CommonUtils.isDoubleClick(it)) {
+                recyclerView.smoothScrollToPosition(0)
+            }
+
+        }
         initEvent()
     }
 
@@ -64,9 +75,14 @@ class ProductFragment : BaseRefreshListFragment2<Product2, ProductPresenter>(), 
             }, 1000)
 
             // TODO 资讯点击事件
-            val introduce = adapter.allData[it].introduce
-            ToastUtils.showShort("资讯列表点击 = introduce:$introduce")
+            val data = adapter.allData[it]
 
+            startActivity(
+                Intent(activity, ProductDetailActivity::class.java).putExtra(
+                    Constants.PARAM_PRODUCT_ID,
+                    data.id
+                )
+            )
         }
         return adapter
     }

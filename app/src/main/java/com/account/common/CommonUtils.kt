@@ -14,9 +14,13 @@ import android.graphics.Rect
 import android.net.Uri
 import android.os.Environment
 import android.provider.ContactsContract
+import android.text.Spannable
+import android.text.SpannableStringBuilder
 import android.text.TextUtils
+import android.text.style.AbsoluteSizeSpan
 import android.view.View
 import android.view.animation.Interpolator
+import android.widget.TextView
 import com.account.R
 //import com.amap.api.maps2d.AMapUtils
 //import com.amap.api.maps2d.model.LatLng
@@ -40,7 +44,8 @@ object CommonUtils {
     private const val ALGORITHM = "PBKDF2WithHmacSHA1"
     private const val TRANSFORMATION = "AES/CBC/PKCS7Padding"
     private val AES_IV = byteArrayOf(0xA, 1, 0xB, 5, 4, 0xF, 7, 9, 0x17, 3, 1, 6, 8, 0xC, 0xD, 91)
-    private val PASSWORD = charArrayOf('P', '$', 'r', ' ', 'v', '9', 'l', 'K', 'j', 'm', '2', 'D', 'u', 'c', '@', 's', ' ', 'L', 'a', 'b', 'F', 'n')
+    private val PASSWORD =
+        charArrayOf('P', '$', 'r', ' ', 'v', '9', 'l', 'K', 'j', 'm', '2', 'D', 'u', 'c', '@', 's', ' ', 'L', 'a', 'b', 'F', 'n')
     private val SALT = byteArrayOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF)
     private val keyHashMap = HashMap<String, Pair<String, String>>()
 
@@ -80,11 +85,17 @@ object CommonUtils {
         temp.append(",")
         temp.append(AppUtils.getAppVersionName())
 
-        val secretKey = SecretKeyFactory.getInstance(ALGORITHM).generateSecret(PBEKeySpec(PASSWORD, SALT,
-                10000, 128))
+        val secretKey = SecretKeyFactory.getInstance(ALGORITHM).generateSecret(
+            PBEKeySpec(
+                PASSWORD, SALT,
+                10000, 128
+            )
+        )
 
-        val aes = EncryptUtils.encryptAES2Base64(temp.toString().toByteArray(),
-                secretKey.encoded, TRANSFORMATION, AES_IV)
+        val aes = EncryptUtils.encryptAES2Base64(
+            temp.toString().toByteArray(),
+            secretKey.encoded, TRANSFORMATION, AES_IV
+        )
         return String(aes).apply {
             keyHashMap[this] = Pair(account, actionType)
         }
@@ -147,13 +158,15 @@ object CommonUtils {
      */
     fun getLocationInfo(): Array<String> {
         val location = getShareLocation()
-        return arrayOf(location.getString(Constants.SP_SELECT_LOCAL_CODE),
-                location.getString(Constants.SP_SELECT_LOCAL_NAME),
-                location.getString(Constants.SP_LOCAL_CODE),
-                location.getString(Constants.SP_LOCAL_NAME),
-                location.getString(Constants.SP_LONGITUDE, "0"),
-                location.getString(Constants.SP_LATITUDE, "0"),
-                location.getString(Constants.SP_ADDRESS))
+        return arrayOf(
+            location.getString(Constants.SP_SELECT_LOCAL_CODE),
+            location.getString(Constants.SP_SELECT_LOCAL_NAME),
+            location.getString(Constants.SP_LOCAL_CODE),
+            location.getString(Constants.SP_LOCAL_NAME),
+            location.getString(Constants.SP_LONGITUDE, "0"),
+            location.getString(Constants.SP_LATITUDE, "0"),
+            location.getString(Constants.SP_ADDRESS)
+        )
     }
 
     fun getAutoPlayVideoSetting() = getShareDefault().getBoolean(Constants.SP_AUTO_PLAY_VIDEO)
@@ -255,11 +268,13 @@ object CommonUtils {
                 if (m > 500) {
                     mode = mode.inc()
                 }
-                sb.append(if (mode < 10) {
-                    "0".plus(mode)
-                } else {
-                    mode
-                })
+                sb.append(
+                    if (mode < 10) {
+                        "0".plus(mode)
+                    } else {
+                        mode
+                    }
+                )
             } else {
                 sb.append("00")
             }
@@ -416,17 +431,29 @@ object CommonUtils {
     fun translatePhone(context: Context, phoneNum: String): String {
 
         var displayName = ""
-        val projection = arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER)
-        val phone1 = phoneNum.subSequence(0, 3).toString() + " " + phoneNum.substring(3, 7) + " " + phoneNum.substring(7, 11)// 136 6666 6666
-        val phone2 = phoneNum.subSequence(0, 3).toString() + "-" + phoneNum.substring(3, 7) + "-" + phoneNum.substring(7, 11)// 136-6666-6666
+        val projection =
+            arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER)
+        val phone1 = phoneNum.subSequence(0, 3).toString() + " " + phoneNum.substring(3, 7) + " " + phoneNum.substring(
+            7,
+            11
+        )// 136 6666 6666
+        val phone2 = phoneNum.subSequence(0, 3).toString() + "-" + phoneNum.substring(3, 7) + "-" + phoneNum.substring(
+            7,
+            11
+        )// 136-6666-6666
         val phone3 = "+86$phoneNum"// +8613666666666
-        val phone4 = "+86 " + phoneNum.subSequence(0, 3).toString() + " " + phoneNum.substring(3, 7) + " " + phoneNum.substring(7, 11)// +86 136 6666 6666
+        val phone4 = "+86 " + phoneNum.subSequence(0, 3).toString() + " " + phoneNum.substring(3, 7) + " " + phoneNum.substring(
+            7,
+            11
+        )// +86 136 6666 6666
 
         val resolver = context.contentResolver
-        val cursor = resolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                projection,
-                ContactsContract.CommonDataKinds.Phone.NUMBER + " in(?,?,?,?,?)",
-                arrayOf(phoneNum, phone1, phone2, phone3, phone4), null)
+        val cursor = resolver.query(
+            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+            projection,
+            ContactsContract.CommonDataKinds.Phone.NUMBER + " in(?,?,?,?,?)",
+            arrayOf(phoneNum, phone1, phone2, phone3, phone4), null
+        )
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 displayName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
@@ -522,7 +549,8 @@ object CommonUtils {
     fun getContact(context: Context): Map<String, String> {
         val map = HashMap<String, String>()
         try {
-            val PHONES_PROJECTION = arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER)
+            val PHONES_PROJECTION =
+                arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER)
             val resolver = context.contentResolver
             val cursor = resolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, PHONES_PROJECTION, null, null, null)
             if (cursor != null) {
@@ -582,7 +610,14 @@ object CommonUtils {
         context.startActivity(phoneIntent)
     }
 
-    fun propertyAnim(view: View, millis: Long, rotationStart: Float, rotationEnd: Float, animationListener: AnimatorListener?, value: Interpolator) {
+    fun propertyAnim(
+        view: View,
+        millis: Long,
+        rotationStart: Float,
+        rotationEnd: Float,
+        animationListener: AnimatorListener?,
+        value: Interpolator
+    ) {
         val rotate = PropertyValuesHolder.ofFloat("rotation", rotationStart, rotationEnd)!!
         val animator = ObjectAnimator.ofPropertyValuesHolder(view, rotate)
         if (animationListener != null) {
@@ -597,7 +632,8 @@ object CommonUtils {
     fun checkSearchWords(keyword: String) = RegexUtils.isMatch("[a-zA-Z0-9\\u4e00-\\u9fa5]+", keyword)
 
     fun removeInvalidate(keyword: String): String {
-        val matcher = Pattern.compile("\"[`~!@#\$%^&*()+=|{}':;',\\\\[\\\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]\"").matcher(keyword)
+        val matcher =
+            Pattern.compile("\"[`~!@#\$%^&*()+=|{}':;',\\\\[\\\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]\"").matcher(keyword)
         return matcher.replaceAll("").trim()
     }
 
@@ -722,32 +758,6 @@ object CommonUtils {
         }
     }
 
-//    /**
-//     * 保存加密时间戳
-//     */
-//    fun saveAesTime(context: Context, loginCode: String?) {
-//
-//        val shareDefault = getShareDefault()
-//        val currentTimeMillis = System.currentTimeMillis()
-//        val serviceTime = if (loginCode.isNullOrBlank()) {
-//            currentTimeMillis
-//        } else {
-//            loginCode.toLong()
-//        }
-//
-//        // 兼容旧框架加密时间戳
-//        val appPrefs_ = AppPrefs_(context)
-//        appPrefs_.loginTime().put(currentTimeMillis)
-//        appPrefs_.aesLoginTime().put(currentTimeMillis)
-//
-//        appPrefs_.aesLoginServiceTime().put(serviceTime)
-//
-//        // 新版本加密时间戳
-//        shareDefault.put(Constants.SP_AES_LOGIN_TIME, currentTimeMillis)
-//        shareDefault.put(Constants.SP_AES_LOGIN_SERVICE_TIME, serviceTime)
-//
-//
-//    }
 
     fun isDoubleClick(view: View): Boolean {
         val nowTime = System.currentTimeMillis()
@@ -767,19 +777,25 @@ object CommonUtils {
     }
 
     /**
-     * 判断用户选择的cityCode 是否和真实定位获取的cityCode一致
+     * 设置格式化金额
      *
-     * @return
+     * @param textView
+     * @param text1       单位
+     * @param text2       金额
+     * @param text1DpSize 单位字体大小 dp
+     * @param text2DpSize 金额字体大小 dp
      */
-    fun checkCityCode(): Boolean {
-        val locationCityCode = CommonUtils.getLocationInfo()[2]
-        val areaCityCode = CommonUtils.getLocationInfo()[0]
+    fun setFormatText(textView: TextView, text1: String, text2: String, text1DpSize: Int, text2DpSize: Int) {
 
-        return if (TextUtils.isEmpty(locationCityCode) || TextUtils.isEmpty(areaCityCode)) {
-            false
-        } else locationCityCode == areaCityCode
-
-
+        val stringBuilder = SpannableStringBuilder(text1 + text2)
+        stringBuilder.setSpan(AbsoluteSizeSpan(text1DpSize, true), 0, text1.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        stringBuilder.setSpan(
+            AbsoluteSizeSpan(text2DpSize, true),
+            text1.length,
+            (text1 + text2).length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        textView.text = stringBuilder
     }
 
 
