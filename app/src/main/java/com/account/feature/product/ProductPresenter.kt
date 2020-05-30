@@ -13,13 +13,15 @@ import javax.inject.Inject
 class ProductPresenter @Inject constructor(private var productView: ProductView) : BasePresenter(productView) {
 
 
-    override fun loadListWithPageSize(lifecycle: LifecycleOwner, page: Int, pageSize: Int) {
+    override fun loadList(lifecycle: LifecycleOwner, page: Int, pageSize: Int, lastItemId: String?) {
         requestApi(lifecycle, Lifecycle.Event.ON_DESTROY,
-            apiService.getProductList(pageSize),
+            apiService.getProductList(pageSize, lastItemId),
 
             object : BaseJsonArrayHttpSubscriber<Product2>(productView, false) {
-                override fun onSuccess(jsonObject: JsonArray?, list: ArrayList<Product2>) {
-                    productView.bindList(list, page == 0, (list.size < pageSize))
+
+
+                override fun onSuccess(jsonArray: JsonArray?, list: ArrayList<Product2>, lastItemId: String?) {
+                    productView.bindList(list, lastItemId)
                 }
 
             }

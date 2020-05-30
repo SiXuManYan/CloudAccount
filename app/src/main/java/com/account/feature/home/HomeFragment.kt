@@ -13,9 +13,10 @@ import com.account.R
 import com.account.base.ui.BaseFragment
 import com.account.common.AndroidUtil
 import com.account.entity.home.Banners
-import com.account.entity.home.News
+import com.account.entity.news.News
 import com.account.entity.product.Product
 import com.account.event.entity.TabRefreshEvent
+import com.account.feature.home.adapters.NewsChildAdapter
 import com.account.feature.home.header.HomeHeader
 import com.account.feature.home.holder.NewsHolderPlural
 import com.account.feature.home.holder.NewsHolderSingle
@@ -83,16 +84,14 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
         initRecyclerView()
     }
 
-    private fun initEvent(){
+    private fun initEvent() {
         presenter.subsribeEventEntity<TabRefreshEvent>(Consumer {
             if (it.clx == HomeFragment::class.java) {
                 if (isViewVisible) {
-                    if (isViewVisible) {
-                        recyclerView.smoothScrollToPosition(0)
-                        swipeLayout.postDelayed({
-                            swipeLayout.autoRefresh()
-                        }, 200)
-                    }
+                    recyclerView.smoothScrollToPosition(0)
+                    swipeLayout.postDelayed({
+                        swipeLayout.autoRefresh()
+                    }, 200)
                 }
             }
 
@@ -158,27 +157,7 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
 
     private fun getRecyclerAdapter(): RecyclerArrayAdapter<News> {
 
-        val adapter = object : RecyclerArrayAdapter<News>(context) {
-
-            override fun OnCreateViewHolder(parent: ViewGroup?, viewType: Int): BaseViewHolder<News> {
-
-                return if (viewType == 0) {
-                    NewsHolderSingle(parent)
-                } else {
-                    NewsHolderPlural(parent)
-                }
-            }
-
-            override fun getViewType(position: Int): Int {
-                val size = allData[position].imgUrls.size
-                return if (size <= 1) {
-                    0
-                } else {
-                    1
-                }
-            }
-
-        }
+        val adapter = NewsChildAdapter(context)
 
         adapter.setOnItemClickListener {
             if (!clickAble) {

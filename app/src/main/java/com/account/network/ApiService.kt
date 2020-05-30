@@ -1,9 +1,9 @@
 package com.account.network
 
 import com.account.entity.home.HomeMix
+import com.account.entity.news.NewsCategory
 import com.account.entity.product.ProductDetail
 import com.google.gson.JsonArray
-import com.google.gson.JsonObject
 import io.reactivex.Flowable
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -36,7 +36,7 @@ interface ApiService {
         /**
          * 资讯相关接口前缀
          */
-        private const val NEWS_API = "$API_URI/tNews"
+        private const val NEWS_API = "$API_URI/tNews/"
 
     }
 
@@ -51,15 +51,36 @@ interface ApiService {
      * 获取首页混合列表信息
      * @param pageSize 请求的分页数量
      *                 当返回的list.size()<pageSize 时，为最后一页
+     * @param tailId 末尾项ID 用于分页
      */
     @GET(PRODUCT_API_PREFIX)
-    fun getProductList(@Query("pageSize") pageSize: Int): Flowable<Response<JsonArray>>
+    fun getProductList(
+        @Query("pageSize") pageSize: Int,
+        @Query("tailId") tailId: String? = null): Flowable<Response<JsonArray>>
 
     /**
      * 产品详情页
+     *
      */
     @GET("$PRODUCT_API_PREFIX/detail")
     fun getProductDetail(@Query("productId") productId: String): Flowable<Response<ProductDetail>>
+
+    /**
+     * 获取资讯页tab
+     * @see NewsCategory
+     * @see <a href="http://192.168.1.139:8881/api/account/tNews/mold">点击查看接口返回</a>
+     */
+    @GET("$NEWS_API/mold")
+    fun getNewsCategory(): Flowable<Response<JsonArray>>
+
+    /**
+     * 获取资讯页tab
+     * @see NewsCategory
+     * @see <a href="http://192.168.1.139:8881/api/account/tNews/?pageSize=10">资讯列表</a>
+     */
+    @GET(NEWS_API)
+    fun getNewsList(@Query("pageSize") pageSize: Int,
+                    @Query("tailId") tailId: String? = null): Flowable<Response<JsonArray>>
 
 
 }

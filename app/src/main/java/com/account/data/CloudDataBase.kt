@@ -9,45 +9,35 @@ import androidx.room.migration.Migration
 import android.content.Context
 import com.blankj.utilcode.util.FileUtils
 import com.account.R
+import com.account.entity.news.NewsCategory
 import com.account.entity.users.User
-
 
 
 /**
  * 应用内数据库
+ * 创建新表时 实体类 + 实体类Dao接口 后在此添加
  */
-@Database(entities = [User::class], version = 1, exportSchema = false)
+@Database(entities = [User::class, NewsCategory::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class CloudDataBase : RoomDatabase() {
 
     companion object {
-        private const val DatabaseFileName = "cloud.db"
+        private const val DatabaseFileName = "CloudAccount.db"
         private var instance: CloudDataBase? = null
 
         @Synchronized
         fun get(context: Context): CloudDataBase {
             if (instance == null) {
-//                checkDbFileExists(context)
                 instance = Room.databaseBuilder(context, CloudDataBase::class.java, DatabaseFileName)
-                        .allowMainThreadQueries()
-                        .fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()
+                    .fallbackToDestructiveMigration()
 //                        .addMigrations(migration_1_2)
-                        .build()
+                    .build()
             }
             return instance!!
         }
 
-        /**
-         * 检测预置的数据文件
-         * @param context 上下文
-         */
-        private fun checkDbFileExists(context: Context) {
-            val dbFile = context.getDatabasePath(DatabaseFileName)
-            if (!dbFile.exists()) {
-                FileUtils.createOrExistsFile(dbFile)
-                dbFile.writeBytes(context.resources.openRawResource(R.raw.cloud).readBytes())
-            }
-        }
+
 
         /**
          * version 1 -> 2 user表增加字段
@@ -68,6 +58,7 @@ abstract class CloudDataBase : RoomDatabase() {
     }
 
     abstract fun userDao(): UserDao
+    abstract fun newsCategoryDao(): NewsCategoryDao
 
 
 }

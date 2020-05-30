@@ -3,18 +3,27 @@ package com.account.app
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import androidx.multidex.MultiDex
+import com.account.backstage.DataServiceFaker
+import com.account.common.Constants
+import com.account.common.CrashHandler
 import com.blankj.utilcode.util.LogUtils
 import com.account.data.CloudDataBase
 import com.account.network.ApiService
+import com.account.view.dialog.LoadingDialog
 import com.account.view.swipe.smart.CommonSmartAnimRefreshHeaderView
 import com.account.view.swipe.smart.CommonSmartRefreshFooter
+import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.Utils
+import com.mob.MobSDK
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.tencent.smtt.sdk.QbSdk
 import dagger.android.AndroidInjector
 import dagger.android.HasActivityInjector
 import dagger.android.support.DaggerApplication
+import io.reactivex.plugins.RxJavaPlugins
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
@@ -23,7 +32,8 @@ import javax.inject.Inject
  * </br>
  *
  */
-class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Application.ActivityLifecycleCallbacks, CloudAccountView {
+class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Application.ActivityLifecycleCallbacks,
+    CloudAccountView {
 
 
 
@@ -42,13 +52,32 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
     private var lastActivity: WeakReference<Activity>? = null
     private val presenter by lazy { CloudAccountPresenter(this) }
 
-    var isMute = true
-
 
     override fun onCreate() {
         super.onCreate()
-        initX5WebView()
+        initHandle()
+        DataServiceFaker.startService(this, Constants.ACTION_SYNC)
+    }
 
+    private fun initHandle() {
+        //工具类初始化
+        Utils.init(this)
+        ToastUtils.setBgColor(Color.argb(0xAE, 0, 0, 0))
+        ToastUtils.setMsgColor(Color.WHITE)
+        // crash
+        RxJavaPlugins.setErrorHandler {
+            it.printStackTrace()
+        }
+        // crash 日志收集
+        CrashHandler.instance.init(this)
+
+        // shareSdk
+        MobSDK.init(this)
+
+
+        // tbs
+        // initX5WebView()
+        registerActivityLifecycleCallbacks(this)
     }
 
 
@@ -67,7 +96,8 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
             }
         })
     }
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication>  =
+
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
         DaggerAppComponent.builder().application(this).build()
 
 
@@ -86,13 +116,9 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
     }
 
 
-    override fun onActivityDestroyed(activity: Activity) {
-        TODO("Not yet implemented")
-    }
+    override fun onActivityDestroyed(activity: Activity) = Unit
 
-    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-        TODO("Not yet implemented")
-    }
+    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) = Unit
 
     override fun onActivityStopped(activity: Activity) {
         isActivityChangingConfigurations = activity?.isChangingConfigurations ?: false
@@ -114,34 +140,31 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
 
     }
 
-//    private var loadingDialog: LoadingDialog? = null
+    private var loadingDialog: LoadingDialog? = null
+
+
+    override fun showLoading() = showLoadingDialog()
+
+    override fun hideLoading() = dismissLoadingDialog()
+
 
     private fun showLoadingDialog() {
-//        if (getLastActivity() == null && loadingDialog != null && loadingDialog!!.isShowing) {
-//            return
-//        } else {
-//            loadingDialog = LoadingDialog.Builder(getLastActivity()).setCancelable(false).create()
-//            loadingDialog!!.show()
-//        }
+        if (getLastActivity() == null && loadingDialog != null && loadingDialog!!.isShowing) {
+            return
+        } else {
+            loadingDialog = LoadingDialog.Builder(getLastActivity()).setCancelable(false).create()
+            loadingDialog!!.show()
+        }
 
     }
 
 
     private fun dismissLoadingDialog() {
-//        if (loadingDialog != null && loadingDialog!!.isShowing) {
-//            loadingDialog!!.dismiss()
-//        }
-//        loadingDialog = null
+        if (loadingDialog != null && loadingDialog!!.isShowing) {
+            loadingDialog!!.dismiss()
+        }
+        loadingDialog = null
     }
-
-    override fun showLoading() {
-        showLoadingDialog()
-    }
-
-    override fun hideLoading() {
-        dismissLoadingDialog()
-    }
-
 
 
     override fun getLastActivity(): Activity? {
@@ -159,7 +182,6 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
 
         LogUtils.d("ActivityLife--->", "onForeground")
 
-//        DataService.startService(this, Constants.ACTION_CHECK_ORALTOKEN)
     }
 
     /**

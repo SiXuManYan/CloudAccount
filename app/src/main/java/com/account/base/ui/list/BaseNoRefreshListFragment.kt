@@ -106,13 +106,7 @@ abstract class BaseNoRefreshListFragment<T, P : BasePresenter> : BaseFragment<P>
         onRefresh()
     }
 
-//    override fun showError(code: Int, message: String) {
-//        if (swipeLayout.isRefreshing) {
-//            swipeLayout.isRefreshing = false
-//        }
-//        super.showError(code, message)
-//        accidentView.showRetry()
-//    }
+
 
     fun showEmptyView() {
         accidentView.showEmpty(emptyMessage(), emptyImage())

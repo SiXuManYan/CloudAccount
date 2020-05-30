@@ -1,5 +1,6 @@
 package com.account.feature.home.holder
 
+import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -8,14 +9,11 @@ import com.account.app.Glide
 import com.account.base.ui.list.BaseItemViewHolder
 import com.account.common.Common
 import com.account.common.TimeUtil
-import com.account.entity.home.News
+import com.account.entity.news.News
 import com.account.extend.RoundTransFormation
-import com.blankj.utilcode.util.SizeUtils
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_news_pural.*
 import java.util.*
@@ -45,6 +43,11 @@ class NewsHolderPlural(parent: ViewGroup?) : BaseItemViewHolder<News>(parent, R.
             image_container_ll.visibility = View.GONE
         }
 
+        if (data.recommandFlag == 1) {
+            top_tv.visibility = View.VISIBLE
+        } else {
+            top_tv.visibility = View.GONE
+        }
 
     }
 
@@ -64,7 +67,7 @@ class NewsHolderPlural(parent: ViewGroup?) : BaseItemViewHolder<News>(parent, R.
                     RequestOptions().transform(
                         MultiTransformation(
                             CenterCrop(),
-                            RoundTransFormation(context,4)
+                            RoundTransFormation(context, 4)
                         )
                     )
                 )

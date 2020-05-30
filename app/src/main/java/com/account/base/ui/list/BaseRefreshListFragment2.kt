@@ -1,9 +1,9 @@
 package com.account.base.ui.list
 
+import android.text.TextUtils
 import androidx.core.content.ContextCompat
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import butterknife.BindView
 import com.blankj.utilcode.util.SizeUtils
 import com.account.R
@@ -21,7 +21,7 @@ import com.jz.yihua.activity.view.swipe.NoMoreItemView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
-import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * 列表Fragment基类
@@ -50,8 +50,21 @@ abstract class BaseRefreshListFragment2<T, P : BasePresenter> : BaseFragment<P>(
 
 
     private var adapter: RecyclerArrayAdapter<T>? = null
+
+    /**
+     * 兼容使用PageNumber方式请求列表
+     */
     var page = 0
+
+    /**
+     * 请求的分页数量，默认10
+     */
     var pageSize = 10
+
+    /**
+     * 用于请求下一页的最后一项 item id ,首页可不传
+     */
+    var lastItemId: String? = null
 
     override fun getLayoutId() = R.layout.fragment_refresh_list2
 
@@ -90,6 +103,10 @@ abstract class BaseRefreshListFragment2<T, P : BasePresenter> : BaseFragment<P>(
         }
     }
 
+    override fun bindList(list: ArrayList<T>, lastItemId: String?) {
+        bindList(list, TextUtils.isEmpty(this.lastItemId), list.size < pageSize)
+        this.lastItemId = lastItemId
+    }
 
     override fun bindList(list: ArrayList<T>, isFirstPage: Boolean, last: Boolean) {
 
@@ -174,14 +191,15 @@ abstract class BaseRefreshListFragment2<T, P : BasePresenter> : BaseFragment<P>(
     open fun onRefresh() {
 
         page = 0
+        lastItemId = null
         presenter.loadList(this, page)
-        presenter.loadListWithPageSize(this, page, pageSize)
+        presenter.loadList(this, page, pageSize, lastItemId)
     }
 
     open fun onLoadMore() {
         page++
         presenter.loadList(this, page)
-        presenter.loadListWithPageSize(this, page, pageSize)
+        presenter.loadList(this, page, pageSize, lastItemId)
     }
 
 

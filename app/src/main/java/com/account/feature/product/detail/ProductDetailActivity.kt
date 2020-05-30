@@ -126,7 +126,6 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
             Glide.with(this)
 //                .load(product.imgUrl)
                 .load(Common.TEST_IMG_URL)
-                .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 8))))
                 .error(R.drawable.ic_error_image_load)
                 .into(imageView)
 
@@ -153,7 +152,7 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
     fun click(view: View) {
         when (view.id) {
             R.id.back_iv -> onBackPressed()
-            R.id.title_rl -> {
+            R.id.title_rl -> {3
                 if (AndroidUtil.isDoubleClick(view)) {
                     scroll_nsv.smoothScrollTo(0, 0)
                 }

@@ -23,54 +23,8 @@ object Constants {
     const val SP_SHOW_CITY = "sp_show_city"// 上次获取的城市首页信息
     const val SP_AUTO_PLAY_VIDEO = "sp_auto_play_video"// 是否自动播放视频
 
-    /** 数据版本 */
-    const val DATA_VERSION = 1
-
-    /** 请求码 */
-    const val REQUEST_CAPTCHA = 1000
-
-    /** 更新数据 */
-    const val REQUEST_UPDATE = 1001
-
-    /** 是否更新 */
-    const val REQUEST_REFRESH = 1002
-
-    /** 选取附件 */
-    const val REQUEST_MEDIA = 1003
-
-    /** 话题 */
-    const val REQUEST_TOPIC = 1004
-
-    /** 关注 */
-    const val REQUEST_AT = 1005
-
-    /** 获取图片 */
-    const val REQUEST_PHOTO = 1006
-
-    /** 裁剪 */
-    const val REQUEST_CROP = 1007
-
-    /** 拍摄 */
-    const val REQUEST_CAMERA = 1008
-
-    /** 录制 */
-    const val REQUEST_VIDEO = 1009
-
-    /** 微信登录 */
-    const val REQUEST_WECHAT_LOGIN = 1010
 
 
-    const val VERIFY_BIND = "08" // 换绑
-    const val VERIFY_PROTECTION = "09" // 修改密保
-
-    const val LOGIC_PHONE = 0
-    const val LOGIC_QUESTION = 1
-
-    const val FLAG_LOGOUT = 0
-    const val FLAG_LOGON = 1
-
-    /** 验证码等待时间 */
-    const val WAIT_DELAYS = 59
 
     /** 定位间隔 */
     const val LOCATION_INTERVAL = 300000L
@@ -127,6 +81,13 @@ object Constants {
 
     // 列表数据 key
     const val KEY_DATA = "data"
+
+
+    /**
+     * 应用初始化数据
+     */
+    const val ACTION_SYNC = 1
+    const val ACTION_DATA_WORK = "action"
 
 
 }

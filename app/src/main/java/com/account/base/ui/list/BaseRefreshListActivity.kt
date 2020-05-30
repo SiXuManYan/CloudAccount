@@ -1,5 +1,6 @@
 package com.account.base.ui.list
 
+import android.text.TextUtils
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import butterknife.BindView
@@ -48,8 +49,20 @@ abstract class BaseRefreshListActivity<T, P : BasePresenter> : BaseMVPActivity<P
 
 
     private var adapter: RecyclerArrayAdapter<T>? = null
+    /**
+     * 兼容使用PageNumber方式请求列表
+     */
     var page = 0
 
+    /**
+     * 请求的分页数量，默认10
+     */
+    var pageSize = 10
+
+    /**
+     * 用于请求下一页的最后一项 item id ,首页可不传
+     */
+    var lastItemId: String? = null
     override fun getLayoutId() = R.layout.activity_refresh_list2
 
     open fun emptyMessage(): String = getString(R.string.hint_data_no_found)
@@ -92,6 +105,11 @@ abstract class BaseRefreshListActivity<T, P : BasePresenter> : BaseMVPActivity<P
         }
 
         loadOnVisible()
+    }
+
+    override fun bindList(list: ArrayList<T>, lastItemId: String?) {
+        bindList(list, TextUtils.isEmpty(this.lastItemId), list.size < pageSize)
+        this.lastItemId = lastItemId
     }
 
 
@@ -168,12 +186,15 @@ abstract class BaseRefreshListActivity<T, P : BasePresenter> : BaseMVPActivity<P
 
     open fun onRefresh() {
         page = 0
+        lastItemId = null
         presenter.loadList(this, page)
+        presenter.loadList(this, page, pageSize, lastItemId)
     }
 
     open fun onLoadMore() {
-        ++page
+        page++
         presenter.loadList(this, page)
+        presenter.loadList(this, page, pageSize, lastItemId)
     }
 
     abstract fun getMainTitle(): Int?

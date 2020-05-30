@@ -1,5 +1,6 @@
 package com.account.entity.home
 
+import com.account.entity.news.News
 import com.account.entity.product.Product
 
 /**

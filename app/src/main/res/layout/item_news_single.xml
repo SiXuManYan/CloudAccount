@@ -8,10 +8,28 @@
     android:paddingRight="15dp"
     android:paddingBottom="5dp">
 
+    <TextView
+        android:id="@+id/top_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/shape_stock_red"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingLeft="2dp"
+        android:paddingTop="1dp"
+        android:paddingRight="2dp"
+        android:paddingBottom="1dp"
+        android:textColor="@color/color_app_red"
+        android:textSize="@dimen/font_size_10"
+        android:visibility="gone"
+        android:text="置顶"
+        tools:visibility="visible" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="84dp"
-
+        android:layout_below="@+id/top_tv"
         android:layout_toLeftOf="@+id/image_iv"
         android:orientation="vertical">
 
@@ -29,9 +47,9 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:gravity="center_vertical"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
@@ -85,9 +103,10 @@
         android:id="@+id/image_iv"
         android:layout_width="110dp"
         android:layout_height="84dp"
+        android:layout_below="@+id/top_tv"
         android:layout_alignParentRight="true"
-        android:scaleType="centerCrop"
         android:layout_marginLeft="22dp"
+        android:scaleType="centerCrop"
         android:visibility="gone"
         tools:src="@tools:sample/avatars"
         tools:visibility="visible" />

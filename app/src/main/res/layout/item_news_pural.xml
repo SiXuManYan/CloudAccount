@@ -21,6 +21,24 @@
         android:textSize="@dimen/font_size_14"
         tools:text="靖江发放泰州首张“纯”电子商务营业执照" />
 
+    <TextView
+        android:id="@+id/top_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/shape_stock_red"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingLeft="2dp"
+        android:paddingTop="1dp"
+        android:paddingRight="2dp"
+        android:paddingBottom="1dp"
+        android:textColor="@color/color_app_red"
+        android:textSize="@dimen/font_size_10"
+        android:visibility="gone"
+        android:text="置顶"
+        tools:visibility="visible" />
+
 
     <LinearLayout
         android:id="@+id/image_container_ll"
@@ -28,10 +46,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:visibility="gone"
-        tools:visibility="visible"
         android:minHeight="73dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <ImageView
             android:layout_width="110dp"

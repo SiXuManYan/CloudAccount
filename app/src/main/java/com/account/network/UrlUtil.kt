@@ -40,7 +40,7 @@ object UrlUtil {
     }
     val URL_LIST =
             listOf(
-                    Pair("测试服", Pair("http://192.168.1.139:8881", "https://www.baidu.com")),
-                    Pair("正式服", Pair("http://192.168.1.139:8881", "https://www.baidu.com"))
+                    Pair("测试服", Pair("http://192.168.1.191:8881", "https://www.baidu.com")),
+                    Pair("正式服", Pair("http://192.168.1.191:8881", "https://www.baidu.com"))
             )
 }
