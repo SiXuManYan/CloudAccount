@@ -13,11 +13,9 @@ import javax.inject.Inject
 class NewsChildPresenter @Inject constructor(private var newsChildView: NewsChildView) : BasePresenter(newsChildView) {
 
 
-
-
-    override fun loadList(lifecycle: LifecycleOwner, page: Int, pageSize: Int, lastItemId: String?) {
+    fun loadNewsList(lifecycle: LifecycleOwner, pageSize: Int, lastItemId: String?, categoryValue: String?) {
         requestApi(lifecycle, Lifecycle.Event.ON_DESTROY,
-            apiService.getNewsList(pageSize,lastItemId),
+            apiService.getNewsList(pageSize, lastItemId, categoryValue),
 
             object : BaseJsonArrayHttpSubscriber<News>(newsChildView, false) {
 

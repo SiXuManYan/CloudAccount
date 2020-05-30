@@ -12,11 +12,10 @@ import com.account.base.ui.BaseFragment
 import com.jude.easyrecyclerview.EasyRecyclerView
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import com.jude.easyrecyclerview.decoration.DividerDecoration
-import com.jz.yihua.activity.base.BaseNoJsonListView2
-import com.jz.yihua.activity.feature.main.explore.category.footer.EmptyImageFooter
-import com.jz.yihua.activity.feature.main.explore.category.footer.EmptyLoadingFooter
-import com.jz.yihua.activity.feature.main.explore.category.footer.EmptyRetryFooter
-import com.jz.yihua.activity.view.swipe.NoMoreItemView
+import com.account.view.swipe.footer.EmptyImageFooter
+import com.account.view.swipe.footer.EmptyLoadingFooter
+import com.account.view.swipe.footer.EmptyRetryFooter
+import com.account.view.swipe.NoMoreItemView
 
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout

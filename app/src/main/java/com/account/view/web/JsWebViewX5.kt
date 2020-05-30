@@ -1,4 +1,4 @@
-package com.jz.yihua.activity.view
+package com.account.view.web
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
@@ -12,7 +12,6 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import androidx.appcompat.app.AlertDialog
 import android.util.AttributeSet
 import android.util.Log
 import android.util.SparseArray
@@ -22,6 +21,7 @@ import android.view.ViewGroup
 import android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
 import android.widget.EditText
 import android.widget.FrameLayout
+import androidx.appcompat.app.AlertDialog
 import com.tencent.smtt.export.external.interfaces.*
 import com.tencent.smtt.sdk.*
 import org.json.JSONArray
@@ -121,11 +121,15 @@ open class JsWebViewX5 @JvmOverloads constructor(context: Context?, attrs: Attri
                 }
             }
 
-            override fun onCreateWindow(view: WebView, isDialog: Boolean,
-                                        isUserGesture: Boolean, resultMsg: Message): Boolean {
+            override fun onCreateWindow(
+                view: WebView, isDialog: Boolean,
+                isUserGesture: Boolean, resultMsg: Message
+            ): Boolean {
                 return if (chromeClient != null) {
-                    chromeClient!!.onCreateWindow(view, isDialog,
-                            isUserGesture, resultMsg)
+                    chromeClient!!.onCreateWindow(
+                        view, isDialog,
+                        isUserGesture, resultMsg
+                    )
                 } else super.onCreateWindow(view, isDialog, isUserGesture, resultMsg)
             }
 
@@ -154,18 +158,21 @@ open class JsWebViewX5 @JvmOverloads constructor(context: Context?, attrs: Attri
                         return true
                     }
                 }
-                val alertDialog = AlertDialog.Builder(getContext()).setMessage(message).setCancelable(false).setPositiveButton(android.R.string.ok) { dialog, _ ->
-                    dialog.dismiss()
-                    if (alertBoxBlock) {
-                        result.confirm()
-                    }
-                }.create()
+                val alertDialog = AlertDialog.Builder(getContext()).setMessage(message).setCancelable(false)
+                    .setPositiveButton(android.R.string.ok) { dialog, _ ->
+                        dialog.dismiss()
+                        if (alertBoxBlock) {
+                            result.confirm()
+                        }
+                    }.create()
                 alertDialog.show()
                 return true
             }
 
-            override fun onJsConfirm(view: WebView, url: String, message: String,
-                                     result: JsResult): Boolean {
+            override fun onJsConfirm(
+                view: WebView, url: String, message: String,
+                result: JsResult
+            ): Boolean {
                 if (!alertBoxBlock) {
                     result.confirm()
                 }
@@ -183,17 +190,19 @@ open class JsWebViewX5 @JvmOverloads constructor(context: Context?, attrs: Attri
                         dialog.dismiss()
                     }
                     AlertDialog.Builder(getContext())
-                            .setMessage(message)
-                            .setCancelable(false)
-                            .setPositiveButton(android.R.string.ok, listener)
-                            .setNegativeButton(android.R.string.cancel, listener).show()
+                        .setMessage(message)
+                        .setCancelable(false)
+                        .setPositiveButton(android.R.string.ok, listener)
+                        .setNegativeButton(android.R.string.cancel, listener).show()
                     return true
 
                 }
             }
 
-            override fun onJsPrompt(view: WebView, url: String, message: String,
-                                    defaultValue: String?, result: JsPromptResult): Boolean {
+            override fun onJsPrompt(
+                view: WebView, url: String, message: String,
+                defaultValue: String?, result: JsPromptResult
+            ): Boolean {
                 if (!alertBoxBlock) {
                     result.confirm()
                 }
@@ -217,15 +226,16 @@ open class JsWebViewX5 @JvmOverloads constructor(context: Context?, attrs: Attri
                         }
                     }
                     AlertDialog.Builder(getContext())
-                            .setTitle(message)
-                            .setView(editText)
-                            .setCancelable(false)
-                            .setPositiveButton(android.R.string.ok, listener)
-                            .setNegativeButton(android.R.string.cancel, listener)
-                            .show()
+                        .setTitle(message)
+                        .setView(editText)
+                        .setCancelable(false)
+                        .setPositiveButton(android.R.string.ok, listener)
+                        .setNegativeButton(android.R.string.cancel, listener)
+                        .show()
                     val layoutParams = FrameLayout.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT)
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
                     val t = (dpi * 16).toInt()
                     layoutParams.setMargins(t, 0, t, 0)
                     layoutParams.gravity = Gravity.CENTER_HORIZONTAL
@@ -309,8 +319,10 @@ open class JsWebViewX5 @JvmOverloads constructor(context: Context?, attrs: Attri
             }
 
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-            override fun onShowFileChooser(webView: WebView, filePathCallback: ValueCallback<Array<Uri>>,
-                                           fileChooserParams: FileChooserParams): Boolean {
+            override fun onShowFileChooser(
+                webView: WebView, filePathCallback: ValueCallback<Array<Uri>>,
+                fileChooserParams: FileChooserParams
+            ): Boolean {
                 return if (chromeClient != null) {
                     chromeClient!!.onShowFileChooser(webView, filePathCallback, fileChooserParams)
                 } else super.onShowFileChooser(webView, filePathCallback, fileChooserParams)
@@ -473,8 +485,10 @@ open class JsWebViewX5 @JvmOverloads constructor(context: Context?, attrs: Attri
         }
 
         val appCacheDir = File(appCacheDirName)
-        val webviewCacheDir = File(context.cacheDir
-                .absolutePath + "/webviewCache")
+        val webviewCacheDir = File(
+            context.cacheDir
+                .absolutePath + "/webviewCache"
+        )
 
         if (webviewCacheDir.exists()) {
             deleteFile(webviewCacheDir)

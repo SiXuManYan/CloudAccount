@@ -1,4 +1,4 @@
-package com.jz.yihua.activity.feature.main.explore.category.footer
+package com.account.view.swipe.footer
 
 import android.content.Context
 import android.view.LayoutInflater

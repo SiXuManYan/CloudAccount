@@ -1079,37 +1079,6 @@ public class AndroidUtil {
         return sb.toString().trim();
     }
 
-//    /**
-//     * 复制 assets数据库至 data/data/包名/files
-//     *
-//     * @param context
-//     */
-//    @Deprecated
-//    public static void copyDB(Context context) {
-//
-////      File file = new File(context.getFilesDir(), "SupportCities.db");
-//        File file = new File("/data/data/com.jz.yihua.activity/databases/", "SupportCities.db");// 目录:data/data/包名/files目录下，文件名相同
-//
-//        if (!file.exists()) {
-//            AssetManager assetManager = context.getAssets();
-//            try {
-//                InputStream is = assetManager.open("SupportCities.db");
-//                FileOutputStream fos = new FileOutputStream(file);
-//
-//                byte[] bys = new byte[1024];
-//                int len;
-//                while ((len = is.read(bys)) != -1) {
-//                    fos.write(bys, 0, len);
-//                }
-//
-//                is.close();
-//                fos.close();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//    }
 
     /**
      * 用户定位cityCode

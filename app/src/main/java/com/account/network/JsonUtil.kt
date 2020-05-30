@@ -1,4 +1,4 @@
-package com.jz.yihua.activity.network
+package com.account.network
 
 import com.google.gson.JsonObject
 

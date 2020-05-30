@@ -2,9 +2,11 @@ package com.account.app
 
 import com.account.feature.MainActivity
 import com.account.feature.MainModule
+import com.account.feature.news.detail.NewsDetailActivity
+import com.account.feature.news.detail.NewsDetailModule
 import com.account.feature.product.detail.ProductDetailActivity
 import com.account.feature.product.detail.ProductDetailModule
-import com.jz.yihua.activity.scope.ActivityScore
+import com.account.scope.ActivityScore
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -15,9 +17,6 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityBindModule {
 
-//    @ActivityScore
-//    @ContributesAndroidInjector(modules = [ServiceModule::class])
-//    abstract fun dataSyncServiceInjector(): DataService
 
     @ActivityScore
     @ContributesAndroidInjector(modules = [FragmentBindModule::class, MainModule::class])
@@ -25,7 +24,12 @@ abstract class ActivityBindModule {
 
     @ActivityScore
     @ContributesAndroidInjector(modules = [ProductDetailModule::class])
-    abstract fun ProductDetailActivityInjector(): ProductDetailActivity
+    abstract fun productDetailActivityInjector(): ProductDetailActivity
+
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [NewsDetailModule::class])
+    abstract fun newsDetailActivityInjector(): NewsDetailActivity
 
 
 }

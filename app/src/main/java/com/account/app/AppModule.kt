@@ -4,15 +4,12 @@ import android.content.Context
 import android.util.Log
 import com.blankj.utilcode.util.LogUtils
 import com.account.BuildConfig
-import com.account.common.CommonUtils
-import com.account.common.Constants
 import com.account.common.Constants.DEVICE_ANDROID
 import com.account.data.CloudDataBase
 import com.account.network.ApiService
 import com.account.network.UrlUtil
 import com.google.gson.Gson
-import com.google.gson.internal.LinkedTreeMap
-import com.jz.yihua.activity.network.GsonConvertFactory
+import com.account.network.GsonConvertFactory
 
 import dagger.Module
 import dagger.Provides

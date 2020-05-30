@@ -1,4 +1,4 @@
-package com.jz.yihua.activity.view.swipe
+package com.account.view.swipe
 
 import android.content.Context
 import android.graphics.Color

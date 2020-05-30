@@ -25,7 +25,7 @@ import com.account.common.Constants
 import com.account.common.ShareUtil
 import com.account.view.error.AccidentView
 import com.google.gson.JsonParser
-import com.jz.yihua.activity.view.JsWebViewX5
+import com.account.view.web.JsWebViewX5
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
@@ -48,6 +48,7 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
 
     @BindView(R.id.tv_title)
     lateinit var tv_title: TextView
+
     @BindView(R.id.iv_back)
     lateinit var iv_back: ImageView
 
@@ -56,6 +57,7 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
 
     @BindView(R.id.swipe)
     lateinit var swipeLayout: SmartRefreshLayout
+
     @BindView(R.id.accident)
     lateinit var accidentView: AccidentView
 
@@ -65,7 +67,7 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
     var contentUrl = ""
 
     /** 标题 */
-    private var webTitle = ""
+    var webTitle = ""
 
     /** 处理返回键 */
     private var backCallJs = false
@@ -127,7 +129,7 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
             onBackPressed()
         }
 
-        if(refresh){
+        if (refresh) {
             swipeLayout.setEnableLoadMore(false)
             swipeLayout.setOnRefreshListener(this)
             swipeLayout.setScrollBoundaryDecider(object : ScrollBoundaryDecider {
@@ -139,7 +141,7 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
                     return false
                 }
             })
-        }else{
+        } else {
             swipeLayout.setEnableLoadMore(false)
             swipeLayout.setEnableRefresh(false)
         }
@@ -153,7 +155,7 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
             }
         }
         x5_web.addJavascriptInterface(this@BaseMVPWebActivity, JsWebViewX5.BRIDGE_NAME)
-        x5_web.webChromeClient=object: WebChromeClient(){
+        x5_web.webChromeClient = object : WebChromeClient() {
             override fun onReceivedTitle(view: WebView?, title: String?) {
                 super.onReceivedTitle(view, title)
                 if (!title.isNullOrEmpty() && changeTitle) {
@@ -181,7 +183,7 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
 
             override fun onPageFinished(p0: WebView?, p1: String?) {
                 super.onPageFinished(p0, p1)
-                if(refresh){
+                if (refresh) {
                     swipeLayout.finishRefresh()
                 }
                 dismissLoadingDialog()
@@ -195,14 +197,19 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
         x5_web.clearCache(true)
         showLoadingDialog()
 
-        if (RegexUtils.isURL(contentUrl)) {
-            x5_web.loadUrl(contentUrl)
-        } else {
-            var body = Common.WEB_STYLE + contentUrl
-            body += "<div style='margin-bottom: 80px;'/>"
-            x5_web.loadDataWithBaseURL(null, body, "text/html", "utf-8", null)
-        }
+        initLoadUrl()
+    }
 
+    fun initLoadUrl() {
+        if (!TextUtils.isEmpty(contentUrl)) {
+            if (RegexUtils.isURL(contentUrl)) {
+                x5_web.loadUrl(contentUrl)
+            } else {
+//                var body = Common.WEB_STYLE + contentUrl
+//                body += "<div style='margin-bottom: 80px;'/>"
+                x5_web.loadDataWithBaseURL(null, contentUrl, "text/html", "utf-8", null)
+            }
+        }
     }
 
     override fun onBackPressed() {
@@ -247,7 +254,6 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
             finish()
         }
         if (!TextUtils.isEmpty(pageUrl)) {
-
 
 
         }
@@ -307,7 +313,6 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
     }
 
 
-
     /**
      * 分享内容至朋友圈
      */
@@ -318,33 +323,34 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
         showLoadingDialog()
         val jsonStr = jsonParser.parse(json).asJsonObject
         val photoUrl = if (jsonStr.has("photoUrl")) jsonStr.get("photoUrl") else ""
-        Glide.with(this).asBitmap().load(photoUrl).apply(RequestOptions.overrideOf(300, 300)).into(object : SimpleTarget<Bitmap>() {
-            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                shareMoment("店铺提名", resource)
-            }
+        Glide.with(this).asBitmap().load(photoUrl).apply(RequestOptions.overrideOf(300, 300))
+            .into(object : SimpleTarget<Bitmap>() {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    shareMoment("店铺提名", resource)
+                }
 
-            override fun onLoadFailed(errorDrawable: Drawable?) {
-                shareMoment("店铺提名", null)
-            }
-        })
+                override fun onLoadFailed(errorDrawable: Drawable?) {
+                    shareMoment("店铺提名", null)
+                }
+            })
     }
 
     private fun shareMoment(title: String, resource: Bitmap?) {
         dismissLoadingDialog()
         ShareUtil.shareImageMoment(title, if (resource == null) Common.LOGO_URL else null, null, resource,
-                object : PlatformActionListener {
-                    override fun onComplete(p0: Platform?, p1: Int, p2: java.util.HashMap<String, Any>?) {
-                        ToastUtils.showShort(R.string.share_success)
-                    }
+            object : PlatformActionListener {
+                override fun onComplete(p0: Platform?, p1: Int, p2: java.util.HashMap<String, Any>?) {
+                    ToastUtils.showShort(R.string.share_success)
+                }
 
-                    override fun onCancel(p0: Platform?, p1: Int) {
-                        ToastUtils.showShort(R.string.share_cancle)
-                    }
+                override fun onCancel(p0: Platform?, p1: Int) {
+                    ToastUtils.showShort(R.string.share_cancle)
+                }
 
-                    override fun onError(p0: Platform?, p1: Int, p2: Throwable?) {
-                        ToastUtils.showShort(R.string.share_fail)
-                    }
-                })
+                override fun onError(p0: Platform?, p1: Int, p2: Throwable?) {
+                    ToastUtils.showShort(R.string.share_fail)
+                }
+            })
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) = onRefresh()
@@ -373,8 +379,6 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
             override fun onComplete(p0: Platform?, p1: Int, p2: HashMap<String, Any>?) = Unit
         })
     }
-
-
 
 
 }

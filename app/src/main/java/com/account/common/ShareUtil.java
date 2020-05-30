@@ -420,7 +420,7 @@ public class ShareUtil {
         shareParams.setTitle(title);
         shareParams.setText(text);
         shareParams.setTitleUrl(titleUrl);
-//        shareParams.setSite("yihua");
+//        shareParams.setSite("account");
 //        shareParams.setSiteUrl("http://www.yihuaapp.com/share.html");
         shareParams.setShareType(Platform.SHARE_TEXT);
         platform.setPlatformActionListener(mListener);
@@ -446,7 +446,7 @@ public class ShareUtil {
         shareParams.setTitle(title);
         shareParams.setText(text);
         shareParams.setUrl(webUrl);
-//        shareParams.setSite("yihua");
+//        shareParams.setSite("account");
 //        shareParams.setSiteUrl("http://www.yihuaapp.com/share.html");
         shareParams.setShareType(Platform.SHARE_WEBPAGE);
         platform.setPlatformActionListener(mListener);

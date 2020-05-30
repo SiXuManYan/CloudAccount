@@ -1,4 +1,4 @@
-package com.jz.yihua.activity.view
+package com.account.view.web
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi

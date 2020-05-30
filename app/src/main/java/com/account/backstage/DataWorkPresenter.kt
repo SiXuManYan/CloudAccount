@@ -1,6 +1,5 @@
 package com.account.backstage
 
-import android.os.Bundle
 import com.account.app.CloudAccountApplication
 import com.account.base.common.BaseNoDaggerPresenter
 import com.account.base.net.BaseJsonArrayHttpSubscriber
@@ -8,7 +7,7 @@ import com.account.data.CloudDataBase
 import com.account.entity.news.NewsCategory
 import com.blankj.utilcode.util.Utils
 import com.google.gson.JsonArray
-import java.util.ArrayList
+import java.util.*
 
 class DataWorkPresenter constructor(private var serviceView: ServiceView) : BaseNoDaggerPresenter(serviceView) {
 

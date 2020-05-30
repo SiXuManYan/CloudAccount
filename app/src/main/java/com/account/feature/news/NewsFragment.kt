@@ -91,7 +91,7 @@ class NewsFragment : BaseFragment<NewsPresenter>(), NewsView {
 
     private inner class InnerPageAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
 
-        override fun getItem(position: Int): Fragment = NewsChildFragment()
+        override fun getItem(position: Int): Fragment = NewsChildFragment.newInstance(typeList[position].value)
 
         override fun getCount() = typeList.size
 

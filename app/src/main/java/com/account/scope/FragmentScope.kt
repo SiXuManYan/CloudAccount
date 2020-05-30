@@ -1,4 +1,4 @@
-package com.jz.yihua.activity.scope
+package com.account.scope
 
 import javax.inject.Scope
 

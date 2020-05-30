@@ -2,9 +2,9 @@
 
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_layout"
@@ -15,11 +15,11 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <LinearLayout
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
 
 
             <TextView
@@ -28,32 +28,43 @@
                 android:layout_height="45dp"
                 android:background="@color/font_white"
                 android:gravity="center"
-                android:text="产品"
+                android:text="资讯"
                 android:textColor="@color/color_first_level"
                 android:textSize="@dimen/font_size_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/split_line_color" />
 
         </LinearLayout>
 
 
         <com.account.view.tabs.SlidingTabLayout
             android:id="@+id/tabs"
-            app:tl_indicator_height="0dp"
+            android:layout_width="match_parent"
+            app:tl_indicator_color="@color/color_app_red"
+            android:layout_height="40dp"
+            app:tl_indicator_width="20dp"
+            android:layout_toLeftOf="@+id/tv_filter"
+            app:tl_indicator_corner_radius="2dp"
+            app:tl_indicator_height="3dp"
             app:tl_tab_padding="15dp"
             app:tl_textBold="SELECT"
             app:tl_textSelectColor="@color/color_first_level"
             app:tl_textUnselectColor="@color/color_third_level"
             app:tl_textsize="@dimen/font_size_15"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_toLeftOf="@+id/tv_filter" />
+            app:tl_underline_color="@color/split_line_color"
+            app:tl_underline_gravity="BOTTOM"
+            app:tl_underline_height="1px" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

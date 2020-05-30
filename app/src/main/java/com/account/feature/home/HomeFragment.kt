@@ -2,7 +2,6 @@ package com.account.feature.home
 
 import android.os.Handler
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
@@ -18,18 +17,15 @@ import com.account.entity.product.Product
 import com.account.event.entity.TabRefreshEvent
 import com.account.feature.home.adapters.NewsChildAdapter
 import com.account.feature.home.header.HomeHeader
-import com.account.feature.home.holder.NewsHolderPlural
-import com.account.feature.home.holder.NewsHolderSingle
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jude.easyrecyclerview.EasyRecyclerView
-import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import com.jude.easyrecyclerview.decoration.DividerDecoration
-import com.jz.yihua.activity.feature.main.explore.category.footer.EmptyImageFooter
-import com.jz.yihua.activity.feature.main.explore.category.footer.EmptyLoadingFooter
-import com.jz.yihua.activity.feature.main.explore.category.footer.EmptyRetryFooter
-import com.jz.yihua.activity.view.swipe.NoMoreItemView
+import com.account.view.swipe.footer.EmptyImageFooter
+import com.account.view.swipe.footer.EmptyLoadingFooter
+import com.account.view.swipe.footer.EmptyRetryFooter
+import com.account.view.swipe.NoMoreItemView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener

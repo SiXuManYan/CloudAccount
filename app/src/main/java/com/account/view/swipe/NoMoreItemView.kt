@@ -1,4 +1,4 @@
-package com.jz.yihua.activity.view.swipe
+package com.account.view.swipe
 
 import android.view.LayoutInflater
 import android.view.View

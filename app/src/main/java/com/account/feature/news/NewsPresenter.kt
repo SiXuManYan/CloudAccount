@@ -6,13 +6,21 @@ import com.account.entity.news.NewsCategory
 import java.util.ArrayList
 import javax.inject.Inject
 
-class NewsPresenter @Inject constructor(private val view: NewsView):BasePresenter(view){
+class NewsPresenter @Inject constructor(private val view: NewsView) : BasePresenter(view) {
 
     lateinit var database: CloudDataBase @Inject set
 
 
     fun getNewCategoryList(): List<NewsCategory> {
-        return database.newsCategoryDao().findTopServiceSubTypes()
+
+
+
+        val findTopServiceSubTypes = database.newsCategoryDao().findTopServiceSubTypes() as ArrayList
+        findTopServiceSubTypes.add(0,  NewsCategory().apply {
+            name = "全部"
+            value = ""
+        })
+        return findTopServiceSubTypes
     }
 
 

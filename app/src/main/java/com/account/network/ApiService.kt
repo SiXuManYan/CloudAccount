@@ -1,7 +1,9 @@
 package com.account.network
 
 import com.account.entity.home.HomeMix
+import com.account.entity.news.NewDetail
 import com.account.entity.news.NewsCategory
+import com.account.entity.news.News
 import com.account.entity.product.ProductDetail
 import com.google.gson.JsonArray
 import io.reactivex.Flowable
@@ -56,7 +58,8 @@ interface ApiService {
     @GET(PRODUCT_API_PREFIX)
     fun getProductList(
         @Query("pageSize") pageSize: Int,
-        @Query("tailId") tailId: String? = null): Flowable<Response<JsonArray>>
+        @Query("tailId") tailId: String? = null
+    ): Flowable<Response<JsonArray>>
 
     /**
      * 产品详情页
@@ -76,11 +79,26 @@ interface ApiService {
     /**
      * 获取资讯页tab
      * @see NewsCategory
-     * @see <a href="http://192.168.1.139:8881/api/account/tNews/?pageSize=10">资讯列表</a>
+     * @see News
+     * @see <a href="http://192.168.1.191:8881/api/account/tNews/?pageSize=10">资讯列表</a>
+     * @param tailId 最后一项item id
+     * @param mold 资讯列别，即：资讯tab列表中的 value 字段
+     *
      */
     @GET(NEWS_API)
-    fun getNewsList(@Query("pageSize") pageSize: Int,
-                    @Query("tailId") tailId: String? = null): Flowable<Response<JsonArray>>
+    fun getNewsList(
+        @Query("pageSize") pageSize: Int,
+        @Query("tailId") tailId: String? = null,
+        @Query("mold") mold: String? = null
+    ): Flowable<Response<JsonArray>>
+
+    /**
+     * 获取资讯页详情
+     * http://192.168.1.191:8881/api/account/tNews/detail?newsId=1265846914897674240
+     *
+     */
+    @GET("$NEWS_API/detail")
+    fun getNewsDetail(@Query("newsId") newsId: String?): Flowable<Response<NewDetail>>
 
 
 }

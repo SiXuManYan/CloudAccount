@@ -10,7 +10,7 @@ import com.account.feature.news.child.NewsChildFragment
 import com.account.feature.news.child.NewsChildModule
 import com.account.feature.product.ProductFragment
 import com.account.feature.product.ProductModule
-import com.jz.yihua.activity.scope.FragmentScope
+import com.account.scope.FragmentScope
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

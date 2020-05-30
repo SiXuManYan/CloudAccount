@@ -1,9 +1,9 @@
 package com.account.feature.news.child
 
 import com.account.entity.news.News
-import com.jz.yihua.activity.base.BaseNoJsonListView2
+import com.account.base.ui.list.BaseNoJsonListView2
 
 
-interface NewsChildView :BaseNoJsonListView2<News>{
+interface NewsChildView : BaseNoJsonListView2<News> {
 
 }

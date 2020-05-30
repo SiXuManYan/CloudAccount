@@ -1,4 +1,4 @@
-package com.jz.yihua.activity.base
+package com.account.base.ui.list
 
 import com.account.base.common.BaseView
 

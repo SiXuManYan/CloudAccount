@@ -11,8 +11,7 @@ import com.account.view.error.AccidentView
 import com.account.view.swipe.AnimLoadMoreFooterView
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import com.jude.easyrecyclerview.decoration.DividerDecoration
-import com.jz.yihua.activity.base.BaseNoJsonListView
-import com.jz.yihua.activity.view.swipe.NoMoreItemView
+import com.account.view.swipe.NoMoreItemView
 
 import java.util.*
 

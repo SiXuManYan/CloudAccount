@@ -1,7 +1,5 @@
-package com.jz.yihua.activity.network
+package com.account.network
 
-import com.account.network.ApiException
-import com.account.network.Response
 import com.google.gson.Gson
 import com.google.gson.TypeAdapter
 import com.google.gson.internal.LinkedTreeMap

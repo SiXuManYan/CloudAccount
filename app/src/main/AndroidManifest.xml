@@ -125,6 +125,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/LaunchTheme" />
 
+        <activity
+            android:name=".feature.news.detail.NewsDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/LaunchTheme" />
+
 
     </application>
 

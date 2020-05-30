@@ -1,15 +1,19 @@
 package com.account.feature.news.child
 
+import android.content.Intent
+import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.account.R
 import com.account.base.ui.list.BaseRefreshListFragment2
+import com.account.common.Constants
 import com.account.entity.news.News
 import com.account.event.entity.NewsProductScrollToTopEvent
 import com.account.event.entity.TabRefreshEvent
 import com.account.feature.home.adapters.NewsChildAdapter
+import com.account.feature.news.detail.NewsDetailActivity
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
@@ -24,11 +28,28 @@ import io.reactivex.functions.Consumer
  */
 class NewsChildFragment : BaseRefreshListFragment2<News, NewsChildPresenter>(), NewsChildView {
 
+
+    companion object {
+
+        /**
+         * @param categoryValue tab类别，全部时传空
+         */
+        fun newInstance(categoryValue: String): NewsChildFragment {
+            val fragment = NewsChildFragment()
+            val args = Bundle()
+            args.putString(Constants.PARAM_TYPE, categoryValue)
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
     private val handler = Handler()
     private var clickAble = true
+    private var categoryValue: String? = null
 
     override fun initViews(parent: View) {
         super.initViews(parent)
+        categoryValue = arguments?.getString(Constants.PARAM_TYPE)
         initEvent()
     }
 
@@ -69,10 +90,8 @@ class NewsChildFragment : BaseRefreshListFragment2<News, NewsChildPresenter>(), 
                 clickAble = true
             }, 1000)
 
-            // TODO 资讯点击事件
-            val title = adapter.allData[it].title
-            ToastUtils.showShort("资讯点击 = title:$title")
-
+            val news = adapter.allData[it]
+            startActivity(Intent(context,NewsDetailActivity::class.java).putExtra(Constants.PARAM_ID,news.id))
         }
         return adapter
     }
@@ -88,5 +107,16 @@ class NewsChildFragment : BaseRefreshListFragment2<News, NewsChildPresenter>(), 
         itemDecoration.setDrawHeaderFooter(false)
         return itemDecoration
     }
+
+    override fun onRefresh() {
+        super.onRefresh()
+        presenter.loadNewsList(this, pageSize, lastItemId, categoryValue)
+    }
+
+    override fun onLoadMore() {
+        super.onLoadMore()
+        presenter.loadNewsList(this, pageSize, lastItemId, categoryValue)
+    }
+
 
 }

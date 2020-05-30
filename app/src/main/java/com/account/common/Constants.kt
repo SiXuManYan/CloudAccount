@@ -60,6 +60,8 @@ object Constants {
     const val PARAM_WEB_REFRESH = "param_web_refresh" // 是否可刷新
     const val PARAM_WEB_CHANGETITLE = "param_web_changetitle" // 自动改变标题
     const val PARAM_PRODUCT_ID: String = "param_productId"// 产品ID
+    const val PARAM_TYPE = "param_type"
+    const val PARAM_ID = "param_id"
 
 
     /** RxBus Event */
