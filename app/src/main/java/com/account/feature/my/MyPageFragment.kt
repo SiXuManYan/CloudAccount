@@ -1,18 +1,15 @@
 package com.account.feature.my
 
 import android.view.View
-import android.widget.FrameLayout
 import butterknife.OnClick
 import com.account.R
 import com.account.app.Glide
 import com.account.base.ui.BaseFragment
-import com.account.common.Common
 import com.account.common.CommonUtils
 import com.account.common.Constants
 import com.account.entity.users.User
 import com.account.extend.RoundTransFormation
 import com.account.feature.about.AboutActivity
-import com.blankj.utilcode.util.BarUtils
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions

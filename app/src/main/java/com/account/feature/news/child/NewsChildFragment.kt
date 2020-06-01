@@ -15,7 +15,6 @@ import com.account.event.entity.TabRefreshEvent
 import com.account.feature.home.adapters.NewsChildAdapter
 import com.account.feature.news.detail.NewsDetailActivity
 import com.blankj.utilcode.util.SizeUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import com.jude.easyrecyclerview.decoration.DividerDecoration
 import io.reactivex.functions.Consumer
