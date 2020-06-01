@@ -2,10 +2,16 @@ package com.account.app
 
 import com.account.feature.MainActivity
 import com.account.feature.MainModule
+import com.account.feature.about.AboutActivity
+import com.account.feature.about.AboutModule
+import com.account.feature.about.contacts.ContactActivity
+import com.account.feature.about.contacts.ContactModule
 import com.account.feature.news.detail.NewsDetailActivity
 import com.account.feature.news.detail.NewsDetailModule
 import com.account.feature.product.detail.ProductDetailActivity
 import com.account.feature.product.detail.ProductDetailModule
+import com.account.feature.webs.WebCommonActivity
+import com.account.feature.webs.WebCommonModule
 import com.account.scope.ActivityScore
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -30,6 +36,19 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [NewsDetailModule::class])
     abstract fun newsDetailActivityInjector(): NewsDetailActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [AboutModule::class])
+    abstract fun aboutActivityInjector(): AboutActivity
+
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [WebCommonModule::class])
+    abstract fun webCommonActivityInjector(): WebCommonActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [ContactModule::class])
+    abstract fun contactActivityInjector(): ContactActivity
 
 
 }

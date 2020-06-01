@@ -1,8 +1,12 @@
 package com.account.entity.news
 
 data class NewDetail(
+    /**
+     * BaseUrl
+     */
     val content: String = "",
     val createDt: String = "",
+
     val delFlag: Int = 0,
     val homeFlag: String = "",
     val homeFlagText: String = "",
@@ -19,3 +23,21 @@ data class NewDetail(
     val updateDt: String = "",
     val version: Int = 0
 )
+/*
+
+{
+    "code": "200",
+    "msg": "成功",
+    "data":
+    {
+        "delFlag": 0,
+        "mold": "N2",
+        "homeFlag": "on",
+        "showFlag": "on",
+        "showFlagText": "是",
+        "homeFlagText": "是",
+        "moldText": "财税天地"
+    }
+}
+
+*/

@@ -1,0 +1,27 @@
+package com.account.common
+
+import com.account.network.UrlUtil
+
+
+/**
+ * Created by Admin on 2020/6/1
+ * </br>
+ * H5链接
+ */
+object Html5Url {
+
+    private val H5_BASE_URL = UrlUtil.H5_BASE_URL
+
+    /**
+     * 隐私政策
+     */
+    val PRIVACY_STATEMENT_URL="$H5_BASE_URL"
+
+    /**
+     * 版权声明
+     */
+    val COPYRIGHT_URL="$H5_BASE_URL"
+
+
+
+}

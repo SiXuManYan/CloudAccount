@@ -50,18 +50,7 @@
     <uses-permission-sdk-23 android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <!-- 摄像头-->
-    <!-- android.hardware.camera -->
-    <!-- 摄像头功能 -->
-    <!-- android.hardware.camera.autofocus -->
-    <!-- 自动对焦 -->
-    <!-- android.hardware.camera.flash -->
-    <!-- 闪光灯 -->
-    <!-- android.hardware.camera.front -->
-    <!-- 前置摄像头 -->
-    <!-- android.hardware.camera.any -->
-    <!-- 任何方向的摄像头 -->
-    <!-- android.hardware.camera.external -->
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature android:name="android.hardware.camera.flash" />
@@ -71,7 +60,7 @@
 
     <application
         android:name=".app.CloudAccountApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:fullBackupContent="false"
         android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
@@ -116,19 +105,28 @@
         <activity
             android:name=".feature.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/LaunchTheme" />
+            android:screenOrientation="portrait" />
 
 
         <activity
             android:name=".feature.product.detail.ProductDetailActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/LaunchTheme" />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".feature.news.detail.NewsDetailActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/LaunchTheme" />
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.webs.WebCommonActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.about.AboutActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.about.contacts.ContactActivity"
+            android:screenOrientation="portrait" />
 
 
     </application>

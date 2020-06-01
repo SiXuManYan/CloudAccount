@@ -19,10 +19,7 @@ import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.account.R
 import com.account.base.common.BasePresenter
-import com.account.common.AndroidUtil
-import com.account.common.Common
-import com.account.common.Constants
-import com.account.common.ShareUtil
+import com.account.common.*
 import com.account.view.error.AccidentView
 import com.google.gson.JsonParser
 import com.account.view.web.JsWebViewX5
@@ -37,6 +34,7 @@ import com.tencent.smtt.export.external.interfaces.WebResourceRequest
 import com.tencent.smtt.sdk.WebChromeClient
 import com.tencent.smtt.sdk.WebView
 import com.tencent.smtt.sdk.WebViewClient
+import kotlinx.android.synthetic.main.activity_web_common.*
 
 /**
  * Created by Wangsw on 2019/9/3 16:55.
@@ -127,6 +125,12 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
         tv_title.text = webTitle
         iv_back.setOnClickListener {
             onBackPressed()
+        }
+        title_rl.setOnClickListener {
+            if (CommonUtils.isDoubleClick(it)) {
+                x5_web.scrollTo(0, 0)
+            }
+
         }
 
         if (refresh) {

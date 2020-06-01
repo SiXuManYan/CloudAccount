@@ -67,7 +67,7 @@ object Constants {
     /** RxBus Event */
     const val EVENT_STARTUP_DONE = 0x59//新手接口
     const val EVENT_FINISH_ALL = 0x60
-
+    const val EVENT_NEED_REFRESH = 0x62//登录登出后刷新界面
     const val EVENT_LOGOUT = 0x76//登录登出后刷新界面
     const val EVENT_LOGIN = 0x78//登录后刷新界面
     const val EVENT_FOLLOW_USER = 0x77//关注用户
@@ -90,6 +90,11 @@ object Constants {
      */
     const val ACTION_SYNC = 1
     const val ACTION_DATA_WORK = "action"
+
+    /**
+     * 客服热线
+     */
+    const val CONSUMER_HOT_LINE = "4007772556"
 
 
 }

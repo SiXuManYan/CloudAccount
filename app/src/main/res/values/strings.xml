@@ -27,6 +27,11 @@
     <string name="money_symbol">&#165;</string>
     <string name="money_symbol_format">&#165;%1$s</string>
     <string name="money_symbol_negative_format">-&#165;%1$s</string>
+    <string name="un_login_name">登录/注册</string>
+    <string name="about_us">关于我们</string>
+    <string name="privacy_statement">隐私政策</string>
+    <string name="copyright_protection">版权保护</string>
+    <string name="contact_us">版权保护</string>
 
 
 </resources>

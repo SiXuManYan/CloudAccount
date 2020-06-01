@@ -161,7 +161,7 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
                 ToastUtils.showShort("分享功能开发中")
             }
             R.id.customer_service_tv -> {
-                startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "4007772556")))
+                startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Constants.CONSUMER_HOT_LINE)))
             }
             R.id.transact_tv -> {
                 ToastUtils.showShort("功能开发中")

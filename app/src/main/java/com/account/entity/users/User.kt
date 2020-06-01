@@ -30,7 +30,7 @@ class User {
         @Synchronized
         fun get() = instance!!
 
-        fun isLogon():Boolean {
+        fun isLogon(): Boolean {
             val isLogin = CommonUtils.getShareDefault().getBoolean(Constants.SP_LOGIN)
             if (isLogin && get().id == null) {
                 clearAll()
@@ -52,7 +52,7 @@ class User {
     }
 
     @PrimaryKey
-    var id: Long? = null
+    var id: Long = 0
 
     @Ignore
     var yihuaId: Long? = null
@@ -66,10 +66,12 @@ class User {
     var phone: String? = null
 
     var name: String? = null
+
     /**
      * 用户性别,0-默认,1-男,2-女
      */
     var sex: Int? = null
+
     /**
      * 用户年龄,0-未知,1-六零后及其他,2-七零后,3-八零后,4-九零后,5-零零后
      */
@@ -82,6 +84,7 @@ class User {
     var deviceId: String? = null
 
     var address: String? = null
+
     /**
      * 用户状态,0-正常,1-测试审查,2-账户锁定,3-禁言,4-封号
      */
@@ -98,13 +101,11 @@ class User {
     var logincode: String? = null
 
 
-
     /**
      * 用户类型,0-普通用户, 1-认证商家, 2-益划官方认证, 10-小益 11 达人
      */
     @ColumnInfo(name = "owner_level")
     var ownerLevel: Int? = null
-
 
 
     /** 用户头像 */
@@ -126,7 +127,6 @@ class User {
     var rechangeAmount: String? = null
 
 
-
     /** 密码MD5 */
     @Ignore
     var password: String? = null
@@ -146,17 +146,10 @@ class User {
     var photoSetFlag: Boolean = false
 
 
-
-
-
-
-
     /**
      * 是否绑定过微信(登录接口返回)
      */
     var bindWxFlag: Boolean = false
-
-
 
 
 }

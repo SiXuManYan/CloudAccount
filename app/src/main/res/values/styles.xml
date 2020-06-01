@@ -1,12 +1,43 @@
 <resources>
 
+
+
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+
+    <style name="LaunchTheme" parent="AppTheme.Base">
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <item name="android:windowShowWallpaper">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
+
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="AppTheme.Base">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- customize -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
+
     </style>
+
+
+    <!--界面切换动画-->
+    <style name="ActivityAnimation">
+        <item name="android:activityOpenEnterAnimation">@anim/left_fade_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/left_fade_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/right_fade_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/right_fade_out</item>
+    </style>
+
+
 
 
     <!--dialog全屏显示-->
@@ -67,16 +98,7 @@
     </style>
 
 
-    <style name="LaunchTheme" parent="AppTheme.Base">
-        <!--<item name="android:windowIsTranslucent">true</item>-->
-        <item name="android:windowShowWallpaper">false</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowDisablePreview">true</item>
-    </style>
 
-    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowNoTitle">true</item>
-    </style>
 
 
     <style name="MyCheckBox" parent="Theme.AppCompat.DayNight">

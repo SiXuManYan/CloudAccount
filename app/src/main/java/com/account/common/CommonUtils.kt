@@ -799,4 +799,27 @@ object CommonUtils {
     }
 
 
+     fun getFriendlyTime(tv: TextView) {
+
+        val hours = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+
+        when {
+            hours < 11 -> {
+                tv.text = "嗨，早上好"
+            }
+            hours < 13 -> {
+                tv.text = "嗨，中午好"
+            }
+            hours < 18 -> {
+                tv.text = "嗨，下午好"
+            }
+            else -> {
+                tv.text = "嗨，晚上好"
+            }
+        }
+
+
+    }
+
+
 }

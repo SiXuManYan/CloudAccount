@@ -24,25 +24,11 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:lines="1"
-            tools:text="默认标题"
+            tools:text="Yasuo"
             android:textColor="@color/color_zero_level"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
-        <!---->
-        <!--<TextView-->
-        <!--android:id="@+id/tv_sub_title"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="@drawable/yihua_ripple_white"-->
-        <!--android:drawablePadding="5dp"-->
-        <!--android:drawableRight="@mipmap/ic_select_down"-->
-        <!--android:gravity="center"-->
-        <!--android:paddingLeft="10dp"-->
-        <!--android:paddingRight="10dp"-->
-        <!--android:text="城市"-->
-        <!--android:textColor="@color/font_black"-->
-        <!--android:textSize="@dimen/font_size_12"-->
-        <!--android:visibility="visible" />-->
+
 
     </LinearLayout>
 
