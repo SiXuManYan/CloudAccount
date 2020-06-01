@@ -85,7 +85,7 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
 
         Glide.with(context!!)
             //            .load(User.get().photo)
-            .load(Common.TEST_IMG_URL)
+            .load(CommonUtils.getTestUrl())
             .apply(
                 RequestOptions().transform(
                     MultiTransformation(

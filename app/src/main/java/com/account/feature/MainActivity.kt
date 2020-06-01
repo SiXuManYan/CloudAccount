@@ -12,6 +12,7 @@ import com.account.common.CommonUtils
 import com.account.common.Constants
 import com.account.entity.TabItem
 import com.account.event.RxBus
+import com.account.event.entity.SetMainSelectNewsTabEvent
 import com.account.event.entity.TabRefreshEvent
 import com.account.feature.home.HomeFragment
 import com.account.feature.my.MyPageFragment
@@ -20,6 +21,7 @@ import com.account.feature.product.ProductFragment
 import com.blankj.utilcode.util.ToastUtils
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -48,18 +50,25 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
     override fun initViews() {
         CommonUtils.setStatusBarTransparentWithLightMode(this)
         initTabs(1)
+        initEvent()
 
-
-        // todo 权限检测
-//        presenter.checkPermissions(this)
+        //  权限检测
+        //  presenter.checkPermissions(this)
         loginInit()
     }
+
+
+    private fun initEvent() {
+        presenter.subsribeEventEntity<SetMainSelectNewsTabEvent>(Consumer {
+            tabs_navigator.currentTab = 2
+            onTabSelect(2)
+        })
+    }
+
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         setIntent(intent)
-
-
     }
 
     private fun initTabs(firstIndexTabType: Int) {
@@ -119,8 +128,6 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
                  tabs_navigator.hideMsg(preferentialIndex)
                  tabs_navigator.hideMsg(2)
                  tabs_navigator.hideMsg(3)
-                 //TODO 兼容老版本
-     //            sendBroadcast(Intent(CommonAction.ACTION_LINKTASK_VISITOR_START))
                  DataService.startService(this, Constants.ACTION_REQUEST_EXCONDTION)
                  return
              }*/

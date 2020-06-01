@@ -1,5 +1,6 @@
 package com.account.feature.home
 
+import android.content.Intent
 import android.os.Handler
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -11,12 +12,14 @@ import butterknife.OnClick
 import com.account.R
 import com.account.base.ui.BaseFragment
 import com.account.common.AndroidUtil
+import com.account.common.Constants
 import com.account.entity.home.Banners
 import com.account.entity.news.News
 import com.account.entity.product.Product
 import com.account.event.entity.TabRefreshEvent
 import com.account.feature.home.adapters.NewsChildAdapter
 import com.account.feature.home.header.HomeHeader
+import com.account.feature.news.detail.NewsDetailActivity
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jude.easyrecyclerview.EasyRecyclerView
@@ -164,9 +167,8 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
                 clickAble = true
             }, 1000)
 
-            // TODO 资讯点击事件
-            val title = adapter.allData[it].title
-            ToastUtils.showShort("资讯点击 = title:$title")
+            val news = adapter.allData[it]
+            startActivity(Intent(context, NewsDetailActivity::class.java).putExtra(Constants.PARAM_ID,news.id))
 
         }
         return adapter

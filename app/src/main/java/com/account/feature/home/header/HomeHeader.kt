@@ -9,8 +9,12 @@ import android.widget.TextView
 import com.account.R
 import com.account.common.Common
 import com.account.common.CommonUtils
+import com.account.common.Constants
 import com.account.entity.home.Banners
 import com.account.entity.product.Product
+import com.account.event.Event
+import com.account.event.RxBus
+import com.account.event.entity.SetMainSelectNewsTabEvent
 import com.account.extend.RoundTransFormation
 import com.account.view.banner.BannerSupport
 import com.blankj.utilcode.util.ColorUtils
@@ -97,9 +101,7 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
         product_2 = view.findViewById<ImageView>(R.id.product_2)
         product_3 = view.findViewById<ImageView>(R.id.product_3)
         view.findViewById<TextView>(R.id.more_product_tv).setOnClickListener {
-            // todo 更多点击
-            ToastUtils.showShort("更多功能开发中")
-
+          RxBus.post(SetMainSelectNewsTabEvent())
         }
 
         // 宽高比 1.78
@@ -118,7 +120,7 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
 
                     Glide.with(context!!)
 //                        .load(obj)
-                        .load(Common.TEST_IMG_URL)
+                        .load(CommonUtils.getTestUrl())
                         .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE).dontAnimate())
                         .error(R.drawable.ic_error_image_load)
                         .into(imageView!!)
@@ -184,7 +186,7 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
 
             Glide.with(context)
 //                .load(product.imgUrl)
-                .load(Common.TEST_IMG_URL)
+                .load(CommonUtils.getTestUrl())
                 .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 8))))
                 .error(R.drawable.ic_error_image_load)
                 .into(indexImage)

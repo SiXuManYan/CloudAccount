@@ -8,6 +8,7 @@ import com.account.R
 import com.account.app.Glide
 import com.account.base.ui.list.BaseItemViewHolder
 import com.account.common.Common
+import com.account.common.CommonUtils
 import com.account.common.TimeUtil
 import com.account.entity.news.News
 import com.account.extend.RoundTransFormation
@@ -62,7 +63,7 @@ class NewsHolderPlural(parent: ViewGroup?) : BaseItemViewHolder<News>(parent, R.
             val image_iv = itemView.findViewById<ImageView>(R.id.image_iv)
             Glide.with(context)
 //                .load(imgUrls[0])
-                .load(Common.TEST_IMG_URL)
+                .load(CommonUtils.getTestUrl())
                 .apply(
                     RequestOptions().transform(
                         MultiTransformation(

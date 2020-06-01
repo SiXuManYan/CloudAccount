@@ -66,7 +66,7 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
 
                     Glide.with(context!!)
 //                        .load(obj)
-                        .load(Common.TEST_IMG_URL)
+                        .load(CommonUtils.getTestUrl())
                         .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE).dontAnimate())
                         .error(R.drawable.ic_error_image_load)
                         .into(imageView!!)
@@ -125,7 +125,7 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
 
             Glide.with(this)
 //                .load(product.imgUrl)
-                .load(Common.TEST_IMG_URL)
+                .load(CommonUtils.getTestUrl())
                 .error(R.drawable.ic_error_image_load)
                 .into(imageView)
 

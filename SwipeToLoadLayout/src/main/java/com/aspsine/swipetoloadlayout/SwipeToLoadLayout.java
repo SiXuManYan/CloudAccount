@@ -382,7 +382,6 @@ public class SwipeToLoadLayout extends ViewGroup {
     }
 
     /**
-     * TODO add gravity
      * LayoutParams of RefreshLoadMoreLayout
      */
     public static class LayoutParams extends MarginLayoutParams {

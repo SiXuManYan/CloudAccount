@@ -7,6 +7,7 @@ import com.account.R
 import com.account.app.Glide
 import com.account.base.ui.list.BaseItemViewHolder
 import com.account.common.Common
+import com.account.common.CommonUtils
 import com.account.entity.product.Product2
 import com.account.extend.RoundTransFormation
 import com.blankj.utilcode.util.SizeUtils
@@ -41,7 +42,7 @@ class ProductHolder(parent: ViewGroup?) : BaseItemViewHolder<Product2>(parent, R
 
         Glide.with(context)
 //            .load(data.imgurl)
-            .load(Common.TEST_IMG_URL)
+            .load(CommonUtils.getTestUrl())
             .apply(
                 RequestOptions().transform(
                     MultiTransformation(

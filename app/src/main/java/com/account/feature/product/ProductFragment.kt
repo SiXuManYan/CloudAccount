@@ -96,7 +96,6 @@ class ProductFragment : BaseRefreshListFragment2<Product2, ProductPresenter>(), 
                 clickAble = true
             }, 1000)
 
-            // TODO 资讯点击事件
             val data = adapter.allData[it]
 
             startActivity(
