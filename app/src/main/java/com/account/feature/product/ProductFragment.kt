@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Handler
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.account.R
@@ -12,12 +13,11 @@ import com.account.common.CommonUtils
 import com.account.common.Constants
 import com.account.entity.product.Product2
 import com.account.event.entity.TabRefreshEvent
-import com.account.feature.home.HomeFragment
 import com.account.feature.home.header.HomeHeader
 import com.account.feature.product.detail.ProductDetailActivity
 import com.account.feature.product.holder.ProductHolder
+import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SizeUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import com.jude.easyrecyclerview.decoration.DividerDecoration
@@ -44,6 +44,11 @@ class ProductFragment : BaseRefreshListFragment2<Product2, ProductPresenter>(), 
 
     override fun initViews(parent: View) {
         super.initViews(parent)
+
+        val layoutParams = parent_container.layoutParams as FrameLayout.LayoutParams
+        layoutParams.topMargin = BarUtils.getStatusBarHeight()
+
+
         title_tv.setOnClickListener {
             if (CommonUtils.isDoubleClick(it)) {
                 recyclerView.smoothScrollToPosition(0)

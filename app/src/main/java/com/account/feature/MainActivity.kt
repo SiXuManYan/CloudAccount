@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.account.R
 import com.account.base.ui.BaseMVPActivity
+import com.account.common.CommonUtils
 import com.account.common.Constants
 import com.account.entity.TabItem
 import com.account.event.RxBus
@@ -45,6 +46,7 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
 
 
     override fun initViews() {
+        CommonUtils.setStatusBarTransparentWithLightMode(this)
         initTabs(1)
 
 

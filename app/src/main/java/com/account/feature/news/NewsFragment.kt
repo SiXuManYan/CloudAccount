@@ -1,6 +1,7 @@
 package com.account.feature.news
 
 import android.view.View
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -16,8 +17,10 @@ import com.account.event.entity.NewsProductScrollToTopEvent
 import com.account.event.entity.TabRefreshEvent
 import com.account.feature.news.child.NewsChildFragment
 import com.account.view.tabs.SlidingTabLayout
+import com.blankj.utilcode.util.BarUtils
 import com.google.android.material.appbar.AppBarLayout
 import io.reactivex.functions.Consumer
+import kotlinx.android.synthetic.main.fragment_news.*
 
 /**
  * Created by Wangsw on 2020/5/25 0025 16:42.
@@ -45,6 +48,9 @@ class NewsFragment : BaseFragment<NewsPresenter>(), NewsView {
     override fun getLayoutId() = R.layout.fragment_news
 
     override fun initViews(parent: View) {
+        val layoutParams = parent_cl.layoutParams as FrameLayout.LayoutParams
+        layoutParams.topMargin = BarUtils.getStatusBarHeight()
+
         typeList = presenter.getNewCategoryList()
 
         pager.adapter = InnerPageAdapter(childFragmentManager)

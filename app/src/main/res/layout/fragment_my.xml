@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_list_gray_background"
@@ -50,8 +51,9 @@
                     <LinearLayout
                         android:id="@+id/user_info_ll"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="64dp"
                         android:layout_toRightOf="@+id/ic_avatar_civ"
+                        android:gravity="center_vertical"
                         android:orientation="vertical">
 
                         <TextView
