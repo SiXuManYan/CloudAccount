@@ -11,6 +11,7 @@ import com.account.base.ui.BaseMVPActivity
 import com.account.common.CommonUtils
 import com.account.common.Constants
 import com.account.entity.TabItem
+import com.account.entity.users.User
 import com.account.event.RxBus
 import com.account.event.entity.SetMainSelectNewsTabEvent
 import com.account.event.entity.TabRefreshEvent
@@ -63,6 +64,21 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
             tabs_navigator.currentTab = 2
             onTabSelect(2)
         })
+        presenter.subsribeEvent(Consumer {
+            when (it.code) {
+                Constants.EVENT_LOGIN -> {
+                    tabs_navigator.currentTab = 0
+                    onTabSelect(0)
+                }
+                Constants.EVENT_NEED_REFRESH -> {
+
+                    loginInit()
+                }
+                else -> {
+                }
+            }
+        })
+
     }
 
 
@@ -124,15 +140,11 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
 
     private fun loginInit() {
 
-        /*     if (!User.isLogon() || User.get().id == null) {
-                 tabs_navigator.hideMsg(preferentialIndex)
-                 tabs_navigator.hideMsg(2)
-                 tabs_navigator.hideMsg(3)
-                 DataService.startService(this, Constants.ACTION_REQUEST_EXCONDTION)
-                 return
-             }*/
+        if (User.isLogon()) {
 
-//        DataService.startService(this, Constants.ACTION_LINKTASK_START)
+        }
+
+
     }
 
 
@@ -218,17 +230,6 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
         }
 
         override fun getItem(position: Int): Fragment {
-//            var fragment: Fragment? = null
-//            when (position) {
-//
-//                0 -> fragment = HomeFragment()
-//                1 -> fragment = ServiceFragment()
-//                2 -> fragment = NewsFragment()
-//                3 -> fragment = MyPageFragment()
-//            }
-//            return fragment!!
-
-
             return fm.fragmentFactory.instantiate(classLoader, (tabs[position] as TabItem).clx.name)
                 .apply {
                     if (position == 0) {

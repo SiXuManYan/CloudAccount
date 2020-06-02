@@ -128,6 +128,16 @@
             android:name=".feature.about.contacts.ContactActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".feature.account.login.LoginActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.account.captcha.CaptchaActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".feature.account.password.PasswordSetActivity" />
+        <activity android:name=".feature.account.password.login.PasswordLoginActivity" />
+
 
     </application>
 

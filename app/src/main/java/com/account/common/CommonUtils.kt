@@ -19,7 +19,10 @@ import android.text.SpannableStringBuilder
 import android.text.TextUtils
 import android.text.style.AbsoluteSizeSpan
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.CycleInterpolator
 import android.view.animation.Interpolator
+import android.view.animation.TranslateAnimation
 import android.widget.TextView
 import com.account.R
 //import com.amap.api.maps2d.AMapUtils
@@ -872,5 +875,18 @@ object CommonUtils {
         return id
     }
 
+
+    /**
+     * 晃动动画
+     *
+     * @param counts 1秒钟晃动多少下
+     * @return 动画
+     */
+    fun getShakeAnimation(counts: Int): Animation? {
+        val translateAnimation: Animation = TranslateAnimation(0f, 10f, 0f, 0f)
+        translateAnimation.interpolator = CycleInterpolator(counts.toFloat())
+        translateAnimation.duration = 500
+        return translateAnimation
+    }
 
 }

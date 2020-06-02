@@ -1,21 +1,15 @@
 package com.account.base.common
 
+import android.content.Context
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import android.content.Context
-import com.blankj.utilcode.util.LogUtils
 import com.account.base.net.BaseHttpSubscriber
 import com.account.event.Event
 import com.account.event.RxBus
 import com.account.network.ApiService
 import com.account.network.Response
-import com.account.network.UrlUtil
+import com.blankj.utilcode.util.LogUtils
 import com.google.gson.JsonObject
-//import com.jz.cloud.activity.entity.Event
-//import com.jz.cloud.activity.entity.Response
-//import com.jz.cloud.activity.event.RxBus
-//import com.jz.cloud.activity.network.ApiService
-//import com.jz.cloud.activity.network.UrlUtil
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
@@ -26,7 +20,6 @@ import io.reactivex.functions.Consumer
 import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subscribers.ResourceSubscriber
-import me.jessyan.retrofiturlmanager.RetrofitUrlManager
 import javax.inject.Inject
 
 /**

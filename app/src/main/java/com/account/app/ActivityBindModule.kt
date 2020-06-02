@@ -6,6 +6,14 @@ import com.account.feature.about.AboutActivity
 import com.account.feature.about.AboutModule
 import com.account.feature.about.contacts.ContactActivity
 import com.account.feature.about.contacts.ContactModule
+import com.account.feature.account.captcha.CaptchaActivity
+import com.account.feature.account.captcha.CaptchaModule
+import com.account.feature.account.login.LoginActivity
+import com.account.feature.account.login.LoginModule
+import com.account.feature.account.password.PasswordSetActivity
+import com.account.feature.account.password.PasswordSetModule
+import com.account.feature.account.password.login.PasswordLoginActivity
+import com.account.feature.account.password.login.PasswordLoginModule
 import com.account.feature.news.detail.NewsDetailActivity
 import com.account.feature.news.detail.NewsDetailModule
 import com.account.feature.product.detail.ProductDetailActivity
@@ -49,6 +57,22 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [ContactModule::class])
     abstract fun contactActivityInjector(): ContactActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [LoginModule::class])
+    abstract fun loginActivityInjector(): LoginActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [CaptchaModule::class])
+    abstract fun captchaActivityInjector(): CaptchaActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [PasswordSetModule::class])
+    abstract fun passwordSetActivityInjector(): PasswordSetActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [PasswordLoginModule::class])
+    abstract fun passwordLoginActivityInjector(): PasswordLoginActivity
 
 
 }

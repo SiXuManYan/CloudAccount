@@ -4,10 +4,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.account.base.common.BasePresenter
 import com.account.base.net.BaseHttpSubscriber
-import com.account.base.net.BaseJsonArrayHttpSubscriber
-import com.account.entity.product.Product2
 import com.account.entity.product.ProductDetail
-import com.google.gson.JsonArray
 import java.util.ArrayList
 import javax.inject.Inject
 

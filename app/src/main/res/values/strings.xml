@@ -33,5 +33,14 @@
     <string name="copyright_protection">版权保护</string>
     <string name="contact_us">版权保护</string>
 
+    <string name="register_protocol">我已阅读并接受《自贸区云账户服务协议》</string>
+    <string name="register_protocol_title">我已阅读并接受</string>
+    <string name="register_protocol_value">《自贸区云账户服务协议》</string>
+    <string name="register">注册</string>
+    <string name="login">注册</string>
+    <string name="captcha_target_format">验证码已经发送到您的手机 \n%1$s</string>
+    <string name="count_down_format" formatted="false">%1$d秒</string>
+    <string name="get_again">重新获取</string>
+
 
 </resources>

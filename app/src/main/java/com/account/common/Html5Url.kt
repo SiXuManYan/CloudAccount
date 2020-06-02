@@ -22,6 +22,11 @@ object Html5Url {
      */
     val COPYRIGHT_URL="$H5_BASE_URL"
 
+    /**
+     * 自贸区云账户服务协议
+     */
+    val SERVICE_AGREEMENT_URL="$H5_BASE_URL"
+
 
 
 }

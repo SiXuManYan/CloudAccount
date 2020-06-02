@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/font_white"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_back"
+        style="@style/TopButton"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_back" />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="获取验证码"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_23"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/action_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/shape_stock_red"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/get_again"
+                    android:textColor="@color/color_app_red"
+                    android:textSize="@dimen/font_size_13" />
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/captcha_target_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                tools:text="@string/captcha_target_format"
+                android:textColor="@color/color_second_level"
+                android:textSize="@dimen/font_size_14" />
+
+
+            <com.account.view.extend.VerificationCodeView
+                android:id="@+id/captcha_view"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:vcv_et_cursor="@drawable/et_cursor"
+                app:vcv_et_cursor_visible="false"
+                app:vcv_et_inputType="numberPassword"
+                app:vcv_et_number="6"
+                app:vcv_et_spacing="6dp"
+                app:vcv_et_text_color="@color/font_black"
+                app:vcv_et_text_size="6sp" />
+
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>

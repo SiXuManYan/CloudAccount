@@ -8,4 +8,10 @@ import com.account.base.common.BaseTaskView
  *
  */
 interface LoginView :BaseTaskView{
+
+    /**
+     * 账户是否存在
+     * @param existed 用户是否存在
+     */
+    fun accountExistedTag(existed: Boolean, account: String)
 }

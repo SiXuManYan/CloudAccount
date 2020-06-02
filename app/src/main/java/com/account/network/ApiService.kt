@@ -5,9 +5,13 @@ import com.account.entity.news.NewDetail
 import com.account.entity.news.NewsCategory
 import com.account.entity.news.News
 import com.account.entity.product.ProductDetail
+import com.account.entity.users.User
 import com.google.gson.JsonArray
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
 import io.reactivex.Flowable
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 /**
@@ -37,8 +41,15 @@ interface ApiService {
 
         /**
          * 资讯相关接口前缀
+         * /api/account/tNews/
+
          */
         private const val NEWS_API = "$API_URI/tNews/"
+
+        /**
+         * 账户相关接口前缀
+         */
+        private const val ACCOUNT_API = "$API_URI/tAccount/"
 
     }
 
@@ -99,6 +110,66 @@ interface ApiService {
      */
     @GET("$NEWS_API/detail")
     fun getNewsDetail(@Query("newsId") newsId: String?): Flowable<Response<NewDetail>>
+
+    /**
+     * 校验账户是否存在
+     * @Field
+     */
+    @POST("$ACCOUNT_API/existed")
+    fun checkAccountIsExisted(@Query("username") username: String?): Flowable<Response<JsonObject>>
+
+    /**
+     * 发送验证码
+     * @Field
+     */
+    @POST("$ACCOUNT_API/sendvc")
+    fun sendCaptchaToTarget(@Query("username") username: String?): Flowable<Response<JsonElement>>
+
+    /**
+     * 校验验证码
+     * @Field
+     */
+    @POST("$ACCOUNT_API/checkvc")
+    fun checkCaptcha(
+        @Query("username") username: String?,
+        @Query("vc") vc: String?
+    ): Flowable<Response<JsonElement>>
+
+    /**
+     * 注册
+     * @Field
+     */
+    @POST("$ACCOUNT_API/regist")
+    fun register(
+        @Query("username") username: String?,
+        @Query("passwd") passwd: String?,
+        @Query("vc") vc: String?,
+        @Query("from") from: String?,
+        @Query("cityCode") cityCode: String?,
+        @Query("lng") lng: String?,
+        @Query("lat") lat: String?
+    ): Flowable<Response<User>>
+
+    /**
+     * 密码登录
+     * @Field
+     */
+    @POST("$ACCOUNT_API/login")
+    fun passwordLogin(
+        @Query("username") username: String?,
+        @Query("passwd") passwd: String?
+    ): Flowable<Response<User>>
+
+
+    /**
+     * 重设密码
+     * @Field
+     */
+    @POST("$ACCOUNT_API/resetPasswd")
+    fun resetPassword(
+        @Query("username") username: String?,
+        @Query("newPasswd") newPasswd: String?
+    ): Flowable<Response<User>>
 
 
 }

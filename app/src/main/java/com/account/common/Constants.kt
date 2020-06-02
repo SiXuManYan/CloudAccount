@@ -17,13 +17,15 @@ object Constants {
     const val SP_LATITUDE = "latitude"
     const val SP_ADDRESS = "address"
     const val SP_NOVICE = "novice"
+    const val SP_LAST_LOGIN_USER = "last_login_user"
 
     const val SP_AES_LOGIN_TIME = "SP_AES_LOGIN_TIME"// 上次登录时间
     const val SP_AES_LOGIN_SERVICE_TIME = "SP_AES_LOGIN_SERVICE_TIME"// 上次登录成功时的服务器时间
     const val SP_SHOW_CITY = "sp_show_city"// 上次获取的城市首页信息
     const val SP_AUTO_PLAY_VIDEO = "sp_auto_play_video"// 是否自动播放视频
 
-
+    /** 验证码等待时间 */
+    const val WAIT_DELAYS = 59
 
 
     /** 定位间隔 */
@@ -62,14 +64,19 @@ object Constants {
     const val PARAM_PRODUCT_ID: String = "param_productId"// 产品ID
     const val PARAM_TYPE = "param_type"
     const val PARAM_ID = "param_id"
+    const val PARAM_ACCOUNT = "param_account"// 账号
+    const val PARAM_CAPTCHA_MODE = "param_captcha_mode"// 验证码用途类型
+    const val PARAM_CAPTCHA = "param_captcha"// 验证码用途类型
+    const val PARAM_IS_PASSWORD_REGISTER_SET_MODE = "param_is_password_register_set_mode"// 设置密码用途类型  (true注册设置密码 false 登录后修改密码)
 
 
     /** RxBus Event */
     const val EVENT_STARTUP_DONE = 0x59//新手接口
     const val EVENT_FINISH_ALL = 0x60
-    const val EVENT_NEED_REFRESH = 0x62//登录登出后刷新界面
-    const val EVENT_LOGOUT = 0x76//登录登出后刷新界面
-    const val EVENT_LOGIN = 0x78//登录后刷新界面
+    const val EVENT_NEED_REFRESH = 0x62// 登录登出后刷新界面登录状态发生变化
+    const val EVENT_LOGOUT = 0x76// 退出登录后刷新界面
+    const val EVENT_LOGIN = 0x78// 登录后刷新界面
+
     const val EVENT_FOLLOW_USER = 0x77//关注用户
 
 
@@ -80,6 +87,7 @@ object Constants {
 
     const val EVENT_MORE_TRANSPARENT = 0x94
     const val EVENT_MORE_SATURATION = 0x95
+    const val EVENT_PASSWORD_RESET_SUCCESS = 0x96 //密码重置成功
 
     // 列表数据 key
     const val KEY_DATA = "data"
@@ -89,6 +97,7 @@ object Constants {
      * 应用初始化数据
      */
     const val ACTION_SYNC = 1
+    const val ACTION_SYNC_OTHER = 2
     const val ACTION_DATA_WORK = "action"
 
     /**
