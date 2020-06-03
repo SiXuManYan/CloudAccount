@@ -46,4 +46,13 @@
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
     <string name="login_out_hint">是否退出登录?</string>
+
+    <!-- 订单相关 -->
+    <string name="order_list_title">我的订单</string>
+    <string name="order_id_format">订单ID:%1$s</string>
+    <string name="expiration_date_format">订单有效期:%1$s</string>
+    <string name="go_payment">去付款</string>
+    <string name="view">查看</string>
+
+
 </resources>

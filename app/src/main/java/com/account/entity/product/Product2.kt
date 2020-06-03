@@ -1,5 +1,7 @@
 package com.account.entity.product
 
+import java.math.BigDecimal
+
 /**
  * 产品列表model
  */
@@ -7,7 +9,7 @@ data class Product2(
     val id: String = "",
     val imgurl: String = "",
     val introduce: String = "",
-    val money: Int = 0,
+    val money: BigDecimal = BigDecimal.ZERO,
     val name: String = "",
     val orderCount: Int = 0
 )

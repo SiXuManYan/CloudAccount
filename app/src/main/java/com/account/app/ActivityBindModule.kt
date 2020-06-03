@@ -16,6 +16,8 @@ import com.account.feature.account.password.login.PasswordLoginActivity
 import com.account.feature.account.password.login.PasswordLoginModule
 import com.account.feature.news.detail.NewsDetailActivity
 import com.account.feature.news.detail.NewsDetailModule
+import com.account.feature.order.OrderListActivity
+import com.account.feature.order.OrderListModule
 import com.account.feature.product.detail.ProductDetailActivity
 import com.account.feature.product.detail.ProductDetailModule
 import com.account.feature.webs.WebCommonActivity
@@ -73,6 +75,10 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [PasswordLoginModule::class])
     abstract fun passwordLoginActivityInjector(): PasswordLoginActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [OrderListModule::class])
+    abstract fun orderListActivityInjector(): OrderListActivity
 
 
 }

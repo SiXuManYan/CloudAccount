@@ -1,4 +1,4 @@
-package com.account.feature.product.holder
+package com.account.feature.order.holders
 
 import android.view.View
 import android.view.ViewGroup
@@ -6,42 +6,33 @@ import android.widget.LinearLayout
 import com.account.R
 import com.account.app.Glide
 import com.account.base.ui.list.BaseItemViewHolder
-import com.account.common.Common
 import com.account.common.CommonUtils
-import com.account.entity.product.Product2
+import com.account.entity.order.Order
 import com.account.extend.RoundTransFormation
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_news_single.*
-import kotlinx.android.synthetic.main.item_product.*
-import kotlinx.android.synthetic.main.item_product.image_iv
+import kotlinx.android.synthetic.main.item_order.*
 
 /**
- * Created by Wangsw on 2020/5/28 0028 9:10.
+ * Created by Wangsw on 2020/6/3 0003 18:06.
  * </br>
- * 产品列表Holder
+ * 订单列表
  */
-class ProductHolder(parent: ViewGroup?) : BaseItemViewHolder<Product2>(parent, R.layout.item_product), LayoutContainer {
+class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.layout.item_order), LayoutContainer {
 
     override val containerView: View? get() = itemView
 
-    override fun setData(data: Product2?) {
+    override fun setData(data: Order?) {
         if (data == null) {
             return
         }
-        name_tv.text = data.name
-        content_tv.text = data.introduce
-        sales_tv.text = StringUtils.getString(R.string.sales_format, data.orderCount.toString())
-        amount_tv.text = StringUtils.getString(R.string.money_symbol_format, data.money.stripTrailingZeros().toPlainString())
-
+        order_id_tv.text = StringUtils.getString(R.string.order_id_format,data.productId)
         Glide.with(context)
-//            .load(data.imgurl)
+//            .load(data.imgUrl)
             .load(CommonUtils.getTestUrl())
             .apply(
                 RequestOptions().transform(
@@ -54,6 +45,12 @@ class ProductHolder(parent: ViewGroup?) : BaseItemViewHolder<Product2>(parent, R
             .error(R.drawable.ic_error_image_load)
             .into(image_iv)
 
+
+        content_tv.text = data.productName
+        amount_tv.text = StringUtils.getString(R.string.money_symbol_format, data.money.stripTrailingZeros().toPlainString())
+        time_tv.text = data.createDt
+        order_status_tv.text = data.stateText
+
         val layoutParams = card_cv.layoutParams as LinearLayout.LayoutParams
         layoutParams.apply {
 
@@ -63,6 +60,9 @@ class ProductHolder(parent: ViewGroup?) : BaseItemViewHolder<Product2>(parent, R
                 SizeUtils.dp2px(0f)
             }
         }
+
+
+        // todo  订单有效期倒计时 ,
 
 
     }

@@ -23,10 +23,7 @@ class ProductPresenter @Inject constructor(private var productView: ProductView)
                 override fun onSuccess(jsonArray: JsonArray?, list: ArrayList<Product2>, lastItemId: String?) {
                     productView.bindList(list, lastItemId)
                 }
-
             }
-
-
         )
 
     }

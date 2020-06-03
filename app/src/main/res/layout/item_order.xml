@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_cv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardBackgroundColor="@color/font_white"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="1dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/dp10">
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/tag_iv"
+                    android:layout_width="3dp"
+                    android:layout_height="13dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/shape_vertical_line_red" />
+
+                <TextView
+                    android:id="@+id/order_id_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toLeftOf="@+id/order_status_tv"
+                    android:layout_toRightOf="@+id/tag_iv"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_14"
+                    tools:text="订单ID：20200202" />
+
+
+                <TextView
+
+                    android:id="@+id/order_status_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/color_app_red"
+                    android:textSize="@dimen/font_size_14"
+                    tools:text="支付中" />
+
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="5dp"
+                android:background="@color/color_cccccc" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+
+                <ImageView
+                    android:id="@+id/image_iv"
+                    android:layout_width="110dp"
+                    android:layout_height="73dp"
+                    android:layout_marginRight="10dp"
+                    android:contentDescription="@null"
+                    android:scaleType="centerCrop"
+                    tools:background="@tools:sample/backgrounds/scenic[3]" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="73dp">
+
+
+                    <TextView
+                        android:id="@+id/content_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/bottom_rl"
+                        android:layout_alignParentTop="true"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/color_first_level"
+                        android:textSize="@dimen/font_size_14"
+                        tools:text="足不出户工商注册，资料无误100%通过00045" />
+
+                    <TextView
+                        android:id="@+id/amount_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/content_tv"
+                        android:ellipsize="end"
+                        android:lineSpacingMultiplier="1.2"
+                        android:maxLines="2"
+                        android:textColor="@color/color_app_red"
+                        android:textSize="@dimen/font_size_14"
+                        tools:text="￥10000" />
+
+                    <LinearLayout
+                        android:id="@+id/bottom_ll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/time_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:ellipsize="end"
+                            android:lineSpacingMultiplier="1.2"
+                            android:maxLines="2"
+                            android:textColor="@color/color_third_level"
+                            android:textSize="@dimen/font_size_10"
+                            tools:text="2020-6-3 18:20:19" />
+
+                        <TextView
+                            android:id="@+id/countdown_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginTop="2dp"
+                            android:ellipsize="end"
+                            android:lineSpacingMultiplier="1.2"
+                            android:maxLines="2"
+                            android:textColor="@color/color_third_level"
+                            android:textSize="@dimen/font_size_10"
+                            android:visibility="gone"
+                            tools:text="订单有效期:23:2:30"
+                            tools:visibility="visible" />
+
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/payment_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/shape_stock_red_18"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/go_payment"
+                    android:textColor="@color/color_app_red"
+                    android:textSize="@dimen/font_size_12"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+
+                <TextView
+                    android:id="@+id/look_detail_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/shape_stock_gray_18"
+                    android:paddingLeft="25dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="25dp"
+                    android:textStyle="bold"
+                    android:paddingBottom="10dp"
+                    android:text="@string/view"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_12" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

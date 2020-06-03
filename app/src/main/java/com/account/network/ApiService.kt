@@ -46,9 +46,15 @@ interface ApiService {
         private const val NEWS_API = "$API_URI/tNews/"
 
         /**
-         * 账户相关接口前缀  111
+         * 账户相关接口前缀
          */
         private const val ACCOUNT_API = "$API_URI/tAccount"
+
+
+        /**
+         * 订单相关
+         */
+        private const val ORDER_API = "$API_URI/tOrder/"
 
     }
 
@@ -178,7 +184,17 @@ interface ApiService {
     fun logout(): Flowable<Response<JsonElement>>
 
 
-
+    /**
+     * 获取订单列表
+     * @param tailId 最后一项item id
+     * @param pageSize 请求的分页数量
+     *                 当返回的list.size()<pageSize 时，为最后一页
+     */
+    @GET(ORDER_API)
+    fun getOrderList(
+        @Query("pageSize") pageSize: Int,
+        @Query("tailId") tailId: String? = null
+    ): Flowable<Response<JsonArray>>
 
 
 }

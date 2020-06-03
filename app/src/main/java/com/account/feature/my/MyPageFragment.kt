@@ -16,6 +16,7 @@ import com.account.event.RxBus
 import com.account.extend.RoundTransFormation
 import com.account.feature.about.AboutActivity
 import com.account.feature.account.login.LoginActivity
+import com.account.feature.order.OrderListActivity
 import com.account.view.dialog.AlertDialog
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ScreenUtils
@@ -164,7 +165,7 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
 
             }
             R.id.order_rl -> {
-
+                startActivity(OrderListActivity::class.java)
             }
             R.id.income_rl -> {
 

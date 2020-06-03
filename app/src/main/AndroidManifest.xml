@@ -151,6 +151,11 @@
             android:windowSoftInputMode="adjustPan" />
 
 
+        <activity
+            android:name=".feature.order.OrderListActivity"
+            android:screenOrientation="portrait" />
+
+
     </application>
 
 </manifest>
