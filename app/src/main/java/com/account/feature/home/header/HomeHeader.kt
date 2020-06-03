@@ -1,6 +1,7 @@
 package com.account.feature.home.header
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,15 +11,19 @@ import com.account.R
 import com.account.common.Common
 import com.account.common.CommonUtils
 import com.account.common.Constants
+import com.account.common.Html5Url
 import com.account.entity.home.Banners
 import com.account.entity.product.Product
 import com.account.event.Event
 import com.account.event.RxBus
 import com.account.event.entity.SetMainSelectNewsTabEvent
 import com.account.extend.RoundTransFormation
+import com.account.feature.product.detail.ProductDetailActivity
+import com.account.feature.webs.WebCommonActivity
 import com.account.view.banner.BannerSupport
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
@@ -141,9 +146,18 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
                     return@setOnBannerListener
                 }
 
-                // todo 轮播图跳转事件
+
                 if (mBannersData.isNotEmpty()) {
-                    ToastUtils.showShort("轮播图点击 mold == " + mBannersData[it].mold)
+                    val banners = mBannersData[it]
+
+                    context.startActivity(
+                        Intent(context, WebCommonActivity::class.java)
+                            .putExtra(Constants.PARAM_URL, Html5Url.SERVICE_AGREEMENT_URL)
+                            .putExtra(Constants.PARAM_TITLE, StringUtils.getString(R.string.privacy_statement))
+                            .putExtra(Constants.PARAM_WEB_REFRESH, false)
+                    )
+
+
                 }
             }
 
@@ -180,7 +194,12 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
             val indexImage = getIndexImage(index)
             indexImage.setOnClickListener {
 
-                ToastUtils.showShort("资讯item点击 name == " + product.name)
+                context.startActivity(
+                    Intent(context, ProductDetailActivity::class.java).putExtra(
+                        Constants.PARAM_PRODUCT_ID,
+                        product.id
+                    )
+                )
 
             }
 

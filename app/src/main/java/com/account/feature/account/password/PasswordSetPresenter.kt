@@ -11,6 +11,7 @@ import com.account.data.CloudDataBase
 import com.account.entity.users.User
 import com.account.event.Event
 import com.account.event.RxBus
+import com.google.gson.JsonElement
 import javax.inject.Inject
 
 /**
@@ -76,6 +77,7 @@ class PasswordSetPresenter @Inject constructor(private var passwordSetView: Pass
 
         // 更新登录状态
         CommonUtils.getShareDefault().put(Constants.SP_LOGIN, true)
+        CommonUtils.getShareDefault().put(Constants.SP_TOKEN, it.token)
         CommonUtils.getShareDefault().put(Constants.SP_LAST_LOGIN_USER, account)
 
         // 刷新页面登录状态
@@ -95,8 +97,8 @@ class PasswordSetPresenter @Inject constructor(private var passwordSetView: Pass
                 account,
                 passWord
             ),
-            object : BaseHttpSubscriber<User>(passwordSetView) {
-                override fun onSuccess(data: User?) {
+            object : BaseHttpSubscriber<JsonElement>(passwordSetView) {
+                override fun onSuccess(data: JsonElement?) {
                     RxBus.post(Event(Constants.EVENT_PASSWORD_RESET_SUCCESS))
                     passwordSetView.passwordResetSuccess()
 

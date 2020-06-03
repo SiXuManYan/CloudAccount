@@ -109,7 +109,7 @@ class LoginActivity : BaseMVPActivity<LoginPresenter>(), LoginView {
 
                 override fun updateDrawState(ds: TextPaint) {
                     ds.color = Color.BLUE
-                    ds.isUnderlineText = true
+                    ds.isUnderlineText = false
                 }
             }).create()
 

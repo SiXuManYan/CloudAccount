@@ -49,6 +49,7 @@ class PasswordLoginPresenter @Inject constructor(private var view: PasswordLogin
 
         // 更新登录状态
         CommonUtils.getShareDefault().put(Constants.SP_LOGIN, true)
+        CommonUtils.getShareDefault().put(Constants.SP_TOKEN, it.token)
         CommonUtils.getShareDefault().put(Constants.SP_LAST_LOGIN_USER, account)
 
         // 刷新页面登录状态

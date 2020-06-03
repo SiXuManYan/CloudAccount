@@ -145,8 +145,7 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
                     .setPositiveButton(R.string.confirm, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, _ ->
                         run {
                             dialog.dismiss()
-                            presenter.loginOut()
-
+                            presenter.loginOutRequest(this@MyPageFragment)
 
                             startActivity(LoginActivity::class.java)
                         }

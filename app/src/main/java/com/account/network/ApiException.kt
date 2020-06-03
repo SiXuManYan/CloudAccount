@@ -1,7 +1,5 @@
 package com.account.network
 
-import com.account.common.CommonUtils
-import com.account.common.Constants
 import com.google.gson.internal.LinkedTreeMap
 
 /**

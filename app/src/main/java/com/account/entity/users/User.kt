@@ -57,11 +57,12 @@ class User {
 
 /*
 
-    "data": {
-        "token": "2ecd511fb1f143ad922679e73e08fc18",
-        "username": "17640339671",
-        "nickName": "Fta:笔张"
-    }
+     "data" : {
+        "token" : "ae00bd7586a34015ba628b04fa9ad158",
+        "username" : "13200010001",
+        "nickName" : "晌笆蹈悼绝",
+        "headUrl" : "ios_20200526202947196_202001205.png"
+      }
 
 */
 
@@ -78,6 +79,12 @@ class User {
      */
     @ColumnInfo(name = "nick_name")
     var nickName = ""
+
+    /**
+     * 用户头像
+     */
+    @ColumnInfo(name = "head_url")
+    var headUrl = ""
 
 
 

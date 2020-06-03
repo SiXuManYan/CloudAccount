@@ -1,16 +1,20 @@
 package com.account.app
 
 import android.content.Context
+import android.text.TextUtils
 import android.util.Log
-import com.blankj.utilcode.util.LogUtils
 import com.account.BuildConfig
+import com.account.R2.id.original
+import com.account.common.CommonUtils
+import com.account.common.Constants
 import com.account.common.Constants.DEVICE_ANDROID
 import com.account.data.CloudDataBase
+import com.account.entity.users.User
 import com.account.network.ApiService
-import com.account.network.UrlUtil
-import com.google.gson.Gson
 import com.account.network.GsonConvertFactory
-
+import com.account.network.UrlUtil
+import com.blankj.utilcode.util.LogUtils
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import me.jessyan.retrofiturlmanager.RetrofitUrlManager
@@ -25,6 +29,7 @@ import javax.inject.Singleton
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
+
 
 /**
  * 应用数据模块
@@ -74,23 +79,38 @@ class AppModule {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
         if (BuildConfig.DEBUG) {
-            //日志拦截器
+
+            // 日志拦截器
             val loggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
                 LogUtils.v(it)
-            }).apply { this.level = HttpLoggingInterceptor.Level.BASIC }
+            }).apply {
+                this.level = HttpLoggingInterceptor.Level.BASIC
+            }
+
             val bodyInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
                 Log.i("bodyInterceptor", it)
-            }).apply { this.level = HttpLoggingInterceptor.Level.BODY }
+            }).apply {
+                this.level = HttpLoggingInterceptor.Level.BODY
+            }
+
             builder.addInterceptor(loggingInterceptor)
             builder.addInterceptor(bodyInterceptor)
         }
+
+
+
         builder.protocols(Collections.singletonList(Protocol.HTTP_1_1))
             .addInterceptor(cacheInterceptor)
             .retryOnConnectionFailure(true)
             .cache(Cache(File(context.cacheDir, "http_response"), 10485760L))//10M
             .connectTimeout(defaultTimeout, TimeUnit.SECONDS)
             .readTimeout(defaultTimeout, TimeUnit.SECONDS)
+
+
+
+
 
         return builder.build()
     }
@@ -112,16 +132,33 @@ class AppModule {
     @Singleton
     internal fun databaseProvider(context: Context) = CloudDataBase.get(context)
 
-    /** 缓存拦截器 */
+    /**
+     * 拦截器
+     */
     private val cacheInterceptor: Interceptor
         get() = Interceptor { chain ->
-            //加入通用的参数
-            val url =
-                chain.request().url().newBuilder()
-                    .addQueryParameter(FROM, DEVICE_ANDROID)
-                    .addQueryParameter(VERSION, BuildConfig.VERSION_CODE.toString())
-                    .build()
-            return@Interceptor chain.proceed(chain.request().newBuilder().build())
+
+
+            val request = chain.request()
+
+            // url上增加通用参数
+            val url = request.url()
+                .newBuilder()
+                .addQueryParameter(FROM, DEVICE_ANDROID)
+                .addQueryParameter(VERSION, BuildConfig.VERSION_CODE.toString())
+                .build()
+
+            val requestBuilder = request.newBuilder().url(url)
+
+            // 增加  header token
+            val shareDefault = CommonUtils.getShareDefault()
+            val isLogin = shareDefault.getBoolean(Constants.SP_LOGIN)
+            val token = shareDefault.getString(Constants.SP_TOKEN, "")
+
+            if (isLogin && token.isNotEmpty()) {
+                requestBuilder.addHeader("token", token)
+            }
+            return@Interceptor chain.proceed(requestBuilder.build())
         }
 
 

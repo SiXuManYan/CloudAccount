@@ -168,7 +168,17 @@ interface ApiService {
     fun resetPassword(
         @Query("username") username: String?,
         @Query("newPasswd") newPasswd: String?
-    ): Flowable<Response<User>>
+    ): Flowable<Response<JsonElement>>
+
+    /**
+     * 重设密码
+     * @Field
+     */
+    @POST("$ACCOUNT_API/logout")
+    fun logout(): Flowable<Response<JsonElement>>
+
+
+
 
 
 }
