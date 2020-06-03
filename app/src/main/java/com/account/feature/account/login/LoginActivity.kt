@@ -2,7 +2,9 @@ package com.account.feature.account.login
 
 import android.content.Intent
 import android.graphics.Color
+import android.text.Editable
 import android.text.TextPaint
+import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
@@ -61,8 +63,8 @@ class LoginActivity : BaseMVPActivity<LoginPresenter>(), LoginView {
 
 
     override fun initViews() {
-        isRegisterMode = true
 
+        phone_aet.requestFocus()
         phone_aet.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_GO) {
                 next_tv.performClick()
@@ -70,6 +72,23 @@ class LoginActivity : BaseMVPActivity<LoginPresenter>(), LoginView {
             }
             return@OnEditorActionListener false
         })
+
+        phone_aet.addTextChangedListener(object : TextWatcher {
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
+
+            override fun afterTextChanged(s: Editable?) {
+                val phone = s.toString().trim()
+                if (phone.length == 11) {
+                    next_tv.setBackgroundResource(R.drawable.shape_bg_4_red)
+                } else {
+                    next_tv.setBackgroundResource(R.drawable.shape_bg_4_gray)
+                }
+            }
+        })
+
 
         // 用户协议
         register_protocol.movementMethod = LinkMovementMethod.getInstance()
@@ -130,7 +149,8 @@ class LoginActivity : BaseMVPActivity<LoginPresenter>(), LoginView {
             override fun onAnimationStart(p0: Animation?) = Unit
         })
         isRegisterMode = !isRegisterMode
-        login_container_ll.startAnimation(animation)
+        scroll_nsv.startAnimation(animation)
+        iv_back.startAnimation(animation)
 
     }
 
@@ -178,7 +198,7 @@ class LoginActivity : BaseMVPActivity<LoginPresenter>(), LoginView {
                     phone_aet.startAnimation(CommonUtils.getShakeAnimation(5))
                     return
                 }
-                if (!register_protocol.isChecked) {
+                if (isRegisterMode && !register_protocol.isChecked) {
                     VibrateUtils.vibrate(10)
                     register_protocol.startAnimation(CommonUtils.getShakeAnimation(3))
                     return

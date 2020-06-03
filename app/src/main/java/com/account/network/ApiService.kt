@@ -41,15 +41,14 @@ interface ApiService {
 
         /**
          * 资讯相关接口前缀
-         * /api/account/tNews/
-
+         *
          */
         private const val NEWS_API = "$API_URI/tNews/"
 
         /**
-         * 账户相关接口前缀
+         * 账户相关接口前缀  111
          */
-        private const val ACCOUNT_API = "$API_URI/tAccount/"
+        private const val ACCOUNT_API = "$API_URI/tAccount"
 
     }
 

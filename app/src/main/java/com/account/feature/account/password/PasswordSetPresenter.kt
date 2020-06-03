@@ -97,10 +97,8 @@ class PasswordSetPresenter @Inject constructor(private var passwordSetView: Pass
             ),
             object : BaseHttpSubscriber<User>(passwordSetView) {
                 override fun onSuccess(data: User?) {
-                    data?.let {
-                        RxBus.post(Event(Constants.EVENT_PASSWORD_RESET_SUCCESS))
-                        passwordSetView.passwordResetSuccess()
-                    }
+                    RxBus.post(Event(Constants.EVENT_PASSWORD_RESET_SUCCESS))
+                    passwordSetView.passwordResetSuccess()
 
                 }
             })

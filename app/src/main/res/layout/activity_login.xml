@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/login_container_ll"
     android:layout_width="match_parent"
@@ -15,7 +15,10 @@
 
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_nsv"
+        android:layout_below="@+id/iv_back"
         android:layout_width="match_parent"
+        android:background="@color/font_white"
         android:layout_height="wrap_content">
 
         <LinearLayout
@@ -218,4 +221,4 @@
     </androidx.core.widget.NestedScrollView>
 
 
-</LinearLayout>
+</RelativeLayout>

@@ -64,7 +64,7 @@ class GsonConvertFactory private constructor(private var gson: Gson): Converter.
                 value.close()
                 throw ApiException(
                         response.code !!.toInt(),
-                        response.message,
+                        response.msg,
                         response.data as LinkedTreeMap<String, String>?
                 )
             }

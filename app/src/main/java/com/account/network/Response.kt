@@ -17,7 +17,7 @@ class Response<T> constructor() {
     var code: Int? = null
 
     /** 错误信息 */
-    var message: String? = null
+    var msg: String? = null
 
 
     /** 接口数据 */

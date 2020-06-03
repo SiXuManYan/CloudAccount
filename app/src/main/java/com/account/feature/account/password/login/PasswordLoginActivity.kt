@@ -14,12 +14,11 @@ import com.account.base.ui.BaseMVPActivity
 import com.account.common.CommonUtils
 import com.account.common.Constants
 import com.account.feature.account.captcha.CaptchaActivity
+import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.VibrateUtils
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.activity_login_password.next_tv
-import kotlinx.android.synthetic.main.activity_login_password.password_et
-import kotlinx.android.synthetic.main.activity_login_password.password_rule_iv
-import kotlinx.android.synthetic.main.activity_login_password_set.*
+import kotlinx.android.synthetic.main.activity_login_password.*
 
 /**
  * Created by Wangsw on 2020/6/2 0002 18:09.
@@ -37,7 +36,7 @@ class PasswordLoginActivity : BaseMVPActivity<PasswordLoginPresenter>(), Passwor
     /**
      * 是否为密文
      */
-    private var isCipherText = false
+    private var isCipherText = true
 
 
     override fun showLoading() = showLoadingDialog()
@@ -54,6 +53,8 @@ class PasswordLoginActivity : BaseMVPActivity<PasswordLoginPresenter>(), Passwor
     }
 
     private fun initView() {
+        password_et.requestFocus()
+//        KeyboardUtils.showSoftInput(password_et)
         password_et.addTextChangedListener(object : TextWatcher {
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
@@ -88,7 +89,7 @@ class PasswordLoginActivity : BaseMVPActivity<PasswordLoginPresenter>(), Passwor
                 Constants.EVENT_LOGIN -> {
                     finish()
                 }
-                Constants.EVENT_PASSWORD_RESET_SUCCESS->{
+                Constants.EVENT_PASSWORD_RESET_SUCCESS -> {
                     // 密码重设成功
                     password_et.setText("")
                 }
@@ -113,7 +114,6 @@ class PasswordLoginActivity : BaseMVPActivity<PasswordLoginPresenter>(), Passwor
         R.id.forget_password_tv
     )
     fun onClick(view: View) {
-
         if (CommonUtils.isDoubleClick(view)) {
             return
         }
@@ -146,14 +146,12 @@ class PasswordLoginActivity : BaseMVPActivity<PasswordLoginPresenter>(), Passwor
             // 切换至明文
             password_rule_iv.setImageResource(R.drawable.ic_login_password_visible)
             password_et.transformationMethod = HideReturnsTransformationMethod.getInstance();
-            confirm_et.transformationMethod = HideReturnsTransformationMethod.getInstance();
-
         } else {
             // 切换至密文
             password_rule_iv.setImageResource(R.drawable.ic_login_password_gone)
             password_et.transformationMethod = PasswordTransformationMethod.getInstance();
-            confirm_et.transformationMethod = PasswordTransformationMethod.getInstance();
         }
+        password_et.setSelection(password_et.text.toString().length)
         isCipherText = !isCipherText
     }
 
@@ -175,6 +173,11 @@ class PasswordLoginActivity : BaseMVPActivity<PasswordLoginPresenter>(), Passwor
 
     override fun loginSuccess() {
         finish()
+    }
+
+    override fun showError(code: Int, message: String) {
+        super.showError(code, message)
+        VibrateUtils.vibrate(10)
     }
 
 

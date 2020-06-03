@@ -22,7 +22,10 @@ class NewsCategory constructor() {
 
     @ColumnInfo(name = "type_name")
     var typeName: String = ""
-    var value: String = ""
+
+
+
+    var value: String? = ""
 
     @Ignore
     constructor(

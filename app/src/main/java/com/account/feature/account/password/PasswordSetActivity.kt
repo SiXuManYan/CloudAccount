@@ -12,7 +12,9 @@ import com.account.R
 import com.account.base.ui.BaseMVPActivity
 import com.account.common.CommonUtils
 import com.account.common.Constants
+import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.RegexUtils
+import com.blankj.utilcode.util.VibrateUtils
 import kotlinx.android.synthetic.main.activity_login_password_set.*
 
 /**
@@ -33,7 +35,7 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
     /**
      * 是否为密文
      */
-    private var isCipherText = false
+    private var isCipherText = true
 
     /**
      * 账号
@@ -54,17 +56,19 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
 
     override fun initViews() {
 
-        initView()
         initExtra()
+        initView()
     }
 
     private fun initView() {
+        password_et.requestFocus()
+//        KeyboardUtils.showSoftInput(password_et)
         if (isRegisterMode) {
-            confirm_et.visibility = View.VISIBLE
+            confirm_rl.visibility = View.VISIBLE
             rule_same_cb.visibility = View.VISIBLE
             password_et.imeOptions = EditorInfo.IME_ACTION_NEXT
         } else {
-            confirm_et.visibility = View.GONE
+            confirm_rl.visibility = View.GONE
             rule_same_cb.visibility = View.GONE
             password_et.imeOptions = EditorInfo.IME_ACTION_DONE
         }
@@ -81,12 +85,14 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
 
                 val passwordFirst = s.toString().trim()
                 if (passwordFirst.isNullOrBlank()) {
+                    rule_format_cb.isChecked = false
                     return
                 }
 
-                rule_length_cb.isChecked = passwordFirst.length in 7..17
-                rule_format_cb.isChecked =
-                    RegexUtils.isMatch("/^(?![0-9]+)(?![a−zA−Z]+)(?![a-zA-Z]+)(?![a−zA−Z]+)[0-9A-Za-z]{8,20}\$/", passwordFirst)
+                rule_length_cb.isChecked = passwordFirst.length in 6..18
+                rule_format_cb.isChecked = RegexUtils.isMatch("^[A-Za-z0-9]+$", passwordFirst)
+
+                changeActionButtonBackground(!isRegisterMode && rule_length_cb.isChecked && rule_format_cb.isChecked)
             }
         })
 
@@ -99,9 +105,15 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
             override fun afterTextChanged(s: Editable?) {
                 val password = s.toString().trim()
                 if (password.isNullOrBlank()) {
+                    rule_same_cb.isChecked = false
                     return
                 }
-                rule_same_cb.isChecked = (password == password_et.text.toString().trim())
+
+                val isSame = (password == password_et.text.toString().trim())
+                rule_same_cb.isChecked = isSame
+
+                changeActionButtonBackground(isSame)
+
             }
         })
 
@@ -127,7 +139,6 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
         intent.getBooleanExtra(Constants.PARAM_IS_PASSWORD_REGISTER_SET_MODE, false)?.let {
             isRegisterMode = it
         }
-
 
     }
 
@@ -169,6 +180,9 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
             password_et.transformationMethod = PasswordTransformationMethod.getInstance();
             confirm_et.transformationMethod = PasswordTransformationMethod.getInstance();
         }
+        password_et.setSelection(password_et.text.toString().length)
+        confirm_et.setSelection(confirm_et.text.toString().length)
+
         isCipherText = !isCipherText
 
     }
@@ -176,14 +190,17 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
     private fun handlePasswordSet() {
         if (!rule_length_cb.isChecked) {
             rule_length_cb.startAnimation(CommonUtils.getShakeAnimation(5))
+            VibrateUtils.vibrate(10)
             return
         }
         if (!rule_format_cb.isChecked) {
             rule_format_cb.startAnimation(CommonUtils.getShakeAnimation(5))
+            VibrateUtils.vibrate(10)
             return
         }
 
-        if (isRegisterMode && !rule_format_cb.isChecked) {
+        if (isRegisterMode && !rule_same_cb.isChecked) {
+            VibrateUtils.vibrate(10)
             rule_same_cb.startAnimation(CommonUtils.getShakeAnimation(5))
             return
         }
@@ -194,13 +211,21 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
             presenter.register(this, passWord, account, captcha)
         } else {
             // 重置密码
-            presenter.resetPassword(this,passWord,account)
+            presenter.resetPassword(this, passWord, account)
         }
     }
 
     override fun registerSuccess() = finish()
 
     override fun passwordResetSuccess() = finish()
+
+    private fun changeActionButtonBackground(positive: Boolean) {
+        if (positive) {
+            next_tv.setBackgroundResource(R.drawable.shape_bg_4_red)
+        } else {
+            next_tv.setBackgroundResource(R.drawable.shape_bg_4_gray)
+        }
+    }
 
 
 }

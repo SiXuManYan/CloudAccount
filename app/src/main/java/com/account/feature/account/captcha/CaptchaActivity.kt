@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_login_captcha.*
  * </br>
  *  验证码校验
  *  注册验证身份 + 忘记密码进行密码重置，验证身份
+ *  todo ：弹出软键盘获取焦点
  */
 class CaptchaActivity : BaseMVPActivity<CaptchaPresenter>(), CaptchaView {
 
@@ -112,6 +113,7 @@ class CaptchaActivity : BaseMVPActivity<CaptchaPresenter>(), CaptchaView {
                         .putExtra(Constants.PARAM_CAPTCHA, captcha)
                         .putExtra(Constants.PARAM_IS_PASSWORD_REGISTER_SET_MODE, true)
                 )
+                finish()
             }
 
             MODE_FORGET_PASSWORD -> {
@@ -121,6 +123,7 @@ class CaptchaActivity : BaseMVPActivity<CaptchaPresenter>(), CaptchaView {
                         .putExtra(Constants.PARAM_ACCOUNT, currentAccount)
                         .putExtra(Constants.PARAM_IS_PASSWORD_REGISTER_SET_MODE, false)
                 )
+                finish()
             }
             else -> {
             }

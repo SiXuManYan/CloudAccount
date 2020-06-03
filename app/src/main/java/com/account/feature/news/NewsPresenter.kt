@@ -18,7 +18,7 @@ class NewsPresenter @Inject constructor(private val view: NewsView) : BasePresen
         val findTopServiceSubTypes = database.newsCategoryDao().findTopServiceSubTypes() as ArrayList
         findTopServiceSubTypes.add(0,  NewsCategory().apply {
             name = "全部"
-            value = ""
+            value = null
         })
         return findTopServiceSubTypes
     }

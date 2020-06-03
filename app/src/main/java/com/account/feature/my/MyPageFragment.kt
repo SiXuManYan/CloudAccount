@@ -1,6 +1,9 @@
 package com.account.feature.my
 
+import android.content.DialogInterface
+import android.content.Intent
 import android.view.View
+import android.widget.RelativeLayout
 import butterknife.OnClick
 import com.account.R
 import com.account.app.Glide
@@ -8,8 +11,15 @@ import com.account.base.ui.BaseFragment
 import com.account.common.CommonUtils
 import com.account.common.Constants
 import com.account.entity.users.User
+import com.account.event.Event
+import com.account.event.RxBus
 import com.account.extend.RoundTransFormation
 import com.account.feature.about.AboutActivity
+import com.account.feature.account.login.LoginActivity
+import com.account.view.dialog.AlertDialog
+import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.VibrateUtils
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
@@ -32,6 +42,13 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
 
     override fun initViews(parent: View) {
 
+        val layoutParams = login_out_tv.layoutParams as RelativeLayout.LayoutParams
+        layoutParams.topMargin = BarUtils.getStatusBarHeight()
+
+        banner_rl.layoutParams.apply {
+            height = (ScreenUtils.getScreenWidth() / 1.78).toInt()
+        }
+
         initEvent()
     }
 
@@ -40,10 +57,7 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
         presenter.subsribeEvent(Consumer {
             when (it.code) {
                 Constants.EVENT_NEED_REFRESH -> {
-                    User.get().id?.let {
-                        loadOnVisible()
-
-                    }
+                    loadOnVisible()
 
                 }
                 else -> {
@@ -72,8 +86,9 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
         if (!User.isLogon()) {
             ic_avatar_civ.setImageResource(R.drawable.ic_avatar_default)
             name_tv.text = getString(R.string.un_login_name)
+            name_tv.isClickable = true
             user_id_tv.visibility = View.GONE
-            login_out_tv.visibility = View.GONE
+            login_out_tv.visibility = View.INVISIBLE
             spread_rl.visibility = View.GONE
             return
         }
@@ -94,10 +109,11 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
             .error(R.drawable.ic_error_image_load)
             .into(ic_avatar_civ)
 
-        name_tv.text = user.name
+        name_tv.text = user.nickName
+        name_tv.isClickable = false
         user_id_tv.apply {
+            text = user.username.toString()
             visibility = View.VISIBLE
-            text = user.id.toString()
         }
         login_out_tv.visibility = View.VISIBLE
         spread_rl.visibility = View.VISIBLE
@@ -112,12 +128,34 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
         R.id.income_rl,
         R.id.qr_rl,
         R.id.spread_rl,
-        R.id.about_rl
+        R.id.about_rl,
+        R.id.name_tv
 
     )
     fun onClick(view: View) {
         when (view.id) {
+
+            R.id.name_tv -> {
+                startActivity(LoginActivity::class.java)
+            }
             R.id.login_out_tv -> {
+                VibrateUtils.vibrate(10)
+                AlertDialog.Builder(context)
+                    .setMessage(getString(R.string.login_out_hint))
+                    .setPositiveButton(R.string.confirm, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, _ ->
+                        run {
+                            dialog.dismiss()
+                            presenter.loginOut()
+
+
+                            startActivity(LoginActivity::class.java)
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, _ ->
+                        dialog.dismiss()
+                    })
+                    .create()
+                    .show()
 
             }
             R.id.ic_avatar_civ -> {

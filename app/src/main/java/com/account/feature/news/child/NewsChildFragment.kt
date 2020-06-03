@@ -33,7 +33,7 @@ class NewsChildFragment : BaseRefreshListFragment2<News, NewsChildPresenter>(), 
         /**
          * @param categoryValue tab类别，全部时传空
          */
-        fun newInstance(categoryValue: String): NewsChildFragment {
+        fun newInstance(categoryValue: String?): NewsChildFragment {
             val fragment = NewsChildFragment()
             val args = Bundle()
             args.putString(Constants.PARAM_TYPE, categoryValue)

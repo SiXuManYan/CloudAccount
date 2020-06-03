@@ -45,7 +45,7 @@ abstract class BaseHttpSubscriber<T>(private var view: BaseView, var showLoading
                 view.showError(-1, "网络连接超时")
             }
             is ApiException -> {
-                view.showError(e.code, e.message ?: "接口异常")
+                view.showError(e.code, e.msg ?: "接口异常")
             }
             else -> {
                 view.showError(-1, "服务异常")

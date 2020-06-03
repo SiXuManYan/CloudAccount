@@ -67,9 +67,15 @@ class User {
 
     var token = ""
 
+    /**
+     * 用户名，手机号
+     */
     @ColumnInfo(name = "user_name")
     var username = ""
 
+    /**
+     * 用户昵称
+     */
     @ColumnInfo(name = "nick_name")
     var nickName = ""
 

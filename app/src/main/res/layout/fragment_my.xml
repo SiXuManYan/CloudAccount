@@ -18,6 +18,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/banner_rl"
                 android:layout_width="match_parent"
                 android:layout_height="194dp"
                 android:background="@color/color_app_red"
@@ -35,9 +36,9 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="40dp"
+                    android:layout_below="@+id/login_out_tv"
                     android:paddingLeft="30dp"
+                    android:layout_marginTop="30dp"
                     android:paddingRight="30dp">
 
                     <com.account.view.CircleImageView
@@ -50,7 +51,7 @@
 
                     <LinearLayout
                         android:id="@+id/user_info_ll"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="64dp"
                         android:layout_toRightOf="@+id/ic_avatar_civ"
                         android:gravity="center_vertical"
@@ -67,10 +68,11 @@
 
                         <TextView
                             android:id="@+id/name_tv"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:layout_marginBottom="2dp"
+                            android:background="?android:attr/selectableItemBackground"
                             android:ellipsize="end"
                             android:maxLines="1"
                             android:textColor="@color/font_white"
@@ -99,10 +101,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:background="?android:attr/selectableItemBackground"
                     android:padding="15dp"
                     android:text="退出"
                     android:textColor="@color/font_white"
-                    android:textSize="@dimen/font_size_14" />
+                    android:textSize="@dimen/font_size_14"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
 
             </RelativeLayout>
