@@ -22,7 +22,7 @@
             android:paddingTop="45dp"
             android:paddingBottom="45dp">
 
-            <com.account.view.banner.BannerSupport
+            <com.fatcloud.account.view.banner.BannerSupport
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

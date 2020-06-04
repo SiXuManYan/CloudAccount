@@ -41,7 +41,7 @@
                     android:layout_marginTop="30dp"
                     android:paddingRight="30dp">
 
-                    <com.account.view.CircleImageView
+                    <com.fatcloud.account.view.CircleImageView
                         android:id="@+id/ic_avatar_civ"
                         android:layout_width="64dp"
                         android:layout_height="64dp"

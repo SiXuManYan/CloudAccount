@@ -73,7 +73,7 @@
                 android:textSize="@dimen/font_size_14" />
 
 
-            <com.account.view.extend.VerificationCodeView
+            <com.fatcloud.account.view.extend.VerificationCodeView
                 android:id="@+id/captcha_view"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

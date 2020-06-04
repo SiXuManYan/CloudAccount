@@ -55,14 +55,14 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/title_rl">
 
-        <com.account.view.web.JsWebViewX5
+        <com.fatcloud.account.view.web.JsWebViewX5
             android:id="@+id/x5_web"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
-    <com.account.view.error.AccidentView
+    <com.fatcloud.account.view.error.AccidentView
         android:id="@+id/accident"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

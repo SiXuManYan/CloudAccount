@@ -7,7 +7,7 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <com.account.view.loading.CommonProgressBar
+    <com.fatcloud.account.view.loading.CommonProgressBar
         android:id="@+id/common_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

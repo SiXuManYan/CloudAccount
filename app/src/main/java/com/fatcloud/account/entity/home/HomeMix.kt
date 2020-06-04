@@ -1,0 +1,18 @@
+package com.fatcloud.account.entity.home
+
+import com.fatcloud.account.entity.news.News
+import com.fatcloud.account.entity.product.Product
+
+/**
+ * Created by Wangsw on 2020/5/26 11:39.
+ * </br>
+ * 首页混合信息
+ * 轮播图，产品，资讯
+ */
+class HomeMix {
+
+    var banners: ArrayList<Banners> = ArrayList()
+    var products: ArrayList<Product> = ArrayList()
+    var news: ArrayList<News> = ArrayList()
+
+}

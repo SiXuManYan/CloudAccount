@@ -41,7 +41,7 @@
         </LinearLayout>
 
 
-        <com.account.view.tabs.SlidingTabLayout
+        <com.fatcloud.account.view.tabs.SlidingTabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             app:tl_indicator_color="@color/color_app_red"
