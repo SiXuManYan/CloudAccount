@@ -4,6 +4,7 @@ import com.fatcloud.account.entity.home.HomeMix
 import com.fatcloud.account.entity.news.NewDetail
 import com.fatcloud.account.entity.news.NewsCategory
 import com.fatcloud.account.entity.news.News
+import com.fatcloud.account.entity.order.progress.BusinessProgress
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.entity.users.User
 import com.google.gson.JsonArray
@@ -195,6 +196,16 @@ interface ApiService {
         @Query("pageSize") pageSize: Int,
         @Query("tailId") tailId: String? = null
     ): Flowable<Response<JsonArray>>
+
+
+    /**
+     * 查看企业业务办理流程
+     * http://192.168.1.191:8881/api/account/tOrder/detailEnterprise?orderId=1265245356027805696
+     */
+    @GET("$ORDER_API/detailEnterprise")
+    fun getBusinessProgress(
+        @Query("orderId") orderId: String? = null
+    ): Flowable<Response<JsonObject>>
 
 
 }

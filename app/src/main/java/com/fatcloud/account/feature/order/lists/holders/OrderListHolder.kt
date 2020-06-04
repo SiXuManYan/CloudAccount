@@ -1,4 +1,4 @@
-package com.fatcloud.account.feature.order.holders
+package com.fatcloud.account.feature.order.lists.holders
 
 import android.view.View
 import android.view.ViewGroup

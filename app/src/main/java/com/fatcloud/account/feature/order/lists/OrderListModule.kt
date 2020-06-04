@@ -1,5 +1,7 @@
-package com.fatcloud.account.feature.order
+package com.fatcloud.account.feature.order.lists
 
+import com.fatcloud.account.feature.order.lists.OrderListActivity
+import com.fatcloud.account.feature.order.lists.OrderListView
 import dagger.Module
 import dagger.Provides
 

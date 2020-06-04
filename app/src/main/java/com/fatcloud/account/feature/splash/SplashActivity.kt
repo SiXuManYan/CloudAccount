@@ -24,7 +24,7 @@ class SplashActivity : BaseActivity() {
         BarUtils.setNavBarVisibility(this, false)
 
         val alphaAnimation = AlphaAnimation(0f, 1f).apply {
-            duration = 3000
+            duration = 1000
             setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationRepeat(p0: Animation?) {
                 }

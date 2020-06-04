@@ -1,5 +1,6 @@
-package com.fatcloud.account.feature.order
+package com.fatcloud.account.feature.order.lists
 
+import android.content.Intent
 import android.os.Handler
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -7,9 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.list.BaseRefreshListActivity
 import com.fatcloud.account.entity.order.Order
-import com.fatcloud.account.feature.order.holders.OrderListHolder
+import com.fatcloud.account.feature.order.lists.holders.OrderListHolder
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.fatcloud.account.common.Constants
+import com.fatcloud.account.feature.order.progress.BusinessProgressActivity
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import com.jude.easyrecyclerview.decoration.DividerDecoration
@@ -19,7 +22,7 @@ import com.jude.easyrecyclerview.decoration.DividerDecoration
  * </br>
  * 订单列表
  */
-class OrderListActivity: BaseRefreshListActivity<Order, OrderListPresenter>(), OrderListView {
+class OrderListActivity : BaseRefreshListActivity<Order, OrderListPresenter>(), OrderListView {
 
     private val handler = Handler()
     private var clickAble = true
@@ -32,6 +35,7 @@ class OrderListActivity: BaseRefreshListActivity<Order, OrderListPresenter>(), O
         parent_container.setBackgroundColor(ColorUtils.getColor(R.color.color_list_gray_background))
         recyclerView.setBackgroundColor(ColorUtils.getColor(R.color.color_list_gray_background))
     }
+
     override fun getRecyclerAdapter(): RecyclerArrayAdapter<Order> {
 
         val adapter = object : RecyclerArrayAdapter<Order>(context) {
@@ -54,16 +58,15 @@ class OrderListActivity: BaseRefreshListActivity<Order, OrderListPresenter>(), O
 
             val data = adapter.allData[it]
 
-//            startActivity(
-//                Intent(activity, ProductDetailActivity::class.java).putExtra(
-//                    Constants.PARAM_PRODUCT_ID,
-//                    data.id
-//                )
-//            )
+            startActivity(
+                Intent(this, BusinessProgressActivity::class.java).putExtra(
+                    Constants.PARAM_ID,
+                    data.id
+                )
+            )
         }
         return adapter
     }
-
 
 
     override fun getItemDecoration(): RecyclerView.ItemDecoration? {
@@ -74,7 +77,6 @@ class OrderListActivity: BaseRefreshListActivity<Order, OrderListPresenter>(), O
         itemDecoration.setDrawLastItem(false)
         return itemDecoration
     }
-
 
 
 }

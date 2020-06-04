@@ -13,7 +13,7 @@ import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.extend.RoundTransFormation
 import com.fatcloud.account.feature.about.AboutActivity
 import com.fatcloud.account.feature.account.login.LoginActivity
-import com.fatcloud.account.feature.order.OrderListActivity
+import com.fatcloud.account.feature.order.lists.OrderListActivity
 import com.fatcloud.account.view.dialog.AlertDialog
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ScreenUtils

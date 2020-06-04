@@ -17,59 +17,72 @@
         app:indicator_margin="2dp"
         tools:layout_height="211dp" />
 
-    <include layout="@layout/layout_home_split" />
 
-
-    <com.google.android.flexbox.FlexboxLayout
-        android:id="@+id/product_fbl"
+    <LinearLayout
+        android:id="@+id/product_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        app:flexDirection="row"
-        app:flexWrap="wrap">
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/product_0"
-            android:layout_width="168dp"
-            android:layout_height="112dp"
-            android:layout_marginRight="3dp"
-            android:scaleType="centerCrop"
-            app:layout_flexGrow="1"
-            tools:src="@tools:sample/avatars" />
+        <include layout="@layout/layout_home_split" />
 
 
-        <ImageView
-            android:id="@+id/product_1"
-            android:layout_width="168dp"
-            android:layout_height="112dp"
-            android:layout_marginLeft="3dp"
-            android:scaleType="centerCrop"
-            app:layout_flexGrow="1"
-            tools:src="@tools:sample/avatars" />
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/product_fbl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            app:flexDirection="row"
+            app:flexWrap="wrap">
 
-        <ImageView
-            android:id="@+id/product_2"
-            android:layout_width="168dp"
-            android:layout_height="112dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginRight="3dp"
-            android:scaleType="centerCrop"
-            app:layout_flexGrow="1"
-            tools:src="@tools:sample/avatars" />
-
-        <ImageView
-            android:id="@+id/product_3"
-            android:layout_width="168dp"
-            android:layout_height="112dp"
-            android:layout_marginLeft="3dp"
-            android:layout_marginTop="6dp"
-            android:scaleType="centerCrop"
-            app:layout_flexGrow="1"
-            tools:src="@tools:sample/avatars" />
+            <ImageView
+                android:id="@+id/product_0"
+                android:layout_width="168dp"
+                android:layout_height="112dp"
+                android:layout_marginRight="3dp"
+                android:scaleType="centerCrop"
+                app:layout_flexGrow="1"
+                tools:src="@tools:sample/avatars" />
 
 
-    </com.google.android.flexbox.FlexboxLayout>
+            <ImageView
+                android:id="@+id/product_1"
+                android:layout_width="168dp"
+                android:layout_height="112dp"
+                android:layout_marginLeft="3dp"
+                android:scaleType="centerCrop"
+                app:layout_flexGrow="1"
+                tools:src="@tools:sample/avatars" />
+
+            <ImageView
+                android:id="@+id/product_2"
+                android:layout_width="168dp"
+                android:layout_height="112dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginRight="3dp"
+                android:scaleType="centerCrop"
+                app:layout_flexGrow="1"
+                tools:src="@tools:sample/avatars" />
+
+            <ImageView
+                android:id="@+id/product_3"
+                android:layout_width="168dp"
+                android:layout_height="112dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="6dp"
+                android:scaleType="centerCrop"
+                app:layout_flexGrow="1"
+                tools:src="@tools:sample/avatars" />
+
+
+        </com.google.android.flexbox.FlexboxLayout>
+
+
+    </LinearLayout>
+
 
 
     <include layout="@layout/layout_home_split2" />

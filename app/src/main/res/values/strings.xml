@@ -53,6 +53,7 @@
     <string name="expiration_date_format">订单有效期:%1$s</string>
     <string name="go_payment">去付款</string>
     <string name="view">查看</string>
+    <string name="business_progress_title">订单详情(企业业务办理进度)</string>
 
 
 </resources>

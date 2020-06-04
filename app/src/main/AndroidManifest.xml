@@ -152,8 +152,14 @@
 
 
         <activity
-            android:name=".feature.order.OrderListActivity"
+            android:name=".feature.order.lists.OrderListActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.order.details.OrderDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".feature.order.progress.BusinessProgressActivity" />
+        <activity android:name=".feature.order.registrant.RegistrantInfoActivity" />
 
 
     </application>

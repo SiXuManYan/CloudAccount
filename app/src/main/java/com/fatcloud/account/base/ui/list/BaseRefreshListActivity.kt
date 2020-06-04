@@ -1,13 +1,16 @@
 package com.fatcloud.account.base.ui.list
 
+import android.os.Handler
 import android.text.TextUtils
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import butterknife.BindView
 import com.blankj.utilcode.util.SizeUtils
 import com.fatcloud.account.R
+import com.fatcloud.account.R2.id.title_bar
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.ui.BaseMVPActivity
+import com.fatcloud.account.common.CommonUtils
 import com.jude.easyrecyclerview.EasyRecyclerView
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import com.jude.easyrecyclerview.decoration.DividerDecoration
@@ -19,6 +22,7 @@ import com.fatcloud.account.view.swipe.NoMoreItemView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
+import kotlinx.android.synthetic.main.activity_refresh_list2.*
 import java.util.*
 
 /**
@@ -62,6 +66,10 @@ abstract class BaseRefreshListActivity<T, P : BasePresenter> : BaseMVPActivity<P
      * 用于请求下一页的最后一项 item id ,首页可不传
      */
     var lastItemId: String? = null
+
+
+
+
     override fun getLayoutId() = R.layout.activity_refresh_list2
 
     open fun emptyMessage(): String = getString(R.string.hint_data_no_found)
@@ -70,9 +78,7 @@ abstract class BaseRefreshListActivity<T, P : BasePresenter> : BaseMVPActivity<P
 
     override fun initViews() {
 
-        getMainTitle()?.let {
-            setMainTitle(it)
-        }
+
 
         // 刷新和加载
         swipeLayout.setOnRefreshLoadMoreListener(this)
@@ -101,6 +107,16 @@ abstract class BaseRefreshListActivity<T, P : BasePresenter> : BaseMVPActivity<P
         easyRecyclerView.showRecycler()
         getItemDecoration()?.let {
             easyRecyclerView.addItemDecoration(it)
+        }
+
+        getMainTitle()?.let {
+            setMainTitle(it)
+            title_bar.setOnClickListener { view ->
+                if (CommonUtils.isDoubleClick(view)) {
+                    recyclerView.smoothScrollToPosition(0)
+                }
+
+            }
         }
 
         loadOnVisible()

@@ -1,4 +1,4 @@
-package com.fatcloud.account.feature.order
+package com.fatcloud.account.feature.order.lists
 
 import com.fatcloud.account.base.ui.list.BaseNoJsonListView2
 import com.fatcloud.account.entity.order.Order

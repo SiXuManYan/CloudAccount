@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.fatcloud.account.R
 import com.fatcloud.account.common.CommonUtils
@@ -58,6 +59,7 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
     lateinit var product_1: ImageView
     lateinit var product_2: ImageView
     lateinit var product_3: ImageView
+    lateinit var product_container: LinearLayout
 
 
     fun setNewBannerData(newDataList: List<Banners>) {
@@ -102,6 +104,7 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
         product_1 = view.findViewById<ImageView>(R.id.product_1)
         product_2 = view.findViewById<ImageView>(R.id.product_2)
         product_3 = view.findViewById<ImageView>(R.id.product_3)
+        product_container = view.findViewById<LinearLayout>(R.id.product_container)
         view.findViewById<TextView>(R.id.more_product_tv).setOnClickListener {
           RxBus.post(SetMainSelectNewsTabEvent())
         }
@@ -179,8 +182,10 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
 
     private fun updateHotProductData(productData: List<Product>) {
         if (productData.isNullOrEmpty()) {
+            product_container.visibility = View.GONE
             return
         }
+        product_container.visibility = View.VISIBLE
         product_fbl.visibility = View.VISIBLE
 
         productData.forEachIndexed { index, product ->

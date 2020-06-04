@@ -16,8 +16,14 @@ import com.fatcloud.account.feature.account.password.login.PasswordLoginActivity
 import com.fatcloud.account.feature.account.password.login.PasswordLoginModule
 import com.fatcloud.account.feature.news.detail.NewsDetailActivity
 import com.fatcloud.account.feature.news.detail.NewsDetailModule
-import com.fatcloud.account.feature.order.OrderListActivity
-import com.fatcloud.account.feature.order.OrderListModule
+import com.fatcloud.account.feature.order.lists.OrderListActivity
+import com.fatcloud.account.feature.order.lists.OrderListModule
+import com.fatcloud.account.feature.order.details.OrderDetailActivity
+import com.fatcloud.account.feature.order.details.OrderDetailModule
+import com.fatcloud.account.feature.order.progress.BusinessProgressActivity
+import com.fatcloud.account.feature.order.progress.BusinessProgressModule
+import com.fatcloud.account.feature.order.registrant.RegistrantInfoActivity
+import com.fatcloud.account.feature.order.registrant.RegistrantInfoModule
 import com.fatcloud.account.feature.product.detail.ProductDetailActivity
 import com.fatcloud.account.feature.product.detail.ProductDetailModule
 import com.fatcloud.account.feature.webs.WebCommonActivity
@@ -79,6 +85,18 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [OrderListModule::class])
     abstract fun orderListActivityInjector(): OrderListActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [OrderDetailModule::class])
+    abstract fun orderDetailActivityInjector(): OrderDetailActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [RegistrantInfoModule::class])
+    abstract fun registrantInfoActivityInjector(): RegistrantInfoActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [BusinessProgressModule::class])
+    abstract fun businessProgressActivityInjector(): BusinessProgressActivity
 
 
 }
