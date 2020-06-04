@@ -209,9 +209,9 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
             if (RegexUtils.isURL(contentUrl)) {
                 x5_web.loadUrl(contentUrl)
             } else {
-//                var body = Common.WEB_STYLE + contentUrl
-//                body += "<div style='margin-bottom: 80px;'/>"
-                x5_web.loadDataWithBaseURL(null, contentUrl, "text/html", "utf-8", null)
+                var body = Common.WEB_STYLE + contentUrl
+                body += "<div style='margin-bottom: 80px;'/>"
+                x5_web.loadDataWithBaseURL(null, body, "text/html", "utf-8", null)
             }
         }
     }
