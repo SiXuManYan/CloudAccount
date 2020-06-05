@@ -1,4 +1,4 @@
-package com.fatcloud.account.feature.order.registrant
+package com.fatcloud.account.feature.order.details.personal
 
 import com.fatcloud.account.base.common.BaseTaskView
 
@@ -7,5 +7,5 @@ import com.fatcloud.account.base.common.BaseTaskView
  * </br>
  *  注册人信息
  */
-interface RegistrantInfoView : BaseTaskView {
+interface PersonalOrderDetailView : BaseTaskView {
 }

@@ -18,12 +18,10 @@ import com.fatcloud.account.feature.news.detail.NewsDetailActivity
 import com.fatcloud.account.feature.news.detail.NewsDetailModule
 import com.fatcloud.account.feature.order.lists.OrderListActivity
 import com.fatcloud.account.feature.order.lists.OrderListModule
-import com.fatcloud.account.feature.order.details.OrderDetailActivity
-import com.fatcloud.account.feature.order.details.OrderDetailModule
-import com.fatcloud.account.feature.order.progress.BusinessProgressActivity
-import com.fatcloud.account.feature.order.progress.BusinessProgressModule
-import com.fatcloud.account.feature.order.registrant.RegistrantInfoActivity
-import com.fatcloud.account.feature.order.registrant.RegistrantInfoModule
+import com.fatcloud.account.feature.order.progress.ScheduleActivity
+import com.fatcloud.account.feature.order.progress.ScheduleModule
+import com.fatcloud.account.feature.order.details.enterprise.info.CompanyRegisterRegisterInfoActivity
+import com.fatcloud.account.feature.order.details.enterprise.info.CompanyRegisterInfoModule
 import com.fatcloud.account.feature.product.detail.ProductDetailActivity
 import com.fatcloud.account.feature.product.detail.ProductDetailModule
 import com.fatcloud.account.feature.webs.WebCommonActivity
@@ -91,12 +89,12 @@ abstract class ActivityBindModule {
     abstract fun orderDetailActivityInjector(): OrderDetailActivity
 
     @ActivityScore
-    @ContributesAndroidInjector(modules = [RegistrantInfoModule::class])
-    abstract fun registrantInfoActivityInjector(): RegistrantInfoActivity
+    @ContributesAndroidInjector(modules = [CompanyRegisterInfoModule::class])
+    abstract fun registrantInfoActivityInjector(): CompanyRegisterRegisterInfoActivity
 
     @ActivityScore
-    @ContributesAndroidInjector(modules = [BusinessProgressModule::class])
-    abstract fun businessProgressActivityInjector(): BusinessProgressActivity
+    @ContributesAndroidInjector(modules = [ScheduleModule::class])
+    abstract fun businessProgressActivityInjector(): ScheduleActivity
 
 
 }

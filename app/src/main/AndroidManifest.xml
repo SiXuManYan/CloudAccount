@@ -158,8 +158,8 @@
         <activity
             android:name=".feature.order.details.OrderDetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".feature.order.progress.BusinessProgressActivity" />
-        <activity android:name=".feature.order.registrant.RegistrantInfoActivity" />
+        <activity android:name="com.fatcloud.account.feature.order.progress.ScheduleActivity" />
+        <activity android:name=".feature.order.details.enterprise.info.CompanyRegisterRegisterInfoActivity" />
 
 
     </application>

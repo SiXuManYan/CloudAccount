@@ -3,10 +3,10 @@ package com.fatcloud.account.feature.order.progress
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.fatcloud.account.base.common.BasePresenter
-import com.fatcloud.account.base.net.BaseListHttpSubscriber
+import com.fatcloud.account.base.net.BaseJsonArrayHttpSubscriber
 import com.fatcloud.account.entity.order.progress.BusinessProgress
-import com.google.gson.JsonObject
-import java.util.ArrayList
+import com.google.gson.JsonArray
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -14,16 +14,17 @@ import javax.inject.Inject
  * </br>
  *
  */
-class BusinessProgressPresenter @Inject constructor(private var businessProgressView: BusinessProgressView) : BasePresenter(businessProgressView) {
+class SchedulePresenter @Inject constructor(private var scheduleView: ScheduleView) : BasePresenter(scheduleView) {
 
     fun getProgressData(lifecycleOwner: LifecycleOwner, orderId: String?) {
 
         requestApi(lifecycleOwner, Lifecycle.Event.ON_DESTROY,
             apiService.getBusinessProgress(orderId),
 
-            object : BaseListHttpSubscriber<BusinessProgress>("orderWorks", businessProgressView, false) {
-                override fun onSuccess(jsonObject: JsonObject, list: ArrayList<BusinessProgress>, lastItemId: String?) {
-                    businessProgressView.bindProgressData(list);
+            object : BaseJsonArrayHttpSubscriber<BusinessProgress>(scheduleView, false) {
+
+                override fun onSuccess(jsonArray: JsonArray?, list: ArrayList<BusinessProgress>, lastItemId: String?) {
+                    scheduleView.bindProgressData(list);
                 }
             }
         )

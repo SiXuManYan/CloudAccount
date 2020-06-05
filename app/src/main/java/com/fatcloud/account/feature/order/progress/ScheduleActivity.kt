@@ -1,18 +1,19 @@
 package com.fatcloud.account.feature.order.progress
 
+import android.view.View
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.order.progress.BusinessProgress
-import kotlinx.android.synthetic.main.item_business_progress.*
+import kotlinx.android.synthetic.main.activity_schedule.*
 import java.util.ArrayList
 
 /**
  * Created by Wangsw on 2020/6/4 0004 11:58.
  * </br>
- * （企业套餐）业务办理进度
+ * 业务办理流程
  */
-class BusinessProgressActivity : BaseMVPActivity<BusinessProgressPresenter>(), BusinessProgressView {
+class ScheduleActivity : BaseMVPActivity<SchedulePresenter>(), ScheduleView {
 
     var orderId: String? = ""
 
@@ -21,7 +22,7 @@ class BusinessProgressActivity : BaseMVPActivity<BusinessProgressPresenter>(), B
 
     override fun hideLoading() = dismissLoadingDialog()
 
-    override fun getLayoutId() = R.layout.item_business_progress
+    override fun getLayoutId() = R.layout.activity_schedule
 
     override fun initViews() {
         setMainTitle(getString(R.string.business_progress_title))
@@ -50,20 +51,24 @@ class BusinessProgressActivity : BaseMVPActivity<BusinessProgressPresenter>(), B
             }
             when (index) {
                 0 -> {
-                    title_00_tv.text = businessProgress.name
-                    content_00_tv.text = businessProgress.moldText
+                    card_00_cv.visibility = View.VISIBLE
+                    title_00_tv.text = businessProgress.productWorkName
+                    content_00_tv.text = businessProgress.productWorkIntroduce
                 }
                 1 -> {
-                    title_01_tv.text = businessProgress.name
-                    content_01_tv.text = businessProgress.moldText
+                    card_01_cv.visibility = View.VISIBLE
+                    title_01_tv.text = businessProgress.productWorkName
+                    content_01_tv.text = businessProgress.productWorkIntroduce
                 }
                 2 -> {
-                    title_02_tv.text = businessProgress.name
-                    content_02_tv.text = businessProgress.moldText
+                    card_02_cv.visibility = View.VISIBLE
+                    title_02_tv.text = businessProgress.productWorkName
+                    content_02_tv.text = businessProgress.productWorkIntroduce
                 }
                 3 -> {
-                    title_03_tv.text = businessProgress.name
-                    content_03_tv.text = businessProgress.moldText
+                    card_03_cv.visibility = View.VISIBLE
+                    title_03_tv.text = businessProgress.productWorkName
+                    content_03_tv.text = businessProgress.productWorkIntroduce
                 }
                 else -> {
                 }

@@ -55,5 +55,11 @@
     <string name="view">查看</string>
     <string name="business_progress_title">订单详情(企业业务办理进度)</string>
 
+    <string name="taxpayer_id">纳税人识别号\n(社会统一代码)</string>
+    <string name="legal_person_name">法人姓名</string>
+    <string name="identity_number">身份证号</string>
+    <string name="bank_card_number">银行卡号</string>
+    <string name="bank_phone">银行预留手机号</string>
+
 
 </resources>

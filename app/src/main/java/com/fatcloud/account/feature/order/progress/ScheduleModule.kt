@@ -9,11 +9,11 @@ import dagger.Provides
  *
  */
 @Module
-class BusinessProgressModule {
+class ScheduleModule {
 
 
     @Provides
-    fun viewProvider(activity: BusinessProgressActivity): BusinessProgressView {
+    fun viewProvider(activity: ScheduleActivity): ScheduleView {
         return activity
     }
 }

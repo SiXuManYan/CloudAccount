@@ -40,11 +40,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
                     android:foreground="?attr/selectableItemBackground"
+                    android:visibility="gone"
                     app:cardBackgroundColor="@color/font_white"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="1dp"
                     app:cardPreventCornerOverlap="false"
-                    app:cardUseCompatPadding="false">
+                    app:cardUseCompatPadding="false"
+                    tools:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -73,6 +75,15 @@
                             android:textColor="@color/color_third_level"
                             android:textSize="@dimen/font_size_14"
                             tools:text="营业执照办结后可办理" />
+
+                        <TextView
+                            android:id="@+id/status_00_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/content_00_tv"
+                            android:textColor="@color/color_red_foreground"
+                            android:textSize="@dimen/font_size_14"
+                            tools:text="办理中" />
 
                         <TextView
                             android:id="@+id/look_detail_00_tv"
@@ -118,11 +129,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
                     android:foreground="?attr/selectableItemBackground"
+                    android:visibility="gone"
                     app:cardBackgroundColor="@color/font_white"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="1dp"
                     app:cardPreventCornerOverlap="false"
-                    app:cardUseCompatPadding="false">
+                    app:cardUseCompatPadding="false"
+                    tools:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -199,11 +212,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
                     android:foreground="?attr/selectableItemBackground"
+                    android:visibility="gone"
                     app:cardBackgroundColor="@color/font_white"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="1dp"
                     app:cardPreventCornerOverlap="false"
-                    app:cardUseCompatPadding="false">
+                    app:cardUseCompatPadding="false"
+                    tools:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -279,11 +294,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
                     android:foreground="?attr/selectableItemBackground"
+                    android:visibility="gone"
                     app:cardBackgroundColor="@color/font_white"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="1dp"
                     app:cardPreventCornerOverlap="false"
-                    app:cardUseCompatPadding="false">
+                    app:cardUseCompatPadding="false"
+                    tools:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"

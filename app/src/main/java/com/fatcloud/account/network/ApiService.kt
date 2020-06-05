@@ -4,6 +4,7 @@ import com.fatcloud.account.entity.home.HomeMix
 import com.fatcloud.account.entity.news.NewDetail
 import com.fatcloud.account.entity.news.NewsCategory
 import com.fatcloud.account.entity.news.News
+import com.fatcloud.account.entity.order.PersonalOrderDetail
 import com.fatcloud.account.entity.order.progress.BusinessProgress
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.entity.users.User
@@ -55,7 +56,7 @@ interface ApiService {
         /**
          * 订单相关
          */
-        private const val ORDER_API = "$API_URI/tOrder/"
+        private const val ORDER_API = "$API_URI/tOrder"
 
     }
 
@@ -191,7 +192,7 @@ interface ApiService {
      * @param pageSize 请求的分页数量
      *                 当返回的list.size()<pageSize 时，为最后一页
      */
-    @GET(ORDER_API)
+    @GET("$ORDER_API/")
     fun getOrderList(
         @Query("pageSize") pageSize: Int,
         @Query("tailId") tailId: String? = null
@@ -199,13 +200,22 @@ interface ApiService {
 
 
     /**
-     * 查看企业业务办理流程
-     * http://192.168.1.191:8881/api/account/tOrder/detailEnterprise?orderId=1265245356027805696
+     * 获取订单办理流程
+     * http://192.168.1.191:8881/api/account/tOrderWork/?orderId=1268456920973312000
+     *
      */
-    @GET("$ORDER_API/detailEnterprise")
+    @GET("$ACCOUNT_API/tOrderWork/")
     fun getBusinessProgress(
         @Query("orderId") orderId: String? = null
-    ): Flowable<Response<JsonObject>>
+    ): Flowable<Response<JsonArray>>
+
+    /**
+     * 个人业务详情
+     */
+    @GET("$ORDER_API/detail")
+    fun getPersonalOrderDetail(
+        @Query("id ") id : String? = null
+    ): Flowable<Response<PersonalOrderDetail>>
 
 
 }

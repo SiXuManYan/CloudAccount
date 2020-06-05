@@ -12,7 +12,7 @@ import com.fatcloud.account.feature.order.lists.holders.OrderListHolder
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.fatcloud.account.common.Constants
-import com.fatcloud.account.feature.order.progress.BusinessProgressActivity
+import com.fatcloud.account.feature.order.progress.ScheduleActivity
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import com.jude.easyrecyclerview.decoration.DividerDecoration
@@ -58,12 +58,16 @@ class OrderListActivity : BaseRefreshListActivity<Order, OrderListPresenter>(), 
 
             val data = adapter.allData[it]
 
-            startActivity(
-                Intent(this, BusinessProgressActivity::class.java).putExtra(
-                    Constants.PARAM_ID,
-                    data.id
+            if (data.mold == "P2") {
+                // 企业业务办理流程
+                startActivity(
+                    Intent(this, ScheduleActivity::class.java).putExtra(Constants.PARAM_ID, data.id)
                 )
-            )
+            }else{
+
+            }
+
+
         }
         return adapter
     }

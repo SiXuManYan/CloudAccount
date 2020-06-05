@@ -9,7 +9,7 @@ import java.util.ArrayList
  * </br>
  *
  */
-interface BusinessProgressView : BaseTaskView {
+interface ScheduleView : BaseTaskView {
 
 
     fun bindProgressData(list: ArrayList<BusinessProgress>)

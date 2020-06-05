@@ -158,11 +158,9 @@ class LoginActivity : BaseMVPActivity<LoginPresenter>(), LoginView {
     private fun setSignViews() {
         if (isRegisterMode) {
             register_protocol.visibility = View.VISIBLE
-            authorized_login_ll.visibility = View.GONE
             switch_model_tv.text = getString(R.string.login)
         } else {
             register_protocol.visibility = View.GONE
-            authorized_login_ll.visibility = View.VISIBLE
             switch_model_tv.text = getString(R.string.register)
 
         }
