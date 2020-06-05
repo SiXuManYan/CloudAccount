@@ -54,21 +54,25 @@ class ScheduleActivity : BaseMVPActivity<SchedulePresenter>(), ScheduleView {
                     card_00_cv.visibility = View.VISIBLE
                     title_00_tv.text = businessProgress.productWorkName
                     content_00_tv.text = businessProgress.productWorkIntroduce
+                    status_00_tv.text = businessProgress.stateText
                 }
                 1 -> {
                     card_01_cv.visibility = View.VISIBLE
                     title_01_tv.text = businessProgress.productWorkName
                     content_01_tv.text = businessProgress.productWorkIntroduce
+                    status_01_tv.text = businessProgress.stateText
                 }
                 2 -> {
                     card_02_cv.visibility = View.VISIBLE
                     title_02_tv.text = businessProgress.productWorkName
                     content_02_tv.text = businessProgress.productWorkIntroduce
+                    status_02_tv.text = businessProgress.stateText
                 }
                 3 -> {
                     card_03_cv.visibility = View.VISIBLE
                     title_03_tv.text = businessProgress.productWorkName
                     content_03_tv.text = businessProgress.productWorkIntroduce
+                    status_03_tv.text = businessProgress.stateText
                 }
                 else -> {
                 }

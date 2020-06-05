@@ -82,7 +82,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/content_00_tv"
                             android:textColor="@color/color_red_foreground"
-                            android:textSize="@dimen/font_size_14"
+                            android:textSize="@dimen/font_size_12"
                             tools:text="办理中" />
 
                         <TextView
@@ -164,6 +164,16 @@
                             android:textColor="@color/color_third_level"
                             android:textSize="@dimen/font_size_14"
                             tools:text="营业执照办结后可办理" />
+
+                        <TextView
+                            android:id="@+id/status_01_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/content_01_tv"
+                            android:textColor="@color/color_red_foreground"
+                            android:textSize="@dimen/font_size_12"
+                            tools:text="办理中" />
+
 
                         <TextView
                             android:id="@+id/look_detail_01_tv"
@@ -248,6 +258,17 @@
                             android:textSize="@dimen/font_size_14"
                             tools:text="营业执照办结后可办理" />
 
+
+                        <TextView
+                            android:id="@+id/status_02_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/content_02_tv"
+                            android:textColor="@color/color_red_foreground"
+                            android:textSize="@dimen/font_size_12"
+                            tools:text="办理中" />
+
+
                         <TextView
                             android:id="@+id/look_detail_02_tv"
                             android:layout_width="wrap_content"
@@ -329,6 +350,17 @@
                             android:textColor="@color/color_third_level"
                             android:textSize="@dimen/font_size_14"
                             tools:text="营业执照办结后可办理" />
+
+                        <TextView
+                            android:id="@+id/status_03_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/content_03_tv"
+                            android:textColor="@color/color_red_foreground"
+                            android:textSize="@dimen/font_size_12"
+                            tools:text="办理中" />
+
+
 
                         <TextView
                             android:id="@+id/look_detail_04_tv"
