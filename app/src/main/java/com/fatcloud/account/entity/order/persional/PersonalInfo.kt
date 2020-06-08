@@ -1,12 +1,13 @@
-package com.fatcloud.account.entity.order
+package com.fatcloud.account.entity.order.persional
 
+import com.fatcloud.account.entity.order.IdentityImg
 import java.math.BigDecimal
 
 /**
  * 个人业务订单详情
  *
  */
-data class PersonalOrderDetail(
+data class PersonalInfo(
     val accountId: String,
     val addr: String,
     val area: String,

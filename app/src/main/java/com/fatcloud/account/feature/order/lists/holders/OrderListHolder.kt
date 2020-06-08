@@ -7,7 +7,7 @@ import com.fatcloud.account.R
 import com.fatcloud.account.app.Glide
 import com.fatcloud.account.base.ui.list.BaseItemViewHolder
 import com.fatcloud.account.common.CommonUtils
-import com.fatcloud.account.entity.order.Order
+import com.fatcloud.account.entity.order.persional.Order
 import com.fatcloud.account.extend.RoundTransFormation
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils

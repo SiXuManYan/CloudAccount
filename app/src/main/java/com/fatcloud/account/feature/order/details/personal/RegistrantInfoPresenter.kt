@@ -4,11 +4,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
-import com.fatcloud.account.base.net.BaseJsonArrayHttpSubscriber
-import com.fatcloud.account.entity.order.Order
-import com.fatcloud.account.entity.order.PersonalOrderDetail
-import com.google.gson.JsonArray
-import java.util.ArrayList
+import com.fatcloud.account.entity.order.persional.PersonalInfo
 import javax.inject.Inject
 
 /**
@@ -25,9 +21,9 @@ class RegistrantInfoPresenter @Inject constructor(private var registrantInfoView
         requestApi(lifecycle, Lifecycle.Event.ON_DESTROY,
             apiService.getPersonalOrderDetail(orderId),
 
-            object :BaseHttpSubscriber<PersonalOrderDetail>(registrantInfoView){
+            object :BaseHttpSubscriber<PersonalInfo>(registrantInfoView){
 
-                override fun onSuccess(data: PersonalOrderDetail?) {
+                override fun onSuccess(data: PersonalInfo?) {
 
                     data?.let {
                         registrantInfoView.bindDetailInfo(data)

@@ -8,7 +8,7 @@ import com.blankj.utilcode.util.ColorUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.list.BaseRefreshListActivity
 import com.fatcloud.account.common.Constants
-import com.fatcloud.account.entity.order.Order
+import com.fatcloud.account.entity.order.persional.Order
 import com.fatcloud.account.entity.order.progress.BusinessProgress
 import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterRegisterInfoActivity
 import com.fatcloud.account.feature.order.details.personal.RegistrantInfoActivity

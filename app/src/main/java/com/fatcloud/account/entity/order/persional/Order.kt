@@ -1,4 +1,4 @@
-package com.fatcloud.account.entity.order
+package com.fatcloud.account.entity.order.persional
 
 import java.math.BigDecimal
 

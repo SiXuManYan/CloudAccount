@@ -9,9 +9,9 @@ import com.fatcloud.account.app.Glide
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
-import com.fatcloud.account.entity.order.PersonalOrderDetail
+import com.fatcloud.account.entity.order.persional.PersonalInfo
 import com.fatcloud.account.extend.RoundTransFormation
-import kotlinx.android.synthetic.main.activity_personal_order_detail.*
+import kotlinx.android.synthetic.main.activity_order_detail_personal.*
 import kotlinx.android.synthetic.main.layout_detail_personal.*
 import kotlinx.android.synthetic.main.layout_detail_tax_registration.*
 
@@ -36,7 +36,7 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
 
     override fun hideLoading() = dismissLoadingDialog()
 
-    override fun getLayoutId() = R.layout.activity_personal_order_detail
+    override fun getLayoutId() = R.layout.activity_order_detail_personal
 
     override fun initViews() {
         initExtra()
@@ -65,7 +65,7 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
     }
 
 
-    override fun bindDetailInfo(data: PersonalOrderDetail) {
+    override fun bindDetailInfo(data: PersonalInfo) {
         setPaymentStatus(data.state)
 
         when (productType) {
@@ -129,7 +129,7 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
     /**
      * PW1 营业执照办理 ：注册人信息
      */
-    private fun setRegistrantInfo(data: PersonalOrderDetail) {
+    private fun setRegistrantInfo(data: PersonalInfo) {
         sex_tv.text = if (data.gender == "1") {
             "男"
         } else {
@@ -191,7 +191,7 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
     /**
      * PW2  税务登记办理 办理信息
      */
-    private fun setTaxRegistration(data: PersonalOrderDetail) {
+    private fun setTaxRegistration(data: PersonalInfo) {
         taxpayer_id_tv.text = data.taxpayerNo
         id_number_tv.text = data.idno
         bank_card_number_tv.text = data.bankNo

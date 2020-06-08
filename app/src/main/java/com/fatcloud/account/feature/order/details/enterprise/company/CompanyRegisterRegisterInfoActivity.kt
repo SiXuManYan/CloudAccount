@@ -14,7 +14,7 @@ class CompanyRegisterRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoP
 
     var orderWorkId: String? = ""
 
-    override fun getLayoutId() = R.layout.activity_personal_order_detail
+    override fun getLayoutId() = R.layout.activity_order_detail_company
 
     override fun initViews() {
         initExtra()

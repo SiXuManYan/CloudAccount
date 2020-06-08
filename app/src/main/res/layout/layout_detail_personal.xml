@@ -95,7 +95,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginRight="15dp"
             android:lineSpacingMultiplier="1.2"
-            android:text="地址"
+            android:text="@string/address"
             android:textColor="@color/color_third_level"
             android:textSize="@dimen/font_size_14" />
 

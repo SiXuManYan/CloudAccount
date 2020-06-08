@@ -4,7 +4,7 @@ import com.fatcloud.account.entity.home.HomeMix
 import com.fatcloud.account.entity.news.NewDetail
 import com.fatcloud.account.entity.news.NewsCategory
 import com.fatcloud.account.entity.news.News
-import com.fatcloud.account.entity.order.PersonalOrderDetail
+import com.fatcloud.account.entity.order.persional.PersonalInfo
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.entity.users.User
 import com.google.gson.JsonArray
@@ -218,7 +218,7 @@ interface ApiService {
     @GET("$ORDER_API/detail")
     fun getPersonalOrderDetail(
         @Query("id") id: String? = null
-    ): Flowable<Response<PersonalOrderDetail>>
+    ): Flowable<Response<PersonalInfo>>
 
 
 }

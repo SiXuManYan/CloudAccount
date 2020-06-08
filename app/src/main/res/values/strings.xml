@@ -60,6 +60,17 @@
     <string name="identity_number">身份证号</string>
     <string name="bank_card_number">银行卡号</string>
     <string name="bank_phone">银行预留手机号</string>
+    <string name="zero_company_name">首选公司名称</string>
+    <string name="first_company_name">备选公司名称1</string>
+    <string name="second_company_name">备选公司名称2</string>
+    <string name="invest_year_num">出资年限</string>
+    <string name="amount_of_funds">资金数额</string>
+    <string name="address">地址</string>
+    <string name="id_address">身份证地址</string>
+    <string name="contact_number">联系电话</string>
+    <string name="share_ratio">股份占比</string>
+    <string name="registered_capital">注册资金(万元)</string>
+    <string name="account_nature">账户性质</string>
 
 
 </resources>

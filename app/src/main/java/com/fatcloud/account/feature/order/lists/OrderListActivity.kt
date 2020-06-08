@@ -7,7 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.list.BaseRefreshListActivity
-import com.fatcloud.account.entity.order.Order
+import com.fatcloud.account.entity.order.persional.Order
 import com.fatcloud.account.feature.order.lists.holders.OrderListHolder
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
