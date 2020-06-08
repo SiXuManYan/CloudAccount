@@ -14,12 +14,13 @@ interface HomeView : BaseView {
     fun setHeaderDada(banners: ArrayList<Banners>, products: ArrayList<Product>)
 
 
+
+
     /**
-     * 设置 “资讯列表”数据
-     * @param news list
-     * @param isFirstPage 是否是首页
-     * @param isLastPage 是否为最后一页
+     * 绑定列表数据，并且记录最后一项 itemId
+     * @param list 列表数据
+     * @param lastItemId 最后一项
      */
-    fun bindNewsList(news: ArrayList<News>, isFirstPage: Boolean, isLastPage: Boolean)
+    fun bindList(list: ArrayList<News>, lastItemId: String? = null)
 
 }

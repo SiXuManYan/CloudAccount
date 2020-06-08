@@ -2,6 +2,7 @@ package com.fatcloud.account.feature.home
 
 import android.content.Intent
 import android.os.Handler
+import android.text.TextUtils
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
@@ -66,6 +67,16 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
     private var emptyLoadingFooter: EmptyLoadingFooter? = null
     private var mAdapter: RecyclerArrayAdapter<News> = getRecyclerAdapter()
     var page = 0
+
+    /**
+     * 请求的分页数量，默认10
+     */
+    var pageSize = 10
+
+    /**
+     * 用于请求下一页的最后一项 item id ,首页可不传
+     */
+    var lastItemId: String? = null
 
 
     override fun getLayoutId() = R.layout.fragment_home
@@ -168,7 +179,7 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
             }, 1000)
 
             val news = adapter.allData[it]
-            startActivity(Intent(context, NewsDetailActivity::class.java).putExtra(Constants.PARAM_ID,news.id))
+            startActivity(Intent(context, NewsDetailActivity::class.java).putExtra(Constants.PARAM_ID, news.id))
 
         }
         return adapter
@@ -190,14 +201,15 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
 
     override fun onLoadMore(refreshLayout: RefreshLayout) = onLoadMore()
 
+
     private fun onRefresh() {
-        page = 0
-        presenter.loadHomeList(this, page)
+
+        lastItemId = null
+        presenter.loadHomeList(this, pageSize, lastItemId)
     }
 
     private fun onLoadMore() {
-        page++
-        presenter.loadHomeList(this, page)
+        presenter.loadHomeList(this, pageSize, lastItemId)
     }
 
     override fun setHeaderDada(banners: ArrayList<Banners>, products: ArrayList<Product>) {
@@ -210,7 +222,9 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
 
     }
 
-    override fun bindNewsList(list: ArrayList<News>, isFirstPage: Boolean, isLastPage: Boolean) {
+    override fun bindList(list: ArrayList<News>, lastItemId: String?) {
+        val isFirstPage = TextUtils.isEmpty(this.lastItemId)
+        val isLastPage = list.size < pageSize
 
         if (isFirstPage) {
             if (swipeLayout.isRefreshing) {
@@ -244,7 +258,10 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
             if (mAdapter.footerCount > 0) mAdapter.removeAllFooter()
             mAdapter.addFooter(noMoreItemView)
         }
+
+        this.lastItemId = lastItemId
     }
+
 
     override fun showError(code: Int, message: String) {
         super.showError(code, message)

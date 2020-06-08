@@ -65,10 +65,13 @@ interface ApiService {
      * @see HomeMix
      */
     @GET(HOME_API_PREFIX)
-    fun getHomeList(): Flowable<Response<HomeMix>>
+    fun getHomeList(
+        @Query("pageSize") pageSize: Int,
+        @Query("tailId") tailId: String? = null
+    ): Flowable<Response<HomeMix>>
 
     /**
-     * 获取首页混合列表信息
+     * 获取产品信息
      * @param pageSize 请求的分页数量
      *                 当返回的list.size()<pageSize 时，为最后一页
      * @param tailId 末尾项ID 用于分页
@@ -214,7 +217,7 @@ interface ApiService {
      */
     @GET("$ORDER_API/detail")
     fun getPersonalOrderDetail(
-        @Query("id ") id : String? = null
+        @Query("id ") id: String? = null
     ): Flowable<Response<PersonalOrderDetail>>
 
 
