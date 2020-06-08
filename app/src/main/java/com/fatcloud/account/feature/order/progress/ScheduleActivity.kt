@@ -12,6 +12,7 @@ import com.fatcloud.account.entity.order.Order
 import com.fatcloud.account.entity.order.progress.BusinessProgress
 import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterRegisterInfoActivity
 import com.fatcloud.account.feature.order.details.personal.RegistrantInfoActivity
+import com.fatcloud.account.feature.order.progress.holders.ScheduleHolder
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import java.util.*
@@ -94,7 +95,17 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
                                 }
                             }
                             "PW2" -> {
-                                // 税务登记办理 无事件
+                                //  企业税务登记办理 无事件
+                                if (it.mold != "P2") {
+                                    // 个人
+                                    startActivity(
+                                        Intent(this@ScheduleActivity, RegistrantInfoActivity::class.java)
+                                            .putExtra(Constants.PARAM_ORDER_ID, orderId)
+                                            .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
+                                    )
+                                }
+
+
                             }
                             "PW3" -> {
                                 // 银行账户办理

@@ -5,10 +5,10 @@
     android:id="@+id/tax_registration"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@color/font_white"
+    android:orientation="vertical"
     android:visibility="gone"
-    tools:visibility="gone">
+    tools:visibility="visible">
 
 
     <LinearLayout
@@ -97,7 +97,7 @@
 
 
         <TextView
-            android:id="@+id/identity_number_tv"
+            android:id="@+id/id_number_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -218,7 +218,6 @@
         android:layout_height="1px"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginBottom="15dp"
         android:background="@color/split_line_color" />
 
 
@@ -226,7 +225,7 @@
         android:id="@+id/card_cv"
         android:layout_width="165dp"
         android:layout_height="120dp"
-        android:layout_marginLeft="15dp"
+        android:layout_margin="15dp"
         android:foreground="?attr/selectableItemBackground"
         app:cardBackgroundColor="@color/font_white"
         app:cardCornerRadius="6dp"
@@ -235,6 +234,7 @@
         app:cardUseCompatPadding="true">
 
         <ImageView
+            android:id="@+id/business_license_iv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:src="@tools:sample/backgrounds/scenic" />

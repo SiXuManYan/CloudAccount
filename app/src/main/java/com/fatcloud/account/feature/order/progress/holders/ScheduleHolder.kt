@@ -1,4 +1,4 @@
-package com.fatcloud.account.feature.order.progress
+package com.fatcloud.account.feature.order.progress.holders
 
 import android.view.View
 import android.view.ViewGroup
@@ -26,13 +26,13 @@ class ScheduleHolder(parent: ViewGroup?) : BaseItemViewHolder<BusinessProgress>(
             image_iv.setImageResource(R.drawable.ic_order_detail_progress_top)
 
         } else if (data.state == "OW3") {
-            if (adapterPosition == ownerAdapter?.allData?.size!!-1) {
+            if (adapterPosition == ownerAdapter?.allData?.size!! - 1) {
                 image_iv.setImageResource(R.drawable.ic_order_detail_progress_end_red)
             } else {
                 image_iv.setImageResource(R.drawable.ic_order_detail_progress_center_red)
             }
         } else {
-            if (adapterPosition == ownerAdapter?.allData?.size!!-1) {
+            if (adapterPosition == ownerAdapter?.allData?.size!! - 1) {
                 image_iv.setImageResource(R.drawable.ic_order_detail_progress_end_gray)
             } else {
                 image_iv.setImageResource(R.drawable.ic_order_detail_progress_center_gray)
@@ -50,7 +50,13 @@ class ScheduleHolder(parent: ViewGroup?) : BaseItemViewHolder<BusinessProgress>(
                 look_detail_tv.text = "查看"
             }
             "PW2" -> {
-                look_detail_tv.visibility = View.INVISIBLE
+                if (data.mold == "P2") {
+                    // 企业税务等级没有详情页
+                    look_detail_tv.visibility = View.INVISIBLE
+                } else {
+                    look_detail_tv.visibility = View.VISIBLE
+                }
+
             }
             "PW3" -> {
 

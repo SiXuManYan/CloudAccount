@@ -11,6 +11,10 @@ data class PersonalOrderDetail(
     val addr: String,
     val area: String,
     val bankNo: String,
+
+    /**
+     * 营业执照地址
+     */
     val businessLicenseImgUrl: String,
     val createDt: String,
     val delFlag: Int,

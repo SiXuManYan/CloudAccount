@@ -13,7 +13,6 @@ import com.fatcloud.account.entity.order.PersonalOrderDetail
 import com.fatcloud.account.extend.RoundTransFormation
 import kotlinx.android.synthetic.main.activity_personal_order_detail.*
 import kotlinx.android.synthetic.main.layout_detail_personal.*
-import kotlinx.android.synthetic.main.layout_detail_personal.identity_number_tv
 import kotlinx.android.synthetic.main.layout_detail_tax_registration.*
 
 /**
@@ -40,8 +39,17 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
     override fun getLayoutId() = R.layout.activity_personal_order_detail
 
     override fun initViews() {
-        setMainTitle("注册人信息")
         initExtra()
+        setMainTitle(
+            when (productType) {
+                "PW1" -> {
+                    "注册人信息"
+                }
+                else -> {
+                    "办理信息"
+                }
+            }
+        )
         presenter.getRegistrantInfo(this, orderId)
     }
 
@@ -72,6 +80,9 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
         }
     }
 
+    /**
+     * 订单支付状态
+     */
     private fun setPaymentStatus(payState: String) {
         when (payState) {
             "OS1" -> {
@@ -114,16 +125,9 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
         }
     }
 
-    /**
-     * 税务登记
-     */
-    private fun setTaxRegistration(data: PersonalOrderDetail) {
-
-    }
-
 
     /**
-     * 注册人信息
+     * PW1 营业执照办理 ：注册人信息
      */
     private fun setRegistrantInfo(data: PersonalOrderDetail) {
         sex_tv.text = if (data.gender == "1") {
@@ -143,14 +147,13 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
         form_tv.text = data.formName
         identity_number_tv.text = data.idno
         name_tv.text = data.realName
-        identity_number_tv.text = data.idno
 
 
         data.imgs.forEachIndexed { index, identityImg ->
 
             if (index == 0) {
                 Glide.with(this)
-//            .load(data.imgUrl)
+//                    .load(identityImg.imgUrl)
                     .load(CommonUtils.getTestUrl())
                     .apply(
                         RequestOptions().transform(
@@ -165,7 +168,7 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
 
             } else {
                 Glide.with(this)
-//            .load(data.imgUrl)
+//                    .load(identityImg.imgUrl)
                     .load(CommonUtils.getTestUrl())
                     .apply(
                         RequestOptions().transform(
@@ -182,6 +185,32 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
 
         }
 
+
+    }
+
+    /**
+     * PW2  税务登记办理 办理信息
+     */
+    private fun setTaxRegistration(data: PersonalOrderDetail) {
+        taxpayer_id_tv.text = data.taxpayerNo
+        id_number_tv.text = data.idno
+        bank_card_number_tv.text = data.bankNo
+        bank_phone_tv.text = data.phoneOfBank
+        legal_person_name_tv.text = data.legalPersonName
+
+        Glide.with(this)
+//            .load(data.businessLicenseImgUrl)
+            .load(CommonUtils.getTestUrl())
+            .apply(
+                RequestOptions().transform(
+                    MultiTransformation(
+                        CenterCrop(),
+                        RoundTransFormation(context, 4)
+                    )
+                )
+            )
+            .error(R.drawable.ic_error_image_load)
+            .into(business_license_iv)
 
     }
 
