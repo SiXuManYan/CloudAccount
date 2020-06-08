@@ -1,4 +1,4 @@
-package com.fatcloud.account.feature.order.details.enterprise.info
+package com.fatcloud.account.feature.order.details.enterprise.company
 
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity

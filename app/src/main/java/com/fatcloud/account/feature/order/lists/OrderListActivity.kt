@@ -58,14 +58,12 @@ class OrderListActivity : BaseRefreshListActivity<Order, OrderListPresenter>(), 
 
             val data = adapter.allData[it]
 
-            if (data.mold == "P2") {
-                // 企业业务办理流程
-                startActivity(
-                    Intent(this, ScheduleActivity::class.java).putExtra(Constants.PARAM_ID, data.id)
-                )
-            }else{
+            startActivity(
+                Intent(this, ScheduleActivity::class.java)
+                    .putExtra(Constants.PARAM_ORDER_ID, data.id)
+                    .putExtra(Constants.PARAM_MOLD, data.mold)
 
-            }
+            )
 
 
         }

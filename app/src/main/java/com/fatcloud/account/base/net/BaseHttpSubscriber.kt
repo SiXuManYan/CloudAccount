@@ -39,7 +39,7 @@ abstract class BaseHttpSubscriber<T>(private var view: BaseView, var showLoading
         onComplete()
         when (e) {
             is HttpException -> {
-                view.showError(e.code(), "网络连接失败")
+                view.showError(e.code(), e.message())
             }
             is IOException -> {
                 view.showError(-1, "网络连接超时")

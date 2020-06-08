@@ -142,8 +142,8 @@ class AppModule {
             // url上增加通用参数
             val url = request.url()
                 .newBuilder()
-                .addQueryParameter(FROM, DEVICE_ANDROID)
-                .addQueryParameter(VERSION, BuildConfig.VERSION_CODE.toString())
+//                .addQueryParameter(FROM, DEVICE_ANDROID)
+//                .addQueryParameter(VERSION, BuildConfig.VERSION_CODE.toString())
                 .build()
 
             val requestBuilder = request.newBuilder().url(url)

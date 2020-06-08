@@ -16,12 +16,14 @@ import com.fatcloud.account.feature.account.password.login.PasswordLoginActivity
 import com.fatcloud.account.feature.account.password.login.PasswordLoginModule
 import com.fatcloud.account.feature.news.detail.NewsDetailActivity
 import com.fatcloud.account.feature.news.detail.NewsDetailModule
+import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterInfoModule
+import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterRegisterInfoActivity
+import com.fatcloud.account.feature.order.details.personal.RegistrantInfoActivity
+import com.fatcloud.account.feature.order.details.personal.RegistrantInfoModule
 import com.fatcloud.account.feature.order.lists.OrderListActivity
 import com.fatcloud.account.feature.order.lists.OrderListModule
 import com.fatcloud.account.feature.order.progress.ScheduleActivity
 import com.fatcloud.account.feature.order.progress.ScheduleModule
-import com.fatcloud.account.feature.order.details.enterprise.info.CompanyRegisterRegisterInfoActivity
-import com.fatcloud.account.feature.order.details.enterprise.info.CompanyRegisterInfoModule
 import com.fatcloud.account.feature.product.detail.ProductDetailActivity
 import com.fatcloud.account.feature.product.detail.ProductDetailModule
 import com.fatcloud.account.feature.webs.WebCommonActivity
@@ -85,16 +87,16 @@ abstract class ActivityBindModule {
     abstract fun orderListActivityInjector(): OrderListActivity
 
     @ActivityScore
-    @ContributesAndroidInjector(modules = [OrderDetailModule::class])
-    abstract fun orderDetailActivityInjector(): OrderDetailActivity
-
-    @ActivityScore
     @ContributesAndroidInjector(modules = [CompanyRegisterInfoModule::class])
-    abstract fun registrantInfoActivityInjector(): CompanyRegisterRegisterInfoActivity
+    abstract fun companyRegisterRegisterInfoActivity(): CompanyRegisterRegisterInfoActivity
 
     @ActivityScore
     @ContributesAndroidInjector(modules = [ScheduleModule::class])
     abstract fun businessProgressActivityInjector(): ScheduleActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [RegistrantInfoModule::class])
+    abstract fun registrantInfoActivityInjector(): RegistrantInfoActivity
 
 
 }

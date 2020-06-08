@@ -1,4 +1,4 @@
-package com.fatcloud.account.feature.order.details.enterprise.info.bank
+package com.fatcloud.account.feature.order.details.enterprise.bank
 
 import com.fatcloud.account.base.common.BaseTaskView
 

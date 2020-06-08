@@ -8,7 +8,7 @@ import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.fatcloud.account.R
-import com.fatcloud.account.base.ui.list.BaseRefreshListFragment2
+import com.fatcloud.account.base.ui.list.BaseRefreshListFragment
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.product.Product2
@@ -30,7 +30,7 @@ import kotlinx.android.synthetic.main.fragment_product.*
  * 产品列表
  * 请求回来的list size < pageSize 则为最后一页
  */
-class ProductFragment : BaseRefreshListFragment2<Product2, ProductPresenter>(), ProductView {
+class ProductFragment : BaseRefreshListFragment<Product2, ProductPresenter>(), ProductView {
 
     init {
         needMenuControl = true

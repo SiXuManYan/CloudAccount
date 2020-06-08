@@ -155,11 +155,13 @@
             android:name=".feature.order.lists.OrderListActivity"
             android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".feature.order.details.OrderDetailActivity"
-            android:screenOrientation="portrait" />
+
+
         <activity android:name="com.fatcloud.account.feature.order.progress.ScheduleActivity" />
-        <activity android:name=".feature.order.details.enterprise.info.CompanyRegisterRegisterInfoActivity" />
+
+
+        <activity android:name=".feature.order.details.enterprise.company.CompanyRegisterRegisterInfoActivity" />
+        <activity android:name=".feature.order.details.personal.RegistrantInfoActivity" />
 
 
     </application>

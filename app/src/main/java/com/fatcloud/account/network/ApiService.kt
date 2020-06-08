@@ -5,7 +5,6 @@ import com.fatcloud.account.entity.news.NewDetail
 import com.fatcloud.account.entity.news.NewsCategory
 import com.fatcloud.account.entity.news.News
 import com.fatcloud.account.entity.order.PersonalOrderDetail
-import com.fatcloud.account.entity.order.progress.BusinessProgress
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.entity.users.User
 import com.google.gson.JsonArray
@@ -50,7 +49,7 @@ interface ApiService {
         /**
          * 账户相关接口前缀
          */
-        private const val ACCOUNT_API = "$API_URI/tAccount"
+        private const val T_ACCOUNT_API = "$API_URI/tAccount"
 
 
         /**
@@ -125,21 +124,21 @@ interface ApiService {
      * 校验账户是否存在
      * @Field
      */
-    @POST("$ACCOUNT_API/existed")
+    @POST("$T_ACCOUNT_API/existed")
     fun checkAccountIsExisted(@Query("username") username: String?): Flowable<Response<JsonObject>>
 
     /**
      * 发送验证码
      * @Field
      */
-    @POST("$ACCOUNT_API/sendvc")
+    @POST("$T_ACCOUNT_API/sendvc")
     fun sendCaptchaToTarget(@Query("username") username: String?): Flowable<Response<JsonElement>>
 
     /**
      * 校验验证码
      * @Field
      */
-    @POST("$ACCOUNT_API/checkvc")
+    @POST("$T_ACCOUNT_API/checkvc")
     fun checkCaptcha(
         @Query("username") username: String?,
         @Query("vc") vc: String?
@@ -149,7 +148,7 @@ interface ApiService {
      * 注册
      * @Field
      */
-    @POST("$ACCOUNT_API/regist")
+    @POST("$T_ACCOUNT_API/regist")
     fun register(
         @Query("username") username: String?,
         @Query("passwd") passwd: String?,
@@ -164,7 +163,7 @@ interface ApiService {
      * 密码登录
      * @Field
      */
-    @POST("$ACCOUNT_API/login")
+    @POST("$T_ACCOUNT_API/login")
     fun passwordLogin(
         @Query("username") username: String?,
         @Query("passwd") passwd: String?
@@ -175,7 +174,7 @@ interface ApiService {
      * 重设密码
      * @Field
      */
-    @POST("$ACCOUNT_API/resetPasswd")
+    @POST("$T_ACCOUNT_API/resetPasswd")
     fun resetPassword(
         @Query("username") username: String?,
         @Query("newPasswd") newPasswd: String?
@@ -185,7 +184,7 @@ interface ApiService {
      * 重设密码
      * @Field
      */
-    @POST("$ACCOUNT_API/logout")
+    @POST("$T_ACCOUNT_API/logout")
     fun logout(): Flowable<Response<JsonElement>>
 
 
@@ -207,13 +206,14 @@ interface ApiService {
      * http://192.168.1.191:8881/api/account/tOrderWork/?orderId=1268456920973312000
      *
      */
-    @GET("$ACCOUNT_API/tOrderWork/")
+    @GET("$API_URI/tOrderWork/")
     fun getBusinessProgress(
         @Query("orderId") orderId: String? = null
     ): Flowable<Response<JsonArray>>
 
     /**
      * 个人业务详情
+     * @param id 订单id
      */
     @GET("$ORDER_API/detail")
     fun getPersonalOrderDetail(

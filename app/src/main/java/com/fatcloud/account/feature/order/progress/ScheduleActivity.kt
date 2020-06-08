@@ -1,12 +1,16 @@
 package com.fatcloud.account.feature.order.progress
 
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.cardview.widget.CardView
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.entity.order.Order
 import com.fatcloud.account.entity.order.progress.BusinessProgress
 import kotlinx.android.synthetic.main.activity_schedule.*
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by Wangsw on 2020/6/4 0004 11:58.
@@ -17,6 +21,10 @@ class ScheduleActivity : BaseMVPActivity<SchedulePresenter>(), ScheduleView {
 
     var orderId: String? = ""
 
+    /**
+     * @see Order.mold
+     */
+    var mold: String? = ""
 
     override fun showLoading() = showLoadingDialog()
 
@@ -33,17 +41,16 @@ class ScheduleActivity : BaseMVPActivity<SchedulePresenter>(), ScheduleView {
 
     private fun initExtra() {
 
-        if (intent.extras == null || !intent.extras!!.containsKey(Constants.PARAM_ID)) {
+        if (intent.extras == null || !intent.extras!!.containsKey(Constants.PARAM_ORDER_ID)) {
             finish()
             return
         }
-        orderId = intent.extras!!.getString(Constants.PARAM_ID)
+        orderId = intent.extras!!.getString(Constants.PARAM_ORDER_ID)
+        mold = intent.extras!!.getString(Constants.PARAM_MOLD)
     }
 
     override fun bindProgressData(list: ArrayList<BusinessProgress>) {
-        if (list.size < 4) {
-            return
-        }
+
 
         list.forEachIndexed { index, businessProgress ->
             if (index > 3) {
@@ -51,37 +58,42 @@ class ScheduleActivity : BaseMVPActivity<SchedulePresenter>(), ScheduleView {
             }
             when (index) {
                 0 -> {
-                    card_00_cv.visibility = View.VISIBLE
-                    title_00_tv.text = businessProgress.productWorkName
-                    content_00_tv.text = businessProgress.productWorkIntroduce
-                    status_00_tv.text = businessProgress.stateText
+                    setItemData(image_00_iv, card_00_cv, title_00_tv, content_00_tv, status_00_tv, businessProgress)
                 }
                 1 -> {
-                    card_01_cv.visibility = View.VISIBLE
-                    title_01_tv.text = businessProgress.productWorkName
-                    content_01_tv.text = businessProgress.productWorkIntroduce
-                    status_01_tv.text = businessProgress.stateText
+
+                    setItemData(image_01_iv, card_01_cv, title_01_tv, content_01_tv, status_01_tv, businessProgress)
                 }
                 2 -> {
-                    card_02_cv.visibility = View.VISIBLE
-                    title_02_tv.text = businessProgress.productWorkName
-                    content_02_tv.text = businessProgress.productWorkIntroduce
-                    status_02_tv.text = businessProgress.stateText
+
+                    setItemData(image_02_iv, card_02_cv, title_02_tv, content_02_tv, status_02_tv, businessProgress)
                 }
                 3 -> {
-                    card_03_cv.visibility = View.VISIBLE
-                    title_03_tv.text = businessProgress.productWorkName
-                    content_03_tv.text = businessProgress.productWorkIntroduce
-                    status_03_tv.text = businessProgress.stateText
+
+                    setItemData(image_03_iv, card_03_cv, title_03_tv, content_03_tv, status_03_tv, businessProgress)
                 }
                 else -> {
                 }
             }
 
-
         }
 
 
+    }
+
+    private fun setItemData(
+        imageTag: ImageView,
+        card_index_cv: CardView,
+        title_index_tv: TextView,
+        content_index_tv: TextView,
+        status_index_tv: TextView,
+        businessProgress: BusinessProgress
+    ) {
+        imageTag.visibility = View.VISIBLE
+        card_index_cv.visibility = View.VISIBLE
+        title_index_tv.text = businessProgress.productWorkName
+        content_index_tv.text = businessProgress.productWorkIntroduce
+        status_index_tv.text = businessProgress.stateText
     }
 
 

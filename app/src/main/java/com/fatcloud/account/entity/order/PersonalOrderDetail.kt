@@ -15,6 +15,10 @@ data class PersonalOrderDetail(
     val id: String,
     val idno: String,
     val legalPersonName: String,
+
+    /**
+     * @see  Order.mold
+     */
     val mold: String,
     val moldText: String,
     val money: Int,
@@ -27,6 +31,7 @@ data class PersonalOrderDetail(
     val productName: String,
     val productPriceId: String,
     val productPriceName: String,
+
 
 
     /**

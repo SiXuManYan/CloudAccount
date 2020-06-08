@@ -7,7 +7,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.fatcloud.account.R
-import com.fatcloud.account.base.ui.list.BaseRefreshListFragment2
+import com.fatcloud.account.base.ui.list.BaseRefreshListFragment
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.news.News
 import com.fatcloud.account.event.entity.NewsProductScrollToTopEvent
@@ -25,7 +25,7 @@ import io.reactivex.functions.Consumer
  * 资讯子列表
  * 请求回来的list size < pageSize 则为最后一页
  */
-class NewsChildFragment : BaseRefreshListFragment2<News, NewsChildPresenter>(), NewsChildView {
+class NewsChildFragment : BaseRefreshListFragment<News, NewsChildPresenter>(), NewsChildView {
 
 
     companion object {

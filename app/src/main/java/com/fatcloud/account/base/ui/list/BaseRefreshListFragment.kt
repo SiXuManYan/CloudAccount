@@ -28,7 +28,7 @@ import kotlin.collections.ArrayList
  * emptyView 会覆盖 headerView
  * 使用 emptyFooter 代替 accidentViewView
  */
-abstract class BaseRefreshListFragment2<T, P : BasePresenter> : BaseFragment<P>(), BaseNoJsonListView2<T>,
+abstract class BaseRefreshListFragment<T, P : BasePresenter> : BaseFragment<P>(), BaseNoJsonListView2<T>,
     OnRefreshLoadMoreListener {
 
 

@@ -38,6 +38,7 @@ data class Order(
      * OS 6 已受理
      * OS 7 办理中
      * OS 8 已办结
+     * OS unsubmitted 未提交
      */
     val state: String = "",
 
