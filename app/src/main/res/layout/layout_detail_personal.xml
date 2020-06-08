@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/detail_personal_ll"
+    android:id="@+id/registrant_info"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/font_white"
@@ -274,10 +274,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
-            android:maxLines="1"
+            android:maxLines="3"
             android:textColor="@color/color_first_level"
             android:textSize="@dimen/font_size_14"
-            tools:text="食品" />
+            tools:text="食品食品食品食品食品食品食品食品食品食品食品食品食品食品" />
 
     </LinearLayout>
 
@@ -454,8 +454,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:padding="15dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_front_cv"

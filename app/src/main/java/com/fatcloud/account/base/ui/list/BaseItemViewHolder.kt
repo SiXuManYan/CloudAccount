@@ -3,9 +3,9 @@ package com.fatcloud.account.base.ui.list
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.annotation.LayoutRes
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import butterknife.ButterKnife
 import com.fatcloud.account.entity.users.User
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
@@ -17,7 +17,7 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder
 open class BaseItemViewHolder<T> : BaseViewHolder<T> {
 
     var onChildViewClickListener: OnChildViewClickListener? = null
-    var onMediaPlayListener: OnMediaPlayListener? = null
+//    var onMediaPlayListener: OnMediaPlayListener? = null
 
     constructor(parent: ViewGroup?, @LayoutRes res: Int) : super(parent, res)
 
@@ -37,7 +37,10 @@ open class BaseItemViewHolder<T> : BaseViewHolder<T> {
 
     protected fun <T> startActivityForResultAfterLogin(target: Class<T>, bundle: Bundle, requestCode: Int) {
         if (User.isLogon()) {
-            (context as Activity).startActivityForResult(Intent(context!!.applicationContext, target).putExtras(bundle), requestCode)
+            (context as Activity).startActivityForResult(
+                Intent(context!!.applicationContext, target).putExtras(bundle),
+                requestCode
+            )
         } else {
 //            startActivity(SignUpActivity::class.java)
         }
@@ -49,10 +52,6 @@ open class BaseItemViewHolder<T> : BaseViewHolder<T> {
         } else {
 //            startActivity(SignUpActivity::class.java)
         }
-    }
-
-    interface OnMediaPlayListener {
-        fun onPlay(view: View, position: Int)
     }
 
 

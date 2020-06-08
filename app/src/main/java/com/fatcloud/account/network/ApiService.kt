@@ -217,7 +217,7 @@ interface ApiService {
      */
     @GET("$ORDER_API/detail")
     fun getPersonalOrderDetail(
-        @Query("id ") id: String? = null
+        @Query("id") id: String? = null
     ): Flowable<Response<PersonalOrderDetail>>
 
 

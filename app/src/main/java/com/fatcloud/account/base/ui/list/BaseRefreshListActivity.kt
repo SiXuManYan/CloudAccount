@@ -78,8 +78,6 @@ abstract class BaseRefreshListActivity<T, P : BasePresenter> : BaseMVPActivity<P
 
     override fun initViews() {
 
-
-
         // 刷新和加载
         swipeLayout.setOnRefreshLoadMoreListener(this)
         swipeLayout.setEnableLoadMore(false)

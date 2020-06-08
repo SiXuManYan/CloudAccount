@@ -25,6 +25,7 @@ data class BusinessProgress(
      * OS6 已受理
      * OS7 办理中
      * OS8 已办结
+     * OS unsubmitted 未提交
      *
      * 企业套餐
      * OW1 已激活
@@ -51,8 +52,6 @@ data class BusinessProgress(
     val mold: String
 
 )
-
-
 
 
 /*

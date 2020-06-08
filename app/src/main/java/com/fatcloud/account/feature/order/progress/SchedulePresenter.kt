@@ -27,14 +27,14 @@ class SchedulePresenter @Inject constructor(private var scheduleView: ScheduleVi
 
                 override fun onSuccess(jsonArray: JsonArray?, list: ArrayList<BusinessProgress>, lastItemId: String?) {
 
-                    val newList:ArrayList<BusinessProgress> = ArrayList()
+                    val newList: ArrayList<BusinessProgress> = ArrayList()
 
                     list.forEach {
-                        if (!TextUtils.isEmpty(    it.productWorkName)) {
+                        if (!TextUtils.isEmpty(it.productWorkName)) {
                             newList.add(it)
                         }
                     }
-                    scheduleView.bindProgressData(newList);
+                    scheduleView.bindList(newList, null)
                 }
             }
         )

@@ -1,15 +1,19 @@
 package com.fatcloud.account.feature.order.progress
 
-import android.view.View
-import android.widget.ImageView
+import android.content.Intent
+import android.view.ViewGroup
 import android.widget.TextView
-import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.ColorUtils
 import com.fatcloud.account.R
-import com.fatcloud.account.base.ui.BaseMVPActivity
+import com.fatcloud.account.base.ui.list.BaseRefreshListActivity
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.order.Order
 import com.fatcloud.account.entity.order.progress.BusinessProgress
-import kotlinx.android.synthetic.main.activity_schedule.*
+import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterRegisterInfoActivity
+import com.fatcloud.account.feature.order.details.personal.RegistrantInfoActivity
+import com.jude.easyrecyclerview.adapter.BaseViewHolder
+import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import java.util.*
 
 /**
@@ -17,7 +21,7 @@ import java.util.*
  * </br>
  * 业务办理流程
  */
-class ScheduleActivity : BaseMVPActivity<SchedulePresenter>(), ScheduleView {
+class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePresenter>(), ScheduleView {
 
     var orderId: String? = ""
 
@@ -26,17 +30,22 @@ class ScheduleActivity : BaseMVPActivity<SchedulePresenter>(), ScheduleView {
      */
     var mold: String? = ""
 
-    override fun showLoading() = showLoadingDialog()
+    override fun getMainTitle(): Int? {
+        return R.string.business_progress_title
+    }
 
-    override fun hideLoading() = dismissLoadingDialog()
-
-    override fun getLayoutId() = R.layout.activity_schedule
 
     override fun initViews() {
-        setMainTitle(getString(R.string.business_progress_title))
-
+        super.initViews()
+        easyRecyclerView.setBackgroundColor(ColorUtils.getColor(R.color.color_list_gray_background))
+        swipeLayout.setEnableRefresh(false)
         initExtra()
         presenter.getProgressData(this, orderId)
+    }
+
+    override fun bindList(list: ArrayList<BusinessProgress>, isFirstPage: Boolean, last: Boolean) {
+        super.bindList(list, isFirstPage, last)
+        getAdapter()?.removeFooter(noMoreItemView)
     }
 
     private fun initExtra() {
@@ -49,52 +58,79 @@ class ScheduleActivity : BaseMVPActivity<SchedulePresenter>(), ScheduleView {
         mold = intent.extras!!.getString(Constants.PARAM_MOLD)
     }
 
-    override fun bindProgressData(list: ArrayList<BusinessProgress>) {
+    override fun getRecyclerAdapter(): RecyclerArrayAdapter<BusinessProgress> {
+
+        val adapter = object : RecyclerArrayAdapter<BusinessProgress>(context) {
+
+            override fun OnCreateViewHolder(parent: ViewGroup?, viewType: Int): BaseViewHolder<BusinessProgress> {
+
+                val holder = ScheduleHolder(parent)
+
+                holder.itemView.findViewById<TextView>(R.id.look_detail_tv).setOnClickListener {
+                    val adapter = getAdapter()
+                    val adapterPosition = holder.adapterPosition
+                    val model = adapter?.allData?.get(adapterPosition)
+                    model?.let {
 
 
-        list.forEachIndexed { index, businessProgress ->
-            if (index > 3) {
-                return@forEachIndexed
-            }
-            when (index) {
-                0 -> {
-                    setItemData(image_00_iv, card_00_cv, title_00_tv, content_00_tv, status_00_tv, businessProgress)
-                }
-                1 -> {
+                        when (it.code) {
+                            "PW1" -> {
+                                //  营业执照办理
+                                if (it.mold == "P2") {
 
-                    setItemData(image_01_iv, card_01_cv, title_01_tv, content_01_tv, status_01_tv, businessProgress)
-                }
-                2 -> {
+                                    // 企业
+                                    startActivity(
+                                        Intent(this@ScheduleActivity, CompanyRegisterRegisterInfoActivity::class.java)
+                                            .putExtra(Constants.PARAM_ORDER_WORK_ID, orderId)
+                                            .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.mold)
+                                    )
+                                } else {
+                                    // 个人
+                                    startActivity(
+                                        Intent(this@ScheduleActivity, RegistrantInfoActivity::class.java)
+                                            .putExtra(Constants.PARAM_ORDER_ID, orderId)
+                                            .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
+                                    )
+                                }
+                            }
+                            "PW2" -> {
+                                // 税务登记办理 无事件
+                            }
+                            "PW3" -> {
+                                // 银行账户办理
 
-                    setItemData(image_02_iv, card_02_cv, title_02_tv, content_02_tv, status_02_tv, businessProgress)
-                }
-                3 -> {
+                                if (it.mold == "P2") {
+                                    // 企业
+                                    if (it.state == "OW1") {
 
-                    setItemData(image_03_iv, card_03_cv, title_03_tv, content_03_tv, status_03_tv, businessProgress)
+                                    } else {
+                                        // 银行信息页
+                                    }
+
+                                }
+                            }
+                            "PW4" -> {
+                                // 代理记账办理
+                            }
+
+                        }
+
+
+                    }
+
+
                 }
-                else -> {
-                }
+                return holder
             }
 
         }
 
 
+        return adapter
     }
 
-    private fun setItemData(
-        imageTag: ImageView,
-        card_index_cv: CardView,
-        title_index_tv: TextView,
-        content_index_tv: TextView,
-        status_index_tv: TextView,
-        businessProgress: BusinessProgress
-    ) {
-        imageTag.visibility = View.VISIBLE
-        card_index_cv.visibility = View.VISIBLE
-        title_index_tv.text = businessProgress.productWorkName
-        content_index_tv.text = businessProgress.productWorkIntroduce
-        status_index_tv.text = businessProgress.stateText
+    override fun getItemDecoration(): RecyclerView.ItemDecoration? {
+        return null
     }
-
 
 }

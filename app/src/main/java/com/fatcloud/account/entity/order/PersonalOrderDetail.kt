@@ -1,5 +1,7 @@
 package com.fatcloud.account.entity.order
 
+import java.math.BigDecimal
+
 /**
  * 个人业务订单详情
  *
@@ -13,6 +15,10 @@ data class PersonalOrderDetail(
     val createDt: String,
     val delFlag: Int,
     val id: String,
+
+    /**
+     * 身份证号
+     */
     val idno: String,
     val legalPersonName: String,
 
@@ -21,9 +27,17 @@ data class PersonalOrderDetail(
      */
     val mold: String,
     val moldText: String,
-    val money: Int,
+    val money: String = "",
     val nickName: String,
     val no: String,
+
+    /**
+     * PS1 未支付
+     * PS2 微信支付中
+     * PS3 支付宝支付中
+     * PS4 微信已支付
+     * PS5 支付宝已支付
+     */
     val payState: String,
     val payStateText: String,
     val phoneOfBank: String,
@@ -31,7 +45,6 @@ data class PersonalOrderDetail(
     val productName: String,
     val productPriceId: String,
     val productPriceName: String,
-
 
 
     /**
@@ -50,7 +63,44 @@ data class PersonalOrderDetail(
     val updateDt: String,
     val username: String,
     val version: Int,
-    val weixinPayMap: String
+    val weixinPayMap: String,
+
+
+    //
+    val businessScope: List<Int>,
+    val businessScopeNames: String,
+
+
+    val capital: Int,
+
+    /**
+     * 从业人数
+     */
+    val employedNum: Long = 0,
+    val form: Int,
+    val formName: String,
+
+    /**
+     * 1 男
+     * 2 女
+     */
+    val gender: String,
+    val imgs: List<IdentityImg> = ArrayList(),
+
+
+    /**
+     * 收入
+     */
+    val income: BigDecimal = BigDecimal.ZERO,
+    val name0: String,
+    val name1: String,
+    val name2: String,
+    val nation: String,
+
+    val realName: String,
+    val tel: String
+
+
 )
 
 /*

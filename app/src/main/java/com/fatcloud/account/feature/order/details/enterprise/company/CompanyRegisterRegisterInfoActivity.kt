@@ -2,6 +2,7 @@ package com.fatcloud.account.feature.order.details.enterprise.company
 
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
+import com.fatcloud.account.common.Constants
 
 /**
  * Created by Wangsw on 2020/6/4 0004 14:03.
@@ -11,10 +12,22 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 class CompanyRegisterRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter>(),
     CompanyRegisterInfoView {
 
-    override fun getLayoutId()=  R.layout.activity_personal_order_detail
+    var orderWorkId: String? = ""
+
+    override fun getLayoutId() = R.layout.activity_personal_order_detail
 
     override fun initViews() {
-        TODO("Not yet implemented")
+        initExtra()
+    }
+
+
+    private fun initExtra() {
+
+        if (intent.extras == null || !intent.extras!!.containsKey(Constants.PARAM_ORDER_WORK_ID)) {
+            finish()
+            return
+        }
+        orderWorkId = intent.extras!!.getString(Constants.PARAM_ORDER_WORK_ID)
     }
 
     override fun showLoading() {
