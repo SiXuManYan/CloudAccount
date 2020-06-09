@@ -11,7 +11,7 @@ import dagger.Provides
 @Module
 class CompanyRegisterInfoModule {
     @Provides
-    fun viewProvider(activityRegister: CompanyRegisterRegisterInfoActivity): CompanyRegisterInfoView {
+    fun viewProvider(activityRegister: CompanyRegisterInfoActivity): CompanyRegisterInfoView {
         return activityRegister
     }
 

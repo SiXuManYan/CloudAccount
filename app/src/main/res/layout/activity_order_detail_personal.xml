@@ -36,8 +36,8 @@
                     android:id="@+id/payment_status_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
                     android:textColor="@color/color_first_level"
                     android:textSize="@dimen/font_size_18"
                     tools:text="待支付" />
@@ -52,13 +52,10 @@
                 android:background="@color/split_line_color" />
 
             <!-- 税务登记 -->
-            <include
+            <include layout="@layout/layout_detail_tax_registration" />
 
-                layout="@layout/layout_detail_tax_registration" />
-
-            <include
-
-                layout="@layout/layout_detail_personal" />
+            <!-- 法人信息 -->
+            <include layout="@layout/layout_detail_personal" />
 
 
         </LinearLayout>

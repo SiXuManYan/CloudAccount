@@ -4,6 +4,7 @@ import com.fatcloud.account.entity.home.HomeMix
 import com.fatcloud.account.entity.news.NewDetail
 import com.fatcloud.account.entity.news.NewsCategory
 import com.fatcloud.account.entity.news.News
+import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.persional.PersonalInfo
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.entity.users.User
@@ -219,6 +220,15 @@ interface ApiService {
     fun getPersonalOrderDetail(
         @Query("id") id: String? = null
     ): Flowable<Response<PersonalInfo>>
+
+    /**
+     * 企业订单详情
+     * @param orderWorkId 订单流程id
+     */
+    @GET("$API_URI/tOrderWork/detail")
+    fun getEnterpriseOrderDetail(
+        @Query("orderWorkId") orderWorkId: String? = null
+    ): Flowable<Response<EnterpriseInfo>>
 
 
 }

@@ -87,6 +87,10 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
             name_tv.isClickable = true
             user_id_tv.visibility = View.GONE
             login_out_tv.visibility = View.INVISIBLE
+
+            // 后期开放
+            income_rl.visibility = View.GONE
+            qr_rl.visibility = View.GONE
             spread_rl.visibility = View.GONE
             return
         }
@@ -114,7 +118,11 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
             visibility = View.VISIBLE
         }
         login_out_tv.visibility = View.VISIBLE
-        spread_rl.visibility = View.VISIBLE
+
+        // 后期开放
+        income_rl.visibility = View.GONE
+        qr_rl.visibility = View.GONE
+        spread_rl.visibility = View.GONE
     }
 
 

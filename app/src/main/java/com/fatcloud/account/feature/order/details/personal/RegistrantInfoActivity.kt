@@ -30,7 +30,7 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
      * PW1  营业执照办理
      * PW2  税务登记办理
      */
-    private var productType: String? = ""
+    private var productWorkType: String? = ""
 
     override fun showLoading() = showLoadingDialog()
 
@@ -41,7 +41,7 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
     override fun initViews() {
         initExtra()
         setMainTitle(
-            when (productType) {
+            when (productWorkType) {
                 "PW1" -> {
                     "注册人信息"
                 }
@@ -61,14 +61,14 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
             return
         }
         orderId = intent.extras!!.getString(Constants.PARAM_ORDER_ID)
-        productType = intent.extras!!.getString(Constants.PARAM_PRODUCT_WORK_TYPE)
+        productWorkType = intent.extras!!.getString(Constants.PARAM_PRODUCT_WORK_TYPE)
     }
 
 
     override fun bindDetailInfo(data: PersonalInfo) {
-        setPaymentStatus(data.state)
+        CommonUtils.setPaymentStatus(data.state, payment_status_iv, payment_status_tv)
 
-        when (productType) {
+        when (productWorkType) {
             "PW1" -> {
                 registrant_info.visibility = View.VISIBLE
                 setRegistrantInfo(data)
@@ -76,51 +76,6 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
             else -> {
                 tax_registration.visibility = View.VISIBLE
                 setTaxRegistration(data)
-            }
-        }
-    }
-
-    /**
-     * 订单支付状态
-     */
-    private fun setPaymentStatus(payState: String) {
-        when (payState) {
-            "OS1" -> {
-                payment_status_iv.setImageResource(R.drawable.ic_status_daizhifu)
-                payment_status_tv.text = "待支付"
-            }
-            "OS2" -> {
-                payment_status_iv.setImageResource(R.drawable.ic_status_dingdanshixiao)
-                payment_status_tv.text = "取消订单"
-            }
-            "OS3" -> {
-                payment_status_iv.setImageResource(R.drawable.ic_status_dingdanshixiao)
-                payment_status_tv.text = "订单实效"
-            }
-            "OS4" -> {
-                payment_status_iv.setImageResource(R.drawable.ic_status_zhifuzhong)
-                payment_status_tv.text = "支付中"
-            }
-            "OS5" -> {
-                payment_status_iv.setImageResource(R.drawable.ic_status_yibanjie)
-                payment_status_tv.text = "已支付"
-            }
-
-            "OS6" -> {
-                payment_status_iv.setImageResource(R.drawable.ic_status_banlizhong)
-                payment_status_tv.text = "已受理"
-            }
-            "OS7" -> {
-                payment_status_iv.setImageResource(R.drawable.ic_status_banlizhong)
-                payment_status_tv.text = "办理中"
-            }
-            "OS8" -> {
-                payment_status_iv.setImageResource(R.drawable.ic_status_yibanjie)
-                payment_status_tv.text = "已办结"
-            }
-            else -> {
-                payment_status_iv.visibility = View.INVISIBLE
-                payment_status_tv.visibility = View.INVISIBLE
             }
         }
     }

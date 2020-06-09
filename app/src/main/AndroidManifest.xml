@@ -160,7 +160,7 @@
         <activity android:name="com.fatcloud.account.feature.order.progress.ScheduleActivity" />
 
 
-        <activity android:name=".feature.order.details.enterprise.company.CompanyRegisterRegisterInfoActivity" />
+        <activity android:name=".feature.order.details.enterprise.company.CompanyRegisterInfoActivity" />
         <activity android:name=".feature.order.details.personal.RegistrantInfoActivity" />
 
 

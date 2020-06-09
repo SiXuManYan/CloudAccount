@@ -110,5 +110,55 @@ object Constants {
      */
     const val CONSUMER_HOT_LINE = "4007772556"
 
+    // 企业股东类型
+    /** 企业股东类型 企业法人*/
+    const val SH1 = "SH1"
+
+    /** 企业股东类型 监事*/
+    const val SH2 = "SH2"
+
+    /** 企业股东类型 股东*/
+    const val SH3 = "SH3"
+
+
+    // 产品类型
+
+    /** 个体户营业执照办理 */
+    const val P1 = "P1"
+
+    /** 企业套餐 */
+    const val P2 = "P2"
+
+    /** 个体户代理记账 */
+    const val P3 = "P3"
+
+    /** 个体户税务登记 */
+    const val P4 = "P4"
+
+    /** 个体户营业执照变更 */
+    const val P5 = "P5"
+
+    /** 个体户营业执照注销 */
+    const val P6 = "P6"
+
+    /** 大师起名 */
+    const val P7 = "P7"
+
+
+    // 产品流程类型 product_word
+    // PW1 营业执照办理 PW2 税务登记办理 PW3  PW4
+
+    /** 营业执照办理 */
+    const val PW1 = "PW1"
+
+    /** 税务登记办理 */
+    const val PW2 = "PW2"
+
+    /** 银行账户办理 */
+    const val PW3 = "PW3"
+
+    /** 代理记账办理 */
+    const val PW4 = "PW4"
+
 
 }

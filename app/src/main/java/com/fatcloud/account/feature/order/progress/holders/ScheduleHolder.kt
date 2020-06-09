@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.list.BaseItemViewHolder
+import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.order.progress.BusinessProgress
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import kotlinx.android.extensions.LayoutContainer
@@ -44,22 +45,26 @@ class ScheduleHolder(parent: ViewGroup?) : BaseItemViewHolder<BusinessProgress>(
         status_tv.text = data.stateText
 
 
+
+        when (data.mold) {
+            Constants.P2 -> handleEnterpriseProduct(data)
+            else -> handlePersonalProduct(data)
+        }
+    }
+
+    /**
+     * 个人业务
+     */
+    private fun handlePersonalProduct(data: BusinessProgress) {
         when (data.code) {
-            "PW1" -> {
+            Constants.PW1 -> {
                 look_detail_tv.visibility = View.VISIBLE
                 look_detail_tv.text = "查看"
             }
-            "PW2" -> {
-                if (data.mold == "P2") {
-                    // 企业税务等级没有详情页
-                    look_detail_tv.visibility = View.INVISIBLE
-                } else {
-                    look_detail_tv.visibility = View.VISIBLE
-                }
-
+            Constants.PW2 -> {
+                look_detail_tv.visibility = View.VISIBLE
             }
-            "PW3" -> {
-
+            Constants.PW3 -> {
                 if (data.state == "OS7" || data.state == "OS8") {
                     look_detail_tv.visibility = View.VISIBLE
                     look_detail_tv.text = "查看"
@@ -67,7 +72,35 @@ class ScheduleHolder(parent: ViewGroup?) : BaseItemViewHolder<BusinessProgress>(
                     look_detail_tv.visibility = View.GONE
                 }
             }
-            "PW4" -> {
+            Constants.PW4 -> {
+                look_detail_tv.visibility = View.VISIBLE
+                look_detail_tv.text = "查看"
+            }
+
+        }
+    }
+
+    /**
+     * 企业套餐
+     */
+    private fun handleEnterpriseProduct(data: BusinessProgress) {
+        when (data.code) {
+            Constants.PW1 -> {
+                look_detail_tv.visibility = View.VISIBLE
+                look_detail_tv.text = "查看"
+            }
+            Constants.PW2 -> {
+                look_detail_tv.visibility = View.INVISIBLE
+            }
+            Constants.PW3 -> {
+                if (data.state != "OW4") {
+                    look_detail_tv.visibility = View.VISIBLE
+                    look_detail_tv.text = "查看"
+                } else {
+                    look_detail_tv.visibility = View.GONE
+                }
+            }
+            Constants.PW4 -> {
                 look_detail_tv.visibility = View.VISIBLE
                 look_detail_tv.text = "查看"
             }

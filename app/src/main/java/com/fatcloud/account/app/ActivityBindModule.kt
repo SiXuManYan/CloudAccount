@@ -17,7 +17,7 @@ import com.fatcloud.account.feature.account.password.login.PasswordLoginModule
 import com.fatcloud.account.feature.news.detail.NewsDetailActivity
 import com.fatcloud.account.feature.news.detail.NewsDetailModule
 import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterInfoModule
-import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterRegisterInfoActivity
+import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterInfoActivity
 import com.fatcloud.account.feature.order.details.personal.RegistrantInfoActivity
 import com.fatcloud.account.feature.order.details.personal.RegistrantInfoModule
 import com.fatcloud.account.feature.order.lists.OrderListActivity
@@ -88,7 +88,7 @@ abstract class ActivityBindModule {
 
     @ActivityScore
     @ContributesAndroidInjector(modules = [CompanyRegisterInfoModule::class])
-    abstract fun companyRegisterRegisterInfoActivity(): CompanyRegisterRegisterInfoActivity
+    abstract fun companyRegisterRegisterInfoActivity(): CompanyRegisterInfoActivity
 
     @ActivityScore
     @ContributesAndroidInjector(modules = [ScheduleModule::class])

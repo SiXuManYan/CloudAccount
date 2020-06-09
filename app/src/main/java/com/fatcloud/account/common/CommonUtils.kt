@@ -23,6 +23,7 @@ import android.view.animation.Animation
 import android.view.animation.CycleInterpolator
 import android.view.animation.Interpolator
 import android.view.animation.TranslateAnimation
+import android.widget.ImageView
 import android.widget.TextView
 import com.fatcloud.account.R
 //import com.amap.api.maps2d.AMapUtils
@@ -178,23 +179,6 @@ object CommonUtils {
         getShareDefault().put(Constants.SP_AUTO_PLAY_VIDEO, auto)
     }
 
-
-//
-//    /**
-//     * 获取的城市首页信息
-//     * @return
-//     */
-//    fun getCityConfigInfo(): CityConfigInfo? {
-//        val saveString = getShareDefault().getString(Constants.SP_LAST_CITY_CONFIGURATION_INFO)
-//        if (saveString.isNullOrEmpty()) {
-//            return null
-//        }
-//        return Gson().fromJson(saveString, CityConfigInfo::class.java)
-//    }
-//
-//    fun setCityConfigInfo(cityConfigInfo: CityConfigInfo) {
-//        getShareDefault().put(Constants.SP_LAST_CITY_CONFIGURATION_INFO, Gson().toJson(cityConfigInfo))
-//    }
 
     /**
      * 根据经纬度算距离
@@ -888,5 +872,70 @@ object CommonUtils {
         translateAnimation.duration = 500
         return translateAnimation
     }
+
+
+    /**
+     * 订单支付状态
+     */
+    fun setPaymentStatus(payState: String, statusImage: ImageView, statusTextView: TextView) {
+        when (payState) {
+            "OS1" -> {
+                statusImage.setImageResource(R.drawable.ic_status_daizhifu)
+                statusTextView.text = "待支付"
+            }
+            "OS2" -> {
+                statusImage.setImageResource(R.drawable.ic_status_dingdanshixiao)
+                statusTextView.text = "取消订单"
+            }
+            "OS3" -> {
+                statusImage.setImageResource(R.drawable.ic_status_dingdanshixiao)
+                statusTextView.text = "订单实效"
+            }
+            "OS4" -> {
+                statusImage.setImageResource(R.drawable.ic_status_zhifuzhong)
+                statusTextView.text = "支付中"
+            }
+            "OS5" -> {
+                statusImage.setImageResource(R.drawable.ic_status_yibanjie)
+                statusTextView.text = "已支付"
+            }
+
+            "OS6" -> {
+                statusImage.setImageResource(R.drawable.ic_status_banlizhong)
+                statusTextView.text = "已受理"
+            }
+            "OS7" -> {
+                statusImage.setImageResource(R.drawable.ic_status_banlizhong)
+                statusTextView.text = "办理中"
+            }
+            "OS8" -> {
+                statusImage.setImageResource(R.drawable.ic_status_yibanjie)
+                statusTextView.text = "已办结"
+            }
+            "OW1" -> {
+                statusImage.setImageResource(R.drawable.ic_status_banlizhong)
+                statusTextView.text = "已激活"
+            }
+            "OW2" -> {
+                statusImage.setImageResource(R.drawable.ic_status_banlizhong)
+                statusTextView.text = "办理中"
+            }
+            "OW3" -> {
+                statusImage.setImageResource(R.drawable.ic_status_yibanjie)
+                statusTextView.text = "已办结"
+            }
+            "OW4" -> {
+                statusImage.setImageResource(R.drawable.ic_status_dingdanshixiao)
+                statusTextView.text = "未激活"
+            }
+
+
+            else -> {
+                statusImage.visibility = View.INVISIBLE
+                statusTextView.visibility = View.INVISIBLE
+            }
+        }
+    }
+
 
 }

@@ -37,8 +37,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
                     android:layout_below="@+id/login_out_tv"
-                    android:paddingLeft="30dp"
                     android:layout_marginTop="30dp"
+                    android:paddingLeft="30dp"
                     android:paddingRight="30dp">
 
                     <com.fatcloud.account.view.CircleImageView
@@ -178,7 +178,9 @@
                 android:layout_height="50dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp">
+                android:paddingRight="15dp"
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <ImageView
                     android:id="@+id/income_tag_iv"
@@ -224,7 +226,9 @@
                 android:layout_height="50dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp">
+                android:paddingRight="15dp"
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <ImageView
                     android:id="@+id/qr_tag_iv"

@@ -2,6 +2,10 @@ package com.fatcloud.account.entity.order.enterprise
 
 import com.fatcloud.account.entity.order.IdentityImg
 
+
+/**
+ *  股权人相关信息
+ */
 data class Shareholder(
     val idno: String,
     val idnoAddr: String,

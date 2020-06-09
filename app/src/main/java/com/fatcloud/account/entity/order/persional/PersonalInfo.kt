@@ -1,6 +1,7 @@
 package com.fatcloud.account.entity.order.persional
 
 import com.fatcloud.account.entity.order.IdentityImg
+import com.fatcloud.account.entity.order.enterprise.Shareholder
 import java.math.BigDecimal
 
 /**
@@ -103,7 +104,23 @@ data class PersonalInfo(
     val nation: String,
 
     val realName: String,
-    val tel: String
+    val tel: String,
+
+
+    // 公司信息
+
+
+    val enterpriseName0: String,
+    val enterpriseName1: String,
+    val enterpriseName2: String,
+
+    /**
+     * 注册资本
+     */
+    val investMoney: BigDecimal = BigDecimal.ZERO,
+    val investYearNum: Int,
+
+    val shareholders: List<Shareholder> = ArrayList()
 
 
 )

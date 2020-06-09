@@ -1,6 +1,7 @@
 package com.fatcloud.account.feature.order.progress
 
 import android.content.Intent
+import android.icu.lang.UScript.HAN
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,7 @@ import com.fatcloud.account.base.ui.list.BaseRefreshListActivity
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.order.persional.Order
 import com.fatcloud.account.entity.order.progress.BusinessProgress
-import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterRegisterInfoActivity
+import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterInfoActivity
 import com.fatcloud.account.feature.order.details.personal.RegistrantInfoActivity
 import com.fatcloud.account.feature.order.progress.holders.ScheduleHolder
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
@@ -72,64 +73,11 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
                     val adapterPosition = holder.adapterPosition
                     val model = adapter?.allData?.get(adapterPosition)
                     model?.let {
-
-
-                        when (it.code) {
-                            "PW1" -> {
-                                //  营业执照办理
-                                if (it.mold == "P2") {
-
-                                    // 企业
-                                    startActivity(
-                                        Intent(this@ScheduleActivity, CompanyRegisterRegisterInfoActivity::class.java)
-                                            .putExtra(Constants.PARAM_ORDER_WORK_ID, orderId)
-                                            .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.mold)
-                                    )
-                                } else {
-                                    // 个人
-                                    startActivity(
-                                        Intent(this@ScheduleActivity, RegistrantInfoActivity::class.java)
-                                            .putExtra(Constants.PARAM_ORDER_ID, orderId)
-                                            .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
-                                    )
-                                }
-                            }
-                            "PW2" -> {
-                                //  企业税务登记办理 无事件
-                                if (it.mold != "P2") {
-                                    // 个人
-                                    startActivity(
-                                        Intent(this@ScheduleActivity, RegistrantInfoActivity::class.java)
-                                            .putExtra(Constants.PARAM_ORDER_ID, orderId)
-                                            .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
-                                    )
-                                }
-
-
-                            }
-                            "PW3" -> {
-                                // 银行账户办理
-
-                                if (it.mold == "P2") {
-                                    // 企业
-                                    if (it.state == "OW1") {
-
-                                    } else {
-                                        // 银行信息页
-                                    }
-
-                                }
-                            }
-                            "PW4" -> {
-                                // 代理记账办理
-                            }
-
+                        when (it.mold) {
+                            Constants.P2 -> handleEnterpriseProduct(it)
+                            else -> handlePersonalProduct(it)
                         }
-
-
                     }
-
-
                 }
                 return holder
             }
@@ -140,8 +88,74 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
         return adapter
     }
 
-    override fun getItemDecoration(): RecyclerView.ItemDecoration? {
-        return null
+
+    override fun getItemDecoration(): RecyclerView.ItemDecoration? = null
+
+
+    /**
+     * 个人业务
+     */
+    private fun handlePersonalProduct(it: BusinessProgress) {
+        when (it.code) {
+            Constants.PW1 -> {
+                startActivity(
+                    Intent(this@ScheduleActivity, RegistrantInfoActivity::class.java)
+                        .putExtra(Constants.PARAM_ORDER_ID, orderId)
+                        .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
+                )
+            }
+            Constants.PW2 -> {
+                startActivity(
+                    Intent(this@ScheduleActivity, RegistrantInfoActivity::class.java)
+                        .putExtra(Constants.PARAM_ORDER_ID, orderId)
+                        .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
+                )
+            }
+            Constants.PW3 -> {
+
+            }
+            Constants.PW4 -> {
+
+            }
+
+        }
+
+    }
+
+    /**
+     * 企业业务
+     */
+    private fun handleEnterpriseProduct(it: BusinessProgress) {
+        when (it.code) {
+            Constants.PW1 -> {
+                startActivity(
+                    Intent(this@ScheduleActivity, CompanyRegisterInfoActivity::class.java)
+                        .putExtra(Constants.PARAM_ORDER_WORK_ID, it.id)
+                        .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
+                )
+            }
+            Constants.PW2 -> {
+                // 企业税务登记无事件
+            }
+            Constants.PW3 -> {
+                if (it.state == "OW1") {
+                    // 编辑页
+                } else {
+                    // 回显银行信息页
+                    startActivity(
+                        Intent(this@ScheduleActivity, CompanyRegisterInfoActivity::class.java)
+                            .putExtra(Constants.PARAM_ORDER_WORK_ID, it.id)
+                            .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
+                            .putExtra(Constants.PARAM_ORDER_ID, orderId)
+                    )
+
+                }
+            }
+            Constants.PW4 -> {
+
+            }
+
+        }
     }
 
 }
