@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/font_white"
+    android:orientation="vertical">
+
+    <include layout="@layout/inc_title_bar" />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/zero_choice_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/first_choice_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/second_choice_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/investment_period"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/amount_of_funds"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:id="@+id/business_scope"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:text="经营范围"
+                    android:textColor="@color/color_first_level" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/business_scope_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@+id/business_scope"
+                    android:minWidth="150dp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/split_line_color" />
+
+
+            </RelativeLayout>
+
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/bank_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/bank_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:id="@+id/addr_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:text="地址"
+                    android:textColor="@color/color_first_level" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/addr_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@+id/addr_iv"
+                    android:minWidth="150dp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/split_line_color" />
+
+
+            </RelativeLayout>
+
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/detail_addr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/split_line_color" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:layout_width="3dp"
+                    android:layout_height="13dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/shape_vertical_line_red" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="法人信息"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_14"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="3dp"
+                android:background="@color/split_line_color" />
+
+            <com.fatcloud.account.view.EditView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <com.fatcloud.account.view.EditView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <com.fatcloud.account.view.EditView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <com.fatcloud.account.view.EditView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <com.fatcloud.account.view.EditView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp">
+
+                <androidx.cardview.widget.CardView
+
+                    android:layout_width="165dp"
+                    android:layout_height="120dp"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:cardBackgroundColor="@color/font_white"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="1dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true">
+
+                    <ImageView
+                        android:id="@+id/id_card_front_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        tools:src="@tools:sample/backgrounds/scenic" />
+
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
+
+                    android:layout_width="165dp"
+                    android:layout_height="120dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="right"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:cardBackgroundColor="@color/font_white"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="1dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true">
+
+                    <ImageView
+                        android:id="@+id/id_card_obverse_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        tools:src="@tools:sample/backgrounds/scenic" />
+
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="支持扩展名: .png .jpg"
+                android:textColor="@color/color_FFAF00"
+                android:textSize="@dimen/font_size_10" />
+
+
+            <TextView
+                android:id="@+id/payment_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/shape_stock_red_15"
+                android:paddingLeft="12dp"
+                android:paddingTop="8dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="8dp"
+                android:text="添加股东 + "
+                android:textColor="@color/color_app_red"
+                android:textSize="@dimen/font_size_12"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/split_line_color" />
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>

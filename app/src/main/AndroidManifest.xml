@@ -162,6 +162,7 @@
 
         <activity android:name=".feature.order.details.enterprise.company.CompanyRegisterInfoActivity" />
         <activity android:name=".feature.order.details.personal.RegistrantInfoActivity" />
+        <activity android:name=".feature.forms.enterprise.license.FormLicenseEnterpriseActivity" />
 
 
     </application>

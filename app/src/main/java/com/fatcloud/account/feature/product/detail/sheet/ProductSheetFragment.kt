@@ -116,7 +116,7 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
 
     }
 
-    private fun clearSelect(){
+    private fun clearSelect() {
         adapter?.allData?.forEachIndexed { index, price ->
             if (price.nativeIsSelect) {
                 price.nativeIsSelect = false
