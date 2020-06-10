@@ -3,6 +3,7 @@ package com.fatcloud.account.common
 object Constants {
 
 
+
     const val PR_DEFAULT = "cloud"
     const val PR_LOCATION = "location"
 
@@ -73,7 +74,7 @@ object Constants {
     const val PARAM_CAPTCHA_MODE = "param_captcha_mode"// 验证码用途类型
     const val PARAM_CAPTCHA = "param_captcha"// 验证码用途类型
     const val PARAM_IS_PASSWORD_REGISTER_SET_MODE = "param_is_password_register_set_mode"// 设置密码用途类型  (true注册设置密码 false 登录后修改密码)
-
+    const val PARAM_DATA = "param_data"
 
     /** RxBus Event */
     const val EVENT_STARTUP_DONE = 0x59//新手接口
@@ -122,15 +123,16 @@ object Constants {
 
 
     // 产品类型
-
     /** 个体户营业执照办理 */
     const val P1 = "P1"
 
-    /** 企业套餐 */
-    const val P2 = "P2"
-
     /** 个体户代理记账 */
     const val P3 = "P3"
+
+    /**
+     *  企业套餐  包括 营业执照办理，代理记账，税务登记，银行对公账户
+     */
+    const val P2 = "P2"
 
     /** 个体户税务登记 */
     const val P4 = "P4"
@@ -159,6 +161,19 @@ object Constants {
 
     /** 代理记账办理 */
     const val PW4 = "PW4"
+
+
+    /**
+     * 代理记账价格类型
+     * 固定价格
+     */
+    const val PP1 = "PP1"
+
+    /**
+     * 代理记账价格类型
+     * 动态计算价格 >2000万，金额 = 手动填写金额*0.1%
+     */
+    const val PP2 = "PP2"
 
 
 }

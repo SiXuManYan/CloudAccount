@@ -45,7 +45,7 @@ abstract class ActivityBindModule {
     abstract fun mainActivityInjector(): MainActivity
 
     @ActivityScore
-    @ContributesAndroidInjector(modules = [ProductDetailModule::class])
+    @ContributesAndroidInjector(modules = [FragmentBindModule::class, ProductDetailModule::class])
     abstract fun productDetailActivityInjector(): ProductDetailActivity
 
 

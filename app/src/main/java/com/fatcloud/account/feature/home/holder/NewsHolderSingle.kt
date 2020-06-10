@@ -48,8 +48,7 @@ class NewsHolderSingle(parent: ViewGroup?) : BaseItemViewHolder<News>(parent, R.
         if (!imgUrls.isNullOrEmpty()) {
             //  TODO url请求
             Glide.with(context)
-//                .load(imgUrls[0])
-                .load(CommonUtils.getTestUrl())
+                .load(imgUrls[0])
                 .apply(
                     RequestOptions().transform(
                         MultiTransformation(

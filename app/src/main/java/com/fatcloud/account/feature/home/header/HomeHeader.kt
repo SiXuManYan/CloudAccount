@@ -124,8 +124,7 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
                 override fun displayImage(context: Context?, obj: Any?, imageView: ImageView?) {
 
                     Glide.with(context!!)
-//                        .load(obj)
-                        .load(CommonUtils.getTestUrl())
+                        .load(obj)
                         .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE).dontAnimate())
                         .error(R.drawable.ic_error_image_load)
                         .into(imageView!!)
@@ -206,8 +205,7 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
             }
 
             Glide.with(context)
-//                .load(product.imgUrl)
-                .load(CommonUtils.getTestUrl())
+                .load(product.imgUrl)
                 .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 8))))
                 .error(R.drawable.ic_error_image_load)
                 .into(indexImage)

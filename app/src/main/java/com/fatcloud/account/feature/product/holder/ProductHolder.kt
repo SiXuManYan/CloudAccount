@@ -37,8 +37,7 @@ class ProductHolder(parent: ViewGroup?) : BaseItemViewHolder<Product2>(parent, R
         amount_tv.text = StringUtils.getString(R.string.money_symbol_format, data.money.stripTrailingZeros().toPlainString())
 
         Glide.with(context)
-//            .load(data.imgurl)
-            .load(CommonUtils.getTestUrl())
+            .load(data.imgurl)
             .apply(
                 RequestOptions().transform(
                     MultiTransformation(

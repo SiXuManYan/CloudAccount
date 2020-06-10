@@ -21,6 +21,8 @@ import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.fatcloud.account.feature.product.detail.sheet.ProductSheetFragment
+import com.fatcloud.account.feature.product.detail.spinners.ProductSpinnerFragment
 import com.youth.banner.BannerConfig
 import com.youth.banner.loader.ImageLoader
 import kotlinx.android.synthetic.main.activity_product_detail.*
@@ -32,6 +34,7 @@ import kotlinx.android.synthetic.main.activity_product_detail.*
  */
 class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), ProductDetailView {
 
+    private var mData: ProductDetail? = null
     private var productId = "0"
 
 
@@ -59,8 +62,7 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
                 override fun displayImage(context: Context?, obj: Any?, imageView: ImageView?) {
 
                     Glide.with(context!!)
-//                        .load(obj)
-                        .load(CommonUtils.getTestUrl())
+                        .load(obj)
                         .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE).dontAnimate())
                         .error(R.drawable.ic_error_image_load)
                         .into(imageView!!)
@@ -83,8 +85,7 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
 
     override fun bindDetailData(data: ProductDetail) {
 
-
-
+        mData = data
         title_tv.text = data.name
         content_tv.text = data.introduce
         CommonUtils.setFormatText(
@@ -109,17 +110,32 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
 
         // image
         image_container_ll.removeAllViews()
-        data.detailImgUrls.forEachIndexed { index, url ->
 
+
+        data.publicImgUrls.forEachIndexed { index, url ->
 
             val imageView = ImageView(this).apply {
                 layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
             }
 
+            Glide.with(this)
+                .load(url)
+                .error(R.drawable.ic_error_image_load)
+                .into(imageView)
+
+            image_container_ll.addView(imageView)
+
+
+        }
+
+        data.detailImgUrls.forEachIndexed { index, url ->
+
+            val imageView = ImageView(this).apply {
+                layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+            }
 
             Glide.with(this)
-//                .load(product.imgUrl)
-                .load(CommonUtils.getTestUrl())
+                .load(url)
                 .error(R.drawable.ic_error_image_load)
                 .into(imageView)
 
@@ -146,7 +162,8 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
     fun click(view: View) {
         when (view.id) {
             R.id.back_iv -> onBackPressed()
-            R.id.title_rl -> {3
+            R.id.title_rl -> {
+
                 if (AndroidUtil.isDoubleClick(view)) {
                     scroll_nsv.smoothScrollTo(0, 0)
                 }
@@ -158,12 +175,54 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
                 startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Constants.CONSUMER_HOT_LINE)))
             }
             R.id.transact_tv -> {
-                ToastUtils.showShort("功能开发中")
+                if (!protocol.isChecked) {
+                    ToastUtils.showShort("请同意用户服务协议")
+                }
+                mData?.let {
+                    when (it.mold) {
+                        Constants.P1 -> {
+                            licenseHandleP1(it)
+                        }
+                        Constants.P2 -> {
+                            enterpriseHandleP2(it)
+
+                        }
+                        Constants.P3 -> {
+
+                        }
+                        Constants.P4 -> {
+
+
+                        }
+                        else -> {
+                        }
+                    }
+
+                }
             }
             else -> {
             }
         }
 
+    }
+
+
+
+    /**
+     * 个体户营业执照办理
+     */
+    private fun licenseHandleP1(it: ProductDetail) {
+
+        ProductSheetFragment.newInstance(it).apply {
+            show(supportFragmentManager, this.tag)
+        }
+
+    }
+
+    private fun enterpriseHandleP2(it: ProductDetail) {
+        ProductSpinnerFragment.newInstance(it).apply {
+            show(supportFragmentManager, this.tag)
+        }
     }
 
 

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/corner_other_bt_top"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image_iv"
+            android:layout_width="110dp"
+            android:layout_height="73dp"
+            android:layout_marginRight="10dp"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            tools:background="@tools:sample/backgrounds/scenic[3]" />
+
+        <TextView
+            android:id="@+id/amount_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/image_iv"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.2"
+            android:maxLines="2"
+            android:textColor="@color/color_app_red"
+            android:textSize="@dimen/font_size_18"
+            android:textStyle="bold"
+            tools:text="￥10000" />
+
+
+        <TextView
+            android:id="@+id/content_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/amount_tv"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/image_iv"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.2"
+            android:maxLines="1"
+            android:textColor="@color/color_first_level"
+            android:textSize="@dimen/font_size_14"
+            tools:text="个体户营业执照" />
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:background="@color/split_line_color" />
+
+    <RelativeLayout
+        android:id="@+id/first_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/industry_category"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.2"
+            android:maxLines="1"
+            android:text="行业类别"
+            android:textColor="@color/color_first_level"
+            android:textSize="@dimen/font_size_14" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/industry_category_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/industry_category"
+            android:minWidth="150dp" />
+
+
+    </RelativeLayout>
+
+    <include layout="@layout/layout_split_1_px" />
+
+    <RelativeLayout
+        android:id="@+id/second_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/tax_return_type"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.2"
+            android:maxLines="1"
+            android:text="报税类型"
+            android:textColor="@color/color_first_level"
+            android:textSize="@dimen/font_size_14" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/tax_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/tax_return_type"
+            android:minWidth="150dp" />
+
+
+    </RelativeLayout>
+
+    <include layout="@layout/layout_split_1_px" />
+
+    <RelativeLayout
+        android:id="@+id/third_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/income"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.2"
+            android:maxLines="1"
+            android:text="收入情况"
+            android:textColor="@color/color_first_level"
+            android:textSize="@dimen/font_size_14" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/income_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/income"
+            android:minWidth="150dp" />
+
+
+    </RelativeLayout>
+
+    <include layout="@layout/layout_split_1_px" />
+
+    <RelativeLayout
+        android:id="@+id/actual_income_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="50dp"
+        android:visibility="invisible"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/actual_income"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.2"
+            android:maxLines="1"
+            android:text="实际收入情况"
+            android:textColor="@color/color_first_level"
+            android:textSize="@dimen/font_size_14" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/actual_income_et"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="填写实际收入(万)"
+            android:imeOptions="actionGo"
+            android:inputType="phone"
+            android:lines="1"
+            android:maxLength="11"
+            android:minWidth="100dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/color_first_level"
+            android:textColorHint="@color/color_cccccc"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/next_tv"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/shape_bg_4_red"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/font_white"
+        android:textSize="@dimen/font_size_14" />
+
+
+</LinearLayout>

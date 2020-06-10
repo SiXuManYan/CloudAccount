@@ -10,12 +10,16 @@ import com.fatcloud.account.feature.news.child.NewsChildFragment
 import com.fatcloud.account.feature.news.child.NewsChildModule
 import com.fatcloud.account.feature.product.ProductFragment
 import com.fatcloud.account.feature.product.ProductModule
+import com.fatcloud.account.feature.product.detail.sheet.ProductSheetFragment
+import com.fatcloud.account.feature.product.detail.sheet.ProductSheetModule
+import com.fatcloud.account.feature.product.detail.spinners.ProductSpinnerFragment
+import com.fatcloud.account.feature.product.detail.spinners.ProductSpinnerModule
 import com.fatcloud.account.scope.FragmentScope
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 /**
- * 绑定Fragment
+ * dagger 绑定Fragment
  */
 @Module
 abstract class FragmentBindModule {
@@ -39,6 +43,15 @@ abstract class FragmentBindModule {
     @FragmentScope
     @ContributesAndroidInjector(modules = [NewsChildModule::class])
     abstract fun newsChildFragmentInjector(): NewsChildFragment
+
+
+    @FragmentScope
+    @ContributesAndroidInjector(modules = [ProductSheetModule::class])
+    abstract fun productSheetFragmentInjector(): ProductSheetFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector(modules = [ProductSpinnerModule::class])
+    abstract fun productSpinnerFragmentInjector(): ProductSpinnerFragment
 
 
 }

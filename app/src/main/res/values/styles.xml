@@ -1,7 +1,6 @@
 <resources>
 
 
-
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
     </style>
@@ -36,8 +35,6 @@
         <item name="android:activityCloseEnterAnimation">@anim/right_fade_in</item>
         <item name="android:activityCloseExitAnimation">@anim/right_fade_out</item>
     </style>
-
-
 
 
     <!--dialog全屏显示-->
@@ -98,12 +95,54 @@
     </style>
 
 
-
-
-
     <style name="MyCheckBox" parent="Theme.AppCompat.DayNight">
         <item name="colorControlNormal">@color/color_list_gray_background</item>
         <item name="colorControlActivated">@color/color_app_red</item>
     </style>
+
+
+    <style name="CustomBottomSheetDialogThemeLight" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyleLight</item>
+    </style>
+
+    <style name="CustomBottomSheetStyleLight" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+
+    <!-- spinner -->
+    <style name="common_spinner">
+        <!--设置弹窗背景为 系统设置的 应用主色调 在application 的colorPrimay 中配置的颜色, actionBar toolbar 默认使用这个为背景颜色-->
+        <item name="android:popupBackground">@color/colorPrimary</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <!--设置 spinner 显示位置往下偏移 actionBarSize 的高度, 默认显示是直接显示在 Spinner 的选中项的上方-->
+        <item name="android:dropDownVerticalOffset">?attr/actionBarSize</item>
+        <!--设置选中之后Item 的背景变换 设置背景为 灰色背景色-->
+        <item name="android:dropDownSelector">@color/color_third_level</item>
+        <!--设置下拉框的 list 的样式, 主要是设置 分割线, 当然也可以设置下拉的 list 的背景颜色-->
+        <item name="android:dropDownListViewStyle">@style/spinnerListStyle</item>
+        <!--设置显示在 popup 中 item(TextView) 的样式-->
+        <item name="android:dropDownItemStyle">@style/itemSpinnerStyle</item>
+    </style>
+
+    <!--设置分割线-->
+    <style name="spinnerListStyle" parent="@android:style/Widget.ListView.DropDown">
+        <item name="android:divider">@color/split_line_color</item>
+        <item name="android:dividerHeight">1px</item>
+    </style>
+
+    <!--设置文本颜色 和大小-->
+    <style name="itemSpinnerStyle" parent="@android:style/Widget.TextView.SpinnerItem">
+        <item name="android:textColor">@color/color_third_level</item>
+        <item name="android:textSize">@dimen/font_size_12</item>
+    </style>
+    <!-- spinner end-->
+
+
 
 </resources>
