@@ -21,7 +21,11 @@ class DataWork(context: Context, workerParams: WorkerParameters) : Worker(contex
             // 处理具体耗时逻辑
             Constants.ACTION_SYNC -> {
                 presenter.getNewsCategoryToDataBase()
+
             }
+
+
+
             else -> {
 
             }

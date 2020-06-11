@@ -1,24 +1,21 @@
 package com.fatcloud.account.base.ui.list
 
-import android.os.Handler
 import android.text.TextUtils
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import butterknife.BindView
 import com.blankj.utilcode.util.SizeUtils
 import com.fatcloud.account.R
-import com.fatcloud.account.R2.id.title_bar
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
-import com.jude.easyrecyclerview.EasyRecyclerView
-import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
-import com.jude.easyrecyclerview.decoration.DividerDecoration
+import com.fatcloud.account.view.swipe.NoMoreItemView
 import com.fatcloud.account.view.swipe.footer.EmptyImageFooter
 import com.fatcloud.account.view.swipe.footer.EmptyLoadingFooter
 import com.fatcloud.account.view.swipe.footer.EmptyRetryFooter
-
-import com.fatcloud.account.view.swipe.NoMoreItemView
+import com.jude.easyrecyclerview.EasyRecyclerView
+import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
+import com.jude.easyrecyclerview.decoration.DividerDecoration
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener

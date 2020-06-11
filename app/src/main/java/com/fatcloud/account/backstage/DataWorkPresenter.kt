@@ -6,6 +6,8 @@ import com.fatcloud.account.base.net.BaseJsonArrayHttpSubscriber
 import com.fatcloud.account.data.CloudDataBase
 import com.fatcloud.account.entity.news.NewsCategory
 import com.blankj.utilcode.util.Utils
+import com.fatcloud.account.base.net.BaseHttpSubscriber
+import com.fatcloud.account.entity.commons.Commons
 import com.google.gson.JsonArray
 import java.util.*
 
@@ -29,6 +31,8 @@ class DataWorkPresenter constructor(private var serviceView: ServiceView) : Base
                 })
         )
     }
+
+
 
 
 }

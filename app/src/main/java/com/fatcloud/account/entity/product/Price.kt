@@ -7,7 +7,7 @@ import java.math.BigDecimal
 class Price : Serializable {
 
 
-    var id: String? = ""
+    var id: String = ""
 
     /**
      * @see Order.mold

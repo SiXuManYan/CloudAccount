@@ -1,5 +1,6 @@
 package com.fatcloud.account.network
 
+import com.fatcloud.account.entity.commons.Commons
 import com.fatcloud.account.entity.home.HomeMix
 import com.fatcloud.account.entity.news.NewDetail
 import com.fatcloud.account.entity.news.NewsCategory
@@ -12,6 +13,7 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import io.reactivex.Flowable
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -230,5 +232,17 @@ interface ApiService {
         @Query("orderWorkId") orderWorkId: String? = null
     ): Flowable<Response<EnterpriseInfo>>
 
+
+    @GET("api/common/list")
+    fun getCommonList(): Flowable<Response<Commons>>
+
+
+    /**
+     * 添加企业套餐
+     */
+    @POST("$ORDER_API/addEnterprise")
+    fun addEnterprise(
+        @Query("in") `in`: String? = null
+    ): Flowable<Response<JsonObject>>
 
 }

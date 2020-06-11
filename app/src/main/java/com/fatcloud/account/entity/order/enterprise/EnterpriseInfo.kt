@@ -5,103 +5,107 @@ import java.math.BigDecimal
 /**
  * 企业信息
  */
-data class EnterpriseInfo(
-    val accountId: String,
-    val addr: String,
-    val area: String,
-    val bankNo: String,
-    val bankPhone: String,
-    val businessScope: List<Int>,
-    val businessScopeNames: String,
-    val createDt: String,
-    val delFlag: Int,
-    val enterpriseName0: String,
-    val enterpriseName1: String,
-    val enterpriseName2: String,
-    val id: String,
-    val income: Int,
+class EnterpriseInfo {
+    var accountId: String = ""
+    var addr: String = ""
+    var area: String = ""
+    var bankNo: String = ""
+    var bankPhone: String = ""
+    var businessScope: ArrayList<Int> = ArrayList()
+    var businessScopeNames: String = ""
+    var createDt: String = ""
+    var delFlag: Int = 0
+    var enterpriseName0: String = ""
+    var enterpriseName1: String = ""
+    var enterpriseName2: String = ""
+    var id: String = ""
+    var income: BigDecimal = BigDecimal.ZERO
 
     /**
      * 出资数额
      */
-    val investMoney:BigDecimal = BigDecimal.ZERO,
-    val investYearNum: Int = 0,
-    val mold: String,
-    val moldText: String,
-    val money: BigDecimal = BigDecimal.ZERO,
-    val nickName: String,
-    val no: String,
-    val payState: String,
-    val payStateText: String,
-    val productId: String,
-    val productName: String,
-    val productPriceId: Int,
-    val productPriceName: String,
-    val shareholders: List<Shareholder>,
-    val state: String,
-    val stateText: String,
-    val updateDt: String,
-    val username: String,
-    val version: Int,
-    val weixinPayMap: String,
+    var investMoney: BigDecimal = BigDecimal.ZERO
+    var investYearNum: String = ""
+    var mold: String = ""
+    var moldText: String = ""
+    var money: BigDecimal = BigDecimal.ZERO
+    var nickName: String = ""
+    var no: String = ""
+    var payState: String = ""
+    var payStateText: String = ""
+    var productId: String = ""
+    var productName: String = ""
+    var productPriceId: Int = 0
+    var productPriceName: String = ""
+
+    /**
+     * 股东信息
+     */
+    var shareholders: List<Shareholder> = ArrayList()
+    var state: String = ""
+    var stateText: String = ""
+    var updateDt: String = ""
+    var username: String = ""
+    var version: Int = 0
+    var weixinPayMap: String = ""
 
 
     // 银行相关信息
     /** 营业执照图网址 */
-    val businessLicenseImgUrl: String,
+    var businessLicenseImgUrl: String = ""
 
     /** 首都 */
-    val capital: String,
+    var capital: String = ""
 
     /** 电子图章网址 */
-    val electronicSealImgUrl: String,
+    var electronicSealImgUrl: String = ""
 
     /** 企业地址 */
-    val enterpriseAddr: String,
+    var enterpriseAddr: String = ""
 
     /** 企业性质 */
-    val enterpriseMold: String,
+    var enterpriseMold: String = ""
 
     /** 企业名称 */
-    val enterpriseName: String,
+    var enterpriseName: String = ""
 
     /** 金融Idno */
-    val financeIdno: String,
+    var financeIdno: String = ""
 
     /** 财务ID编号网址A */
-    val financeIdnoImgUrlA: String,
+    var financeIdnoImgUrlA: String = ""
 
     /** 金融Idno Img Url B */
-    val financeIdnoImgUrlB: String,
+    var financeIdnoImgUrlB: String = ""
 
     /** 财务名称 */
-    val financeName: String,
+    var financeName: String = ""
 
     /** 金融电话 */
-    val financePhone: String,
+    var financePhone: String = ""
 
     /** 法人认股权证网址 */
-    val legalPersonWarrantImgUrl: String,
+    var legalPersonWarrantImgUrl: String = ""
 
     /** 订单工作编号 */
-    val orderWorkId: String,
+    var orderWorkId: String = ""
 
     /** 调和地址 */
-    val reconciliatAddr: String,
+    var reconciliatAddr: String = ""
 
     /** 调解区 */
-    val reconciliatArea: String,
+    var reconciliatArea: String = ""
 
     /** 协调联系 */
-    val reconciliatContact: String,
+    var reconciliatContact: String = ""
 
     /** reconciliatPhone */
-    val reconciliatPhone: String,
+    var reconciliatPhone: String = ""
 
     /** 设置状态文本 */
-    val settingStateText: String
+    var settingStateText: String = ""
 
-)
+}
 
 /*
 

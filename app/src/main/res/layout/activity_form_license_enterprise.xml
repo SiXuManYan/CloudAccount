@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,17 +7,18 @@
     android:background="@color/font_white"
     android:orientation="vertical">
 
-    <include layout="@layout/inc_title_bar" />
-
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_nsv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="50dp"
+            android:paddingBottom="50dp">
 
             <com.fatcloud.account.view.EditView
                 android:id="@+id/zero_choice_name"
@@ -55,11 +56,12 @@
                 android:paddingRight="15dp" />
 
             <RelativeLayout
+                android:id="@+id/business_scope_rl"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp">
+                android:paddingRight="0dp">
 
                 <TextView
                     android:id="@+id/business_scope"
@@ -70,12 +72,24 @@
                     android:text="经营范围"
                     android:textColor="@color/color_first_level" />
 
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/business_scope_spinner"
+                <TextView
+                    android:id="@+id/business_scope_value"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_toLeftOf="@+id/scope_sp"
+                    android:textColor="@color/color_second_level"
+                    android:textSize="@dimen/font_size_14"
+                    tools:text="经营范围" />
+
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/scope_sp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@+id/business_scope"
+
                     android:minWidth="150dp" />
 
 
@@ -148,160 +162,38 @@
                 android:layout_height="10dp"
                 android:background="@color/split_line_color" />
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="15dp"
-                android:paddingTop="10dp"
-                android:paddingRight="15dp"
-                android:paddingBottom="10dp">
-
-                <ImageView
-                    android:layout_width="3dp"
-                    android:layout_height="13dp"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/shape_vertical_line_red" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="法人信息"
-                    android:textColor="@color/color_first_level"
-                    android:textSize="@dimen/font_size_14"
-                    android:textStyle="bold" />
-
-
-            </RelativeLayout>
-
-            <View
+            <!-- 法人信息 -->
+            <com.fatcloud.account.view.CompanyMemberEditView
+                android:id="@+id/legal_person_ev"
                 android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="3dp"
-                android:background="@color/split_line_color" />
+                android:layout_height="wrap_content" />
 
-            <com.fatcloud.account.view.EditView
+            <!-- 监视信息 -->
+            <com.fatcloud.account.view.CompanyMemberEditView
+                android:id="@+id/supervisor_ev"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!-- 股东信息 -->
+            <com.fatcloud.account.view.CompanyMemberEditView
+                android:id="@+id/shareholder_ev"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:id="@+id/shareholder_more_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp" />
-
-            <com.fatcloud.account.view.EditView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp" />
-
-            <com.fatcloud.account.view.EditView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp" />
-
-            <com.fatcloud.account.view.EditView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp" />
-
-            <com.fatcloud.account.view.EditView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="15dp">
-
-                <androidx.cardview.widget.CardView
-
-                    android:layout_width="165dp"
-                    android:layout_height="120dp"
-                    android:foreground="?attr/selectableItemBackground"
-                    app:cardBackgroundColor="@color/font_white"
-                    app:cardCornerRadius="6dp"
-                    app:cardElevation="1dp"
-                    app:cardPreventCornerOverlap="false"
-                    app:cardUseCompatPadding="true">
-
-                    <ImageView
-                        android:id="@+id/id_card_front_iv"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        tools:src="@tools:sample/backgrounds/scenic" />
-
-                </androidx.cardview.widget.CardView>
-
-
-                <androidx.cardview.widget.CardView
-
-                    android:layout_width="165dp"
-                    android:layout_height="120dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_gravity="right"
-                    android:foreground="?attr/selectableItemBackground"
-                    app:cardBackgroundColor="@color/font_white"
-                    app:cardCornerRadius="6dp"
-                    app:cardElevation="1dp"
-                    app:cardPreventCornerOverlap="false"
-                    app:cardUseCompatPadding="true">
-
-                    <ImageView
-                        android:id="@+id/id_card_obverse_iv"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        tools:src="@tools:sample/backgrounds/scenic" />
-
-                </androidx.cardview.widget.CardView>
-
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:text="支持扩展名: .png .jpg"
-                android:textColor="@color/color_FFAF00"
-                android:textSize="@dimen/font_size_10" />
-
-
-            <TextView
-                android:id="@+id/payment_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:layout_gravity="right"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/shape_stock_red_15"
-                android:paddingLeft="12dp"
-                android:paddingTop="8dp"
-                android:paddingRight="12dp"
-                android:paddingBottom="8dp"
-                android:text="添加股东 + "
-                android:textColor="@color/color_app_red"
-                android:textSize="@dimen/font_size_12"
-                android:visibility="gone"
-                tools:visibility="visible" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/split_line_color" />
+                android:orientation="vertical" />
 
         </LinearLayout>
 
 
     </androidx.core.widget.NestedScrollView>
 
+    <include layout="@layout/inc_title_bar" />
 
-</LinearLayout>
+    <include layout="@layout/layout_bottom_action" />
+
+
+</RelativeLayout>

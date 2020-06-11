@@ -1,6 +1,8 @@
 package com.fatcloud.account.app
 
 import com.blankj.utilcode.util.Utils
+import com.fatcloud.account.base.net.BaseHttpSubscriber
+import com.fatcloud.account.entity.commons.Commons
 import com.fatcloud.account.network.ApiService
 import io.reactivex.FlowableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -13,10 +15,9 @@ import io.reactivex.schedulers.Schedulers
  * </br>
  *
  */
-class CloudAccountPresenter (val view: CloudAccountView) {
+class CloudAccountPresenter(val view: CloudAccountView) {
 
     private val apiService: ApiService = (Utils.getApp() as CloudAccountApplication).apiService
-
 
 
     private var compositeDisposable: CompositeDisposable? = null
@@ -42,6 +43,42 @@ class CloudAccountPresenter (val view: CloudAccountView) {
             it.subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
         }
+    }
+
+
+    fun getCommonList() {
+        addSubscribe(
+            apiService.getCommonList()
+                .compose(flowableUICompose())
+                .subscribeWith(object : BaseHttpSubscriber<Commons>(view) {
+                    override fun onSuccess(data: Commons?) {
+                        data?.let {
+
+                            data.businessScope.apply {
+
+
+                                forEachIndexed { index, first ->
+                                    if (index == 0) {
+                                        first.nativeIsSelect = true
+                                    }
+
+
+                                    first.childs.forEach { second ->
+                                        second.nativeIsSelect = true
+                                    }
+
+                                }
+
+
+                            }
+
+                            view.receiveCommonData(data)
+
+                        }
+                    }
+
+                })
+        )
     }
 
 }

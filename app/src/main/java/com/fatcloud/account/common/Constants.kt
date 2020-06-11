@@ -3,7 +3,6 @@ package com.fatcloud.account.common
 object Constants {
 
 
-
     const val PR_DEFAULT = "cloud"
     const val PR_LOCATION = "location"
 
@@ -63,7 +62,7 @@ object Constants {
     const val PARAM_HANDLE_BACK = "param_handle_back" // 处理返回键
     const val PARAM_WEB_REFRESH = "param_web_refresh" // 是否可刷新
     const val PARAM_WEB_CHANGETITLE = "param_web_changetitle" // 自动改变标题
-    const val PARAM_PRODUCT_ID: String = "param_productId"// 产品ID
+    const val PARAM_PRODUCT_ID = "param_productId"// 产品ID
     const val PARAM_TYPE = "param_type"
     const val PARAM_ID = "param_id"
     const val PARAM_ORDER_ID = "param_order_id" // 订单id
@@ -75,6 +74,11 @@ object Constants {
     const val PARAM_CAPTCHA = "param_captcha"// 验证码用途类型
     const val PARAM_IS_PASSWORD_REGISTER_SET_MODE = "param_is_password_register_set_mode"// 设置密码用途类型  (true注册设置密码 false 登录后修改密码)
     const val PARAM_DATA = "param_data"
+    const val PARAM_PRICE_DATA = "param_price_data"
+    const val PARAM_MONEY = "param_money"
+    const val PARAM_INCOME_MONEY = "param_income_money"
+    const val PARAM_FINAL_MONEY = "param_final_money"
+    const val PARAM_PRODUCT_PRICE_ID = "param_product_price_id"
 
     /** RxBus Event */
     const val EVENT_STARTUP_DONE = 0x59//新手接口
@@ -174,6 +178,21 @@ object Constants {
      * 动态计算价格 >2000万，金额 = 手动填写金额*0.1%
      */
     const val PP2 = "PP2"
+
+    /**
+     * 服务业
+     * 身份正面
+     * 身份证正面
+     */
+    const val I1 = "I1"
+
+    /**
+     * 服务业
+     * 商贸企业
+     * 身份反面
+     * 身份证反面
+     */
+    const val I2 = "I2"
 
 
 }

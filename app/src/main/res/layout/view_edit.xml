@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
-        android:text="首选公司名称"
-        android:textColor="@color/color_first_level" />
+        android:textColor="@color/color_first_level"
+        tools:text="名称" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/content_et"
@@ -24,14 +24,13 @@
         android:background="@null"
         android:gravity="center_vertical|right"
         android:imeOptions="actionNext"
-        android:lines="1"
-        android:maxLength="11"
+        android:maxLines="1"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:textColor="@color/color_first_level"
         android:textColorHint="@color/color_cccccc"
         android:textSize="14sp"
-        tools:hint="请输入不少于三个字" />
+        tools:hint="提示信息" />
 
 
     <View

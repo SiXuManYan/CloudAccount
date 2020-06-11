@@ -148,37 +148,6 @@
             android:visibility="invisible" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/bottom_ll"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
-        android:alpha="0.9"
-        android:orientation="horizontal">
-
-
-        <TextView
-            android:id="@+id/customer_service_tv"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/color_first_level"
-            android:gravity="center"
-            android:text="联系客服"
-            android:textColor="@color/font_white"
-            android:textSize="@dimen/font_size_16" />
-
-        <TextView
-            android:id="@+id/transact_tv"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/color_app_red"
-            android:gravity="center"
-            android:text="立即办理"
-            android:textColor="@color/font_white"
-            android:textSize="@dimen/font_size_16" />
-
-    </LinearLayout>
+    <include layout="@layout/layout_bottom_action" />
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.fatcloud.account.feature.product.detail.spinners
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -18,6 +19,7 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.product.Price
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.extend.RoundTransFormation
+import com.fatcloud.account.feature.forms.enterprise.license.FormLicenseEnterpriseActivity
 import kotlinx.android.synthetic.main.fragment_product_spinner.*
 import java.math.BigDecimal
 
@@ -69,10 +71,16 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
      */
     private val priceSeal = 420
 
+    /**
+     * 当前选中的第三项
+     */
+    private var thirdProductPriceId = ""
+
     private var isFirstSelect = false
     private var isSecondSelect = false
     private var isThirdSelect = false
 
+    private var incomeMoney: BigDecimal = BigDecimal.ZERO
 
     companion object {
         fun newInstance(productDetail: ProductDetail): ProductSpinnerFragment {
@@ -204,7 +212,12 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
 
                     val price = thirdAdapter.mList[position]
                     isThirdSelect = !TextUtils.isEmpty(price.mold)
+                    incomeMoney = price.money
+                    thirdProductPriceId = price.id
+
+
                     when (productDetail!!.mold) {
+
                         Constants.P2 -> handleAmountEnterprise(price) // 企业代理记账
                         Constants.P3 -> handleAmountPersonal(price)   // 个人代理记账
                     }
@@ -293,6 +306,24 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
             third_rl.startAnimation(CommonUtils.getShakeAnimation(2))
             return
         }
+
+        startActivity(
+            Intent(activity, FormLicenseEnterpriseActivity::class.java)
+                .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
+                .putExtra(Constants.PARAM_INCOME_MONEY, incomeMoney.stripTrailingZeros().toPlainString())
+                .putExtra(Constants.PARAM_FINAL_MONEY, amount_tv.text.toString().trim())
+                .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, thirdProductPriceId)
+
+        )
+
+//          val bundle = Bundle().apply {
+//              putString(Constants.PARAM_PRODUCT_ID,productDetail?.id)
+//              putSerializable(Constants.PARAM_PRICE_DATA, productDetail)
+//          }
+//
+//        startActivity(FormLicenseEnterpriseActivity::class.java,bundle)
+
+        dismissAllowingStateLoss()
 
     }
 

@@ -26,6 +26,7 @@ import com.fatcloud.account.feature.product.detail.spinners.ProductSpinnerFragme
 import com.youth.banner.BannerConfig
 import com.youth.banner.loader.ImageLoader
 import kotlinx.android.synthetic.main.activity_product_detail.*
+import kotlinx.android.synthetic.main.layout_bottom_action.*
 
 /**
  * Created by Wangsw on 2020/5/28 0028 15:32.
@@ -74,7 +75,8 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
             })
 
         }
-
+        bottom_left_tv.text  = "联系客服"
+        bottom_right_tv.text  = "立即办理"
     }
 
     private fun initExtra() {
@@ -155,8 +157,8 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
         R.id.back_iv,
         R.id.title_rl,
         R.id.share_iv,
-        R.id.customer_service_tv,
-        R.id.transact_tv
+        R.id.bottom_left_tv,
+        R.id.bottom_right_tv
 
     )
     fun click(view: View) {
@@ -171,10 +173,10 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
             R.id.share_iv -> {
                 ToastUtils.showShort("分享功能开发中")
             }
-            R.id.customer_service_tv -> {
+            R.id.bottom_left_tv -> {
                 startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Constants.CONSUMER_HOT_LINE)))
             }
-            R.id.transact_tv -> {
+            R.id.bottom_right_tv -> {
                 if (!protocol.isChecked) {
                     ToastUtils.showShort("请同意用户服务协议")
                 }
@@ -205,7 +207,6 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
         }
 
     }
-
 
 
     /**

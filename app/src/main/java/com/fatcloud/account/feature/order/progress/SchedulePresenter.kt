@@ -7,7 +7,6 @@ import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseJsonArrayHttpSubscriber
 import com.fatcloud.account.entity.order.progress.BusinessProgress
 import com.google.gson.JsonArray
-import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
