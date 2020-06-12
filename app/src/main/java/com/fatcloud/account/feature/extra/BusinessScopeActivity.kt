@@ -99,11 +99,19 @@ class BusinessScopeActivity() : BaseMVPActivity<BusinessScopePresenter>(), Busin
     }
 
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun finish() {
         val selectPids = presenter.getSelectPids(firstAdapter?.allData)
-        setResult(0, Intent().putStringArrayListExtra(Constants.KEY_DATA,selectPids))
+        val selectPidNames = presenter.getSelectPidNames(firstAdapter?.allData)
+        setResult(
+            0,
+            Intent()
+                .putStringArrayListExtra(Constants.PARAM_SELECT_PID, selectPids)
+                .putStringArrayListExtra(Constants.PARAM_SELECT_PID_NAME, selectPidNames)
+        )
 
+
+        super.finish()
     }
+
 
 }

@@ -1,5 +1,7 @@
 package com.fatcloud.account.entity.order.persional
 
+import com.fatcloud.account.entity.commons.BusinessScope
+import com.fatcloud.account.entity.commons.Form
 import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.enterprise.Shareholder
 import java.math.BigDecimal
@@ -8,34 +10,39 @@ import java.math.BigDecimal
  * 个人业务订单详情
  *
  */
-data class PersonalInfo(
-    val accountId: String,
-    val addr: String,
-    val area: String,
-    val bankNo: String,
+class PersonalInfo {
+
+    var accountId: String = ""
+    var addr: String= ""
+    var area: String= ""
+    var bankNo: String= ""
 
     /**
      * 营业执照地址
      */
-    val businessLicenseImgUrl: String,
-    val createDt: String,
-    val delFlag: Int,
-    val id: String,
+    var businessLicenseImgUrl: String= ""
+    var createDt: String= ""
+    var delFlag: Int = 0
+
+    /**
+     * 个人业务id
+     */
+    var id: String = ""
 
     /**
      * 身份证号
      */
-    val idno: String,
-    val legalPersonName: String,
+    var idno: String= ""
+    var legalPersonName: String= ""
 
     /**
      * @see  Order.mold
      */
-    val mold: String,
-    val moldText: String,
-    val money: String = "",
-    val nickName: String,
-    val no: String,
+    var mold: String= ""
+    var moldText: String= ""
+    var money: BigDecimal = BigDecimal.ZERO
+    var nickName: String= ""
+    var no: String= ""
 
     /**
      * PS1 未支付
@@ -44,13 +51,13 @@ data class PersonalInfo(
      * PS4 微信已支付
      * PS5 支付宝已支付
      */
-    val payState: String,
-    val payStateText: String,
-    val phoneOfBank: String,
-    val productId: String,
-    val productName: String,
-    val productPriceId: String,
-    val productPriceName: String,
+    var payState: String= ""
+    var payStateText: String= ""
+    var phoneOfBank: String= ""
+    var productId: String= ""
+    var productName: String= ""
+    var productPriceId: String= ""
+    var productPriceName: String= ""
 
 
     /**
@@ -63,67 +70,82 @@ data class PersonalInfo(
      * OS7 办理中
      * OS8 已办结
      */
-    val state: String,
-    val stateText: String,
-    val taxpayerNo: String,
-    val updateDt: String,
-    val username: String,
-    val version: Int,
-    val weixinPayMap: String,
+    var state: String= ""
+    var stateText: String= ""
+    var taxpayerNo: String= ""
+    var updateDt: String= ""
+    var username: String= ""
+    var version: Int = 0
+    var weixinPayMap: String= ""
 
 
-    //
-    val businessScope: List<Int>,
-    val businessScopeNames: String,
+    /**
+     * 经营范围 id
+     * @see BusinessScope.id
+     */
+    var businessScope: List<Int> = ArrayList()
 
 
-    val capital: Int,
+
+    var businessScopeNames: String= ""
+
+
+    /**
+     * 资金数额，注册资本
+     */
+    var capital: BigDecimal = BigDecimal.ZERO
 
     /**
      * 从业人数
      */
-    val employedNum: Long = 0,
-    val form: Int,
-    val formName: String,
+    var employedNum: String = "0"
+
+    /**
+     * 组成形式的 Id
+     * @see Form.id
+     */
+    var form: Int = 0
+    var formName: String= ""
 
     /**
      * 1 男
      * 2 女
      */
-    val gender: String,
-    val imgs: List<IdentityImg> = ArrayList(),
+    var gender: String= ""
+    var imgs: List<IdentityImg> = ArrayList()
 
 
     /**
      * 收入
      */
-    val income: BigDecimal = BigDecimal.ZERO,
-    val name0: String,
-    val name1: String,
-    val name2: String,
-    val nation: String,
+    var income: BigDecimal = BigDecimal.ZERO
+    var name0: String= ""
+    var name1: String= ""
+    var name2: String= ""
+    var nation: String= ""
 
-    val realName: String,
-    val tel: String,
+    var realName: String= ""
+    var tel: String= ""
 
 
     // 公司信息
 
 
-    val enterpriseName0: String,
-    val enterpriseName1: String,
-    val enterpriseName2: String,
+    var enterpriseName0: String= ""
+    var enterpriseName1: String= ""
+    var enterpriseName2: String= ""
 
     /**
      * 注册资本
      */
-    val investMoney: BigDecimal = BigDecimal.ZERO,
-    val investYearNum: Int,
+    var investMoney: BigDecimal = BigDecimal.ZERO
 
-    val shareholders: List<Shareholder> = ArrayList()
+    var investYearNum: Int = 0
+
+    var shareholders: List<Shareholder> = ArrayList()
 
 
-)
+}
 
 /*
 
@@ -161,5 +183,42 @@ data class PersonalInfo(
     "addr": "营业执照我",
     "username": "13200010001"
 }
+
+// 个体户税务登记
+
+
+// 添加个人营业执照
+{
+  "addr": "string",
+  "area": "string",
+  "businessScope": [
+    0
+  ],
+  "capital": 0,
+  "employedNum": 0,
+  "form": 0,
+  "gender": "string",
+  "idno": "string",
+  "imgs": [
+    {
+      "imgUrl": "string",
+      "mold": "string"
+    }
+  ],
+  "income": 0,
+  "money": "string",
+  "name0": "string",
+  "name1": "string",
+  "name2": "string",
+  "nation": "string",
+  "productId": 0,
+  "productPriceId": 0,
+  "realName": "string",
+  "tel": "string"
+}
+
+
+
+
 */
 

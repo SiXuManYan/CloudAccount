@@ -245,4 +245,15 @@ interface ApiService {
         @Query("in") `in`: String? = null
     ): Flowable<Response<JsonObject>>
 
+
+    /**
+     * 添加个体户营业执照
+     *
+     */
+    @POST("$ORDER_API/addSelfemployed")
+    fun addLicensePersonal(
+        @Query("in") `in`: String? = null
+    ): Flowable<Response<JsonObject>>
+
+
 }

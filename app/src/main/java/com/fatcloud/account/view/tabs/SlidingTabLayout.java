@@ -40,8 +40,8 @@ import java.util.Collections;
  * <br/>
  * 1.增加选中字号切换，如果未设置放大原有字号1.125倍<br/>
  * 2.解决初始化时tab文字未加粗
- * @see #setSelectTextSize(float)
  *
+ * @see #setSelectTextSize(float)
  */
 public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.OnPageChangeListener {
     private Context mContext;
@@ -164,6 +164,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
             mHeight = a.getDimensionPixelSize(0, ViewGroup.LayoutParams.WRAP_CONTENT);
             a.recycle();
         }
+
     }
 
     private void obtainAttributes(Context context, AttributeSet attrs) {
@@ -345,7 +346,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
                 tv_tab_title.setTextColor(i == mCurrentTab ? mTextSelectColor : mTextUnselectColor);
                 tv_tab_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextsize);
                 if (selectTextSize != 0) {
-                    tv_tab_title.setTextSize(TypedValue.COMPLEX_UNIT_PX,i == mCurrentTab ? sp2px(selectTextSize) : mTextsize);
+                    tv_tab_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, i == mCurrentTab ? sp2px(selectTextSize) : mTextsize);
                 } else {
                     //选中后文字放大1.125倍效果
                     tv_tab_title.setScaleX(i == mCurrentTab ? selectTextScale : 1.0f);
@@ -444,7 +445,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
                     tab_title.getPaint().setFakeBoldText(isSelect);
                 }
                 if (selectTextSize != 0) {
-                    tab_title.setTextSize(TypedValue.COMPLEX_UNIT_PX,isSelect ? sp2px(selectTextSize) : mTextsize);
+                    tab_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, isSelect ? sp2px(selectTextSize) : mTextsize);
                 } else {
                     //选中后文字放大1.125倍效果
                     tab_title.setScaleX(isSelect ? selectTextScale : 1.0f);

@@ -12,6 +12,7 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.enterprise.Shareholder
 import kotlinx.android.synthetic.main.layout_highlight_title.view.*
+import kotlinx.android.synthetic.main.layout_image_upload.view.*
 import kotlinx.android.synthetic.main.view_company_member_edit.view.*
 
 /**
@@ -82,10 +83,21 @@ class CompanyMemberEditView : LinearLayout {
 
 
     fun initNameTitleHint(title: CharSequence, hint: String) = ev_00_name.setTitleAndHint(title, hint)
-    fun initIdNumberTitleHint(title: CharSequence, hint: CharSequence) = ev_01_id_number.setTitleAndHint(title, hint)
+    fun initIdNumberTitleHint(title: CharSequence, hint: CharSequence): EditView {
+        ev_01_id_number.setTitleAndHint(title, hint)
+        return ev_01_id_number
+    }
+
     fun initIdAddressTitleHint(title: CharSequence, hint: CharSequence) = ev_02_id_addr.setTitleAndHint(title, hint)
-    fun initPhoneTitleHint(title: CharSequence, hint: CharSequence) = ev_03_phone.setTitleAndHint(title, hint)
-    fun initShareRatioTitleHint(title: CharSequence, hint: CharSequence) = ev_04_share_ratio.setTitleAndHint(title, hint)
+    fun initPhoneTitleHint(title: CharSequence, hint: CharSequence): EditView {
+        ev_03_phone.setTitleAndHint(title, hint)
+        return ev_03_phone
+    }
+
+    fun initShareRatioTitleHint(title: CharSequence, hint: CharSequence): EditView {
+        ev_04_share_ratio.setTitleAndHint(title, hint)
+        return ev_04_share_ratio
+    }
 
     fun getNameValue() = ev_00_name.value()
     fun getIdNumberValue() = ev_01_id_number.value()
@@ -110,8 +122,8 @@ class CompanyMemberEditView : LinearLayout {
     /**
      * 返回所有包含当前所有信息的实体
      */
-    fun getShareHolder() {
-        Shareholder(
+    fun getShareHolder(): Shareholder {
+        return Shareholder(
             idno = getIdNumberValue(),
             idnoAddr = getIdAddressValue(),
             imgs = getImageUrls(),
@@ -119,8 +131,6 @@ class CompanyMemberEditView : LinearLayout {
             name = getNameValue(),
             phone = getPhoneValue(),
             shareProportion = getShareRatioValue()
-
-
         )
     }
 

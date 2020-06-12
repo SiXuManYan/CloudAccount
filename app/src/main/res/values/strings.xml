@@ -93,7 +93,9 @@
     <string name="detailed_address">详细地址</string>
     <string name="detailed_address_hint">请输入详细地址</string>
     <string name="amount_of_fund">资金数额(万元)</string>
+    <string name="amount_of_fund2">资金数额(元)</string>
     <string name="amount_of_fund_hint">请输入资金数额(万元)</string>
+    <string name="amount_of_fund_hint2">请输入资金数额(元)</string>
     <string name="save">保存</string>
     <string name="commit">提交</string>
 

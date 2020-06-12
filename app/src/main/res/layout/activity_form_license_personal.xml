@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/font_white"
+    android:orientation="vertical">
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_nsv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="50dp"
+            android:paddingBottom="100dp">
+
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
+
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/man_sex_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="70dp"
+                    android:button="@null"
+                    android:checked="true"
+                    android:drawableTop="@drawable/selector_radio_button_man"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_horizontal"
+                    android:text="绅士"
+                    android:textColor="@drawable/selector_radio_button_sex_text_color" />
+
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:checked="false"
+                    android:drawableTop="@drawable/selector_radio_button_woman"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_horizontal"
+                    android:text="淑女"
+                    android:textColor="@drawable/selector_radio_button_sex_text_color" />
+
+
+            </RadioGroup>
+
+
+            <!-- 民族 -->
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/nation_ev"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:id="@+id/addr_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:text="地址"
+                    android:textColor="@color/color_first_level" />
+
+
+                <TextView
+                    android:id="@+id/addr_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_toLeftOf="@+id/addr_spinner"
+                    android:ellipsize="end"
+                    android:hint="省"
+                    android:maxLines="1"
+                    android:textColor="@color/color_second_level"
+                    android:textColorHint="@color/color_third_level"
+                    android:textSize="@dimen/font_size_14" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/addr_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/split_line_color" />
+
+
+            </RelativeLayout>
+
+            <!-- 详细地址 -->
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/detail_addr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+
+            <!-- 联系方式 -->
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <!-- 身份证号 -->
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/id_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <!-- 真实姓名 -->
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/real_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+
+            <!-- 首选名称 -->
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/zero_choice_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <!-- 备选名称1 -->
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/first_choice_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <!-- 备选名称2 -->
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/second_choice_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <!-- 经营范围 -->
+            <RelativeLayout
+                android:id="@+id/business_scope_rl"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="15dp"
+                android:paddingRight="0dp">
+
+                <TextView
+                    android:id="@+id/business_scope"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:text="经营范围"
+                    android:textColor="@color/color_first_level" />
+
+                <TextView
+                    android:id="@+id/business_scope_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_toLeftOf="@+id/scope_sp"
+                    android:layout_toRightOf="@+id/business_scope"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:hint="请选择经营范围"
+                    android:maxLines="1"
+                    android:textColor="@color/color_third_level"
+                    android:textColorHint="@color/color_third_level"
+                    android:textSize="@dimen/font_size_14" />
+
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/scope_sp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentRight="true"
+
+                    android:minWidth="150dp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/split_line_color" />
+
+
+            </RelativeLayout>
+
+
+            <!-- 从业人数 -->
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/employees_number_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <!-- 资金数额 -->
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/amount_of_funds"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+
+            <!-- 组成形式 -->
+
+            <RelativeLayout
+                android:id="@+id/formation_rl"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="15dp"
+                android:paddingRight="0dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:text="组成形式"
+                    android:textColor="@color/color_first_level" />
+
+                <TextView
+                    android:id="@+id/formation_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_toLeftOf="@+id/formation_sp"
+                    android:ellipsize="end"
+                    android:hint="请选择组成形式"
+                    android:maxLines="1"
+                    android:textColor="@color/color_second_level"
+                    android:textColorHint="@color/color_third_level"
+                    android:textSize="@dimen/font_size_14" />
+
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/formation_sp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentRight="true"
+                    android:minWidth="150dp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/split_line_color" />
+
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/shareholder_more_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+
+            <include layout="@layout/layout_image_upload" />
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+    <include layout="@layout/inc_title_bar" />
+
+    <include layout="@layout/layout_bottom_action" />
+
+
+</RelativeLayout>

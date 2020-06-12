@@ -1,6 +1,7 @@
 package com.fatcloud.account.feature.forms.enterprise.license
 
 import android.content.Intent
+import android.text.InputType
 import android.view.View
 import butterknife.OnClick
 import com.blankj.utilcode.util.ScreenUtils
@@ -8,17 +9,15 @@ import com.blankj.utilcode.util.VibrateUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
-import com.fatcloud.account.event.Event
-import com.fatcloud.account.event.entity.BusinessScopeEvent
-import com.fatcloud.account.event.entity.TabRefreshEvent
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
-import com.fatcloud.account.feature.home.HomeFragment
 import com.fatcloud.account.view.CompanyMemberEditView
-import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_license_enterprise.*
 import kotlinx.android.synthetic.main.layout_bottom_action.*
 import java.math.BigDecimal
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by Wangsw on 2020/6/10 0010 18:30.
@@ -28,7 +27,15 @@ import java.math.BigDecimal
 class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePresenter>(), FormLicenseEnterpriseView {
 
 
+    /**
+     * 用户选中的一级经营范围pid
+     */
     private var selectPid = ArrayList<String>()
+
+    /**
+     * 用户选中的一级经营范围pid名称
+     */
+    private var selectPidNames = ArrayList<String>()
 
     /**
      * 年收入
@@ -50,8 +57,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
     /**
      * 产品id
      */
-    private var mProductId: String = "0" +
-            "-"
+    private var mProductId: String = "0"
 
     override fun getLayoutId() = R.layout.activity_form_license_enterprise
 
@@ -68,7 +74,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
 
     private fun initExtra() {
 
-        if (intent.extras == null || !intent.extras!!.containsKey(Constants.PARAM_INCOME_MONEY)) {
+        if (intent.extras == null || !intent.extras!!.containsKey(Constants.PARAM_FINAL_MONEY)) {
             finish()
             return
         }
@@ -78,7 +84,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
         }
 
         intent.extras!!.getString(Constants.PARAM_PRODUCT_ID)?.let {
-            incomeMoney = it
+            mProductId = it
         }
 
         intent.extras!!.getString(Constants.PARAM_FINAL_MONEY)?.let {
@@ -87,7 +93,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
 
 
         intent.extras!!.getString(Constants.PARAM_PRODUCT_PRICE_ID)?.let {
-            finalMoney = it
+            mProductPriceId = it
         }
 
 
@@ -107,10 +113,10 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
         zero_choice_name.setTitleAndHint(getString(R.string.zero_company_name), getString(R.string.no_less_than_3_word))
         first_choice_name.setTitleAndHint(getString(R.string.first_company_name), getString(R.string.no_less_than_3_word))
         second_choice_name.setTitleAndHint(getString(R.string.second_company_name), getString(R.string.no_less_than_3_word))
-        investment_period.setTitleAndHint(getString(R.string.invest_year_num), getString(R.string.invest_year_num_hint))
-        amount_of_funds.setTitleAndHint(getString(R.string.amount_of_fund), getString(R.string.amount_of_fund_hint))
-        bank_number.setTitleAndHint(getString(R.string.bank_card_number), getString(R.string.for_tax_registration))
-        bank_phone.setTitleAndHint(getString(R.string.bank_phone), getString(R.string.for_tax_registration))
+        investment_period.setTitleAndHint(getString(R.string.invest_year_num), getString(R.string.invest_year_num_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
+        amount_of_funds.setTitleAndHint(getString(R.string.amount_of_fund), getString(R.string.amount_of_fund_hint)).setInputType(InputType.TYPE_CLASS_NUMBER )
+        bank_number.setTitleAndHint(getString(R.string.bank_card_number), getString(R.string.for_tax_registration)).setInputType(InputType.TYPE_CLASS_NUMBER)
+        bank_phone.setTitleAndHint(getString(R.string.bank_phone), getString(R.string.for_tax_registration)).setInputType(InputType.TYPE_CLASS_NUMBER)
         detail_addr.setTitleAndHint(getString(R.string.detailed_address), getString(R.string.detailed_address_hint))
 
         // 法人信息
@@ -118,10 +124,10 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             currentMold = Constants.SH1
             initHighlightTitle(getString(R.string.legal_person_info))
             initNameTitleHint(getString(R.string.legal_person_name), getString(R.string.legal_person_name_hint))
-            initIdNumberTitleHint(getString(R.string.identity_number), getString(R.string.identity_number_hint))
+            initIdNumberTitleHint(getString(R.string.identity_number), getString(R.string.identity_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
             initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
-            initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint))
-            initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint))
+            initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
+            initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
         }
 
         // 监事信息
@@ -129,10 +135,10 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             currentMold = Constants.SH2
             initHighlightTitle(getString(R.string.supervisor_info))
             initNameTitleHint(getString(R.string.supervisor_name), getString(R.string.supervisor_name_hint))
-            initIdNumberTitleHint(getString(R.string.identity_number), getString(R.string.identity_number_hint))
+            initIdNumberTitleHint(getString(R.string.identity_number), getString(R.string.identity_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
             initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
-            initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint))
-            initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint_2))
+            initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
+            initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint_2)).setInputType(InputType.TYPE_CLASS_NUMBER)
         }
 
         // 默认股东信息
@@ -140,10 +146,10 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             currentMold = Constants.SH3
             initHighlightTitle(getString(R.string.shareholder_info2))
             initNameTitleHint(getString(R.string.shareholder_name), getString(R.string.shareholder_name_hint))
-            initIdNumberTitleHint(getString(R.string.identity_number), getString(R.string.identity_number_hint))
+            initIdNumberTitleHint(getString(R.string.identity_number), getString(R.string.identity_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
             initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
-            initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint))
-            initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint_2))
+            initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
+            initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint_2)).setInputType(InputType.TYPE_CLASS_NUMBER)
             showAddActionView().setOnClickListener {
                 VibrateUtils.vibrate(10)
                 it.visibility = View.GONE
@@ -165,10 +171,10 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             tag = index
             initHighlightTitle(getString(R.string.shareholder_info2))
             initNameTitleHint(getString(R.string.shareholder_name), getString(R.string.shareholder_name_hint))
-            initIdNumberTitleHint(getString(R.string.identity_number), getString(R.string.identity_number_hint))
+            initIdNumberTitleHint(getString(R.string.identity_number), getString(R.string.identity_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
             initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
-            initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint))
-            initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint_2))
+            initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
+            initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint_2)).setInputType(InputType.TYPE_CLASS_NUMBER)
 
             //  添加股东
             showAddActionView().setOnClickListener {
@@ -190,7 +196,9 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1 && data != null) {
-            selectPid = data.getStringArrayListExtra(Constants.KEY_DATA)
+            selectPid = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID)
+            selectPidNames = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID_NAME)
+            business_scope_value.text = Arrays.toString(selectPidNames.toArray())
         }
 
     }
@@ -203,16 +211,15 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
     fun onClick(view: View) {
         when (view.id) {
             R.id.business_scope_rl -> {
-                // EnterpriseInfo
+                // 参照 EnterpriseInfo
                 startActivityForResult(BusinessScopeActivity::class.java, 1, null)
             }
-            R.id.bottom_left_tv -> {
-
-
+            R.id.bottom_left_tv ->{
+                // 保存
             }
 
             R.id.bottom_right_tv -> {
-
+                handlePost()
             }
             else -> {
             }
@@ -221,16 +228,13 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
 
     private fun handlePost() {
 
-        val scope: ArrayList<Int> = ArrayList()
-        selectPid.forEach {
-            scope.add(it.toInt())
-        }
-        EnterpriseInfo().apply {
+
+        val enterpriseInfo = EnterpriseInfo().apply {
             addr = detail_addr.value()
             area = ""
             bankNo = bank_number.value()
-            bankNo = bank_phone.value()
-            businessScope.addAll(scope)
+            bankPhone = bank_phone.value()
+            businessScope.addAll(ProductUtils.stringList2IntList(selectPid))
             enterpriseName0 = zero_choice_name.value()
             enterpriseName1 = first_choice_name.value()
             enterpriseName2 = second_choice_name.value()
@@ -240,10 +244,14 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             money = BigDecimal(finalMoney)
             productId = mProductId
             productPriceId = mProductPriceId.toInt()
-            shareholders
+            shareholders = presenter.getShareHolders(
+                legal_person_ev.getShareHolder(),
+                supervisor_ev.getShareHolder(),
+                shareholder_ev.getShareHolder(),
+                shareholder_more_container
+            )
         }
-        presenter.addEnterprise(this)
-
+        presenter.addEnterprise(this,enterpriseInfo)
 
     }
 

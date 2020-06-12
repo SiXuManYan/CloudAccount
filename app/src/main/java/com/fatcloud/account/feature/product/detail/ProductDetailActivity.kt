@@ -80,9 +80,10 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
     }
 
     private fun initExtra() {
-
-        productId = intent.getStringExtra(Constants.PARAM_PRODUCT_ID)
-        presenter.getDetail(this, productId)
+         intent.getStringExtra(Constants.PARAM_PRODUCT_ID)?.let {
+             productId = it
+             presenter.getDetail(this, productId)
+        }
     }
 
     override fun bindDetailData(data: ProductDetail) {
@@ -165,7 +166,6 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
         when (view.id) {
             R.id.back_iv -> onBackPressed()
             R.id.title_rl -> {
-
                 if (AndroidUtil.isDoubleClick(view)) {
                     scroll_nsv.smoothScrollTo(0, 0)
                 }
@@ -220,6 +220,9 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
 
     }
 
+    /**
+     * 企业套餐办理
+     */
     private fun enterpriseHandleP2(it: ProductDetail) {
         ProductSpinnerFragment.newInstance(it).apply {
             show(supportFragmentManager, this.tag)

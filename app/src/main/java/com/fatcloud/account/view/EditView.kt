@@ -1,6 +1,7 @@
 package com.fatcloud.account.view
 
 import android.content.Context
+import android.text.InputType
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
@@ -18,7 +19,7 @@ class EditView : LinearLayout {
 
 
     private lateinit var title_tv: TextView
-    private lateinit var content_et: TextView
+    private lateinit var content_et: AppCompatEditText
 
     constructor(context: Context?) : super(context) {
         init()
@@ -42,16 +43,27 @@ class EditView : LinearLayout {
         content_et = view.findViewById<AppCompatEditText>(R.id.content_et)
     }
 
-     fun setTitleAndHint(title: CharSequence, hint: CharSequence) {
+    fun setTitleAndHint(title: CharSequence, hint: CharSequence) :EditView{
         title_tv.text = title
         content_et.hint = hint
+        return this
     }
 
 
-
-    fun value():String {
-        return  content_et.text.toString().trim()
+    fun value(): String {
+        return content_et.text.toString().trim()
     }
 
+
+    /**
+     * @see android.text.InputType
+     * @see android.text.InputType.TYPE_CLASS_TEXT
+     * @see android.text.InputType.TYPE_CLASS_NUMBER
+     * @see android.text.InputType.TYPE_CLASS_DATETIME
+     * @see android.text.InputType.TYPE_CLASS_PHONE
+     */
+    fun setInputType(type: Int) {
+        content_et.inputType = type
+    }
 
 }

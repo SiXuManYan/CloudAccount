@@ -3,7 +3,7 @@ package com.fatcloud.account.entity.order.enterprise
 import java.math.BigDecimal
 
 /**
- * 企业信息
+ * 企业信息 表单
  */
 class EnterpriseInfo {
     var accountId: String = ""
@@ -54,7 +54,7 @@ class EnterpriseInfo {
     /** 营业执照图网址 */
     var businessLicenseImgUrl: String = ""
 
-    /** 首都 */
+    /** 注册资本 */
     var capital: String = ""
 
     /** 电子图章网址 */
@@ -241,6 +241,11 @@ class EnterpriseInfo {
     "state": "OW3",
     "settingStateText": "已激活"
   }
+
+
+
+
+
 
 
 

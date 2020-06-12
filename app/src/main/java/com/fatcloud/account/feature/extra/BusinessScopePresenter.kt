@@ -15,19 +15,38 @@ import javax.inject.Inject
 class BusinessScopePresenter @Inject constructor(private var view: BusinessScopeView) : BasePresenter(view) {
 
 
+    /**
+     * 获取经营范围pid
+     */
     fun getSelectPids(allData: List<BusinessScope>?): ArrayList<String> {
         val allPid = ArrayList<String>()
 
         if (allData.isNullOrEmpty()) {
             return allPid
         }
-
         allData.forEach {
             if (it.nativeIsSelect) {
                 allPid.add(it.pid)
             }
         }
+        return allPid
+    }
 
+
+    /**
+     * 获取经营范围pid
+     */
+    fun getSelectPidNames(allData: List<BusinessScope>?): ArrayList<String> {
+        val allPid = ArrayList<String>()
+
+        if (allData.isNullOrEmpty()) {
+            return allPid
+        }
+        allData.forEach {
+            if (it.nativeIsSelect) {
+                allPid.add(it.name)
+            }
+        }
         return allPid
     }
 

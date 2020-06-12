@@ -1,6 +1,7 @@
 package com.fatcloud.account.feature.product.detail.sheet
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.product.Price
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.extend.RoundTransFormation
+import com.fatcloud.account.feature.forms.psrsonal.FormLicensePersonalActivity
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import kotlinx.android.synthetic.main.fragment_product_sheet.*
@@ -96,25 +98,6 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
         return adapter
     }
 
-    @OnClick(R.id.next_tv)
-    fun click() {
-        VibrateUtils.vibrate(10)
-        val allData = adapter?.allData
-        allData?.forEachIndexed { index, price ->
-
-            if (price.nativeIsSelect) {
-                ToastUtils.showShort("前往表单页面")
-                return@forEachIndexed
-            } else {
-                if (index == allData.size - 1) {
-                    ToastUtils.showShort("请选择套餐")
-                    content_rv.startAnimation(CommonUtils.getShakeAnimation(2))
-
-                }
-            }
-        }
-
-    }
 
     private fun clearSelect() {
         adapter?.allData?.forEachIndexed { index, price ->
@@ -130,6 +113,49 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
         clearSelect()
         adapter?.notifyDataSetChanged()
         super.onDismiss(dialog)
+    }
+
+
+    @OnClick(R.id.next_tv)
+    fun click() {
+        VibrateUtils.vibrate(10)
+        val allData = adapter?.allData
+        allData?.forEachIndexed { index, price ->
+
+            if (price.nativeIsSelect) {
+                handleNext(price)
+                return@forEachIndexed
+            } else {
+                // 遍历到最后一条发现，用户一条都没选
+                if (index == allData.size - 1) {
+                    content_rv.startAnimation(CommonUtils.getShakeAnimation(2))
+                }
+            }
+        }
+
+    }
+
+    private fun handleNext(price: Price?) {
+        when (productDetail?.mold) {
+            Constants.P1 -> {
+                startActivity(
+                    Intent(activity, FormLicensePersonalActivity::class.java)
+                        .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
+                        .putExtra(Constants.PARAM_FINAL_MONEY, amount_tv.text.toString().trim())
+                        .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, price?.id)
+                )
+                dismissAllowingStateLoss()
+            }
+            Constants.P2 -> {
+            }
+
+            Constants.P4->{
+
+            }
+            else -> {
+            }
+        }
+        dismissAllowingStateLoss()
     }
 
 }

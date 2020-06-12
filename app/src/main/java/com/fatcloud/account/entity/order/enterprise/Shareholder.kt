@@ -1,5 +1,6 @@
 package com.fatcloud.account.entity.order.enterprise
 
+import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.order.IdentityImg
 
 
@@ -12,13 +13,23 @@ class Shareholder(
     val imgs: ArrayList<IdentityImg> = ArrayList(),
 
     /**
+     *
+     *  企业股东类型
      * SH1 	企业法人
      * SH2 	监事
      * SH3  股东
+     * @see Constants.SH1
+     * @see Constants.SH2
+     * @see Constants.SH3
      */
     val mold: String,
-    val name: String,
+    val name: String ,
+
     val phone: String,
+
+    /**
+     * 股份占比
+     */
     val shareProportion: String
 )
 

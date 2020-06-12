@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -73,15 +72,21 @@
                     android:textColor="@color/color_first_level" />
 
                 <TextView
+                    android:layout_toRightOf="@+id/business_scope"
                     android:id="@+id/business_scope_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="right"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
                     android:layout_toLeftOf="@+id/scope_sp"
-                    android:textColor="@color/color_second_level"
-                    android:textSize="@dimen/font_size_14"
-                    tools:text="经营范围" />
+                    android:ellipsize="end"
+                    android:hint="请选择经营范围"
+                    android:maxLines="1"
+                    android:textColor="@color/color_third_level"
+                    android:textColorHint="@color/color_third_level"
+                    android:textSize="@dimen/font_size_14" />
+
 
 
                 <androidx.appcompat.widget.AppCompatSpinner

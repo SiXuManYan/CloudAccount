@@ -313,16 +313,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 .putExtra(Constants.PARAM_INCOME_MONEY, incomeMoney.stripTrailingZeros().toPlainString())
                 .putExtra(Constants.PARAM_FINAL_MONEY, amount_tv.text.toString().trim())
                 .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, thirdProductPriceId)
-
         )
-
-//          val bundle = Bundle().apply {
-//              putString(Constants.PARAM_PRODUCT_ID,productDetail?.id)
-//              putSerializable(Constants.PARAM_PRICE_DATA, productDetail)
-//          }
-//
-//        startActivity(FormLicenseEnterpriseActivity::class.java,bundle)
-
         dismissAllowingStateLoss()
 
     }

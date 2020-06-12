@@ -78,7 +78,12 @@ object Constants {
     const val PARAM_MONEY = "param_money"
     const val PARAM_INCOME_MONEY = "param_income_money"
     const val PARAM_FINAL_MONEY = "param_final_money"
-    const val PARAM_PRODUCT_PRICE_ID = "param_product_price_id"
+    const val PARAM_PRODUCT_PRICE_ID = "param_product_price_id"// 产品价格类型 eg:pp1 固定价格
+    const val PARAM_SELECT_PID = "param_select_pid"// 用户选中的经营范围pid
+    const val PARAM_SELECT_PID_NAME = "param_select_pid_name"
+    const val PARAM_NAME = "param_name"
+    const val PARAM_SELECT_FORM_PID = "param_select_pid"// 用户选中的组成形式id
+    const val PARAM_NAME_SELECT_FORM_PID_NAME = "param_name_select_form_pid_name"// 用户选中的组成形式id 对应名字
 
     /** RxBus Event */
     const val EVENT_STARTUP_DONE = 0x59//新手接口

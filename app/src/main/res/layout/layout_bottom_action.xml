@@ -19,7 +19,7 @@
         android:layout_weight="1"
         android:background="@color/color_first_level"
         android:gravity="center"
-        tools:text="联系客服"
+        tools:text="文案自行设置"
         android:textColor="@color/font_white"
         android:textSize="@dimen/font_size_16" />
 
@@ -30,7 +30,7 @@
         android:layout_weight="1"
         android:background="@color/color_app_red"
         android:gravity="center"
-        tools:text="立即办理"
+        tools:text="文案自行设置"
         android:textColor="@color/font_white"
         android:textSize="@dimen/font_size_16" />
 
