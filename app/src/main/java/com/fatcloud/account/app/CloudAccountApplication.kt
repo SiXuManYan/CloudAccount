@@ -229,7 +229,7 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
         }
         OSSLog.enableLog() //这个开启会支持写入手机sd卡中的一份日志文件位置在SDCard_path\OSSLog\logs.csv
 
-        val oss: OSS = OSSClient(applicationContext, endpoint, credentialProvider, conf)
+//        val oss: OSS = OSSClient(applicationContext, endpoint, credentialProvider, conf)
 
     }
 

@@ -1,5 +1,7 @@
 package com.fatcloud.account.app
 
+import com.fatcloud.account.feature.forms.psrsonal.bookkeeping.wordpad.WordpadFragment
+import com.fatcloud.account.feature.forms.psrsonal.bookkeeping.wordpad.WordpadModule
 import com.fatcloud.account.feature.home.HomeFragment
 import com.fatcloud.account.feature.home.HomeModule
 import com.fatcloud.account.feature.my.MyPageFragment
@@ -52,6 +54,10 @@ abstract class FragmentBindModule {
     @FragmentScope
     @ContributesAndroidInjector(modules = [ProductSpinnerModule::class])
     abstract fun productSpinnerFragmentInjector(): ProductSpinnerFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector(modules = [WordpadModule::class])
+    abstract fun wordpadFragmentInjector(): WordpadFragment
 
 
 }

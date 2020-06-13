@@ -20,6 +20,7 @@ import com.fatcloud.account.entity.product.Price
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.extend.RoundTransFormation
 import com.fatcloud.account.feature.forms.enterprise.license.FormLicenseEnterpriseActivity
+import com.fatcloud.account.feature.forms.psrsonal.bookkeeping.FormAgentBookkeepingPersonalActivity
 import kotlinx.android.synthetic.main.fragment_product_spinner.*
 import java.math.BigDecimal
 
@@ -82,6 +83,13 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
 
     private var incomeMoney: BigDecimal = BigDecimal.ZERO
 
+    /**
+     *
+     */
+    private var mFinalMoney: BigDecimal = BigDecimal.ZERO
+
+
+
     companion object {
         fun newInstance(productDetail: ProductDetail): ProductSpinnerFragment {
             val fragment = ProductSpinnerFragment()
@@ -102,6 +110,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
         initDefault()
 
         productDetail?.let {
+
             initFirstSpinner(it)
         }
 
@@ -254,10 +263,11 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
             .add(BigDecimal(priceTaxRegistration))
 
         // 最终金额
-        val finalMoney = BigDecimalUtil.add(originalMoney, extraDefaultMoney)
+         mFinalMoney = BigDecimalUtil.add(originalMoney, extraDefaultMoney)
+
 
         if (isThirdSelect) {
-            amount_tv.text = getString(R.string.money_symbol_format, finalMoney.stripTrailingZeros().toPlainString())
+            amount_tv.text = getString(R.string.money_symbol_format, mFinalMoney.stripTrailingZeros().toPlainString())
         }
 
 
@@ -284,7 +294,8 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
 
         // 个人只计算代理记账最终金额即可
         if (isThirdSelect) {
-            amount_tv.text = getString(R.string.money_symbol_format, originalMoney.stripTrailingZeros().toPlainString())
+            mFinalMoney = originalMoney
+            amount_tv.text = getString(R.string.money_symbol_format, mFinalMoney.stripTrailingZeros().toPlainString())
         }
     }
 
@@ -314,7 +325,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                     Intent(activity, FormLicenseEnterpriseActivity::class.java)
                         .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
                         .putExtra(Constants.PARAM_INCOME_MONEY, incomeMoney.stripTrailingZeros().toPlainString())
-                        .putExtra(Constants.PARAM_FINAL_MONEY, amount_tv.text.toString().trim())
+                        .putExtra(Constants.PARAM_FINAL_MONEY, mFinalMoney.stripTrailingZeros().toPlainString())
                         .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, thirdProductPriceId)
                 )
             }
@@ -322,7 +333,12 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
 
             Constants.P3 -> {
                 // 个体户代理记账
-
+                startActivity(
+                    Intent(activity, FormAgentBookkeepingPersonalActivity::class.java)
+                        .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
+                        .putExtra(Constants.PARAM_FINAL_MONEY, mFinalMoney.stripTrailingZeros().toPlainString())
+                        .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, thirdProductPriceId)
+                )
 
             }
             else -> {

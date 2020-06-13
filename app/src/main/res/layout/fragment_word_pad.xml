@@ -9,13 +9,18 @@
     android:padding="15dp">
 
 
+    <!--
+     app:penMaxWidth="3dp"
+        app:penMinWidth="2dp"
+
+    -->
+
     <com.github.gcacace.signaturepad.views.SignaturePad
         android:id="@+id/signature_pad"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         app:penColor="@color/color_first_level"
-        app:penMaxWidth="3dp"
-        app:penMinWidth="1dp" />
+        />
 
 
     <LinearLayout

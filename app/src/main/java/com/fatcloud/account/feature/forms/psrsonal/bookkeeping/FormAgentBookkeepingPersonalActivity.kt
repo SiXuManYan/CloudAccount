@@ -1,6 +1,7 @@
 package com.fatcloud.account.feature.forms.psrsonal.bookkeeping
 
 import android.os.Bundle
+import android.text.InputType
 import android.view.View
 import butterknife.OnClick
 import com.fatcloud.account.R
@@ -16,7 +17,6 @@ import kotlinx.android.synthetic.main.activity_form_agent_bookkeeping_personal.*
  * Created by Wangsw on 2020/6/13 0013 15:40.
  * </br>
  * 个体户代理记账
- * todo 签字页
  */
 class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepingPersonalPresenter>(), FormAgentBookkeepingPersonalView {
 
@@ -82,9 +82,9 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
 
     private fun initView() {
         setMainTitle("法人信息")
-        legal_name.setTitleAndHint(R.string.legal_person_name, R.string.legal_person_name)
-        legal_phone.setTitleAndHint(R.string.contact_number, R.string.legal_person_phone_hint)
-        id_number.setTitleAndHint(R.string.legal_person_id_number, R.string.legal_person_id_number_hint)
+        legal_name.setTitleAndHint(R.string.legal_person_name, R.string.legal_person_name_hint)
+        legal_phone.setTitleAndHint(R.string.contact_number, R.string.legal_person_phone_hint).setInputType(InputType.TYPE_CLASS_NUMBER)
+        id_number.setTitleAndHint(R.string.legal_person_id_number, R.string.legal_person_id_number_hint).setInputType(InputType.TYPE_CLASS_NUMBER)
         store_name.setTitleAndHint(R.string.store_name, R.string.store_name_hint)
     }
 
@@ -113,7 +113,9 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
 
     private fun handleCommit() {
 
-        ProductUtils.checkEditEmptyWithVibrate(legal_name, legal_phone, id_number, store_name)
+        if (!ProductUtils.checkEditEmptyWithVibrate(legal_name, legal_phone, id_number, store_name)) {
+            return
+        }
 
         startActivity(SignatureActivity::class.java,
             Bundle().apply {

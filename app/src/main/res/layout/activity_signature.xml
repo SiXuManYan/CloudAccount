@@ -20,6 +20,7 @@
             android:paddingTop="50dp">
 
             <TextView
+                android:id="@+id/content_tv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:lineSpacingMultiplier="2.0"

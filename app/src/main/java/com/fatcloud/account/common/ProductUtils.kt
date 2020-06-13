@@ -28,13 +28,15 @@ object ProductUtils {
     /**
      * 非空校验，提供震动和抖动反馈
      */
-     fun checkEditEmptyWithVibrate(vararg args: EditView) {
+     fun checkEditEmptyWithVibrate(vararg args: EditView):Boolean {
         VibrateUtils.vibrate(10)
         args.forEach {
-            it.value().isEmpty()
-            it.startAnimation(CommonUtils.getShakeAnimation(2))
-            return@forEach
+            if (it.value().isEmpty()) {
+                it.startAnimation(CommonUtils.getShakeAnimation(2))
+                return false
+            }
         }
+        return true
 
     }
 

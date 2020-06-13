@@ -48,7 +48,6 @@ class SignatureActivity : BaseMVPActivity<SignaturePresenter>(), SignatureView {
             return
         }
         nativeBookkeeping = intent?.extras!!.getSerializable(Constants.PARAM_DATA) as NativeBookkeeping
-
     }
 
     private fun initEvent() {
@@ -61,6 +60,17 @@ class SignatureActivity : BaseMVPActivity<SignaturePresenter>(), SignatureView {
     }
 
     private fun initView() {
+        nativeBookkeeping?.let {
+            content_tv.text = getString(
+                R.string.signature_format,
+                "定位中",
+                "定位中",
+                it.storeName,
+                it.legalPersonName,
+                it.idNumber
+            )
+
+        }
 
     }
 

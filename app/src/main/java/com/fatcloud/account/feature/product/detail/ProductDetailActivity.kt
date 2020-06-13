@@ -75,14 +75,14 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
             })
 
         }
-        bottom_left_tv.text  = "联系客服"
-        bottom_right_tv.text  = "立即办理"
+        bottom_left_tv.text = "联系客服"
+        bottom_right_tv.text = "立即办理"
     }
 
     private fun initExtra() {
-         intent.getStringExtra(Constants.PARAM_PRODUCT_ID)?.let {
-             productId = it
-             presenter.getDetail(this, productId)
+        intent.getStringExtra(Constants.PARAM_PRODUCT_ID)?.let {
+            productId = it
+            presenter.getDetail(this, productId)
         }
     }
 
@@ -182,20 +182,21 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
                 }
                 mData?.let {
                     when (it.mold) {
-                        Constants.P1 -> {
-                            licenseHandleP1(it)
-                        }
-                        Constants.P2 -> {
-                            enterpriseHandleP2(it)
+                        Constants.P1, Constants.P4 -> {
+                            // P1个体户营业执照 ，P4 个体户税务登记
+                            ProductSheetFragment.newInstance(it).apply {
+                                show(supportFragmentManager, this.tag)
+                            }
 
                         }
-                        Constants.P3 -> {
+                        Constants.P2, Constants.P3 -> {
+                            // P2 企业套餐 ,P3个体户代理记账
+                            ProductSpinnerFragment.newInstance(it).apply {
+                                show(supportFragmentManager, this.tag)
+                            }
 
                         }
-                        Constants.P4 -> {
 
-
-                        }
                         else -> {
                         }
                     }
@@ -206,27 +207,6 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
             }
         }
 
-    }
-
-
-    /**
-     * 个体户营业执照办理
-     */
-    private fun licenseHandleP1(it: ProductDetail) {
-
-        ProductSheetFragment.newInstance(it).apply {
-            show(supportFragmentManager, this.tag)
-        }
-
-    }
-
-    /**
-     * 企业套餐办理
-     */
-    private fun enterpriseHandleP2(it: ProductDetail) {
-        ProductSpinnerFragment.newInstance(it).apply {
-            show(supportFragmentManager, this.tag)
-        }
     }
 
 

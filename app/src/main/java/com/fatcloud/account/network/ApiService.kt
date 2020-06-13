@@ -260,17 +260,17 @@ interface ApiService {
     @POST("$ORDER_API/addTaxGrade")
     @FormUrlEncoded
     fun addTaxRegistration(
-        @Query("money") money: String?,
-        @Query("productId") productId: String?,
-        @Query("productPriceId") productPriceId: String?,
-        @Query("taxpayerNo") taxpayerNo: String?,
-        @Query("legalPersonName") legalPersonName: String?,
-        @Query("idno") idno: String?,
-        @Query("bankNo") bankNo: String?,
-        @Query("phoneOfBank") phoneOfBank: String?,
-        @Query("businessLicenseImgUrl") businessLicenseImgUrl: String?,
-        @Query("addr") addr: String?, // 税务登记+刻章时传递
-        @Query("area") area: String?// 税务登记+刻章时传递
+        @Field("money") money: String?,
+        @Field("productId") productId: String?,
+        @Field("productPriceId") productPriceId: String?,
+        @Field("taxpayerNo") taxpayerNo: String?,
+        @Field("legalPersonName") legalPersonName: String?,
+        @Field("idno") idno: String?,
+        @Field("bankNo") bankNo: String?,
+        @Field("phoneOfBank") phoneOfBank: String?,
+        @Field("businessLicenseImgUrl") businessLicenseImgUrl: String?,
+        @Field("addr") addr: String?, // 税务登记+刻章时传递
+        @Field("area") area: String?// 税务登记+刻章时传递
     ): Flowable<Response<JsonObject>>
 
 
@@ -282,15 +282,15 @@ interface ApiService {
     @POST("$ORDER_API/addBookkeeping")
     @FormUrlEncoded
     fun addAgentBookkeeping(
-        @Query("money") money: String?,//
-        @Query("productId") productId: String?,//
-        @Query("productPriceId") productPriceId: String?,//
-        @Query("legalPersonName") legalPersonName: String?,//
-        @Query("phone") phone: String?,//
-        @Query("idno") idno: String?,//
-        @Query("shopName") shopName: String?,//
-        @Query("businessLicenseImgUrl") businessLicenseImgUrl: String?,
-        @Query("signImgUrl") signImgUrl: String?//
+        @Field("money") money: String?,//
+        @Field("productId") productId: String?,//
+        @Field("productPriceId") productPriceId: String?,//
+        @Field("legalPersonName") legalPersonName: String?,//
+        @Field("phone") phone: String?,//
+        @Field("idno") idno: String?,//
+        @Field("shopName") shopName: String?,//
+        @Field("businessLicenseImgUrl") businessLicenseImgUrl: String?,
+        @Field("signImgUrl") signImgUrl: String?//
     ): Flowable<Response<JsonObject>>
 
 

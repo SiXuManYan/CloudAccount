@@ -137,7 +137,9 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
 
     private fun handleCommit() {
 
-        ProductUtils.checkEditEmptyWithVibrate(trn_ev, legal_name, id_number, bank_number, bank_phone)
+        if (!ProductUtils.checkEditEmptyWithVibrate(trn_ev, legal_name, id_number, bank_number, bank_phone)) {
+            return
+        }
 
         presenter.addLicensePersonal(
             this,
