@@ -23,6 +23,7 @@ import com.fatcloud.account.feature.forms.psrsonal.tax.FormTaxRegistrationPerson
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import kotlinx.android.synthetic.main.fragment_product_sheet.*
+import java.math.BigDecimal
 
 
 /**
@@ -34,6 +35,7 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
 
     private var productDetail: ProductDetail? = null
     private var adapter: RecyclerArrayAdapter<Price>? = null
+    private var finalMoney:BigDecimal = BigDecimal.ZERO
 
     companion object {
         fun newInstance(productDetail: ProductDetail): ProductSheetFragment {
@@ -90,7 +92,8 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
 
             val allData = adapter.allData
             val model = allData[it]
-            amount_tv.text = getString(R.string.money_symbol_format, model.money.stripTrailingZeros().toPlainString())
+             finalMoney = model.money
+            amount_tv.text = getString(R.string.money_symbol_format, finalMoney.stripTrailingZeros().toPlainString())
             model.nativeIsSelect = true
             adapter.notifyDataSetChanged()
 
@@ -124,7 +127,7 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
 
             if (price.nativeIsSelect) {
 
-                handleNext(price,index==2)
+                handleNext(price, index == 1)
                 return@forEachIndexed
             } else {
                 // 遍历到最后一条发现，用户一条都没选
@@ -137,23 +140,25 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
     }
 
     private fun handleNext(price: Price?, extraAddSeal: Boolean) {
+        val finalMoneyStr = finalMoney.stripTrailingZeros().toPlainString()
         when (productDetail?.mold) {
             Constants.P1 -> {
                 // 营业执照
+
                 startActivity(
                     Intent(activity, FormLicensePersonalActivity::class.java)
                         .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
-                        .putExtra(Constants.PARAM_FINAL_MONEY, amount_tv.text.toString().trim())
+                        .putExtra(Constants.PARAM_FINAL_MONEY, finalMoneyStr)
                         .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, price?.id)
                 )
 
             }
-            Constants.P4->{
+            Constants.P4 -> {
                 // 税务登记
                 startActivity(
                     Intent(activity, FormTaxRegistrationPersonalActivity::class.java)
                         .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
-                        .putExtra(Constants.PARAM_FINAL_MONEY, amount_tv.text.toString().trim())
+                        .putExtra(Constants.PARAM_FINAL_MONEY, finalMoneyStr)
                         .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, price?.id)
                         .putExtra(Constants.PARAM_ADD_SEAL, extraAddSeal)
                 )
