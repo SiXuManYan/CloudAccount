@@ -307,13 +307,30 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
             return
         }
 
-        startActivity(
-            Intent(activity, FormLicenseEnterpriseActivity::class.java)
-                .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
-                .putExtra(Constants.PARAM_INCOME_MONEY, incomeMoney.stripTrailingZeros().toPlainString())
-                .putExtra(Constants.PARAM_FINAL_MONEY, amount_tv.text.toString().trim())
-                .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, thirdProductPriceId)
-        )
+        when (productDetail?.mold) {
+            Constants.P2 -> {
+                // 企业套餐
+                startActivity(
+                    Intent(activity, FormLicenseEnterpriseActivity::class.java)
+                        .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
+                        .putExtra(Constants.PARAM_INCOME_MONEY, incomeMoney.stripTrailingZeros().toPlainString())
+                        .putExtra(Constants.PARAM_FINAL_MONEY, amount_tv.text.toString().trim())
+                        .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, thirdProductPriceId)
+                )
+            }
+
+
+            Constants.P3 -> {
+                // 个体户代理记账
+
+
+            }
+            else -> {
+            }
+        }
+
+
+
         dismissAllowingStateLoss()
 
     }

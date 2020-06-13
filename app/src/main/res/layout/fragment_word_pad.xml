@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/corner_other_bt_top_gray"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+
+    <com.github.gcacace.signaturepad.views.SignaturePad
+        android:id="@+id/signature_pad"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:penColor="@color/color_first_level"
+        app:penMaxWidth="3dp"
+        app:penMinWidth="1dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="15dp"
+        android:alpha="0.9"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/resign_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:background="@color/color_first_level"
+            android:gravity="center"
+            android:text="重新签字"
+            android:textColor="@color/font_white"
+            android:textSize="@dimen/font_size_16" />
+
+        <TextView
+            android:id="@+id/commit_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:background="@color/color_app_red"
+            android:gravity="center"
+            android:text="提交"
+            android:textColor="@color/font_white"
+            android:textSize="@dimen/font_size_16" />
+
+    </LinearLayout>
+
+</LinearLayout>

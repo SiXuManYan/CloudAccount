@@ -19,6 +19,7 @@ import com.fatcloud.account.entity.product.Price
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.extend.RoundTransFormation
 import com.fatcloud.account.feature.forms.psrsonal.license.FormLicensePersonalActivity
+import com.fatcloud.account.feature.forms.psrsonal.tax.FormTaxRegistrationPersonalActivity
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import kotlinx.android.synthetic.main.fragment_product_sheet.*
@@ -122,7 +123,8 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
         allData?.forEachIndexed { index, price ->
 
             if (price.nativeIsSelect) {
-                handleNext(price)
+
+                handleNext(price,index==2)
                 return@forEachIndexed
             } else {
                 // 遍历到最后一条发现，用户一条都没选
@@ -134,7 +136,7 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
 
     }
 
-    private fun handleNext(price: Price?) {
+    private fun handleNext(price: Price?, extraAddSeal: Boolean) {
         when (productDetail?.mold) {
             Constants.P1 -> {
                 // 营业执照
@@ -144,14 +146,19 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
                         .putExtra(Constants.PARAM_FINAL_MONEY, amount_tv.text.toString().trim())
                         .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, price?.id)
                 )
-                dismissAllowingStateLoss()
-            }
-            Constants.P3 -> {
-                // 个体户代理记账
-            }
 
+            }
             Constants.P4->{
                 // 税务登记
+                startActivity(
+                    Intent(activity, FormTaxRegistrationPersonalActivity::class.java)
+                        .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
+                        .putExtra(Constants.PARAM_FINAL_MONEY, amount_tv.text.toString().trim())
+                        .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, price?.id)
+                        .putExtra(Constants.PARAM_ADD_SEAL, extraAddSeal)
+                )
+
+
             }
             else -> {
             }

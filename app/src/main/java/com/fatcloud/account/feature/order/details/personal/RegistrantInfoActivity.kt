@@ -98,7 +98,7 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
         alternative_name_02_tv.text = data.name2
         business_scope_tv.text = data.businessScopeNames
         employees_number_tv.text = data.employedNum.toString()
-        employment_amount_tv.text = data.money
+        employment_amount_tv.text = data.money.stripTrailingZeros().toPlainString()
         form_tv.text = data.formName
         identity_number_tv.text = data.idno
         name_tv.text = data.realName

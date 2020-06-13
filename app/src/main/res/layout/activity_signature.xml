@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_list_gray_background"
+    android:orientation="vertical">
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_nsv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/font_white"
+            android:orientation="vertical"
+            android:paddingTop="50dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:lineSpacingMultiplier="2.0"
+                android:padding="15dp"
+                android:textColor="@color/color_zero_level"
+                android:textSize="@dimen/font_size_14"
+                tools:text="@string/signature_format" />
+
+
+            <ImageView
+                android:id="@+id/signature_iv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                tools:layout_height="300dp"
+                tools:src="@tools:sample/backgrounds/scenic" />
+
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+    <include layout="@layout/inc_title_bar" />
+
+    <LinearLayout
+        android:id="@+id/bottom_ll"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:alpha="0.9"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/bottom_left_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/color_first_level"
+            android:gravity="center"
+            android:text="签字"
+            android:textColor="@color/font_white"
+            android:textSize="@dimen/font_size_16" />
+
+        <TextView
+            android:id="@+id/bottom_right_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/color_app_red"
+            android:gravity="center"
+            android:text="提交"
+            android:textColor="@color/font_white"
+            android:textSize="@dimen/font_size_16" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -57,7 +57,11 @@
 
     <string name="taxpayer_id">纳税人识别号\n(社会统一代码)</string>
     <string name="legal_person_name">法人姓名</string>
+    <string name="legal_person_id_number">法人身份证</string>
+    <string name="legal_person_id_number_hint">请输入法人身份证</string>
     <string name="legal_person_name_hint">请输入法人姓名</string>
+    <string name="legal_person_phone_hint">请输入法人姓名</string>
+
     <string name="identity_number">身份证号</string>
     <string name="identity_number_hint">请输入身份证号</string>
     <string name="bank_card_number">银行卡号</string>
@@ -102,6 +106,9 @@
     <string name="commit">提交</string>
     <string name="taxpayer_registration_number">纳税人识别号(社会统一代码)</string>
     <string name="taxpayer_registration_number_hint">请输入纳税人识别号</string>
+    <string name="store_name">店铺名称</string>
+    <string name="store_name_hint">请输入店铺名称</string>
+    <string name="signature_format">%1$s市国家税务局：\n%2$s市地方税务局：\n\u3000\u3000兹有我单位：\n&#160;%3$s&#160;店铺，\n现委托于&#160;%4$s&#160;同志（身份证号码:&#160;%5$s&#160;）\n前往贵局办理税务登记事宜，望贵局给予办理。\n\n\n\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000承诺人签字</string>
 
 
 </resources>

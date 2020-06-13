@@ -8,6 +8,7 @@ import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.view.EditView
 import kotlinx.android.synthetic.main.activity_form_tax_registration_personal.*
 
@@ -124,7 +125,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
         }
         when (view.id) {
             R.id.commit_tv -> {
-                handleCommit(trn_ev, legal_name, id_number, bank_number, bank_phone)
+                handleCommit()
             }
             R.id.id_card_front_iv -> {
                 // todo 上传图片至阿里云
@@ -134,13 +135,10 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
         }
     }
 
-    private fun handleCommit(vararg args: EditView) {
-        VibrateUtils.vibrate(10)
-        args.forEach {
-            it.value().isEmpty()
-            it.startAnimation(CommonUtils.getShakeAnimation(2))
-            return@forEach
-        }
+    private fun handleCommit() {
+
+        ProductUtils.checkEditEmptyWithVibrate(trn_ev, legal_name, id_number, bank_number, bank_phone)
+
         presenter.addLicensePersonal(
             this,
             finalMoney,

@@ -18,6 +18,10 @@ import com.fatcloud.account.feature.extra.BusinessScopeActivity
 import com.fatcloud.account.feature.extra.BusinessScopeModule
 import com.fatcloud.account.feature.forms.enterprise.license.FormLicenseEnterpriseActivity
 import com.fatcloud.account.feature.forms.enterprise.license.FormLicenseEnterpriseModule
+import com.fatcloud.account.feature.forms.psrsonal.bookkeeping.FormAgentBookkeepingPersonalActivity
+import com.fatcloud.account.feature.forms.psrsonal.bookkeeping.FormAgentBookkeepingPersonalModule
+import com.fatcloud.account.feature.forms.psrsonal.bookkeeping.signature.SignatureActivity
+import com.fatcloud.account.feature.forms.psrsonal.bookkeeping.signature.SignatureModule
 import com.fatcloud.account.feature.forms.psrsonal.license.FormLicensePersonalActivity
 import com.fatcloud.account.feature.forms.psrsonal.license.FormLicensePersonalModule
 import com.fatcloud.account.feature.forms.psrsonal.tax.FormTaxRegistrationPersonalActivity
@@ -115,7 +119,6 @@ abstract class ActivityBindModule {
     @ContributesAndroidInjector(modules = [FormLicensePersonalModule::class])
     abstract fun formLicensePersonalActivityInjector(): FormLicensePersonalActivity
 
-
     @ActivityScore
     @ContributesAndroidInjector(modules = [BusinessScopeModule::class])
     abstract fun businessScopeActivityInjector(): BusinessScopeActivity
@@ -124,8 +127,14 @@ abstract class ActivityBindModule {
     @ContributesAndroidInjector(modules = [FormTaxRegistrationPersonalModule::class])
     abstract fun formTaxRegistrationPersonalActivityInjector(): FormTaxRegistrationPersonalActivity
 
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [FormAgentBookkeepingPersonalModule::class])
+    abstract fun formAgentBookkeepingPersonalActivityInjector(): FormAgentBookkeepingPersonalActivity
 
 
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [FragmentBindModule::class, SignatureModule::class])
+    abstract fun signatureActivityActivityInjector(): SignatureActivity
 
 
 }

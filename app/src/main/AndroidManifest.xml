@@ -169,6 +169,8 @@
         <activity android:name=".feature.extra.BusinessScopeActivity" />
         <activity android:name=".feature.forms.psrsonal.license.FormLicensePersonalActivity" />
         <activity android:name=".feature.forms.psrsonal.tax.FormTaxRegistrationPersonalActivity" />
+        <activity android:name=".feature.forms.psrsonal.bookkeeping.FormAgentBookkeepingPersonalActivity" />
+        <activity android:name=".feature.forms.psrsonal.bookkeeping.signature.SignatureActivity" />
 
 
     </application>

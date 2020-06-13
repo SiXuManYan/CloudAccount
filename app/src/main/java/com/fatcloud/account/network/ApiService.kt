@@ -256,9 +256,8 @@ interface ApiService {
 
     /**
      * 添加税务登记
-     * api/account/tOrder/addTaxGrade
      */
-    @POST("$ORDER_API/addSelfemployed")
+    @POST("$ORDER_API/addTaxGrade")
     @FormUrlEncoded
     fun addTaxRegistration(
         @Query("money") money: String?,
@@ -270,9 +269,28 @@ interface ApiService {
         @Query("bankNo") bankNo: String?,
         @Query("phoneOfBank") phoneOfBank: String?,
         @Query("businessLicenseImgUrl") businessLicenseImgUrl: String?,
-
         @Query("addr") addr: String?, // 税务登记+刻章时传递
         @Query("area") area: String?// 税务登记+刻章时传递
+    ): Flowable<Response<JsonObject>>
+
+
+    /**
+     * 添加代理记账
+     * @param signImgUrl 签字图片
+     * @param businessLicenseImgUrl 营业执照图片
+     */
+    @POST("$ORDER_API/addBookkeeping")
+    @FormUrlEncoded
+    fun addAgentBookkeeping(
+        @Query("money") money: String?,//
+        @Query("productId") productId: String?,//
+        @Query("productPriceId") productPriceId: String?,//
+        @Query("legalPersonName") legalPersonName: String?,//
+        @Query("phone") phone: String?,//
+        @Query("idno") idno: String?,//
+        @Query("shopName") shopName: String?,//
+        @Query("businessLicenseImgUrl") businessLicenseImgUrl: String?,
+        @Query("signImgUrl") signImgUrl: String?//
     ): Flowable<Response<JsonObject>>
 
 
