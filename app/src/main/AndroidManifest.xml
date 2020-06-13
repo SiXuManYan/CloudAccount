@@ -167,7 +167,8 @@
         <activity android:name=".feature.order.details.personal.RegistrantInfoActivity" />
         <activity android:name=".feature.forms.enterprise.license.FormLicenseEnterpriseActivity" />
         <activity android:name=".feature.extra.BusinessScopeActivity" />
-        <activity android:name=".feature.forms.psrsonal.FormLicensePersonalActivity" />
+        <activity android:name=".feature.forms.psrsonal.license.FormLicensePersonalActivity" />
+        <activity android:name=".feature.forms.psrsonal.tax.FormTaxRegistrationPersonalActivity" />
 
 
     </application>

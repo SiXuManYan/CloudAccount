@@ -1,4 +1,4 @@
-package com.fatcloud.account.feature.forms.psrsonal
+package com.fatcloud.account.feature.forms.psrsonal.license
 
 import com.fatcloud.account.base.common.BaseTaskView
 

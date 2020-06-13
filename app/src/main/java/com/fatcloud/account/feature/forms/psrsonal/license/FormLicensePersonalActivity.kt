@@ -1,4 +1,4 @@
-package com.fatcloud.account.feature.forms.psrsonal
+package com.fatcloud.account.feature.forms.psrsonal.license
 
 import android.content.Intent
 import android.text.InputType
@@ -6,6 +6,7 @@ import android.view.View
 import butterknife.OnClick
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
+import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.order.persional.PersonalInfo
@@ -20,7 +21,6 @@ import kotlinx.android.synthetic.main.activity_form_license_personal.first_choic
 import kotlinx.android.synthetic.main.activity_form_license_personal.second_choice_name
 import kotlinx.android.synthetic.main.activity_form_license_personal.zero_choice_name
 import kotlinx.android.synthetic.main.layout_bottom_action.*
-import kotlinx.android.synthetic.main.layout_detail_personal.*
 import java.math.BigDecimal
 import java.util.*
 import kotlin.collections.ArrayList
@@ -57,7 +57,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
 
 
     /**
-     * 最终收入
+     * 最终需支付金额
      */
     private var finalMoney: String = ""
 
@@ -106,16 +106,18 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
     }
 
     private fun initEvent() {
-        setMainTitle("注册人信息")
+
     }
 
     private fun initView() {
+        setMainTitle("注册人信息")
         bottom_left_tv.text = getString(R.string.save)
         bottom_right_tv.text = getString(R.string.commit)
         nation_ev.setTitleAndHint("民族", "请输入民族")
         detail_addr.setTitleAndHint(getString(R.string.detailed_address), getString(R.string.detailed_address_hint))
         phone.setTitleAndHint("联系方式", "请输入联系方式")
-        id_number.setTitleAndHint(getString(R.string.identity_number), getString(R.string.identity_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
+        id_number.setTitleAndHint(getString(R.string.identity_number), getString(R.string.identity_number_hint))
+            .setInputType(InputType.TYPE_CLASS_NUMBER)
         real_name.setTitleAndHint("真实姓名", "请输入真实姓名")
         zero_choice_name.setTitleAndHint("首选名称", getString(R.string.no_less_than_3_word))
         first_choice_name.setTitleAndHint("备选名称1", getString(R.string.no_less_than_3_word))
@@ -142,7 +144,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             2 -> {
                 // 选中的
                 selectFormId = data.getStringExtra(Constants.PARAM_SELECT_FORM_PID)
-                selectFormIdName = data.getStringExtra(Constants.PARAM_NAME_SELECT_FORM_PID_NAME)
+                selectFormIdName = data.getStringExtra(Constants.PARAM_NAME_SELECT_FORM_PID)
                 business_scope_value.text = Arrays.toString(selectPidNames.toArray())
             }
 
@@ -163,6 +165,9 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         R.id.bottom_right_tv
     )
     fun onClick(view: View) {
+        if (CommonUtils.isDoubleClick(view)) {
+            return
+        }
         when (view.id) {
             R.id.business_scope_rl -> {
                 // 参照 EnterpriseInfo

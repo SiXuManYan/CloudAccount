@@ -1,5 +1,7 @@
-package com.fatcloud.account.feature.forms.psrsonal
+package com.fatcloud.account.feature.forms.psrsonal.license
 
+import com.fatcloud.account.feature.forms.psrsonal.license.FormLicensePersonalActivity
+import com.fatcloud.account.feature.forms.psrsonal.license.FormLicensePersonalView
 import dagger.Module
 import dagger.Provides
 

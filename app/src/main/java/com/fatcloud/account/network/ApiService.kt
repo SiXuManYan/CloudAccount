@@ -13,10 +13,8 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import io.reactivex.Flowable
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
+import java.math.BigDecimal
 
 /**
  * Created by Wangsw on 2020/5/22 0022 15:00.
@@ -253,6 +251,28 @@ interface ApiService {
     @POST("$ORDER_API/addSelfemployed")
     fun addLicensePersonal(
         @Query("in") `in`: String? = null
+    ): Flowable<Response<JsonObject>>
+
+
+    /**
+     * 添加税务登记
+     * api/account/tOrder/addTaxGrade
+     */
+    @POST("$ORDER_API/addSelfemployed")
+    @FormUrlEncoded
+    fun addTaxRegistration(
+        @Query("money") money: String?,
+        @Query("productId") productId: String?,
+        @Query("productPriceId") productPriceId: String?,
+        @Query("taxpayerNo") taxpayerNo: String?,
+        @Query("legalPersonName") legalPersonName: String?,
+        @Query("idno") idno: String?,
+        @Query("bankNo") bankNo: String?,
+        @Query("phoneOfBank") phoneOfBank: String?,
+        @Query("businessLicenseImgUrl") businessLicenseImgUrl: String?,
+
+        @Query("addr") addr: String?, // 税务登记+刻章时传递
+        @Query("area") area: String?// 税务登记+刻章时传递
     ): Flowable<Response<JsonObject>>
 
 

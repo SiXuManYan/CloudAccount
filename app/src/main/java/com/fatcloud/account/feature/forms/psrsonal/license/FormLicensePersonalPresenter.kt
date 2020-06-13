@@ -1,11 +1,11 @@
-package com.fatcloud.account.feature.forms.psrsonal
+package com.fatcloud.account.feature.forms.psrsonal.license
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
-import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.persional.PersonalInfo
+import com.fatcloud.account.feature.forms.psrsonal.license.FormLicensePersonalView
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import javax.inject.Inject
@@ -15,12 +15,12 @@ import javax.inject.Inject
  * </br>
  *
  */
-class FormLicensePersonalPresenter  @Inject constructor(private var view: FormLicensePersonalView) : BasePresenter(view){
+class FormLicensePersonalPresenter @Inject constructor(private var view: FormLicensePersonalView) : BasePresenter(view) {
 
     private val gson = Gson()
 
     /**
-     * 添加企业套餐
+     * 添加个体户税务登记
      */
     fun addLicensePersonal(lifecycle: LifecycleOwner, enterpriseInfo: PersonalInfo) {
 

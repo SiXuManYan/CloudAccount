@@ -83,7 +83,8 @@ object Constants {
     const val PARAM_SELECT_PID_NAME = "param_select_pid_name"
     const val PARAM_NAME = "param_name"
     const val PARAM_SELECT_FORM_PID = "param_select_pid"// 用户选中的组成形式id
-    const val PARAM_NAME_SELECT_FORM_PID_NAME = "param_name_select_form_pid_name"// 用户选中的组成形式id 对应名字
+    const val PARAM_NAME_SELECT_FORM_PID = "param_name_select_form_pid"// 用户选中的组成形式id 对应名字
+    const val PARAM_ADD_SEAL = "param_add_seal"// 办理个体户税务登记时是否额外添加了刻章业务
 
     /** RxBus Event */
     const val EVENT_STARTUP_DONE = 0x59//新手接口

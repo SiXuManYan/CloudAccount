@@ -18,8 +18,10 @@ import com.fatcloud.account.feature.extra.BusinessScopeActivity
 import com.fatcloud.account.feature.extra.BusinessScopeModule
 import com.fatcloud.account.feature.forms.enterprise.license.FormLicenseEnterpriseActivity
 import com.fatcloud.account.feature.forms.enterprise.license.FormLicenseEnterpriseModule
-import com.fatcloud.account.feature.forms.psrsonal.FormLicensePersonalActivity
-import com.fatcloud.account.feature.forms.psrsonal.FormLicensePersonalModule
+import com.fatcloud.account.feature.forms.psrsonal.license.FormLicensePersonalActivity
+import com.fatcloud.account.feature.forms.psrsonal.license.FormLicensePersonalModule
+import com.fatcloud.account.feature.forms.psrsonal.tax.FormTaxRegistrationPersonalActivity
+import com.fatcloud.account.feature.forms.psrsonal.tax.FormTaxRegistrationPersonalModule
 import com.fatcloud.account.feature.news.detail.NewsDetailActivity
 import com.fatcloud.account.feature.news.detail.NewsDetailModule
 import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterInfoModule
@@ -117,6 +119,13 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [BusinessScopeModule::class])
     abstract fun businessScopeActivityInjector(): BusinessScopeActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [FormTaxRegistrationPersonalModule::class])
+    abstract fun formTaxRegistrationPersonalActivityInjector(): FormTaxRegistrationPersonalActivity
+
+
+
 
 
 }

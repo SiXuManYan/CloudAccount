@@ -6,7 +6,9 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatEditText
+import com.blankj.utilcode.util.StringUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.entity.order.enterprise.Shareholder
 
@@ -43,9 +45,16 @@ class EditView : LinearLayout {
         content_et = view.findViewById<AppCompatEditText>(R.id.content_et)
     }
 
-    fun setTitleAndHint(title: CharSequence, hint: CharSequence) :EditView{
+    fun setTitleAndHint(title: CharSequence, hint: CharSequence): EditView {
         title_tv.text = title
         content_et.hint = hint
+        return this
+    }
+
+
+    fun setTitleAndHint(@StringRes titleResId: Int, @StringRes hintResId: Int) : EditView {
+        title_tv.text = StringUtils.getString(titleResId)
+        content_et.hint = StringUtils.getString(hintResId)
         return this
     }
 
@@ -65,5 +74,6 @@ class EditView : LinearLayout {
     fun setInputType(type: Int) {
         content_et.inputType = type
     }
+
 
 }

@@ -61,8 +61,10 @@
     <string name="identity_number">身份证号</string>
     <string name="identity_number_hint">请输入身份证号</string>
     <string name="bank_card_number">银行卡号</string>
+    <string name="bank_card_number_hint">请输入银行卡号</string>
 
     <string name="bank_phone">银行预留手机号</string>
+    <string name="bank_phone_hint">请输入银行预留手机号</string>
     <string name="zero_company_name">首选公司名称</string>
     <string name="first_company_name">备选公司名称1</string>
     <string name="second_company_name">备选公司名称2</string>
@@ -98,6 +100,8 @@
     <string name="amount_of_fund_hint2">请输入资金数额(元)</string>
     <string name="save">保存</string>
     <string name="commit">提交</string>
+    <string name="taxpayer_registration_number">纳税人识别号(社会统一代码)</string>
+    <string name="taxpayer_registration_number_hint">请输入纳税人识别号</string>
 
 
 </resources>

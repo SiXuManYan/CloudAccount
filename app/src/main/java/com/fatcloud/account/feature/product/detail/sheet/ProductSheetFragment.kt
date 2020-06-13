@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import butterknife.OnClick
-import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.VibrateUtils
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -19,7 +18,7 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.product.Price
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.extend.RoundTransFormation
-import com.fatcloud.account.feature.forms.psrsonal.FormLicensePersonalActivity
+import com.fatcloud.account.feature.forms.psrsonal.license.FormLicensePersonalActivity
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import kotlinx.android.synthetic.main.fragment_product_sheet.*
@@ -138,6 +137,7 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
     private fun handleNext(price: Price?) {
         when (productDetail?.mold) {
             Constants.P1 -> {
+                // 营业执照
                 startActivity(
                     Intent(activity, FormLicensePersonalActivity::class.java)
                         .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
@@ -146,11 +146,12 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
                 )
                 dismissAllowingStateLoss()
             }
-            Constants.P2 -> {
+            Constants.P3 -> {
+                // 个体户代理记账
             }
 
             Constants.P4->{
-
+                // 税务登记
             }
             else -> {
             }
