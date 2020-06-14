@@ -24,15 +24,7 @@ import com.fatcloud.account.feature.matisse.Matisse
 import com.fatcloud.account.view.dialog.AlertDialog
 import com.zhihu.matisse.MimeType
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.activity_form_license_enterprise.*
 import kotlinx.android.synthetic.main.activity_form_license_personal.*
-import kotlinx.android.synthetic.main.activity_form_license_personal.amount_of_funds
-import kotlinx.android.synthetic.main.activity_form_license_personal.business_scope_value
-import kotlinx.android.synthetic.main.activity_form_license_personal.detail_addr
-import kotlinx.android.synthetic.main.activity_form_license_personal.employees_number_tv
-import kotlinx.android.synthetic.main.activity_form_license_personal.first_choice_name
-import kotlinx.android.synthetic.main.activity_form_license_personal.second_choice_name
-import kotlinx.android.synthetic.main.activity_form_license_personal.zero_choice_name
 import kotlinx.android.synthetic.main.layout_bottom_action.*
 import kotlinx.android.synthetic.main.layout_image_upload.*
 import java.math.BigDecimal
@@ -133,7 +125,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
     }
 
     private fun initEvent() {
-        // 签字版
+        // 图片上传成功
         presenter.subsribeEventEntity<ImageUploadEvent>(Consumer {
             val finalUrl = it.finalUrl
             if (it.isFaceUp) {
@@ -198,7 +190,9 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
                 isFaceUp = true
             }
             R.id.id_card_back_iv -> {
-                handleMediaSelect(Matisse.IMG)
+//                handleMediaSelect(Matisse.IMG)
+                ProductUtils.handleMediaSelect(this, Matisse.IMG, view.id)
+
                 isFaceUp = false
             }
 
@@ -303,7 +297,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
                 business_scope_value.text = Arrays.toString(selectPidNames.toArray())
             }
             2 -> {
-                // 选中的
+                // 选中组成形式
                 selectFormId = data.getStringExtra(Constants.PARAM_SELECT_FORM_PID)
                 selectFormIdName = data.getStringExtra(Constants.PARAM_NAME_SELECT_FORM_PID)
                 business_scope_value.text = Arrays.toString(selectPidNames.toArray())
@@ -311,6 +305,8 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             Constants.REQUEST_MEDIA -> {
                 // 相册选择图片
                 mediaType = data.getIntExtra(Matisse.MEDIA_TYPE, 0)
+                val fromViewId = data.getIntExtra(Matisse.MEDIA_FROM_VIEW_ID, 0)
+
                 val elements = Matisse.obtainPathResult(data)
                 if (elements.isNotEmpty()) {
                     val fileDirPath = elements[0]
@@ -319,8 +315,10 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
                     } else {
                         Glide.with(this).load(fileDirPath).into(id_card_back_iv)
                     }
+
+                    // 图片上传
                     val application = application as CloudAccountApplication
-                    application.getOssSecurityToken(true, isFaceUp, fileDirPath)
+                    application.getOssSecurityToken(true, isFaceUp, fileDirPath,fromViewId)
 
                 }
 

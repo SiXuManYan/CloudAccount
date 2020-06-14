@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import androidx.annotation.IdRes
 import androidx.multidex.MultiDex
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -197,8 +198,8 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
      * @param objectName 文件路径
      * @param isEncryptFile 是否为加密文件
      */
-    fun getOssSecurityToken(isEncryptFile: Boolean, isFaceUp: Boolean, localFilePatch: String) {
-        presenter.getOssSecurityToken(this, isEncryptFile,isFaceUp, localFilePatch)
+    fun getOssSecurityToken(isEncryptFile: Boolean, isFaceUp: Boolean, localFilePatch: String,@IdRes fromViewId:Int) {
+        presenter.getOssSecurityToken(this, isEncryptFile,isFaceUp, localFilePatch,fromViewId)
     }
 
 

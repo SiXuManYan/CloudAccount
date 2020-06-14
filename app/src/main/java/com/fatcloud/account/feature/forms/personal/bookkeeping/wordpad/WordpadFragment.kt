@@ -1,5 +1,6 @@
 package com.fatcloud.account.feature.forms.personal.bookkeeping.wordpad
 
+import android.graphics.Bitmap
 import android.view.View
 import butterknife.OnClick
 import com.fatcloud.account.R
@@ -63,13 +64,28 @@ class WordpadFragment : BaseBottomSheetDialogFragment<WordpadPresenter>(), Wordp
                 signature_pad.clear()
             }
             R.id.commit_tv -> {
-                val signatureSvg = signature_pad.signatureSvg
-                RxBus.post(WordpadEvent(signatureSvg))
+
+                commitCallBack?.let {
+
+                    val signatureBitmap = signature_pad.signatureBitmap
+
+                    if (presenter.requestAlbumPermissions(activity!!)) {
+                        val fileName = CommonUtils.saveBitmapImage(signatureBitmap, activity)
+                        // todo 签字上传
+                    }
+                    it.onCommit(signatureBitmap)
+                }
                 dismissAllowingStateLoss()
             }
             else -> {
             }
         }
+    }
+
+    var commitCallBack: CommitCallBack? = null
+
+    interface CommitCallBack {
+        fun onCommit(signatureBitmap: Bitmap?)
     }
 
 

@@ -23,7 +23,7 @@ class CrashHandler private constructor() : Thread.UncaughtExceptionHandler {
         private val TAG = "CrashHandler"
         private val DEBUG = true
 
-        private val PATH = Environment.getExternalStorageDirectory().path + "/Yihua/kLog/"
+        private val PATH = Environment.getExternalStorageDirectory().path + "/Cloud/kLog/"
         private val FILE_NAME = "crash"
         private val FILE_NAME_SUFFIX = ".txt"
 

@@ -44,7 +44,7 @@ class SignaturePresenter @Inject constructor(private var view: SignatureView) : 
             ),
             object : BaseHttpSubscriber<JsonObject>(view) {
                 override fun onSuccess(data: JsonObject?) {
-
+                    view.addAgentBookkeepingSuccess()
 
                 }
             }

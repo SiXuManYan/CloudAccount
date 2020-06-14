@@ -1,13 +1,20 @@
 package com.fatcloud.account.feature.forms.personal.tax
 
+import android.content.Intent
 import android.text.InputType
 import android.view.View
+import android.widget.ImageView
 import butterknife.OnClick
 import com.fatcloud.account.R
+import com.fatcloud.account.app.CloudAccountApplication
+import com.fatcloud.account.app.Glide
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
+import com.fatcloud.account.event.entity.ImageUploadEvent
+import com.fatcloud.account.feature.matisse.Matisse
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_tax_registration_personal.*
 
 /**
@@ -91,7 +98,12 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
     }
 
     private fun initEvent() {
+        // 图片上传成功
+        presenter.subsribeEventEntity<ImageUploadEvent>(Consumer {
 
+            businessLicenseImgUrl = it.finalUrl
+
+        })
     }
 
     private fun initView() {
@@ -113,6 +125,40 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
 
     }
 
+
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (data == null) {
+            return
+        }
+
+        when (requestCode) {
+
+            Constants.REQUEST_MEDIA -> {
+                // 相册选择图片
+                val elements = Matisse.obtainPathResult(data)
+                if (elements.isNotEmpty()) {
+                    val fileDirPath = elements[0]
+                    val fromViewId = data.getIntExtra(Matisse.MEDIA_FROM_VIEW_ID, 0)
+                    if (fromViewId != 0) {
+                        val fromView = findViewById<ImageView>(fromViewId)
+                        if (fromView != null) {
+                            Glide.with(this).load(fileDirPath).into(fromView)
+                        }
+                    }
+                    val application = application as CloudAccountApplication
+                    application.getOssSecurityToken(true, true, fileDirPath,fromViewId)
+                }
+            }
+            else -> {
+            }
+        }
+
+
+    }
+
     @OnClick(
         R.id.commit_tv,
         R.id.id_card_front_iv
@@ -126,7 +172,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
                 handleCommit()
             }
             R.id.id_card_front_iv -> {
-                // todo 上传图片至阿里云
+                ProductUtils.handleMediaSelect(this, Matisse.IMG, view.id)
             }
             else -> {
             }

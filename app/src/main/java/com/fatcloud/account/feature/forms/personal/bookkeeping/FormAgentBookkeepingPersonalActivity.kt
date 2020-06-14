@@ -1,16 +1,24 @@
 package com.fatcloud.account.feature.forms.personal.bookkeeping
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
+import android.widget.ImageView
 import butterknife.OnClick
 import com.fatcloud.account.R
+import com.fatcloud.account.app.CloudAccountApplication
+import com.fatcloud.account.app.Glide
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.product.NativeBookkeeping
+import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.feature.forms.personal.bookkeeping.signature.SignatureActivity
+import com.fatcloud.account.feature.matisse.Matisse
+import com.fatcloud.account.view.CompanyMemberEditView
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_agent_bookkeeping_personal.*
 
 /**
@@ -40,6 +48,11 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
      * 图片地址
      */
     private var mBusinessLicenseImgUrl: String = ""
+
+    /**
+     * 证件正面
+     */
+    var isFaceUp = false
 
 
     override fun getLayoutId() = R.layout.activity_form_agent_bookkeeping_personal
@@ -77,7 +90,13 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
     }
 
     private fun initEvent() {
+        // 图片上传成功
+        presenter.subsribeEventEntity<ImageUploadEvent>(Consumer {
 
+            mBusinessLicenseImgUrl = it.finalUrl
+
+
+        })
     }
 
     private fun initView() {
@@ -86,6 +105,41 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
         legal_phone.setTitleAndHint(R.string.contact_number, R.string.legal_person_phone_hint).setInputType(InputType.TYPE_CLASS_NUMBER)
         id_number.setTitleAndHint(R.string.legal_person_id_number, R.string.legal_person_id_number_hint).setInputType(InputType.TYPE_CLASS_NUMBER)
         store_name.setTitleAndHint(R.string.store_name, R.string.store_name_hint)
+    }
+
+
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (data == null) {
+            return
+        }
+
+        when (requestCode) {
+
+            Constants.REQUEST_MEDIA -> {
+                // 相册选择图片
+                val elements = Matisse.obtainPathResult(data)
+                if (elements.isNotEmpty()) {
+                    val fileDirPath = elements[0]
+                    val fromViewId = data.getIntExtra(Matisse.MEDIA_FROM_VIEW_ID, 0)
+                    if (fromViewId != 0) {
+                        val fromView = findViewById<ImageView>(fromViewId)
+                        if (fromView != null) {
+                           Glide.with(this).load(fileDirPath).into(fromView)
+
+                        }
+                    }
+                    val application = application as CloudAccountApplication
+                    application.getOssSecurityToken(true, isFaceUp, fileDirPath,fromViewId)
+                }
+            }
+            else -> {
+            }
+        }
+
+
     }
 
 
@@ -103,7 +157,7 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
                 handleCommit()
             }
             R.id.id_card_front_iv -> {
-                // todo 上传图片至阿里云
+                ProductUtils.handleMediaSelect(this, Matisse.IMG, view.id)
             }
             else -> {
             }
@@ -130,8 +184,6 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
                     businessLicenseImgUrl = mBusinessLicenseImgUrl
                 })
             })
-
-
 
 
     }

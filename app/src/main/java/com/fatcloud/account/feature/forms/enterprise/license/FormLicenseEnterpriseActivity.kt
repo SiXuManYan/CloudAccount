@@ -17,12 +17,14 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
+import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
 import com.fatcloud.account.feature.matisse.Glide4Engine
 import com.fatcloud.account.feature.matisse.Matisse
 import com.fatcloud.account.view.CompanyMemberEditView
 import com.fatcloud.account.view.dialog.AlertDialog
 import com.zhihu.matisse.MimeType
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_license_enterprise.*
 import kotlinx.android.synthetic.main.layout_bottom_action.*
 import kotlinx.android.synthetic.main.view_company_member_edit.view.*
@@ -116,7 +118,16 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
 
 
     private fun initEvent() {
+        // 图片上传成功
+        presenter.subsribeEventEntity<ImageUploadEvent>(Consumer {
 
+            val finalUrl = it.finalUrl
+            val fromView = findViewById<CompanyMemberEditView>(it.fromViewId)
+            if (fromView != null) {
+                fromView.setImageUrl(finalUrl)
+            }
+
+        })
     }
 
 
@@ -253,7 +264,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
                         }
                     }
                     val application = application as CloudAccountApplication
-                    application.getOssSecurityToken(true, isFaceUp, fileDirPath)
+                    application.getOssSecurityToken(true, isFaceUp, fileDirPath, fromViewId)
                 }
             }
             else -> {

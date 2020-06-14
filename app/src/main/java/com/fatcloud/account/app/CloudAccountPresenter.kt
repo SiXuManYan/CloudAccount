@@ -2,6 +2,7 @@ package com.fatcloud.account.app
 
 import android.content.Context
 import android.util.Log
+import androidx.annotation.IdRes
 import com.alibaba.sdk.android.oss.*
 import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback
 import com.alibaba.sdk.android.oss.callback.OSSProgressCallback
@@ -104,14 +105,14 @@ class CloudAccountPresenter(val view: CloudAccountView) {
      * @param objectName 文件路径
      * @param isEncryptFile 是否为加密文件
      */
-    fun getOssSecurityToken(context: Context, isEncryptFile: Boolean, isFaceUp: Boolean, localFilePatch: String) {
+    fun getOssSecurityToken(context: Context, isEncryptFile: Boolean, isFaceUp: Boolean, localFilePatch: String, @IdRes fromViewId: Int) {
 
         addSubscribe(
             apiService.getOssSecurityToken().compose(flowableUICompose())
                 .subscribeWith(object : BaseHttpSubscriber<SecurityTokenModel>(view) {
                     override fun onSuccess(data: SecurityTokenModel?) {
                         data?.let {
-                            uploadResources(context, it, isEncryptFile, localFilePatch, isFaceUp)
+                            uploadResources(context, it, isEncryptFile, localFilePatch, isFaceUp, fromViewId)
                         }
                     }
                 })
@@ -128,7 +129,8 @@ class CloudAccountPresenter(val view: CloudAccountView) {
         stsModel: SecurityTokenModel,
         isEncryptFile: Boolean,
         localFilePatch: String,
-        isFaceUp: Boolean
+        isFaceUp: Boolean,
+        @IdRes fromViewId: Int
     ) {
 
         // 节点
@@ -183,7 +185,7 @@ class CloudAccountPresenter(val view: CloudAccountView) {
             override fun onSuccess(request: PutObjectRequest?, result: PutObjectResult?) {
                 Log.d("PutObject", "UploadSuccess");
                 val finalUrl = endpoint + imageBucketName + imageObjectKey
-                RxBus.post(ImageUploadEvent(finalUrl, isFaceUp))
+                RxBus.post(ImageUploadEvent(finalUrl, isFaceUp, fromViewId))
             }
 
             override fun onFailure(request: PutObjectRequest?, clientException: ClientException?, serviceException: ServiceException?) {

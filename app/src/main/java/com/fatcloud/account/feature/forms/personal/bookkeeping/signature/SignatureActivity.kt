@@ -1,7 +1,9 @@
 package com.fatcloud.account.feature.forms.personal.bookkeeping.signature
 
+import android.graphics.Bitmap
 import android.view.View
 import butterknife.OnClick
+import com.blankj.utilcode.util.ToastUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.app.Glide
 import com.fatcloud.account.base.ui.BaseMVPActivity
@@ -88,6 +90,11 @@ class SignatureActivity : BaseMVPActivity<SignaturePresenter>(), SignatureView {
                 // 签名
                 WordpadFragment.newInstance().apply {
                     show(supportFragmentManager, this.tag)
+                    commitCallBack = object : WordpadFragment.CommitCallBack {
+                        override fun onCommit(signatureBitmap: Bitmap?) {
+                            Glide.with(this@SignatureActivity).load(signatureBitmap).into(signature_iv)
+                        }
+                    }
                 }
 
             }
@@ -102,7 +109,7 @@ class SignatureActivity : BaseMVPActivity<SignaturePresenter>(), SignatureView {
 
     private fun handleCommit() {
 
-        // todo 上传图片至阿里云
+        // todo 上传签名至阿里云
         nativeBookkeeping?.let {
             presenter.addAgentBookkeeping(
                 this, it.finalMoney,
@@ -119,6 +126,10 @@ class SignatureActivity : BaseMVPActivity<SignaturePresenter>(), SignatureView {
         }
 
 
+    }
+
+    override fun addAgentBookkeepingSuccess() {
+        ToastUtils.showShort("代理记账提交成功")
     }
 
 

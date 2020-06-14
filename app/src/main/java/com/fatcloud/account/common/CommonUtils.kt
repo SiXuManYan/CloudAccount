@@ -1,5 +1,9 @@
 package com.fatcloud.account.common
 
+//import com.amap.api.maps2d.AMapUtils
+//import com.amap.api.maps2d.model.LatLng
+
+//import org.jetbrains.anko.startActivity
 import android.animation.Animator.AnimatorListener
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
@@ -25,13 +29,10 @@ import android.view.animation.Interpolator
 import android.view.animation.TranslateAnimation
 import android.widget.ImageView
 import android.widget.TextView
-import com.fatcloud.account.R
-//import com.amap.api.maps2d.AMapUtils
-//import com.amap.api.maps2d.model.LatLng
+import android.widget.Toast
 import com.blankj.utilcode.constant.TimeConstants
 import com.blankj.utilcode.util.*
-
-//import org.jetbrains.anko.startActivity
+import com.fatcloud.account.R
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.math.BigDecimal
@@ -935,6 +936,38 @@ object CommonUtils {
                 statusTextView.visibility = View.INVISIBLE
             }
         }
+    }
+
+
+    /**
+     * 传入图片地址进入保存
+     */
+    fun saveBitmapImage(bitmap: Bitmap?, activityContext: Activity?): String {
+
+
+        var fileName = ""
+        if (bitmap == null || activityContext == null) {
+            Toast.makeText(activityContext, "图片保存失败", Toast.LENGTH_SHORT).show()
+            return fileName
+        }
+
+        try {
+
+            val pathFile = Environment.getExternalStorageDirectory().absolutePath + Common.YH_IMAGE_SAVE_PATH
+            fileName = pathFile + System.currentTimeMillis() + ".png"
+
+            val aveFile = AndroidUtil.saveFile4Bitmap(activityContext, pathFile, bitmap, fileName, Bitmap.CompressFormat.PNG)
+            // 更新图库
+            val intent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
+            val uri = Uri.fromFile(aveFile)
+            intent.data = uri
+            //这个广播的目的就是更新图库，发了这个广播进入相册就可以找到你
+            activityContext.sendBroadcast(intent)
+            Toast.makeText(activityContext, "操作成功，图片保存路径：$pathFile$fileName", Toast.LENGTH_LONG).show()
+        } catch (e: java.lang.Exception) {
+            Toast.makeText(activityContext, "图片保存失败", Toast.LENGTH_SHORT).show()
+        }
+        return fileName
     }
 
 

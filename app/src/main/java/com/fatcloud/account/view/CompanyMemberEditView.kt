@@ -1,28 +1,19 @@
 package com.fatcloud.account.view
 
-import android.Manifest
 import android.app.Activity
 import android.content.Context
-import android.content.DialogInterface
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.blankj.utilcode.util.AppUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.app.Glide
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.enterprise.Shareholder
-import com.fatcloud.account.feature.matisse.Glide4Engine
-import com.fatcloud.account.feature.matisse.Matisse
-import com.fatcloud.account.view.dialog.AlertDialog
-import com.tbruyelle.rxpermissions2.RxPermissions
-import com.zhihu.matisse.MimeType
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.layout_highlight_title.view.*
 import kotlinx.android.synthetic.main.layout_image_upload.view.*
 import kotlinx.android.synthetic.main.view_company_member_edit.view.*
@@ -33,37 +24,6 @@ import kotlinx.android.synthetic.main.view_company_member_edit.view.*
  * @see Shareholder
  */
 class CompanyMemberEditView : LinearLayout {
-
-    //Reactive收集
-    private var compositeDisposable: CompositeDisposable? = null
-
-    /**
-     * 添加订阅
-     * @param subscription 订阅
-     */
-    protected fun addSubscribe(subscription: Disposable) {
-        if (compositeDisposable == null) {
-            compositeDisposable = CompositeDisposable()
-        }
-        compositeDisposable?.add(subscription)
-    }
-
-    /**
-     * 相册权限申请
-     */
-    fun requestAlbumPermissions(activity: Activity): Boolean {
-        var isGranted = false
-        addSubscribe(
-            RxPermissions(activity)
-                .request(
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                )
-                .subscribe {
-                    isGranted = true
-                })
-        return isGranted
-    }
 
 
     /**
@@ -117,11 +77,11 @@ class CompanyMemberEditView : LinearLayout {
 
         id_card_front_iv.setOnClickListener {
             isFaceUp = true
-            handleMediaSelect(context as Activity, 1)
+            ProductUtils.handleMediaSelect(context as Activity, 1, this.id)
         }
         id_card_back_iv.setOnClickListener {
             isFaceUp = false
-            handleMediaSelect(context as Activity, 1)
+            ProductUtils.handleMediaSelect(context as Activity, 1, this.id)
         }
 
     }
@@ -194,57 +154,22 @@ class CompanyMemberEditView : LinearLayout {
     }
 
 
-    /**
-     * 相册选择
-     * @param mediaType
-     * @see Matisse.IMG
-     * @see Matisse.GIF
-     * @see Matisse.VIDEO
-     * @see Constants.I1
-     * @see Constants.I2
-     */
-    private fun handleMediaSelect(activity: Activity, mediaType: Int) {
-
-        val isGranted = requestAlbumPermissions(activity)
-
-        if (isGranted) {
-            Matisse.from(activity).choose(if (mediaType == 0) MimeType.ofAll() else with(MimeType.ofImage()) {
-                remove(MimeType.GIF)
-                this
-            }, true)
-                .countable(true)
-//                .originalEnable(false)
-                .maxSelectable(1)
-                .theme(R.style.Matisse_Dracula)
-                .thumbnailScale(0.87f)
-                .imageEngine(Glide4Engine())
-                .forResult(Constants.REQUEST_MEDIA, mediaType, this.id)
-
+    fun loadResultImage(fileDirPath: String) {
+        if (isFaceUp) {
+//            frontImageUrl = fileDirPath
+            Glide.with(this).load(fileDirPath).into(getFrontImage())
         } else {
-            AlertDialog.Builder(context).setTitle(R.string.hint)
-                .setMessage(R.string.album_need_permission)
-                .setCancelable(false)
-                .setPositiveButton(R.string.yes, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, _ ->
-                    dialog.dismiss()
-                    AppUtils.launchAppDetailsSettings()
-                })
-                .setNegativeButton(R.string.no, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
-                .create()
-                .show()
-
+//            backImageUrl = fileDirPath
+            Glide.with(this).load(fileDirPath).into(getBackImage())
         }
     }
 
-    fun loadResultImage(fileDirPath: String) {
+    fun setImageUrl(fileDirPath: String){
         if (isFaceUp) {
             frontImageUrl = fileDirPath
-            Glide.with(this).load(fileDirPath).into(getFrontImage())
         } else {
             backImageUrl = fileDirPath
-            Glide.with(this).load(fileDirPath).into(getBackImage())
         }
-
-
     }
 
 

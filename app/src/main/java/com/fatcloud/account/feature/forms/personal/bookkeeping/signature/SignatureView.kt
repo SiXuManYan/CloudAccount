@@ -8,4 +8,5 @@ import com.fatcloud.account.base.common.BaseTaskView
  *
  */
 interface SignatureView :BaseTaskView{
+    fun addAgentBookkeepingSuccess()
 }
