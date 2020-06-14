@@ -38,7 +38,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <!-- aliyun oss  -->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
 
     <!-- 23 / -->
@@ -77,7 +78,6 @@
         tools:targetApi="m">
 
 
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.fatcloud.account.fileprovider"
@@ -87,7 +87,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
 
 
         <activity
@@ -173,24 +172,47 @@
             android:screenOrientation="portrait" />
 
 
-
         <activity android:name="com.fatcloud.account.feature.order.progress.ScheduleActivity" />
 
 
-        <activity android:name=".feature.order.details.enterprise.company.CompanyRegisterInfoActivity" />
-        <activity android:name=".feature.order.details.personal.RegistrantInfoActivity" />
-        <activity android:name=".feature.forms.enterprise.license.FormLicenseEnterpriseActivity" />
-        <activity android:name=".feature.extra.BusinessScopeActivity" />
-        <activity android:name=".feature.forms.personal.license.FormLicensePersonalActivity" />
-        <activity android:name=".feature.forms.personal.tax.FormTaxRegistrationPersonalActivity" />
-        <activity android:name=".feature.forms.personal.bookkeeping.FormAgentBookkeepingPersonalActivity" />
-        <activity android:name=".feature.forms.personal.bookkeeping.signature.SignatureActivity" />
-        <activity android:name=".feature.matisse.MatisseActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".feature.matisse.AllPreviewActivity"
-            android:screenOrientation="portrait"
-            />
+        <activity
+            android:name=".feature.order.details.enterprise.company.CompanyRegisterInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".feature.order.details.personal.RegistrantInfoActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.extra.BusinessScopeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.forms.enterprise.license.FormLicenseEnterpriseActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".feature.forms.personal.license.FormLicensePersonalActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".feature.forms.personal.tax.FormTaxRegistrationPersonalActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".feature.forms.personal.bookkeeping.FormAgentBookkeepingPersonalActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
+
+
+        <activity
+            android:name=".feature.forms.personal.bookkeeping.signature.SignatureActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".feature.matisse.MatisseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".feature.matisse.AllPreviewActivity"
+            android:screenOrientation="portrait" />
 
 
     </application>

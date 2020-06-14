@@ -4,9 +4,11 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.text.InputType
 import android.view.View
+import androidx.core.view.forEach
 import butterknife.OnClick
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.VibrateUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
@@ -23,6 +25,7 @@ import com.fatcloud.account.view.dialog.AlertDialog
 import com.zhihu.matisse.MimeType
 import kotlinx.android.synthetic.main.activity_form_license_enterprise.*
 import kotlinx.android.synthetic.main.layout_bottom_action.*
+import kotlinx.android.synthetic.main.view_company_member_edit.view.*
 import java.math.BigDecimal
 import java.util.*
 import kotlin.collections.ArrayList
@@ -120,7 +123,10 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
     private fun initView() {
         setMainTitle("注册信息")
 
-        bottom_left_tv.text = getString(R.string.save)
+        bottom_left_tv.apply {
+            text = getString(R.string.save)
+            visibility = View.GONE
+        }
         bottom_right_tv.text = getString(R.string.commit)
         zero_choice_name.setTitleAndHint(getString(R.string.zero_company_name), getString(R.string.no_less_than_3_word))
         first_choice_name.setTitleAndHint(getString(R.string.first_company_name), getString(R.string.no_less_than_3_word))
@@ -185,12 +191,11 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
 
         }
 
-
     }
 
     private fun getShareholderView(index: Int): CompanyMemberEditView {
         return CompanyMemberEditView(this).apply {
-            id = index+1 // 保证id 不从0开始
+            id = index + 1 // 保证id 不从0开始
             currentMold = Constants.SH3
             // 坐标
             tag = index
@@ -283,6 +288,39 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
 
     private fun handlePost() {
 
+        // 非空校验
+        if (!ProductUtils.checkEditEmptyWithVibrate(
+                zero_choice_name,
+                // 默认信息
+                first_choice_name,
+                second_choice_name,
+                investment_period,
+                amount_of_funds,
+                bank_number,
+                bank_phone,
+                detail_addr,
+                // 法人
+                legal_person_ev.ev_00_name,
+                legal_person_ev.ev_01_id_number,
+                legal_person_ev.ev_02_id_addr,
+                legal_person_ev.ev_03_phone,
+                legal_person_ev.ev_04_share_ratio,
+                // 监事
+                supervisor_ev.ev_00_name,
+                supervisor_ev.ev_01_id_number,
+                supervisor_ev.ev_02_id_addr,
+                supervisor_ev.ev_03_phone,
+                supervisor_ev.ev_04_share_ratio,
+                // 默认股东 shareholder_ev
+                shareholder_ev.ev_00_name,
+                shareholder_ev.ev_01_id_number,
+                shareholder_ev.ev_02_id_addr,
+                shareholder_ev.ev_03_phone,
+                shareholder_ev.ev_04_share_ratio
+            )
+        ) {
+            return
+        }
 
         val enterpriseInfo = EnterpriseInfo().apply {
             addr = detail_addr.value()
@@ -308,6 +346,10 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
         }
         presenter.addEnterprise(this, enterpriseInfo)
 
+    }
+
+    override fun addEnterpriseSuccess() {
+        ToastUtils.showShort("套餐添加成功")
     }
 
 

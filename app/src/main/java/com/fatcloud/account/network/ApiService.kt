@@ -241,7 +241,7 @@ interface ApiService {
      */
     @POST("$ORDER_API/addEnterprise")
     fun addEnterprise(
-        @Query("in") `in`: String? = null
+        @Body `in`: String? = null
     ): Flowable<Response<JsonObject>>
 
 

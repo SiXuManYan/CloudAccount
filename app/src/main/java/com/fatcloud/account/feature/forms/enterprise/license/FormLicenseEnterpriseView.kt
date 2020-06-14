@@ -8,4 +8,9 @@ import com.fatcloud.account.base.common.BaseTaskView
  *
  */
 interface FormLicenseEnterpriseView : BaseTaskView {
+
+    /**
+     * 企业套餐添加成功
+     */
+    fun addEnterpriseSuccess()
 }

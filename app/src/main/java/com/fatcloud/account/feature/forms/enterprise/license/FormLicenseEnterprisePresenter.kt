@@ -26,16 +26,14 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
      */
     fun addEnterprise(lifecycle: LifecycleOwner, enterpriseInfo: EnterpriseInfo) {
 
-
         val bodyJsonStr = gson.toJson(enterpriseInfo)
 
         requestApi(lifecycle, Lifecycle.Event.ON_DESTROY,
             apiService.addEnterprise(bodyJsonStr),
             object : BaseHttpSubscriber<JsonObject>(view) {
                 override fun onSuccess(data: JsonObject?) {
-
+                    view.addEnterpriseSuccess()
                 }
-
             }
         )
     }
@@ -56,16 +54,18 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
         holders.add(shareHolder2)
 
         val max = shareholderMoreContainer.childCount
+        if (max > 0) {
+            for (i in 0..max) {
+                val companyMemberEditView = shareholderMoreContainer.getChildAt(i) as CompanyMemberEditView
+                holders.add(companyMemberEditView.getShareHolder())
+            }
 
-        for (i in 0..max) {
-            val companyMemberEditView = shareholderMoreContainer.getChildAt(i) as CompanyMemberEditView
-            holders.add(companyMemberEditView.getShareHolder())
         }
 
-        return  holders
+
+        return holders
 
     }
-
 
 
 }

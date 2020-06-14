@@ -147,7 +147,10 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
 
     private fun initView() {
         setMainTitle("注册人信息")
-        bottom_left_tv.text = getString(R.string.save)
+        bottom_left_tv.apply {
+            text = getString(R.string.save)
+            visibility = View.GONE
+        }
         bottom_right_tv.text = getString(R.string.commit)
         nation_ev.setTitleAndHint("民族", "请输入民族")
         detail_addr.setTitleAndHint(getString(R.string.detailed_address), getString(R.string.detailed_address_hint))
