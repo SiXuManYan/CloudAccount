@@ -38,7 +38,7 @@ public final class Matisse {
     public static final int VIDEO = 3;
 
     public static final String MEDIA_TYPE = "media_type";
-    public static final String MEDIA_FACE_TYPE = "media_face_type";
+    public static final String MEDIA_FROM_VIEW_ID = "media_from_view_id";
 
 
 

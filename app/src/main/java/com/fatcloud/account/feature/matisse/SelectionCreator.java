@@ -345,12 +345,16 @@ public final class SelectionCreator {
         return this;
     }
 
+    public void forResult(int requestCode, int mediaType) {
+        forResult(requestCode, mediaType, 0);
+    }
+
     /**
      * Start to select media and wait for result.
      *
      * @param requestCode Identity of the request Activity or Fragment.
      */
-    public void forResult(int requestCode, int mediaType) {
+    public void forResult(int requestCode, int mediaType, int viewId) {
         Activity activity = mMatisse.getActivity();
         if (activity == null) {
             return;
@@ -358,7 +362,10 @@ public final class SelectionCreator {
 
         Intent intent = new Intent(activity, MatisseActivity.class);
         intent.putExtra(Matisse.MEDIA_TYPE, mediaType);
-        intent.putExtra(Matisse.MEDIA_TYPE, mediaType);
+
+        if (viewId != 0) {
+            intent.putExtra(Matisse.MEDIA_FROM_VIEW_ID, viewId);
+        }
         Fragment fragment = mMatisse.getFragment();
         if (fragment != null) {
             fragment.startActivityForResult(intent, requestCode);

@@ -8,4 +8,5 @@ import com.fatcloud.account.base.common.BaseTaskView
  * 个体户营业执照
  */
 interface FormLicensePersonalView :BaseTaskView{
+    fun addLicensePersonalSuccess()
 }

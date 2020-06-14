@@ -63,6 +63,7 @@ public class MatisseActivity extends AppCompatActivity implements
 
     private boolean mOriginalEnable;
     private int mediaType;
+    private int fromViewId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,6 +90,8 @@ public class MatisseActivity extends AppCompatActivity implements
         }
 
         mediaType = getIntent().getIntExtra(Matisse.MEDIA_TYPE, 0);
+        fromViewId = getIntent().getIntExtra(Matisse.MEDIA_FROM_VIEW_ID, 0);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -178,6 +181,7 @@ public class MatisseActivity extends AppCompatActivity implements
                 result.putStringArrayListExtra(EXTRA_RESULT_SELECTION_PATH, selectedPaths);
                 result.putExtra(EXTRA_RESULT_ORIGINAL_ENABLE, mOriginalEnable);
                 result.putExtra(Matisse.MEDIA_TYPE, getMediaType());
+                result.putExtra(Matisse.MEDIA_FROM_VIEW_ID, fromViewId);
                 setResult(RESULT_OK, result);
                 finish();
             } else {
@@ -201,6 +205,7 @@ public class MatisseActivity extends AppCompatActivity implements
             result.putParcelableArrayListExtra(EXTRA_RESULT_SELECTION, selected);
             result.putStringArrayListExtra(EXTRA_RESULT_SELECTION_PATH, selectedPath);
             result.putExtra(Matisse.MEDIA_TYPE, getMediaType());
+            result.putExtra(Matisse.MEDIA_FROM_VIEW_ID, fromViewId);
             setResult(RESULT_OK, result);
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
                 MatisseActivity.this.revokeUriPermission(contentUri,
@@ -276,6 +281,7 @@ public class MatisseActivity extends AppCompatActivity implements
             result.putStringArrayListExtra(EXTRA_RESULT_SELECTION_PATH, selectedPaths);
             result.putExtra(EXTRA_RESULT_ORIGINAL_ENABLE, mOriginalEnable);
             result.putExtra(Matisse.MEDIA_TYPE, getMediaType());
+            result.putExtra(Matisse.MEDIA_FROM_VIEW_ID, fromViewId);
             setResult(RESULT_OK, result);
             finish();
         }

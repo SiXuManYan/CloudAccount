@@ -1,18 +1,26 @@
 package com.fatcloud.account.feature.forms.enterprise.license
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.text.InputType
 import android.view.View
 import butterknife.OnClick
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.VibrateUtils
 import com.fatcloud.account.R
+import com.fatcloud.account.app.CloudAccountApplication
+import com.fatcloud.account.app.Glide
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
+import com.fatcloud.account.feature.matisse.Glide4Engine
+import com.fatcloud.account.feature.matisse.Matisse
 import com.fatcloud.account.view.CompanyMemberEditView
+import com.fatcloud.account.view.dialog.AlertDialog
+import com.zhihu.matisse.MimeType
 import kotlinx.android.synthetic.main.activity_form_license_enterprise.*
 import kotlinx.android.synthetic.main.layout_bottom_action.*
 import java.math.BigDecimal
@@ -58,6 +66,10 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
      * 产品id
      */
     private var mProductId: String = "0"
+
+    var isFaceUp = false
+//    var faceUpUrl = ""
+//    var faceDownUrl = ""
 
     override fun getLayoutId() = R.layout.activity_form_license_enterprise
 
@@ -113,9 +125,12 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
         zero_choice_name.setTitleAndHint(getString(R.string.zero_company_name), getString(R.string.no_less_than_3_word))
         first_choice_name.setTitleAndHint(getString(R.string.first_company_name), getString(R.string.no_less_than_3_word))
         second_choice_name.setTitleAndHint(getString(R.string.second_company_name), getString(R.string.no_less_than_3_word))
-        investment_period.setTitleAndHint(getString(R.string.invest_year_num), getString(R.string.invest_year_num_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
-        amount_of_funds.setTitleAndHint(getString(R.string.amount_of_fund), getString(R.string.amount_of_fund_hint)).setInputType(InputType.TYPE_CLASS_NUMBER )
-        bank_number.setTitleAndHint(getString(R.string.bank_card_number), getString(R.string.for_tax_registration)).setInputType(InputType.TYPE_CLASS_NUMBER)
+        investment_period.setTitleAndHint(getString(R.string.invest_year_num), getString(R.string.invest_year_num_hint))
+            .setInputType(InputType.TYPE_CLASS_NUMBER)
+        amount_of_funds.setTitleAndHint(getString(R.string.amount_of_fund), getString(R.string.amount_of_fund_hint))
+            .setInputType(InputType.TYPE_CLASS_NUMBER)
+        bank_number.setTitleAndHint(getString(R.string.bank_card_number), getString(R.string.for_tax_registration))
+            .setInputType(InputType.TYPE_CLASS_NUMBER)
         bank_phone.setTitleAndHint(getString(R.string.bank_phone), getString(R.string.for_tax_registration)).setInputType(InputType.TYPE_CLASS_NUMBER)
         detail_addr.setTitleAndHint(getString(R.string.detailed_address), getString(R.string.detailed_address_hint))
 
@@ -124,10 +139,14 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             currentMold = Constants.SH1
             initHighlightTitle(getString(R.string.legal_person_info))
             initNameTitleHint(getString(R.string.legal_person_name), getString(R.string.legal_person_name_hint))
-            initIdNumberTitleHint(getString(R.string.identity_number), getString(R.string.identity_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
+            initIdNumberTitleHint(
+                getString(R.string.identity_number),
+                getString(R.string.identity_number_hint)
+            ).setInputType(InputType.TYPE_CLASS_NUMBER)
             initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
             initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
             initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
+
         }
 
         // 监事信息
@@ -135,7 +154,10 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             currentMold = Constants.SH2
             initHighlightTitle(getString(R.string.supervisor_info))
             initNameTitleHint(getString(R.string.supervisor_name), getString(R.string.supervisor_name_hint))
-            initIdNumberTitleHint(getString(R.string.identity_number), getString(R.string.identity_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
+            initIdNumberTitleHint(
+                getString(R.string.identity_number),
+                getString(R.string.identity_number_hint)
+            ).setInputType(InputType.TYPE_CLASS_NUMBER)
             initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
             initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
             initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint_2)).setInputType(InputType.TYPE_CLASS_NUMBER)
@@ -146,13 +168,16 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             currentMold = Constants.SH3
             initHighlightTitle(getString(R.string.shareholder_info2))
             initNameTitleHint(getString(R.string.shareholder_name), getString(R.string.shareholder_name_hint))
-            initIdNumberTitleHint(getString(R.string.identity_number), getString(R.string.identity_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
+            initIdNumberTitleHint(
+                getString(R.string.identity_number),
+                getString(R.string.identity_number_hint)
+            ).setInputType(InputType.TYPE_CLASS_NUMBER)
             initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
             initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
             initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint_2)).setInputType(InputType.TYPE_CLASS_NUMBER)
             showAddActionView().setOnClickListener {
                 VibrateUtils.vibrate(10)
-                it.visibility = View.GONE
+                // it.visibility = View.GONE
                 shareholder_more_container.addView(getShareholderView(0), 0)
                 scroll_nsv.smoothScrollTo(0, ScreenUtils.getScreenHeight())
 
@@ -165,13 +190,16 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
 
     private fun getShareholderView(index: Int): CompanyMemberEditView {
         return CompanyMemberEditView(this).apply {
-
+            id = index+1 // 保证id 不从0开始
             currentMold = Constants.SH3
             // 坐标
             tag = index
             initHighlightTitle(getString(R.string.shareholder_info2))
             initNameTitleHint(getString(R.string.shareholder_name), getString(R.string.shareholder_name_hint))
-            initIdNumberTitleHint(getString(R.string.identity_number), getString(R.string.identity_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
+            initIdNumberTitleHint(
+                getString(R.string.identity_number),
+                getString(R.string.identity_number_hint)
+            ).setInputType(InputType.TYPE_CLASS_NUMBER)
             initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
             initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
             initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint_2)).setInputType(InputType.TYPE_CLASS_NUMBER)
@@ -195,11 +223,38 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1 && data != null) {
-            selectPid = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID)
-            selectPidNames = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID_NAME)
-            business_scope_value.text = Arrays.toString(selectPidNames.toArray())
+
+        if (data == null) {
+            return
         }
+
+        when (requestCode) {
+            1 -> {
+                selectPid = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID)
+                selectPidNames = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID_NAME)
+                business_scope_value.text = Arrays.toString(selectPidNames.toArray())
+            }
+
+            Constants.REQUEST_MEDIA -> {
+                // 相册选择图片
+                val elements = Matisse.obtainPathResult(data)
+                if (elements.isNotEmpty()) {
+                    val fileDirPath = elements[0]
+                    val fromViewId = data.getIntExtra(Matisse.MEDIA_FROM_VIEW_ID, 0)
+                    if (fromViewId != 0) {
+                        val fromView = findViewById<CompanyMemberEditView>(fromViewId)
+                        if (fromView != null) {
+                            fromView.loadResultImage(fileDirPath)
+                        }
+                    }
+                    val application = application as CloudAccountApplication
+                    application.getOssSecurityToken(true, isFaceUp, fileDirPath)
+                }
+            }
+            else -> {
+            }
+        }
+
 
     }
 
@@ -214,7 +269,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
                 // 参照 EnterpriseInfo
                 startActivityForResult(BusinessScopeActivity::class.java, 1, null)
             }
-            R.id.bottom_left_tv ->{
+            R.id.bottom_left_tv -> {
                 // 保存
             }
 
@@ -251,7 +306,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
                 shareholder_more_container
             )
         }
-        presenter.addEnterprise(this,enterpriseInfo)
+        presenter.addEnterprise(this, enterpriseInfo)
 
     }
 

@@ -29,7 +29,7 @@ class FormLicensePersonalPresenter @Inject constructor(private var view: FormLic
             apiService.addLicensePersonal(bodyJsonStr),
             object : BaseHttpSubscriber<JsonObject>(view) {
                 override fun onSuccess(data: JsonObject?) {
-
+                    view.addLicensePersonalSuccess()
                 }
 
             }

@@ -91,6 +91,9 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
 
     var identityImg: ArrayList<IdentityImg> = ArrayList()
 
+    /**
+     * 正面
+     */
     var isFaceUp = false
     var faceUpUrl = ""
     var faceDownUrl = ""
@@ -262,13 +265,11 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             }, true)
                 .countable(true)
 //                .originalEnable(false)
-                .maxSelectable(2)
+                .maxSelectable(1)
                 .theme(R.style.Matisse_Dracula)
                 .thumbnailScale(0.87f)
                 .imageEngine(Glide4Engine())
                 .forResult(Constants.REQUEST_MEDIA, mediaType)
-
-
         } else {
             AlertDialog.Builder(context).setTitle(R.string.hint)
                 .setMessage(R.string.album_need_permission)
@@ -310,7 +311,6 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
                 val elements = Matisse.obtainPathResult(data)
                 if (elements.isNotEmpty()) {
                     val fileDirPath = elements[0]
-
                     if (isFaceUp) {
                         Glide.with(this).load(fileDirPath).into(id_card_front_iv)
                     } else {
@@ -327,8 +327,12 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             else -> {
             }
         }
-
-
     }
+
+    override fun addLicensePersonalSuccess() {
+        ToastUtils.showShort("营业执照上传成功")
+        finish()
+    }
+
 
 }
