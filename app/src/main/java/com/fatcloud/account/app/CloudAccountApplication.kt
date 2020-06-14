@@ -6,12 +6,6 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import androidx.multidex.MultiDex
-import com.alibaba.sdk.android.oss.ClientConfiguration
-import com.alibaba.sdk.android.oss.OSS
-import com.alibaba.sdk.android.oss.OSSClient
-import com.alibaba.sdk.android.oss.common.OSSLog
-import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider
-import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
@@ -81,13 +75,9 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
         // shareSdk
         MobSDK.init(this)
 
-
-        // tbs
         // initX5WebView()
         registerActivityLifecycleCallbacks(this)
         presenter.getCommonList()
-
-        initOSSClient()
     }
 
 
@@ -189,11 +179,7 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
     /**
      * 应用进入前台状态
      */
-    fun onForeground() {
-
-        LogUtils.d("ActivityLife--->", "onForeground")
-
-    }
+    fun onForeground() = LogUtils.d("ActivityLife--->", "onForeground")
 
     /**
      * 应用进入后台状态
@@ -207,30 +193,12 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
 
 
     /**
-     * 使用 STS 鉴权模式初始化OSSClient
-     * (STS :阿里云临时安全令牌（Security Token Service，STS）是阿里云提供的一种临时访问权限管理服务)
-     * https://github.com/aliyun/aliyun-oss-android-sdk/blob/master/README-CN.md
-     *
-     *
+     * 获取 token
+     * @param objectName 文件路径
+     * @param isEncryptFile 是否为加密文件
      */
-    private fun initOSSClient() {
-
-
-        val endpoint = "https://ftacloud-bucket-public.oss-cn-qingdao.aliyuncs.com"
-        val credentialProvider: OSSCredentialProvider = OSSStsTokenCredentialProvider("<StsToken.AccessKeyId>", "<StsToken.SecretKeyId>", "<StsToken.SecurityToken>")
-
-
-        //该配置类如果不设置，会有默认配置，具体可看该类
-        val conf = ClientConfiguration().apply {
-            connectionTimeout = 15 * 1000 // 连接超时，默认15秒
-            socketTimeout = 15 * 1000 // socket超时，默认15秒
-            maxConcurrentRequest = 5 // 最大并发请求数，默认5个
-            maxErrorRetry = 2 // 失败后最大重试次数，默认2次
-        }
-        OSSLog.enableLog() //这个开启会支持写入手机sd卡中的一份日志文件位置在SDCard_path\OSSLog\logs.csv
-
-//        val oss: OSS = OSSClient(applicationContext, endpoint, credentialProvider, conf)
-
+    fun getOssSecurityToken(isEncryptFile: Boolean, isFaceUp: Boolean, localFilePatch: String) {
+        presenter.getOssSecurityToken(this, isEncryptFile,isFaceUp, localFilePatch)
     }
 
 

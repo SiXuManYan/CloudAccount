@@ -7,6 +7,7 @@ import com.fatcloud.account.entity.news.NewsCategory
 import com.fatcloud.account.entity.news.News
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.persional.PersonalInfo
+import com.fatcloud.account.entity.oss.SecurityTokenModel
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.entity.users.User
 import com.google.gson.JsonArray
@@ -250,7 +251,7 @@ interface ApiService {
      */
     @POST("$ORDER_API/addSelfemployed")
     fun addLicensePersonal(
-        @Query("in") `in`: String? = null
+        @Body `in`: String? = null
     ): Flowable<Response<JsonObject>>
 
 
@@ -292,6 +293,13 @@ interface ApiService {
         @Field("businessLicenseImgUrl") businessLicenseImgUrl: String?,
         @Field("signImgUrl") signImgUrl: String?//
     ): Flowable<Response<JsonObject>>
+
+
+    /**
+     * 获取资源上传 oss token
+     */
+    @GET("alioss/sts/token")
+    fun getOssSecurityToken(): Flowable<Response<SecurityTokenModel>>
 
 
 }

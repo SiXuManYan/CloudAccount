@@ -17,6 +17,13 @@
     <string name="share_success">分享成功</string>
     <string name="wechat_noting">抱歉,您尚未安装微信</string>
 
+    <!--  android/开发环境/资源类型/是否为加密文件/时间戳.jpg-->
+    <string name="upload_image_path_format">android/formal/image/general/image_%1$s.jpg</string>
+    <string name="upload_image_path_dev_format">android/dev/image/general/image_%1$s.jpg</string>
+
+    <string name="upload_image_encryption_path_format">android/formal/image/encryption/image_%1$s.jpg</string>
+    <string name="upload_image_encryption_path_dev_format">android/dev/image/encryption/image_%1$s.jpg</string>
+
 
     <string name="home">首页</string>
     <string name="product">产品</string>
@@ -110,5 +117,13 @@
     <string name="store_name_hint">请输入店铺名称</string>
     <string name="signature_format">%1$s市国家税务局：\n%2$s市地方税务局：\n\u3000\u3000兹有我单位：\n&#160;%3$s&#160;店铺，\n现委托于&#160;%4$s&#160;同志（身份证号码:&#160;%5$s&#160;）\n前往贵局办理税务登记事宜，望贵局给予办理。\n\n\n\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000承诺人签字</string>
 
+
+
+    <string name="album_need_permission">无法访问系统相册，是否打开应用设置授权？</string>
+    <string name="permission_request">权限申请</string>
+    <string name="set_permission">去设置</string>
+    <string name="capture_error">拍摄失败</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
 
 </resources>

@@ -18,8 +18,8 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.product.Price
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.extend.RoundTransFormation
-import com.fatcloud.account.feature.forms.psrsonal.license.FormLicensePersonalActivity
-import com.fatcloud.account.feature.forms.psrsonal.tax.FormTaxRegistrationPersonalActivity
+import com.fatcloud.account.feature.forms.personal.license.FormLicensePersonalActivity
+import com.fatcloud.account.feature.forms.personal.tax.FormTaxRegistrationPersonalActivity
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import kotlinx.android.synthetic.main.fragment_product_sheet.*
@@ -35,7 +35,7 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
 
     private var productDetail: ProductDetail? = null
     private var adapter: RecyclerArrayAdapter<Price>? = null
-    private var finalMoney:BigDecimal = BigDecimal.ZERO
+    private var finalMoney: BigDecimal = BigDecimal.ZERO
 
     companion object {
         fun newInstance(productDetail: ProductDetail): ProductSheetFragment {
@@ -92,7 +92,7 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
 
             val allData = adapter.allData
             val model = allData[it]
-             finalMoney = model.money
+            finalMoney = model.money
             amount_tv.text = getString(R.string.money_symbol_format, finalMoney.stripTrailingZeros().toPlainString())
             model.nativeIsSelect = true
             adapter.notifyDataSetChanged()

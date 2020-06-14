@@ -1,10 +1,15 @@
 package com.fatcloud.account.base.ui
 
 import android.os.Bundle
+import android.view.ViewGroup
+import android.widget.TextView
 import com.blankj.utilcode.util.ToastUtils
+import com.fatcloud.account.R
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.common.BaseView
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.feature.matisse.Matisse
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -44,9 +49,14 @@ abstract class BaseMVPActivity<P : BasePresenter> : BaseActivity(), BaseView, Ha
 
     override fun showError(code: Int, message: String) {
         if (code >= 0) {
-            ToastUtils.showShort(if(message.isNullOrEmpty())"出现错误($code)" else message)
+            ToastUtils.showShort(if (message.isNullOrEmpty()) "出现错误($code)" else message)
         } else {
             ToastUtils.showShort(message)
         }
     }
+
+
+
+
+
 }

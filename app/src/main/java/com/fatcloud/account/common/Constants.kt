@@ -25,6 +25,9 @@ object Constants {
     const val SP_SHOW_CITY = "sp_show_city"// 上次获取的城市首页信息
     const val SP_AUTO_PLAY_VIDEO = "sp_auto_play_video"// 是否自动播放视频
 
+    /** 选取附件 */
+    const val REQUEST_MEDIA = 1003
+
     /** 验证码等待时间 */
     const val WAIT_DELAYS = 59
 
@@ -49,6 +52,8 @@ object Constants {
             "img {max-width:100%;} img.alignleft {float:left;max-width:120px;margin:0 10px 5px 0;border:1px solid #ccc;background:#fff;padding:2px;} " +
             "pre {font-size:9pt;line-height:12pt;font-family:Courier New,Arial;border:1px solid #ddd;border-left:5px solid #6CE26C;background:#f6f6f6;padding:5px;overflow: auto;} " +
             "a.tag {font-size:15px;text-decoration:none;background-color:#bbd6f3;border-bottom:2px solid #3E6D8E;border-right:2px solid #7F9FB6;color:#284a7b;margin:2px 2px 2px 0;padding:2px 4px;white-space:nowrap;}</style>"
+
+    const val IMAGE_URL_FORMAT = "Android_%1s"
 
 
     const val DEVICE_ANDROID = "1"

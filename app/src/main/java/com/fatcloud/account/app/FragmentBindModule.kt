@@ -1,7 +1,7 @@
 package com.fatcloud.account.app
 
-import com.fatcloud.account.feature.forms.psrsonal.bookkeeping.wordpad.WordpadFragment
-import com.fatcloud.account.feature.forms.psrsonal.bookkeeping.wordpad.WordpadModule
+import com.fatcloud.account.feature.forms.personal.bookkeeping.wordpad.WordpadFragment
+import com.fatcloud.account.feature.forms.personal.bookkeeping.wordpad.WordpadModule
 import com.fatcloud.account.feature.home.HomeFragment
 import com.fatcloud.account.feature.home.HomeModule
 import com.fatcloud.account.feature.my.MyPageFragment

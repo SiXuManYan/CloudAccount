@@ -55,9 +55,9 @@ ext {
 
     // project
     minSdkVersion = 21
-    targetSdkVersion = 29
-    compileSdkVersion = 29
-    buildToolsVersion = '29.0.3'
+    targetSdkVersion = 28
+    compileSdkVersion = 28
+    buildToolsVersion = '28.0.3'
     applicationId = "com.fatcloud.account"
 
     // 网络

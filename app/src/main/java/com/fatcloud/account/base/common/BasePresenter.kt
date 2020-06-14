@@ -1,6 +1,12 @@
 package com.fatcloud.account.base.common
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
+import android.media.Image
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.TextView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.fatcloud.account.base.net.BaseHttpSubscriber
@@ -9,8 +15,15 @@ import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.network.ApiService
 import com.fatcloud.account.network.Response
 import com.blankj.utilcode.util.LogUtils
+import com.fatcloud.account.R
+import com.fatcloud.account.common.Constants
+import com.fatcloud.account.feature.matisse.Glide4Engine
+import com.fatcloud.account.feature.matisse.Matisse
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonObject
+import com.tbruyelle.rxpermissions2.RxPermissions
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
+import com.zhihu.matisse.MimeType
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -184,5 +197,86 @@ open class BasePresenter constructor(private var view: BaseView?) {
         view = null
         unSubscribe()
     }
+
+
+    lateinit var dialog: BottomSheetDialog
+
+
+    /**
+     * @param mediaType
+     * @see Matisse.IMG
+     * @see Matisse.GIF
+     * @see Matisse.VIDEO
+     */
+    fun selectImage(activity: Activity, mediaType: Int) {
+        if (!this::dialog.isInitialized) {
+            dialog = BottomSheetDialog(activity)
+            val view = LayoutInflater.from(activity).inflate(R.layout.post_feed_bottom_sheet, null)
+            dialog.setContentView(view)
+            try {
+                // hack bg color of the BottomSheetDialog
+                val parent = view.parent as ViewGroup
+                parent.setBackgroundResource(android.R.color.transparent)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            view.findViewById<TextView>(R.id.shooting).setOnClickListener {
+                // 拍摄
+//                presenter.requestShootingPermissions(this@PostFeedActivity, filePath, 0)
+                dialog.dismiss()
+            }
+
+
+            view.findViewById<TextView>(R.id.select_album).setOnClickListener {
+                // 相册选择
+                if (requestAlbumPermissions(activity)) {
+                    Matisse.from(activity)
+                        .choose(
+                            if (mediaType == 0)
+                                MimeType.ofAll()
+                            else
+                                MimeType.ofImage().apply {
+                                    remove(MimeType.GIF)
+                                }, true
+                        )
+                        .countable(true)
+                        .originalEnable(false)
+                        .maxSelectable(1)
+                        .theme(R.style.Matisse_Dracula)
+                        .thumbnailScale(0.87f)
+                        .imageEngine(Glide4Engine())
+                        .forResult(Constants.REQUEST_MEDIA, mediaType)
+                } else {
+
+                }
+                dialog.dismiss()
+            }
+            view.findViewById<TextView>(R.id.cancel_tv).setOnClickListener {
+                dialog.dismiss()
+            }
+
+
+        }
+        dialog.show()
+
+    }
+
+
+    /**
+     * 相册权限申请
+     */
+    fun requestAlbumPermissions(activity: Activity): Boolean {
+        var isGranted = false
+        addSubscribe(RxPermissions(activity)
+            .request(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+            .subscribe {
+                isGranted = true
+            })
+        return isGranted
+    }
+
 
 }

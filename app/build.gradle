@@ -220,7 +220,7 @@ dependencies {
     implementation 'com.github.SherlockGougou:BigImageViewPager:androidx-5.0.3'
 
     // 自定义相册
-    implementation 'com.zhihu.android:matisse:0.5.2-beta3'
+    implementation 'com.zhihu.android:matisse:0.5.3-beta3'
 
     // 圆形进度条
     implementation 'com.mikhaellopez:circularprogressbar:3.0.3'

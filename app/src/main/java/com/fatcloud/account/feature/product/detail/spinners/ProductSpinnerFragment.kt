@@ -20,7 +20,7 @@ import com.fatcloud.account.entity.product.Price
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.extend.RoundTransFormation
 import com.fatcloud.account.feature.forms.enterprise.license.FormLicenseEnterpriseActivity
-import com.fatcloud.account.feature.forms.psrsonal.bookkeeping.FormAgentBookkeepingPersonalActivity
+import com.fatcloud.account.feature.forms.personal.bookkeeping.FormAgentBookkeepingPersonalActivity
 import kotlinx.android.synthetic.main.fragment_product_spinner.*
 import java.math.BigDecimal
 
