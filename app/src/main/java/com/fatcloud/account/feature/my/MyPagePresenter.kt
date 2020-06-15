@@ -19,13 +19,10 @@ class MyPagePresenter @Inject constructor(private val view: MyPageView) : BasePr
     lateinit var database: CloudDataBase @Inject set
 
 
-
     /**
-     * 重设密码
+     * 退出登录
      */
     fun loginOutRequest(lifecycleOwner: LifecycleOwner) {
-
-
 
         requestApi(lifecycleOwner, Lifecycle.Event.ON_DESTROY,
             apiService.logout(),
@@ -34,9 +31,37 @@ class MyPagePresenter @Inject constructor(private val view: MyPageView) : BasePr
                     super.onComplete()
                     removeUserInfo()
                 }
+
                 override fun onSuccess(data: JsonElement?) = Unit
             })
     }
+
+    /**
+     * 更新头像和昵称
+     */
+    fun updateAvatarAndNickname(lifecycleOwner: LifecycleOwner, avatarUrl: String? = null, nickName: String? = null) {
+
+        requestApi(lifecycleOwner, Lifecycle.Event.ON_DESTROY,
+            apiService.updateAvatarAndNickname(avatarUrl, nickName),
+            object : BaseHttpSubscriber<JsonElement>(view) {
+
+                override fun onSuccess(data: JsonElement?){
+                    User.get().apply {
+                        avatarUrl?.let {
+                            this.headUrl = it
+                        }
+                        nickName?.let {
+                            this.nickName = it
+                        }
+                        database.userDao().updateUser(this)
+                        User.update()
+                    }
+
+
+                }
+            })
+    }
+
 
     private fun removeUserInfo() {
         // 清空用户信息

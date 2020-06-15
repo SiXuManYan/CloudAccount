@@ -134,7 +134,7 @@ class CloudAccountPresenter(val view: CloudAccountView) {
     ) {
 
         // 节点
-        val endpoint = "https://oss-cn-qingdao.aliyuncs.com"
+        val endpoint = "oss-cn-qingdao.aliyuncs.com"
 
         // bucketName
         val imageBucketName = if (isEncryptFile) {
@@ -173,7 +173,7 @@ class CloudAccountPresenter(val view: CloudAccountView) {
 
         //初始化OSS服务的客户端oss
         //事实上，初始化OSS的实例对象，应该具有与整个应用程序相同的生命周期，在应用程序生命周期结束时销毁
-        val oss: OSS = OSSClient(context, endpoint, credentialProvider, conf)
+        val oss: OSS = OSSClient(context, "https://$endpoint", credentialProvider, conf)
 
         // 构造上传请求,第二个数参是ObjectName，第三个参数是本地文件路径
         val put = PutObjectRequest(imageBucketName, imageObjectKey, localFilePatch)
@@ -184,7 +184,7 @@ class CloudAccountPresenter(val view: CloudAccountView) {
         val task = oss.asyncPutObject(put, object : OSSCompletedCallback<PutObjectRequest, PutObjectResult> {
             override fun onSuccess(request: PutObjectRequest?, result: PutObjectResult?) {
                 Log.d("PutObject", "UploadSuccess");
-                val finalUrl = endpoint + imageBucketName + imageObjectKey
+                val finalUrl = "https://$imageBucketName.$endpoint/$imageObjectKey"
                 RxBus.post(ImageUploadEvent(finalUrl, isFaceUp, fromViewId))
             }
 

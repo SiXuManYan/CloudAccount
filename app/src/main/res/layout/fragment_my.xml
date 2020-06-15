@@ -46,6 +46,7 @@
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:layout_marginRight="15dp"
+                        android:background="?android:attr/selectableItemBackground"
                         android:src="@drawable/ic_avatar_default" />
 
 

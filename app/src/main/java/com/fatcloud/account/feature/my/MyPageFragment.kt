@@ -1,26 +1,33 @@
 package com.fatcloud.account.feature.my
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.view.View
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import butterknife.OnClick
-import com.fatcloud.account.R
-import com.fatcloud.account.app.Glide
-import com.fatcloud.account.base.ui.BaseFragment
-import com.fatcloud.account.common.CommonUtils
-import com.fatcloud.account.common.Constants
-import com.fatcloud.account.entity.users.User
-import com.fatcloud.account.extend.RoundTransFormation
-import com.fatcloud.account.feature.about.AboutActivity
-import com.fatcloud.account.feature.account.login.LoginActivity
-import com.fatcloud.account.feature.order.lists.OrderListActivity
-import com.fatcloud.account.view.dialog.AlertDialog
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.VibrateUtils
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
+import com.fatcloud.account.R
+import com.fatcloud.account.app.CloudAccountApplication
+import com.fatcloud.account.app.Glide
+import com.fatcloud.account.base.ui.BaseFragment
+import com.fatcloud.account.common.CommonUtils
+import com.fatcloud.account.common.Constants
+import com.fatcloud.account.common.ProductUtils
+import com.fatcloud.account.entity.users.User
+import com.fatcloud.account.event.entity.ImageUploadEvent
+import com.fatcloud.account.extend.RoundTransFormation
+import com.fatcloud.account.feature.about.AboutActivity
+import com.fatcloud.account.feature.account.login.LoginActivity
+import com.fatcloud.account.feature.matisse.Matisse
+import com.fatcloud.account.feature.matisse.MatisseActivity
+import com.fatcloud.account.feature.order.lists.OrderListActivity
+import com.fatcloud.account.view.dialog.AlertDialog
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_my.*
 
@@ -52,6 +59,13 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
 
 
     private fun initEvent() {
+        // 图片上传成功
+        presenter.subsribeEventEntity<ImageUploadEvent>(Consumer {
+
+            presenter.updateAvatarAndNickname(this@MyPageFragment, it.finalUrl)
+
+        })
+
         presenter.subsribeEvent(Consumer {
             when (it.code) {
                 Constants.EVENT_NEED_REFRESH -> {
@@ -83,6 +97,7 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
         CommonUtils.getFriendlyTime(time_tv)
         if (!User.isLogon()) {
             ic_avatar_civ.setImageResource(R.drawable.ic_avatar_default)
+            ic_avatar_civ.isClickable = false
             name_tv.text = getString(R.string.un_login_name)
             name_tv.isClickable = true
             user_id_tv.visibility = View.GONE
@@ -98,8 +113,7 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
         val user = User.get()
 
         Glide.with(context!!)
-            //            .load(User.get().photo)
-            .load(CommonUtils.getTestUrl())
+            .load(User.get().headUrl)
             .apply(
                 RequestOptions().transform(
                     MultiTransformation(
@@ -110,6 +124,7 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
             )
             .error(R.drawable.ic_error_image_load)
             .into(ic_avatar_civ)
+        ic_avatar_civ.isClickable = true
 
         name_tv.text = user.nickName
         name_tv.isClickable = false
@@ -123,6 +138,40 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
         income_rl.visibility = View.GONE
         qr_rl.visibility = View.GONE
         spread_rl.visibility = View.GONE
+    }
+
+
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (data == null) {
+            return
+        }
+
+        when (requestCode) {
+
+            Constants.REQUEST_MEDIA -> {
+                // 相册选择图片
+                val elements = Matisse.obtainPathResult(data)
+                if (elements.isNotEmpty()) {
+                    val fileDirPath = elements[0]
+                    val fromViewId = data.getIntExtra(Matisse.MEDIA_FROM_VIEW_ID, 0)
+                    if (fromViewId != 0) {
+                        val fromView = activity!!.findViewById<ImageView>(fromViewId)
+                        if (fromView != null) {
+                            Glide.with(this).load(fileDirPath).into(fromView)
+                        }
+                    }
+                    val application = activity!!.application as CloudAccountApplication
+                    application.getOssSecurityToken(false, true, fileDirPath, fromViewId)
+                }
+            }
+            else -> {
+            }
+        }
+
+
     }
 
 
@@ -164,7 +213,7 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
 
             }
             R.id.ic_avatar_civ -> {
-
+                ProductUtils.handleMediaSelectForFragment(this, Matisse.IMG, view.id)
             }
             R.id.user_info_ll -> {
 

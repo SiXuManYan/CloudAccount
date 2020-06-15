@@ -147,6 +147,9 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
 
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+    }
 
     override fun onBackPressed() {
         if (System.currentTimeMillis() - tapTime > 2000) {

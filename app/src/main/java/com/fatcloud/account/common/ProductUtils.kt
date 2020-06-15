@@ -2,8 +2,10 @@ package com.fatcloud.account.common
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.DialogInterface
 import androidx.annotation.IdRes
+import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.VibrateUtils
 import com.fatcloud.account.R
@@ -69,17 +71,21 @@ object ProductUtils {
     /**
      * 相册权限申请
      */
-   private fun requestAlbumPermissions(activity: Activity): Boolean {
+    private fun requestAlbumPermissions(activity: Activity?): Boolean {
         var isGranted = false
-        addSubscribe(
-            RxPermissions(activity)
-                .request(
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                )
-                .subscribe {
-                    isGranted = true
-                })
+
+        activity?.let {
+            addSubscribe(
+                RxPermissions(it)
+                    .request(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
+                    .subscribe {
+                        isGranted = true
+                    })
+        }
+
         return isGranted
     }
 
@@ -93,7 +99,7 @@ object ProductUtils {
      * @see Constants.I1
      * @see Constants.I2
      */
-     fun handleMediaSelect(activity: Activity, mediaType: Int, @IdRes fromViewId: Int) {
+    fun handleMediaSelect(activity: Activity, mediaType: Int, @IdRes fromViewId: Int) {
 
         val isGranted = requestAlbumPermissions(activity)
 
@@ -111,18 +117,43 @@ object ProductUtils {
                 .forResult(Constants.REQUEST_MEDIA, mediaType, fromViewId)
 
         } else {
-            AlertDialog.Builder(activity).setTitle(R.string.hint)
-                .setMessage(R.string.album_need_permission)
-                .setCancelable(false)
-                .setPositiveButton(R.string.yes, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, _ ->
-                    dialog.dismiss()
-                    AppUtils.launchAppDetailsSettings()
-                })
-                .setNegativeButton(R.string.no, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
-                .create()
-                .show()
-
+            showPermissionFailure(activity)
         }
+    }
+
+    fun handleMediaSelectForFragment(fragment: Fragment, mediaType: Int, @IdRes fromViewId: Int) {
+        val isGranted = requestAlbumPermissions(fragment.activity)
+
+        if (isGranted) {
+            Matisse.from(fragment).choose(if (mediaType == 0) MimeType.ofAll() else with(MimeType.ofImage()) {
+                remove(MimeType.GIF)
+                this
+            }, true)
+                .countable(true)
+//                .originalEnable(false)
+                .maxSelectable(1)
+                .theme(R.style.Matisse_Dracula)
+                .thumbnailScale(0.87f)
+                .imageEngine(Glide4Engine())
+                .forResult(Constants.REQUEST_MEDIA, mediaType, fromViewId)
+
+        } else {
+            showPermissionFailure(fragment.context)
+        }
+    }
+
+
+    private fun showPermissionFailure(context: Context?) {
+        AlertDialog.Builder(context).setTitle(R.string.hint)
+            .setMessage(R.string.album_need_permission)
+            .setCancelable(false)
+            .setPositiveButton(R.string.yes, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, _ ->
+                dialog.dismiss()
+                AppUtils.launchAppDetailsSettings()
+            })
+            .setNegativeButton(R.string.no, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
+            .create()
+            .show()
     }
 
 

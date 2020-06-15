@@ -301,5 +301,14 @@ interface ApiService {
     @GET("alioss/sts/token")
     fun getOssSecurityToken(): Flowable<Response<SecurityTokenModel>>
 
+    /**
+     * 重视头像和昵称
+     */
+    @POST("$T_ACCOUNT_API/resetInfo")
+    @FormUrlEncoded
+    fun updateAvatarAndNickname(
+        @Field("headUrl") headUrl: String?,
+        @Field("nickName") nickName: String?
+    ): Flowable<Response<JsonElement>>
 
 }
