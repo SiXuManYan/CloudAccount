@@ -1,7 +1,8 @@
 package com.fatcloud.account.feature.my
 
-import com.fatcloud.account.base.common.BaseView
+import com.fatcloud.account.base.common.BaseTaskView
 
-interface MyPageView :BaseView{
+interface MyPageView :BaseTaskView{
+    fun updateAvatarAndNicknameSuccess()
 
 }

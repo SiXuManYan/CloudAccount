@@ -45,7 +45,7 @@ class MyPagePresenter @Inject constructor(private val view: MyPageView) : BasePr
             apiService.updateAvatarAndNickname(avatarUrl, nickName),
             object : BaseHttpSubscriber<JsonElement>(view) {
 
-                override fun onSuccess(data: JsonElement?){
+                override fun onSuccess(data: JsonElement?) {
                     User.get().apply {
                         avatarUrl?.let {
                             this.headUrl = it
@@ -56,7 +56,7 @@ class MyPagePresenter @Inject constructor(private val view: MyPageView) : BasePr
                         database.userDao().updateUser(this)
                         User.update()
                     }
-
+                    view.updateAvatarAndNicknameSuccess()
 
                 }
             })

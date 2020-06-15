@@ -6,9 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import butterknife.OnClick
-import com.blankj.utilcode.util.BarUtils
-import com.blankj.utilcode.util.ScreenUtils
-import com.blankj.utilcode.util.VibrateUtils
+import com.blankj.utilcode.util.*
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
@@ -25,9 +23,9 @@ import com.fatcloud.account.extend.RoundTransFormation
 import com.fatcloud.account.feature.about.AboutActivity
 import com.fatcloud.account.feature.account.login.LoginActivity
 import com.fatcloud.account.feature.matisse.Matisse
-import com.fatcloud.account.feature.matisse.MatisseActivity
 import com.fatcloud.account.feature.order.lists.OrderListActivity
 import com.fatcloud.account.view.dialog.AlertDialog
+import com.fatcloud.account.view.dialog.InputDialog
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_my.*
 
@@ -41,6 +39,10 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
     init {
         needMenuControl = true
     }
+
+    override fun showLoading() = showLoadingDialog()
+
+    override fun hideLoading() = dismissLoadingDialog()
 
     override fun getLayoutId() = R.layout.fragment_my
 
@@ -62,7 +64,7 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
         // 图片上传成功
         presenter.subsribeEventEntity<ImageUploadEvent>(Consumer {
 
-            presenter.updateAvatarAndNickname(this@MyPageFragment, it.finalUrl)
+            presenter.updateAvatarAndNickname(this@MyPageFragment, it.finalUrl, null)
 
         })
 
@@ -99,7 +101,6 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
             ic_avatar_civ.setImageResource(R.drawable.ic_avatar_default)
             ic_avatar_civ.isClickable = false
             name_tv.text = getString(R.string.un_login_name)
-            name_tv.isClickable = true
             user_id_tv.visibility = View.GONE
             login_out_tv.visibility = View.INVISIBLE
 
@@ -127,7 +128,6 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
         ic_avatar_civ.isClickable = true
 
         name_tv.text = user.nickName
-        name_tv.isClickable = false
         user_id_tv.apply {
             text = user.username.toString()
             visibility = View.VISIBLE
@@ -191,7 +191,7 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
         when (view.id) {
 
             R.id.name_tv -> {
-                startActivity(LoginActivity::class.java)
+                handleNameClick(view)
             }
             R.id.login_out_tv -> {
                 VibrateUtils.vibrate(10)
@@ -240,6 +240,36 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
             }
         }
 
+    }
+
+    private fun handleNameClick(view: View) {
+        if (User.isLogon()) {
+            InputDialog.Builder(context!!)
+                .setTitle("修改昵称")
+                .setMessage("请输入昵称")
+                .setPositiveButton(R.string.confirm, DialogInterface.OnClickListener { dialog, _ ->
+                    val content = (dialog as InputDialog).getInputContent().toString().trim()
+                    if (content.isNotEmpty()) {
+                        dialog.dismiss()
+                        name_tv.text = content
+                        presenter.updateAvatarAndNickname(this@MyPageFragment, null, content)
+
+                        KeyboardUtils.hideSoftInput(activity!!)
+                    }
+                })
+                .setNegativeButton(R.string.cancel, DialogInterface.OnClickListener { dialog, _ ->
+                    dialog.dismiss()
+                    KeyboardUtils.hideSoftInput(activity!!)
+                }).create().show()
+
+            KeyboardUtils.showSoftInput(activity!!)
+        } else {
+            startActivity(LoginActivity::class.java)
+        }
+    }
+
+    override fun updateAvatarAndNicknameSuccess() {
+        ToastUtils.showShort("更新成功")
     }
 
 
