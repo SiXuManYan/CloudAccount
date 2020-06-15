@@ -197,9 +197,14 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
      * 获取 token
      * @param objectName 文件路径
      * @param isEncryptFile 是否为加密文件
+     * @param isFaceUp 是否为证件照上传
+     * @param localFilePatch 图片所在本地路径
+     * @param fromViewId 发起请求的viewId 用于上传成功后，做后续操作
+     * @param clx 请求发起位置
+     *
      */
-    fun getOssSecurityToken(isEncryptFile: Boolean, isFaceUp: Boolean, localFilePatch: String,@IdRes fromViewId:Int) {
-        presenter.getOssSecurityToken(this, isEncryptFile,isFaceUp, localFilePatch,fromViewId)
+    fun getOssSecurityToken(isEncryptFile: Boolean, isFaceUp: Boolean, localFilePatch: String, @IdRes fromViewId: Int, clx: Class<*>) {
+        presenter.getOssSecurityToken(this, isEncryptFile, isFaceUp, localFilePatch, fromViewId, clx)
     }
 
 

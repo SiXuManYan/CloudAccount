@@ -63,7 +63,9 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
     private fun initEvent() {
         // 图片上传成功
         presenter.subsribeEventEntity<ImageUploadEvent>(Consumer {
-
+            if (it.formWhichClass != this.javaClass) {
+                return@Consumer
+            }
             presenter.updateAvatarAndNickname(this@MyPageFragment, it.finalUrl, null)
 
         })
@@ -164,7 +166,7 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
                         }
                     }
                     val application = activity!!.application as CloudAccountApplication
-                    application.getOssSecurityToken(false, true, fileDirPath, fromViewId)
+                    application.getOssSecurityToken(false, true, fileDirPath, fromViewId, this@MyPageFragment.javaClass)
                 }
             }
             else -> {

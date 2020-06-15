@@ -101,6 +101,9 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
         // 图片上传成功
         presenter.subsribeEventEntity<ImageUploadEvent>(Consumer {
 
+            if (it.formWhichClass != this.javaClass) {
+                return@Consumer
+            }
             businessLicenseImgUrl = it.finalUrl
 
         })
@@ -149,7 +152,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
                         }
                     }
                     val application = application as CloudAccountApplication
-                    application.getOssSecurityToken(true, true, fileDirPath,fromViewId)
+                    application.getOssSecurityToken(true, true, fileDirPath,fromViewId,this@FormTaxRegistrationPersonalActivity.javaClass)
                 }
             }
             else -> {

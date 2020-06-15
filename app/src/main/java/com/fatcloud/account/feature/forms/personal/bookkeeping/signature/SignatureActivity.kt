@@ -2,6 +2,7 @@ package com.fatcloud.account.feature.forms.personal.bookkeeping.signature
 
 import android.graphics.Bitmap
 import android.view.View
+import android.widget.ImageView
 import butterknife.OnClick
 import com.blankj.utilcode.util.ToastUtils
 import com.fatcloud.account.R
@@ -10,9 +11,7 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.product.NativeBookkeeping
-import com.fatcloud.account.event.entity.WordpadEvent
 import com.fatcloud.account.feature.forms.personal.bookkeeping.wordpad.WordpadFragment
-import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_signature.*
 
 /**
@@ -26,9 +25,9 @@ class SignatureActivity : BaseMVPActivity<SignaturePresenter>(), SignatureView {
     private var nativeBookkeeping: NativeBookkeeping? = null
 
     /**
-     * 签名svg路径
+     * 签名上传OSS成功后的最终路径
      */
-    private var signatureSvg: String = ""
+    private var autographFinalUrl: String = ""
 
     override fun getLayoutId() = R.layout.activity_signature
 
@@ -54,11 +53,11 @@ class SignatureActivity : BaseMVPActivity<SignaturePresenter>(), SignatureView {
 
     private fun initEvent() {
 
-        // 签字版
-        presenter.subsribeEventEntity<WordpadEvent>(Consumer {
-            val signatureSvg = it.signatureSvg
-            Glide.with(this).load(signatureSvg).into(signature_iv)
-        })
+//        // 签字版
+//        presenter.subsribeEventEntity<WordpadEvent>(Consumer {
+//            val signatureSvg = it.signatureSvg
+//            Glide.with(this).load(signatureSvg).into(signature_iv)
+//        })
     }
 
     private fun initView() {
@@ -87,22 +86,34 @@ class SignatureActivity : BaseMVPActivity<SignaturePresenter>(), SignatureView {
         }
         when (view.id) {
             R.id.bottom_left_tv -> {
-                // 签名
-                WordpadFragment.newInstance().apply {
-                    show(supportFragmentManager, this.tag)
-                    commitCallBack = object : WordpadFragment.CommitCallBack {
-                        override fun onCommit(signatureBitmap: Bitmap?) {
-                            Glide.with(this@SignatureActivity).load(signatureBitmap).into(signature_iv)
-                        }
-                    }
-                }
-
+                handleWordpad()
             }
             R.id.bottom_right_tv -> {
-
                 handleCommit()
             }
             else -> {
+            }
+        }
+    }
+
+    /**
+     *   签名
+     */
+    private fun handleWordpad() {
+        WordpadFragment.newInstance().apply {
+
+            show(supportFragmentManager, this.tag)
+
+            commitCallBack = object : WordpadFragment.CommitCallBack {
+
+                override fun showAutographForImageView(signatureBitmap: Bitmap?) {
+                    val signature_iv = this@SignatureActivity.findViewById<ImageView>(R.id.signature_iv)
+                    Glide.with(this@SignatureActivity).load(signatureBitmap).into(signature_iv)
+                }
+
+                override fun uploadAutographSuccess(finalUrl: String) {
+                    autographFinalUrl = finalUrl
+                }
             }
         }
     }
@@ -120,7 +131,7 @@ class SignatureActivity : BaseMVPActivity<SignaturePresenter>(), SignatureView {
                 it.idNumber,
                 it.storeName,
                 it.businessLicenseImgUrl,
-                signatureSvg
+                autographFinalUrl
             )
 
         }

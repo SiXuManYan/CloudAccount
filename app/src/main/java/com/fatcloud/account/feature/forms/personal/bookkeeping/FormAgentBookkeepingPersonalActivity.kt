@@ -93,8 +93,10 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
         // 图片上传成功
         presenter.subsribeEventEntity<ImageUploadEvent>(Consumer {
 
+            if (it.formWhichClass != this.javaClass) {
+                return@Consumer
+            }
             mBusinessLicenseImgUrl = it.finalUrl
-
 
         })
     }
@@ -132,7 +134,7 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
                         }
                     }
                     val application = application as CloudAccountApplication
-                    application.getOssSecurityToken(true, isFaceUp, fileDirPath,fromViewId)
+                    application.getOssSecurityToken(true, isFaceUp, fileDirPath,fromViewId,this@FormAgentBookkeepingPersonalActivity.javaClass)
                 }
             }
             else -> {

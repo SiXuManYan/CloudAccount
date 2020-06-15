@@ -3,11 +3,10 @@ package com.fatcloud.account.feature.forms.personal.bookkeeping.wordpad
 import android.graphics.Bitmap
 import android.view.View
 import butterknife.OnClick
+import com.blankj.utilcode.util.ConvertUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseBottomSheetDialogFragment
 import com.fatcloud.account.common.CommonUtils
-import com.fatcloud.account.event.RxBus
-import com.fatcloud.account.event.entity.WordpadEvent
 import com.github.gcacace.signaturepad.views.SignaturePad
 import kotlinx.android.synthetic.main.fragment_word_pad.*
 
@@ -64,17 +63,7 @@ class WordpadFragment : BaseBottomSheetDialogFragment<WordpadPresenter>(), Wordp
                 signature_pad.clear()
             }
             R.id.commit_tv -> {
-
-                commitCallBack?.let {
-
-                    val signatureBitmap = signature_pad.signatureBitmap
-
-                    if (presenter.requestAlbumPermissions(activity!!)) {
-                        val fileName = CommonUtils.saveBitmapImage(signatureBitmap, activity)
-                        // todo 签字上传
-                    }
-                    it.onCommit(signatureBitmap)
-                }
+                commitWordpad()
                 dismissAllowingStateLoss()
             }
             else -> {
@@ -82,10 +71,44 @@ class WordpadFragment : BaseBottomSheetDialogFragment<WordpadPresenter>(), Wordp
         }
     }
 
+    private fun commitWordpad() {
+        commitCallBack?.let {
+            val signatureBitmap = signature_pad.signatureBitmap
+            // 回传Bitmap
+            it.showAutographForImageView(signatureBitmap)
+
+            val byteArray = ConvertUtils.bitmap2Bytes(signatureBitmap, Bitmap.CompressFormat.PNG)
+            // 上传图片至oss
+           presenter.getOssSecurityToken(this,byteArray)
+
+        }
+    }
+
     var commitCallBack: CommitCallBack? = null
 
     interface CommitCallBack {
-        fun onCommit(signatureBitmap: Bitmap?)
+        /**
+         * 签字完成后，立即显示在目标 调用者的imageView 上
+         */
+        fun showAutographForImageView(signatureBitmap: Bitmap?)
+
+        /**
+         * 获取签名上传oss 后的最终地址
+         */
+        fun uploadAutographSuccess(finalUrl: String)
+
+    }
+
+    override fun uploadAutographSuccess(finalUrl: String?) {
+
+        commitCallBack?.let {
+            if (!finalUrl.isNullOrEmpty()) {
+                it.uploadAutographSuccess(finalUrl)
+                return
+            }
+
+
+        }
     }
 
 

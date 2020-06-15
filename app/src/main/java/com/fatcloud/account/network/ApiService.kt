@@ -311,4 +311,50 @@ interface ApiService {
         @Field("nickName") nickName: String?
     ): Flowable<Response<JsonElement>>
 
+
+    /**
+     *
+     * 添加具体流程的内容(如，开立银行对公账户)
+     * @param businessLicenseImgUrl     公司营业执照
+     * @param capital                   企业注册资金
+     * @param electronicSealImgUrl      电子公章
+     * @param enterpriseAddr            公司地址
+     * @param enterpriseMold            企业性质
+     * @param enterpriseName            公司名
+     * @param financeIdno               财务负责人身份证号
+     * @param financeIdnoImgUrlA        财务负责人身份证正面
+     * @param financeIdnoImgUrlB        财务负责人身份证背面不能为空
+     * @param financeName               财务负责人姓名
+     * @param financePhone              财务负责人电话
+     * @param financeShares             财务负责人股份比例
+     * @param legalPersonWarrantImgUrl  法人签字授权书
+     * @param orderWorkId
+     * @param reconciliatAddr           对账单收货地址详细
+     * @param reconciliatArea           对账单收货地址区域
+     * @param reconciliatContact        对账联系人
+     * @param reconciliatPhone          对账联系人电话
+     */
+    @POST("$API_URI/tOrderWork/add")
+    @FormUrlEncoded
+    fun updateAvatarAndNiSckname(
+        @Field("businessLicenseImgUrl") businessLicenseImgUrl: String?,
+        @Field("capital") capital: String?,
+        @Field("electronicSealImgUrl") electronicSealImgUrl: String?,
+        @Field("enterpriseAddr") enterpriseAddr: String?,
+        @Field("enterpriseMold") enterpriseMold: String?,
+        @Field("enterpriseName") enterpriseName: String?,
+        @Field("financeIdno") financeIdno: String?,
+        @Field("financeIdnoImgUrlA") financeIdnoImgUrlA: String?,
+        @Field("financeIdnoImgUrlB") financeIdnoImgUrlB: String?,
+        @Field("financeName") financeName: String?,
+        @Field("financePhone") financePhone: String?,
+        @Field("financeShares") financeShares: String?,
+        @Field("legalPersonWarrantImgUrl") legalPersonWarrantImgUrl: String?,
+        @Field("orderWorkId") orderWorkId: String?,
+        @Field("reconciliatAddr") reconciliatAddr: String?,
+        @Field("reconciliatContact") reconciliatContact: String?,
+        @Field("reconciliatPhone") reconciliatPhone: String?
+    ): Flowable<Response<JsonElement>>
+
+
 }

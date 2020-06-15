@@ -127,6 +127,9 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
     private fun initEvent() {
         // 图片上传成功
         presenter.subsribeEventEntity<ImageUploadEvent>(Consumer {
+            if (it.formWhichClass != this.javaClass) {
+                return@Consumer
+            }
             val finalUrl = it.finalUrl
             if (it.isFaceUp) {
                 faceUpUrl = finalUrl
@@ -318,7 +321,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
 
                     // 图片上传
                     val application = application as CloudAccountApplication
-                    application.getOssSecurityToken(true, isFaceUp, fileDirPath,fromViewId)
+                    application.getOssSecurityToken(true, isFaceUp, fileDirPath, fromViewId, this@FormLicensePersonalActivity.javaClass)
 
                 }
 

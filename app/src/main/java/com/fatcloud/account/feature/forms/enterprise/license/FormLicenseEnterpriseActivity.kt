@@ -121,6 +121,9 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
         // 图片上传成功
         presenter.subsribeEventEntity<ImageUploadEvent>(Consumer {
 
+            if (it.formWhichClass != this.javaClass) {
+                return@Consumer
+            }
             val finalUrl = it.finalUrl
             val fromView = findViewById<CompanyMemberEditView>(it.fromViewId)
             if (fromView != null) {
@@ -264,7 +267,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
                         }
                     }
                     val application = application as CloudAccountApplication
-                    application.getOssSecurityToken(true, isFaceUp, fileDirPath, fromViewId)
+                    application.getOssSecurityToken(true, isFaceUp, fileDirPath, fromViewId, this@FormLicenseEnterpriseActivity.javaClass)
                 }
             }
             else -> {

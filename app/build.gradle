@@ -77,6 +77,8 @@ android {
 
             buildConfigField "String", "WECHAT_APPID", WECHAT_APPID
             buildConfigField "String", "WECHAT_APPSECRET", WECHAT_APPSECRET
+
+            buildConfigField "String", "OSS_END_POINT", OSS_END_POINT
             buildConfigField "String", "BUGLY_APP_ID", '"1"'
             buildConfigField "boolean", "BUGLY_ENABLE_DEBUG", 'false'
         }
@@ -88,6 +90,8 @@ android {
 
             buildConfigField "String", "WECHAT_APPID", WECHAT_APPID
             buildConfigField "String", "WECHAT_APPSECRET", WECHAT_APPSECRET
+
+            buildConfigField "String", "OSS_END_POINT", OSS_END_POINT
             buildConfigField "String", "BUGLY_APP_ID", '"1"'
             buildConfigField "boolean", "BUGLY_ENABLE_DEBUG", 'false'
         }

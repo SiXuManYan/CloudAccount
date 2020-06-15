@@ -18,12 +18,15 @@
     <string name="wechat_noting">抱歉,您尚未安装微信</string>
 
     <!--  android/开发环境/资源类型/是否为加密文件/时间戳.jpg-->
+
     <string name="upload_image_path_format">android/formal/image/general/image_%1$s.jpg</string>
     <string name="upload_image_path_dev_format">android/dev/image/general/image_%1$s.jpg</string>
 
     <string name="upload_image_encryption_path_format">android/formal/image/encryption/image_%1$s.jpg</string>
     <string name="upload_image_encryption_path_dev_format">android/dev/image/encryption/image_%1$s.jpg</string>
 
+    <!-- 上传成功后的最终URL val finalUrl = "https://$imageBucketName.$endpoint/$imageObjectKey" -->
+    <string name="final_url_format">https://%1$s.%2$s/%3$s</string>
 
     <string name="home">首页</string>
     <string name="product">产品</string>

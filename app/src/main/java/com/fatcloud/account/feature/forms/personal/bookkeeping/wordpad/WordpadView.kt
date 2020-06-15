@@ -8,4 +8,5 @@ import com.fatcloud.account.base.common.BaseView
  *
  */
 interface WordpadView :BaseView{
+    fun uploadAutographSuccess(finalUrl: String?)
 }

@@ -105,14 +105,14 @@ class CloudAccountPresenter(val view: CloudAccountView) {
      * @param objectName 文件路径
      * @param isEncryptFile 是否为加密文件
      */
-    fun getOssSecurityToken(context: Context, isEncryptFile: Boolean, isFaceUp: Boolean, localFilePatch: String, @IdRes fromViewId: Int) {
+    fun getOssSecurityToken(context: Context, isEncryptFile: Boolean, isFaceUp: Boolean, localFilePatch: String, @IdRes fromViewId: Int, clx: Class<*>) {
 
         addSubscribe(
             apiService.getOssSecurityToken().compose(flowableUICompose())
                 .subscribeWith(object : BaseHttpSubscriber<SecurityTokenModel>(view) {
                     override fun onSuccess(data: SecurityTokenModel?) {
                         data?.let {
-                            uploadResources(context, it, isEncryptFile, localFilePatch, isFaceUp, fromViewId)
+                            uploadResources(context, it, isEncryptFile, localFilePatch, isFaceUp, fromViewId,clx)
                         }
                     }
                 })
@@ -130,11 +130,13 @@ class CloudAccountPresenter(val view: CloudAccountView) {
         isEncryptFile: Boolean,
         localFilePatch: String,
         isFaceUp: Boolean,
-        @IdRes fromViewId: Int
+        @IdRes fromViewId: Int,
+        clx: Class<*>
+
     ) {
 
         // 节点
-        val endpoint = "oss-cn-qingdao.aliyuncs.com"
+        val endpoint = BuildConfig.OSS_END_POINT
 
         // bucketName
         val imageBucketName = if (isEncryptFile) {
@@ -184,8 +186,9 @@ class CloudAccountPresenter(val view: CloudAccountView) {
         val task = oss.asyncPutObject(put, object : OSSCompletedCallback<PutObjectRequest, PutObjectResult> {
             override fun onSuccess(request: PutObjectRequest?, result: PutObjectResult?) {
                 Log.d("PutObject", "UploadSuccess");
-                val finalUrl = "https://$imageBucketName.$endpoint/$imageObjectKey"
-                RxBus.post(ImageUploadEvent(finalUrl, isFaceUp, fromViewId))
+//                val finalUrl = "https://$imageBucketName.$endpoint/$imageObjectKey"
+                val finalUrl = StringUtils.getString(R.string.final_url_format, imageBucketName, endpoint, imageObjectKey)
+                RxBus.post(ImageUploadEvent(finalUrl, isFaceUp, fromViewId,clx))
             }
 
             override fun onFailure(request: PutObjectRequest?, clientException: ClientException?, serviceException: ServiceException?) {
