@@ -120,7 +120,6 @@ class SignatureActivity : BaseMVPActivity<SignaturePresenter>(), SignatureView {
 
     private fun handleCommit() {
 
-        // todo 上传签名至阿里云
         nativeBookkeeping?.let {
             presenter.addAgentBookkeeping(
                 this, it.finalMoney,
@@ -133,9 +132,7 @@ class SignatureActivity : BaseMVPActivity<SignaturePresenter>(), SignatureView {
                 it.businessLicenseImgUrl,
                 autographFinalUrl
             )
-
         }
-
 
     }
 

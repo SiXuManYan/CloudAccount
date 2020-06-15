@@ -137,6 +137,13 @@ object Constants {
     const val SH3 = "SH3"
 
 
+    /** 财务负责人 */
+    const val SH4_N = "SH4_N"
+
+
+
+
+
     // 产品类型
     /** 个体户营业执照办理 */
     const val P1 = "P1"

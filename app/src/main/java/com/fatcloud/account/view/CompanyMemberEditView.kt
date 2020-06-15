@@ -101,22 +101,67 @@ class CompanyMemberEditView : LinearLayout {
     }
 
 
+    // 姓名
     fun initNameTitleHint(title: CharSequence, hint: String) = ev_00_name.setTitleAndHint(title, hint)
+    fun initNameTitle(title: CharSequence) = ev_00_name.setTitle(title)
+    fun setNameValue(value: CharSequence) = ev_00_name.setValue(value)
+
+    // 身份证号
     fun initIdNumberTitleHint(title: CharSequence, hint: CharSequence): EditView {
         ev_01_id_number.setTitleAndHint(title, hint)
         return ev_01_id_number
     }
 
+    fun initIdNumberTitle(title: CharSequence): EditView {
+        ev_01_id_number.setTitle(title)
+        return ev_01_id_number
+    }
+
+    fun setIdNumberValue(title: CharSequence): EditView {
+        ev_01_id_number.setValue(title)
+        return ev_01_id_number
+    }
+
+
+    // 身份证地址
     fun initIdAddressTitleHint(title: CharSequence, hint: CharSequence) = ev_02_id_addr.setTitleAndHint(title, hint)
+    fun initIdAddressTitle(title: CharSequence) = ev_02_id_addr.setTitle(title)
+    fun setIdAddressValue(title: CharSequence) = ev_02_id_addr.setValue(title)
+
+
+    // 手机号
     fun initPhoneTitleHint(title: CharSequence, hint: CharSequence): EditView {
         ev_03_phone.setTitleAndHint(title, hint)
         return ev_03_phone
     }
 
+    fun initPhoneTitle(title: CharSequence): EditView {
+        ev_03_phone.setTitle(title)
+        return ev_03_phone
+    }
+
+    fun setPhoneValue(title: CharSequence): EditView {
+        ev_03_phone.setValue(title)
+        return ev_03_phone
+    }
+
+
+    // 股份占比
     fun initShareRatioTitleHint(title: CharSequence, hint: CharSequence): EditView {
         ev_04_share_ratio.setTitleAndHint(title, hint)
         return ev_04_share_ratio
     }
+
+    fun initShareRatioTitle(title: CharSequence): EditView {
+        ev_04_share_ratio.setTitle(title)
+        return ev_04_share_ratio
+    }
+
+    fun setShareRatioValue(title: CharSequence): EditView {
+        ev_04_share_ratio.setValue(title)
+        return ev_04_share_ratio
+    }
+
 
     fun getNameValue() = ev_00_name.value()
     fun getIdNumberValue() = ev_01_id_number.value()
@@ -164,7 +209,7 @@ class CompanyMemberEditView : LinearLayout {
         }
     }
 
-    fun setImageUrl(fileDirPath: String){
+    fun setImageUrl(fileDirPath: String) {
         if (isFaceUp) {
             frontImageUrl = fileDirPath
         } else {

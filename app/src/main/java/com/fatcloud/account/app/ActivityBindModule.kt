@@ -16,6 +16,8 @@ import com.fatcloud.account.feature.account.password.login.PasswordLoginActivity
 import com.fatcloud.account.feature.account.password.login.PasswordLoginModule
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
 import com.fatcloud.account.feature.extra.BusinessScopeModule
+import com.fatcloud.account.feature.forms.enterprise.bank.FormBankActivity
+import com.fatcloud.account.feature.forms.enterprise.bank.FormBankModule
 import com.fatcloud.account.feature.forms.enterprise.license.FormLicenseEnterpriseActivity
 import com.fatcloud.account.feature.forms.enterprise.license.FormLicenseEnterpriseModule
 import com.fatcloud.account.feature.forms.personal.bookkeeping.FormAgentBookkeepingPersonalActivity
@@ -135,6 +137,11 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [FragmentBindModule::class, SignatureModule::class])
     abstract fun signatureActivityActivityInjector(): SignatureActivity
+
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [FragmentBindModule::class, FormBankModule::class])
+    abstract fun formBankActivityInjector(): FormBankActivity
 
 
 }

@@ -45,6 +45,38 @@ class EditView : LinearLayout {
         content_et = view.findViewById<AppCompatEditText>(R.id.content_et)
     }
 
+
+    fun setTitle(title: CharSequence): EditView {
+        title_tv.text = title
+        return this
+    }
+
+    fun setTitle(@StringRes titleResId: Int): EditView {
+        title_tv.text = StringUtils.getString(titleResId)
+        return this
+    }
+
+
+    fun setValue(title: CharSequence): EditView {
+        title_tv.text = title
+        return this
+    }
+
+    fun setValue(@StringRes valueResId: Int): EditView {
+        title_tv.text = StringUtils.getString(valueResId)
+        return this
+    }
+
+    fun setEditAble(editAble: Boolean): EditView {
+        content_et.apply {
+            isFocusable = editAble;
+            isFocusableInTouchMode = editAble;
+            isEnabled = editAble;
+        }
+        return this
+    }
+
+
     fun setTitleAndHint(title: CharSequence, hint: CharSequence): EditView {
         title_tv.text = title
         content_et.hint = hint
@@ -52,11 +84,14 @@ class EditView : LinearLayout {
     }
 
 
-    fun setTitleAndHint(@StringRes titleResId: Int, @StringRes hintResId: Int) : EditView {
+    fun setTitleAndHint(@StringRes titleResId: Int, @StringRes hintResId: Int): EditView {
         title_tv.text = StringUtils.getString(titleResId)
         content_et.hint = StringUtils.getString(hintResId)
         return this
     }
+
+
+
 
 
     fun value(): String {

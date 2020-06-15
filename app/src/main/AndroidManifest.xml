@@ -213,6 +213,7 @@
         <activity
             android:name=".feature.matisse.AllPreviewActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".feature.forms.enterprise.bank.FormBankActivity" />
 
 
     </application>
