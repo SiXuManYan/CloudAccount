@@ -2,6 +2,7 @@ package com.fatcloud.account.network
 
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.commons.Commons
+import com.fatcloud.account.entity.defray.WechatPayInfo
 import com.fatcloud.account.entity.home.HomeMix
 import com.fatcloud.account.entity.news.NewDetail
 import com.fatcloud.account.entity.news.NewsCategory
@@ -16,7 +17,6 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import io.reactivex.Flowable
 import retrofit2.http.*
-import java.math.BigDecimal
 
 /**
  * Created by Wangsw on 2020/5/22 0022 15:00.
@@ -31,34 +31,36 @@ interface ApiService {
         /**
          * 云账户API
          */
-        private const val API_URI = "api/account"
+        private const val API_ACCOUNT_URI = "api/account"
+
+        private const val API_URI = "api"
 
         /**
          * <首页>相关接口前缀
          */
-        private const val HOME_API_PREFIX = "$API_URI/tHome/"
+        private const val HOME_API_PREFIX = "$API_ACCOUNT_URI/tHome/"
 
         /**
          * <产品>相关接口前缀
          */
-        private const val PRODUCT_API_PREFIX = "$API_URI/tProduct/"
+        private const val PRODUCT_API_PREFIX = "$API_ACCOUNT_URI/tProduct/"
 
         /**
          * 资讯相关接口前缀
          *
          */
-        private const val NEWS_API = "$API_URI/tNews/"
+        private const val NEWS_API = "$API_ACCOUNT_URI/tNews/"
 
         /**
          * 账户相关接口前缀
          */
-        private const val T_ACCOUNT_API = "$API_URI/tAccount"
+        private const val T_ACCOUNT_API = "$API_ACCOUNT_URI/tAccount"
 
 
         /**
          * 订单相关
          */
-        private const val ORDER_API = "$API_URI/tOrder"
+        private const val ORDER_API = "$API_ACCOUNT_URI/tOrder"
 
     }
 
@@ -209,7 +211,7 @@ interface ApiService {
      * http://192.168.1.191:8881/api/account/tOrderWork/?orderId=1268456920973312000
      *
      */
-    @GET("$API_URI/tOrderWork/")
+    @GET("$API_ACCOUNT_URI/tOrderWork/")
     fun getBusinessProgress(
         @Query("orderId") orderId: String? = null
     ): Flowable<Response<JsonArray>>
@@ -227,7 +229,7 @@ interface ApiService {
      * 企业订单详情
      * @param orderWorkId 订单流程id
      */
-    @GET("$API_URI/tOrderWork/detail")
+    @GET("$API_ACCOUNT_URI/tOrderWork/detail")
     fun getEnterpriseOrderDetail(
         @Query("orderWorkId") orderWorkId: String? = null
     ): Flowable<Response<EnterpriseInfo>>
@@ -339,7 +341,7 @@ interface ApiService {
      * @see Constants.OW3
      * @see Constants.OW4
      */
-    @POST("$API_URI/tOrderWork/add")
+    @POST("$API_ACCOUNT_URI/tOrderWork/add")
     @FormUrlEncoded
     fun addSpecificProcessContent(
         @Field("orderWorkId") orderWorkId: String?,
@@ -367,9 +369,28 @@ interface ApiService {
      * 企业订单详情
      * @param orderWorkId 订单流程id
      */
-    @GET("$API_URI/tOrderWork/detail2")
+    @GET("$API_ACCOUNT_URI/tOrderWork/detail2")
     fun getEnterpriseOrderDetail2(
         @Query("orderWorkId") orderWorkId: String? = null
+    ): Flowable<Response<EnterpriseInfo>>
+
+
+    /**
+     * 微信统一下单
+     * @param orderWorkId 订单流程id
+     */
+    @GET("$API_URI/wxpay/unifiedOrder")
+    fun wechatUnifiedOrder(
+        @Query("orderId") orderId: String?
+    ): Flowable<Response<WechatPayInfo>>
+
+    /**
+     * 支付宝统一下单
+     * @param orderWorkId 订单流程id
+     */
+    @GET("$API_URI/wxpay/unifiedOrder")
+    fun alipayUnifiedOrder(
+        @Query("orderId") orderId: String?
     ): Flowable<Response<EnterpriseInfo>>
 
 

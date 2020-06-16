@@ -229,13 +229,15 @@ dependencies {
     // 圆形进度条
     implementation 'com.mikhaellopez:circularprogressbar:3.0.3'
     implementation 'androidx.work:work-runtime:2.3.4'
-    implementation files('libs/wxselfshare/wechat-sdk-android-with-mta_5.0.8.jar')
 
     // 阿里云对象存储
     implementation 'com.aliyun.dpa:oss-android-sdk:2.9.4'
 
     // 贝塞尔曲线签名 https://github.com/gcacace/android-signaturepad
     implementation 'com.github.gcacace:signature-pad:1.3.1'
+
+    // 微信支付
+    api  'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 
 }
 noArg {

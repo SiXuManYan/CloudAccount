@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.event.entity.RefreshOrderEvent
+import com.fatcloud.account.feature.defray.PayActivity
 import com.fatcloud.account.feature.order.progress.ScheduleActivity
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
@@ -66,13 +67,23 @@ class OrderListActivity : BaseRefreshListActivity<Order, OrderListPresenter>(), 
             }, 1000)
 
             val data = adapter.allData[it]
+            when (data.state) {
+                "OS1", "OS3" -> {
+                    startActivity(
+                        Intent(this, PayActivity::class.java)
+                            .putExtra(Constants.PARAM_ORDER_ID, data.id)
+                            .putExtra(Constants.PARAM_MONEY, data.money.toPlainString())
+                    )
+                }
+                else -> {
+                    startActivity(
+                        Intent(this, ScheduleActivity::class.java)
+                            .putExtra(Constants.PARAM_ORDER_ID, data.id)
+                            .putExtra(Constants.PARAM_MOLD, data.mold)
+                    )
 
-            startActivity(
-                Intent(this, ScheduleActivity::class.java)
-                    .putExtra(Constants.PARAM_ORDER_ID, data.id)
-                    .putExtra(Constants.PARAM_MOLD, data.mold)
-
-            )
+                }
+            }
 
 
         }

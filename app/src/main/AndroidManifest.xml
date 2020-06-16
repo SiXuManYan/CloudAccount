@@ -188,21 +188,25 @@
 
         <activity
             android:name=".feature.forms.enterprise.license.FormLicenseEnterpriseActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".feature.forms.personal.license.FormLicensePersonalActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".feature.forms.personal.tax.FormTaxRegistrationPersonalActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".feature.forms.personal.bookkeeping.FormAgentBookkeepingPersonalActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
 
+        <activity
+            android:name=".feature.forms.enterprise.bank.FormBankActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".feature.forms.personal.bookkeeping.signature.SignatureActivity"
@@ -213,7 +217,17 @@
         <activity
             android:name=".feature.matisse.AllPreviewActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".feature.forms.enterprise.bank.FormBankActivity" />
+
+
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.fatcloud.account" />
+
+        <activity
+            android:name=".feature.defray.PayActivity"
+            android:screenOrientation="portrait" />
 
 
     </application>

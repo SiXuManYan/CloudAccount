@@ -14,6 +14,8 @@ import com.fatcloud.account.feature.account.password.PasswordSetActivity
 import com.fatcloud.account.feature.account.password.PasswordSetModule
 import com.fatcloud.account.feature.account.password.login.PasswordLoginActivity
 import com.fatcloud.account.feature.account.password.login.PasswordLoginModule
+import com.fatcloud.account.feature.defray.PayActivity
+import com.fatcloud.account.feature.defray.PayModule
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
 import com.fatcloud.account.feature.extra.BusinessScopeModule
 import com.fatcloud.account.feature.forms.enterprise.bank.FormBankActivity
@@ -43,6 +45,8 @@ import com.fatcloud.account.feature.product.detail.ProductDetailModule
 import com.fatcloud.account.feature.webs.WebCommonActivity
 import com.fatcloud.account.feature.webs.WebCommonModule
 import com.fatcloud.account.scope.ActivityScore
+import com.fatcloud.account.wxapi.WXEntryActivity
+import com.fatcloud.account.wxapi.WXEntryModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -142,6 +146,14 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [FragmentBindModule::class, FormBankModule::class])
     abstract fun formBankActivityInjector(): FormBankActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [WXEntryModule::class])
+    abstract fun wXEntryActivityInjector(): WXEntryActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [PayModule::class])
+    abstract fun payActivityInjector(): PayActivity
 
 
 }

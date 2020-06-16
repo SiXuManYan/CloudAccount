@@ -8,5 +8,5 @@ import javax.inject.Inject
  * </br>
  *
  */
-class MainPresenter @Inject constructor(private var mainView: MainView) : BasePresenter(mainView)   {
+class MainPresenter @Inject constructor(private var mainView: MainView) : BasePresenter(mainView) {
 }
