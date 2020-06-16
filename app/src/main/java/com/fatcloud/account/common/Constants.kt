@@ -130,7 +130,7 @@ object Constants {
     /** 企业股东类型 企业法人*/
     const val SH1 = "SH1"
 
-    /** 企业股东类型 监事*/
+    /** 企业股东类型 监事 */
     const val SH2 = "SH2"
 
     /** 企业股东类型 股东*/
@@ -139,9 +139,6 @@ object Constants {
 
     /** 财务负责人 */
     const val SH4_N = "SH4_N"
-
-
-
 
 
     // 产品类型
@@ -211,6 +208,43 @@ object Constants {
      * 身份证反面
      */
     const val I2 = "I2"
+
+    /**
+     * 银行账户性质 类型 AccountNature 	基本户
+     */
+    const val AN1 = "AN1"
+
+
+    /**
+     * 银行账户性质 类型 AccountNature 	一般户
+     */
+    const val AN2 = "AN2"
+
+    /**
+     * 银行账户性质 类型 AccountNature 	专用户
+     */
+    const val AN3 = "AN3"
+
+
+    /**
+     * 订单流程状态类型 已激活
+     */
+    const val OW1 = "OW1"
+
+    /**
+     * 订单流程状态类型 办理中
+     */
+    const val OW2 = "OW2"
+
+    /**
+     * 订单流程状态类型 已办结
+     */
+    const val OW3 = "OW3"
+
+    /**
+     * 订单流程状态类型 未激活
+     */
+    const val OW4 = "OW4"
 
 
 }

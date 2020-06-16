@@ -1,5 +1,6 @@
 package com.fatcloud.account.network
 
+import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.commons.Commons
 import com.fatcloud.account.entity.home.HomeMix
 import com.fatcloud.account.entity.news.NewDetail
@@ -328,15 +329,20 @@ interface ApiService {
      * @param financePhone              财务负责人电话
      * @param financeShares             财务负责人股份比例
      * @param legalPersonWarrantImgUrl  法人签字授权书
-     * @param orderWorkId
+     * @param orderWorkId               订单流程状态类型
      * @param reconciliatAddr           对账单收货地址详细
      * @param reconciliatArea           对账单收货地址区域
      * @param reconciliatContact        对账联系人
      * @param reconciliatPhone          对账联系人电话
+     * @see Constants.OW1
+     * @see Constants.OW2
+     * @see Constants.OW3
+     * @see Constants.OW4
      */
     @POST("$API_URI/tOrderWork/add")
     @FormUrlEncoded
-    fun updateAvatarAndNiSckname(
+    fun addSpecificProcessContent(
+        @Field("orderWorkId") orderWorkId: String?,
         @Field("businessLicenseImgUrl") businessLicenseImgUrl: String?,
         @Field("capital") capital: String?,
         @Field("electronicSealImgUrl") electronicSealImgUrl: String?,
@@ -350,11 +356,21 @@ interface ApiService {
         @Field("financePhone") financePhone: String?,
         @Field("financeShares") financeShares: String?,
         @Field("legalPersonWarrantImgUrl") legalPersonWarrantImgUrl: String?,
-        @Field("orderWorkId") orderWorkId: String?,
         @Field("reconciliatAddr") reconciliatAddr: String?,
+        @Field("reconciliatArea") reconciliatArea: String?,
         @Field("reconciliatContact") reconciliatContact: String?,
         @Field("reconciliatPhone") reconciliatPhone: String?
     ): Flowable<Response<JsonElement>>
+
+
+    /**
+     * 企业订单详情
+     * @param orderWorkId 订单流程id
+     */
+    @GET("$API_URI/tOrderWork/detail2")
+    fun getEnterpriseOrderDetail2(
+        @Query("orderWorkId") orderWorkId: String? = null
+    ): Flowable<Response<EnterpriseInfo>>
 
 
 }

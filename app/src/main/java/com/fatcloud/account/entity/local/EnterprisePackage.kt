@@ -3,7 +3,7 @@ package com.fatcloud.account.entity.local
 import com.fatcloud.account.entity.order.enterprise.Shareholder
 
 /**
- * 企业他餐
+ * 企业套餐
  */
 data class EnterprisePackage(
     val addr: String,

@@ -8,19 +8,26 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.request.RequestOptions
 import com.fatcloud.account.R
 import com.fatcloud.account.app.Glide
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.enterprise.Shareholder
+import com.fatcloud.account.extend.RoundTransFormation
 import kotlinx.android.synthetic.main.layout_highlight_title.view.*
 import kotlinx.android.synthetic.main.layout_image_upload.view.*
 import kotlinx.android.synthetic.main.view_company_member_edit.view.*
 
 /**
  * Created by Wangsw on 2020/6/11 0001 10:29.
- * 公司相关成员信息编辑页面
+ * 公司相关成员信息编辑页面，显示页面
+ * 可在ImageView 中 直接发起选择图片请求，如  ProductUtils.handleMediaSelect(context as Activity, 1, this.id)
+ * </br>
+ * 在相应宿主页 的 onActivityResult 方法内，接收相册选择信息回调
  * @see Shareholder
  */
 class CompanyMemberEditView : LinearLayout {
@@ -71,17 +78,21 @@ class CompanyMemberEditView : LinearLayout {
     }
 
 
+    /**
+     * todo context 类型校验 : Activity？ fragment
+     *
+     */
     private fun init() {
-        val view = LayoutInflater.from(context).inflate(R.layout.view_company_member_edit, this, true)
 
+        val view = LayoutInflater.from(context).inflate(R.layout.view_company_member_edit, this, true)
 
         id_card_front_iv.setOnClickListener {
             isFaceUp = true
-            ProductUtils.handleMediaSelect(context as Activity, 1, this.id)
+            ProductUtils.handleMediaSelect(context as Activity, 1, this@CompanyMemberEditView.id)
         }
         id_card_back_iv.setOnClickListener {
             isFaceUp = false
-            ProductUtils.handleMediaSelect(context as Activity, 1, this.id)
+            ProductUtils.handleMediaSelect(context as Activity, 1, this@CompanyMemberEditView.id)
         }
 
     }
@@ -105,10 +116,26 @@ class CompanyMemberEditView : LinearLayout {
     fun initNameTitleHint(title: CharSequence, hint: String) = ev_00_name.setTitleAndHint(title, hint)
     fun initNameTitle(title: CharSequence) = ev_00_name.setTitle(title)
     fun setNameValue(value: CharSequence) = ev_00_name.setValue(value)
+    fun initNameTitleValue(title: CharSequence, value: CharSequence): EditView {
+        initNameTitle(title)
+        setNameValue(value)
+        ev_00_name.setEditAble(false)
+        return ev_00_name
+    }
 
     // 身份证号
     fun initIdNumberTitleHint(title: CharSequence, hint: CharSequence): EditView {
         ev_01_id_number.setTitleAndHint(title, hint)
+        return ev_01_id_number
+    }
+
+    /**
+     * 设置身份证号 值，设置不可编辑
+     */
+    fun initIdNumberTitleValue(title: CharSequence, value: CharSequence): EditView {
+        initIdNumberTitle(title)
+        setIdNumberValue(value)
+        ev_01_id_number.setEditAble(false)
         return ev_01_id_number
     }
 
@@ -127,11 +154,23 @@ class CompanyMemberEditView : LinearLayout {
     fun initIdAddressTitleHint(title: CharSequence, hint: CharSequence) = ev_02_id_addr.setTitleAndHint(title, hint)
     fun initIdAddressTitle(title: CharSequence) = ev_02_id_addr.setTitle(title)
     fun setIdAddressValue(title: CharSequence) = ev_02_id_addr.setValue(title)
-
+    fun initIdAddressTitleValue(title: CharSequence, value: CharSequence): EditView {
+        initIdAddressTitle(title)
+        setIdAddressValue(value)
+        ev_02_id_addr.setEditAble(false)
+        return ev_02_id_addr
+    }
 
     // 手机号
     fun initPhoneTitleHint(title: CharSequence, hint: CharSequence): EditView {
         ev_03_phone.setTitleAndHint(title, hint)
+        return ev_03_phone
+    }
+
+    fun initPhoneTitleValue(title: CharSequence, value: CharSequence): EditView {
+        initPhoneTitle(title)
+        setPhoneValue(value)
+        ev_03_phone.setEditAble(false)
         return ev_03_phone
     }
 
@@ -149,6 +188,13 @@ class CompanyMemberEditView : LinearLayout {
     // 股份占比
     fun initShareRatioTitleHint(title: CharSequence, hint: CharSequence): EditView {
         ev_04_share_ratio.setTitleAndHint(title, hint)
+        return ev_04_share_ratio
+    }
+
+    fun initShareRatioTitleValue(title: CharSequence, value: CharSequence): EditView {
+        initShareRatioTitle(title)
+        setShareRatioValue(value)
+        ev_04_share_ratio.setEditAble(false)
         return ev_04_share_ratio
     }
 
@@ -198,24 +244,66 @@ class CompanyMemberEditView : LinearLayout {
         )
     }
 
-
+    /**
+     * 上传图片是加载本地路径图片
+     */
     fun loadResultImage(fileDirPath: String) {
         if (isFaceUp) {
-//            frontImageUrl = fileDirPath
             Glide.with(this).load(fileDirPath).into(getFrontImage())
         } else {
-//            backImageUrl = fileDirPath
             Glide.with(this).load(fileDirPath).into(getBackImage())
         }
     }
 
-    fun setImageUrl(fileDirPath: String) {
+    fun setImageUrl(finalUrl: String) {
         if (isFaceUp) {
-            frontImageUrl = fileDirPath
+            frontImageUrl = finalUrl
         } else {
-            backImageUrl = fileDirPath
+            backImageUrl = finalUrl
         }
     }
 
+
+    /**
+     * 加载服务器图片地址
+     * todo 解析图片路径
+     */
+    fun setServerImage(images: ArrayList<IdentityImg>) {
+        if (images.isNullOrEmpty()) {
+            return
+        }
+
+
+        images.forEach {
+            Glide.with(this)
+                .load(it.imgUrl)
+                .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
+                .error(R.drawable.ic_error_image_load)
+                .into(
+                    when (it.mold) {
+                        Constants.I1 -> getFrontImage()
+                        else -> getBackImage()
+                    }
+                )
+
+            when (it.mold) {
+                Constants.I1 -> {
+                    frontImageUrl = it.imgUrl
+                }
+                Constants.I2 -> {
+                    backImageUrl = it.imgUrl
+                }
+
+            }
+        }
+
+
+    }
+
+    fun disableImageViewClick(){
+        id_card_front_iv.isClickable = false
+        id_card_back_iv .isClickable = false
+
+    }
 
 }

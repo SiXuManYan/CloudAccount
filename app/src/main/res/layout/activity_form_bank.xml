@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/font_white"
     android:orientation="vertical">
 
@@ -97,7 +97,6 @@
             <include layout="@layout/layout_view_split_10" />
 
 
-
             <!-- 公司信息 -->
 
             <RelativeLayout
@@ -173,6 +172,7 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp" />
 
+
             <!-- 账户性质  AN1 AN2 AN3 -->
 
             <RelativeLayout
@@ -193,21 +193,20 @@
                     android:textColor="@color/color_first_level" />
 
                 <TextView
-                    android:layout_toRightOf="@+id/account_nature_title"
                     android:id="@+id/business_scope_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
                     android:layout_toLeftOf="@+id/scope_sp"
+                    android:layout_toRightOf="@+id/account_nature_title"
                     android:ellipsize="end"
+                    android:gravity="right"
                     android:hint="请选择账户性质"
                     android:maxLines="1"
                     android:textColor="@color/color_third_level"
                     android:textColorHint="@color/color_third_level"
                     android:textSize="@dimen/font_size_14" />
-
 
 
                 <androidx.appcompat.widget.AppCompatSpinner
@@ -353,21 +352,19 @@
                     android:textColor="@color/color_first_level" />
 
                 <TextView
-                    android:layout_toRightOf="@+id/province_title"
                     android:id="@+id/province_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
                     android:layout_toLeftOf="@+id/scope_sp2"
+                    android:layout_toRightOf="@+id/province_title"
                     android:ellipsize="end"
-                    android:hint="请选择账户性质"
+                    android:gravity="right"
                     android:maxLines="1"
                     android:textColor="@color/color_third_level"
                     android:textColorHint="@color/color_third_level"
                     android:textSize="@dimen/font_size_14" />
-
 
 
                 <androidx.appcompat.widget.AppCompatSpinner
@@ -395,33 +392,8 @@
                 android:paddingRight="15dp" />
 
 
-            <!-- 法人信息 -->
-            <com.fatcloud.account.view.CompanyMemberEditView
-                android:id="@+id/legal_person_ev"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <!-- 监视信息 -->
-            <com.fatcloud.account.view.CompanyMemberEditView
-                android:id="@+id/supervisor_ev"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <!-- 股东信息 -->
-            <com.fatcloud.account.view.CompanyMemberEditView
-                android:id="@+id/shareholder_ev"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <!-- 股东信息附加 -->
-            <LinearLayout
-                android:id="@+id/shareholder_more_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-
             <!-- 上传营业执照 -->
-
+            <include layout="@layout/layout_view_split_10" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -466,8 +438,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="165dp"
@@ -491,8 +463,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
                     android:layout_marginBottom="15dp"
+                    android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:text="支持扩展名: .png .jpg"
                     android:textColor="@color/color_FFAF00"
@@ -504,6 +476,7 @@
 
             <!-- 上传电子公章 -->
 
+            <include layout="@layout/layout_view_split_10" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -548,8 +521,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="165dp"
@@ -573,8 +546,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
                     android:layout_marginBottom="15dp"
+                    android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:text="支持扩展名: .png .jpg"
                     android:textColor="@color/color_FFAF00"
@@ -584,9 +557,9 @@
             </LinearLayout>
 
 
-
             <!-- 上传法人签字授权书 -->
 
+            <include layout="@layout/layout_view_split_10" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -631,8 +604,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="165dp"
@@ -656,8 +629,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
                     android:layout_marginBottom="15dp"
+                    android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:text="支持扩展名: .png .jpg"
                     android:textColor="@color/color_FFAF00"
@@ -666,6 +639,143 @@
 
             </LinearLayout>
 
+
+            <!-- 财务负责任人信息 -->
+            <include layout="@layout/layout_view_split_10" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingRight="0dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/ta00_iv"
+                    android:layout_width="3dp"
+                    android:layout_height="13dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/shape_vertical_line_red" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/ta00_iv"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.2"
+                    android:maxLines="2"
+                    android:text="财务负责人信息"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_14"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="3dp"
+                android:background="@color/split_line_color" />
+
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/finance_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/finance_id_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/finance_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <com.fatcloud.account.view.EditView
+                android:id="@+id/finance_share_ratio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" />
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="165dp"
+                    android:layout_height="120dp"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:cardBackgroundColor="@color/font_white"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="1dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true">
+
+                    <ImageView
+                        android:id="@+id/finance_card_front_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        tools:src="@tools:sample/backgrounds/scenic" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="165dp"
+                    android:layout_height="120dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="right"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:cardBackgroundColor="@color/font_white"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="1dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true">
+
+                    <ImageView
+                        android:id="@+id/finance_card_back_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        tools:src="@tools:sample/backgrounds/scenic" />
+
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/image_upload_hint_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="支持扩展名: .png .jpg"
+                android:textColor="@color/color_FFAF00"
+                android:textSize="@dimen/font_size_10" />
+
+
+            <!-- 股东信息附加 -->
+            <LinearLayout
+                android:id="@+id/shareholder_more_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
 
 
         </LinearLayout>

@@ -11,11 +11,15 @@ import com.fatcloud.account.base.ui.list.BaseRefreshListActivity
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.order.persional.Order
 import com.fatcloud.account.entity.order.progress.BusinessProgress
+import com.fatcloud.account.event.Event
+import com.fatcloud.account.event.entity.RefreshOrderEvent
+import com.fatcloud.account.feature.forms.enterprise.bank.FormBankActivity
 import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterInfoActivity
 import com.fatcloud.account.feature.order.details.personal.RegistrantInfoActivity
 import com.fatcloud.account.feature.order.progress.holders.ScheduleHolder
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
+import io.reactivex.functions.Consumer
 import java.util.*
 
 /**
@@ -42,7 +46,16 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
         easyRecyclerView.setBackgroundColor(ColorUtils.getColor(R.color.color_list_gray_background))
         swipeLayout.setEnableRefresh(false)
         initExtra()
-        presenter.getProgressData(this, orderId)
+        initEvent()
+    }
+
+    private fun initEvent() {
+
+        // 更新当前页面
+        presenter.subsribeEventEntity<RefreshOrderEvent>(Consumer {
+            loadDetailData()
+        })
+
     }
 
     override fun bindList(list: ArrayList<BusinessProgress>, isFirstPage: Boolean, last: Boolean) {
@@ -58,7 +71,10 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
         }
         orderId = intent.extras!!.getString(Constants.PARAM_ORDER_ID)
         mold = intent.extras!!.getString(Constants.PARAM_MOLD)
+        loadDetailData()
     }
+
+    private fun loadDetailData() = presenter.getProgressData(this, orderId)
 
     override fun getRecyclerAdapter(): RecyclerArrayAdapter<BusinessProgress> {
 
@@ -140,6 +156,14 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
             Constants.PW3 -> {
                 if (it.state == "OW1") {
                     // 编辑页
+
+                    startActivity(
+                        Intent(this@ScheduleActivity, FormBankActivity::class.java)
+                            .putExtra(Constants.PARAM_ORDER_WORK_ID, it.id)
+                            .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
+                            .putExtra(Constants.PARAM_ORDER_ID, orderId)
+                    )
+
                 } else {
                     // 回显银行信息页
                     startActivity(

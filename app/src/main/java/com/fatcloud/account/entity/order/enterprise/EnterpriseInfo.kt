@@ -247,6 +247,54 @@ class EnterpriseInfo {
 
 
 
+{
+  "code": "200",
+  "msg": "成功",
+  "data": {
+    "addr": "他婆婆说我",
+    "area": "河北省秦皇岛市山海关区西街街道",
+    "money": 4796,
+    "bankNo": "6222222222222222222",
+    "income": 755754,
+    "bankPhone": "13141331511",
+    "productId": "1262568059554496512",
+    "investMoney": 755754,
+    "shareholders": [
+      {
+        "idno": "320882198512263250",
+        "imgs": [
+          {
+            "mold": "I1",
+            "imgUrl": "ios_20200615134027384_202009770.png"
+          },
+          {
+            "mold": "I2",
+            "imgUrl": "ios_20200615134027412_202008557.png"
+          }
+        ],
+        "mold": "SH1",
+        "name": "李国业",
+        "phone": "13141331511",
+        "idnoAddr": "江苏省淮安市楚州区博里镇人民路16号",
+        "idnoDate": "2013-03-21-2033-03-21",
+        "shareProportion": 4
+      }
+    ],
+    "businessScope": [
+      1
+    ],
+    "investYearNum": 45,
+    "productPriceId": 24,
+    "enterpriseName0": "阿里巴巴",
+    "enterpriseName1": "阿里巴巴",
+    "enterpriseName2": "阿里巴巴",
+    "stateText": "已激活",
+    "state": "OW1",
+    "settingStateText": "已激活"
+  }
+}
+
+
 
 
 

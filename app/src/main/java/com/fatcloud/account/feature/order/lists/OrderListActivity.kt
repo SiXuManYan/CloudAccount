@@ -12,10 +12,12 @@ import com.fatcloud.account.feature.order.lists.holders.OrderListHolder
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.event.entity.RefreshOrderEvent
 import com.fatcloud.account.feature.order.progress.ScheduleActivity
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import com.jude.easyrecyclerview.decoration.DividerDecoration
+import io.reactivex.functions.Consumer
 
 /**
  * Created by Wangsw on 2020/6/3 0003 17:42.
@@ -32,8 +34,15 @@ class OrderListActivity : BaseRefreshListActivity<Order, OrderListPresenter>(), 
 
     override fun initViews() {
         super.initViews()
+        initEvent()
         parent_container.setBackgroundColor(ColorUtils.getColor(R.color.color_list_gray_background))
         recyclerView.setBackgroundColor(ColorUtils.getColor(R.color.color_list_gray_background))
+    }
+
+    private fun initEvent() {
+        presenter.subsribeEventEntity<RefreshOrderEvent>(Consumer {
+            loadOnVisible()
+        })
     }
 
     override fun getRecyclerAdapter(): RecyclerArrayAdapter<Order> {

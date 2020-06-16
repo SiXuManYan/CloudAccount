@@ -4,6 +4,8 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
+import android.text.TextUtils
+import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.AppUtils
@@ -47,15 +49,30 @@ object ProductUtils {
      * 非空校验，提供震动和抖动反馈
      */
     fun checkEditEmptyWithVibrate(vararg args: EditView): Boolean {
-        VibrateUtils.vibrate(10)
+
         args.forEach {
             if (it.value().isEmpty()) {
+                VibrateUtils.vibrate(10)
                 it.startAnimation(CommonUtils.getShakeAnimation(2))
                 return false
             }
         }
         return true
     }
+
+    /**
+     * 非空校验，提供震动和抖动反馈
+     */
+    fun checkViewValueEmpty(value: String, view: View): Boolean {
+
+        if (TextUtils.isEmpty(value)) {
+            VibrateUtils.vibrate(10)
+            view.startAnimation(CommonUtils.getShakeAnimation(2))
+            return false
+        }
+        return true
+    }
+
 
     /**
      * 添加订阅

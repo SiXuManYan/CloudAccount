@@ -187,4 +187,5 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
         }
     }
 
+
 }

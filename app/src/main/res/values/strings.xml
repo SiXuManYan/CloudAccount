@@ -95,6 +95,7 @@
     <string name="share_ratio">股份占比</string>
     <string name="share_ratio_hint">请输入股份占比%</string>
     <string name="share_ratio_hint_2">请输入股份占比（选填）%</string>
+    <string name="share_ratio_value_format">股份占比&#160;%1$s</string>
     <string name="registered_capital">注册资金(万元)</string>
     <string name="account_nature">账户性质</string>
     <string name="legal_person_info">法人信息</string>

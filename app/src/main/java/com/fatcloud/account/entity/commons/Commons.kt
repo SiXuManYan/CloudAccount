@@ -5,7 +5,7 @@ data class Commons (
     /**
      * 银行账户性质类型
      */
-    val accountNatues: List<AccountNatue>,
+    val accountNatues: List<AccountNature>,
 
     /**
      * 经营范围

@@ -58,12 +58,12 @@ class EditView : LinearLayout {
 
 
     fun setValue(title: CharSequence): EditView {
-        title_tv.text = title
+        content_et.setText( title)
         return this
     }
 
     fun setValue(@StringRes valueResId: Int): EditView {
-        title_tv.text = StringUtils.getString(valueResId)
+        content_et.setText(StringUtils.getString(valueResId))
         return this
     }
 

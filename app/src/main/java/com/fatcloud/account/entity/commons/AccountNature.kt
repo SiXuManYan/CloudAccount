@@ -1,14 +1,25 @@
 package com.fatcloud.account.entity.commons
 
+import com.fatcloud.account.common.Constants
+
 /**
  * 账户性质
+
  */
-data class AccountNatue(
+data class AccountNature(
+
     val createTime: String,
     val id: String,
     val name: String,
     val type: String,
     val typeName: String,
+
+    /**
+     * 银行账户性质类型
+     * @see Constants.AN1
+     * @see Constants.AN2
+     * @see Constants.AN3
+     */
     val value: String
 )
 
