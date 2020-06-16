@@ -134,4 +134,9 @@
 
     <string name="pay_bottom_format">去支付&#160;&#165;%1$s</string>
 
+    <string name="new_version_hint_01">检测新版本，授权</string>
+    <string name="new_version_hint_02">存储权限</string>
+    <string name="new_version_hint_03">后即可安装</string>
+    <string name="app_up">软件版本更新</string>
+
 </resources>

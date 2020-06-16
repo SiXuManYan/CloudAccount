@@ -12,6 +12,7 @@ import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.persional.PersonalInfo
 import com.fatcloud.account.entity.oss.SecurityTokenModel
 import com.fatcloud.account.entity.product.ProductDetail
+import com.fatcloud.account.entity.upgrade.Upgrade
 import com.fatcloud.account.entity.users.User
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
@@ -405,6 +406,14 @@ interface ApiService {
         @Query("id") id: String?,
         @Query("orderNo") orderNo: String?
     ): Flowable<Response<AliPayInfo>>
+
+    /**
+     * 验证订单是否已支付
+     * @param id 订单id
+     * @param orderNo 订单号
+     */
+    @GET("$API_URI/common/version")
+    fun checkAppVersion(@Query("appFlag") appFlag: String? = "Android"): Flowable<Response<Upgrade>>
 
 
 }

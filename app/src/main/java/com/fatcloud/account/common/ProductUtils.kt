@@ -88,7 +88,7 @@ object ProductUtils {
     /**
      * 相册权限申请
      */
-    private fun requestAlbumPermissions(activity: Activity?): Boolean {
+     fun requestAlbumPermissions(activity: Activity?): Boolean {
         var isGranted = false
 
         activity?.let {

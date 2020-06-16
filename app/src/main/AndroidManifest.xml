@@ -228,7 +228,15 @@
         <activity
             android:name=".feature.defray.PayActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".feature.defray.result.CloudPayResultActivity" />
+        <activity
+            android:name=".feature.defray.result.CloudPayResultActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.upgrade.UpgradeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Dialog"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
 
     </application>

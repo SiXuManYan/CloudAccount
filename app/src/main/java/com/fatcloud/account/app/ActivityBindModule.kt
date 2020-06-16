@@ -44,6 +44,8 @@ import com.fatcloud.account.feature.order.progress.ScheduleActivity
 import com.fatcloud.account.feature.order.progress.ScheduleModule
 import com.fatcloud.account.feature.product.detail.ProductDetailActivity
 import com.fatcloud.account.feature.product.detail.ProductDetailModule
+import com.fatcloud.account.feature.upgrade.UpgradeActivity
+import com.fatcloud.account.feature.upgrade.UpgradeModule
 import com.fatcloud.account.feature.webs.WebCommonActivity
 import com.fatcloud.account.feature.webs.WebCommonModule
 import com.fatcloud.account.scope.ActivityScore
@@ -160,6 +162,10 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [CloudPayResultModule::class])
     abstract fun payResultActivityInjector(): CloudPayResultActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [UpgradeModule::class])
+    abstract fun upgradeActivityInjector(): UpgradeActivity
 
 
 }
