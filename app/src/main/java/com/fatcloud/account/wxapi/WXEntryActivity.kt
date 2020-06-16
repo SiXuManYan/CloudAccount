@@ -40,6 +40,7 @@ class WXEntryActivity : BaseMVPActivity<WXEntryPresenter>(), WXEntryView {
         when (resp?.type) {
             ConstantsAPI.COMMAND_PAY_BY_WX -> {
                 handlePayResult(resp)
+                finish()
             }
             else -> {
             }
@@ -48,22 +49,10 @@ class WXEntryActivity : BaseMVPActivity<WXEntryPresenter>(), WXEntryView {
     }
 
     private fun handlePayResult(resp: BaseResp) {
-        when (resp.errCode) {
-            0 -> {
-                // 支付成功
-                RxBus.post(WechatPayResultEvent(resp.errCode))
-            }
-            -2 -> {
-                // 用户取消支付
-                RxBus.post(WechatPayResultEvent(resp.errCode))
-            }
-            else -> {
-                // 支付错误 (-1)
-                RxBus.post(WechatPayResultEvent(resp.errCode))
-            }
-        }
-
-
+        // 0 支付成功
+        // -2 用户取消支付
+        // -1 支付错误 (-1)
+        RxBus.post(WechatPayResultEvent(resp.errCode))
     }
 
     override fun onReq(p0: BaseReq?) {

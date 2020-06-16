@@ -13,6 +13,7 @@ import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.event.entity.ImageUploadEvent
+import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.matisse.Matisse
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_tax_registration_personal.*
@@ -107,6 +108,10 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
             businessLicenseImgUrl = it.finalUrl
 
         })
+
+        presenter.subsribeEventEntity<OrderPaySuccessEvent>(Consumer {
+            finish()
+        })
     }
 
     private fun initView() {
@@ -152,7 +157,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
                         }
                     }
                     val application = application as CloudAccountApplication
-                    application.getOssSecurityToken(true, true, fileDirPath,fromViewId,this@FormTaxRegistrationPersonalActivity.javaClass)
+                    application.getOssSecurityToken(true, true, fileDirPath, fromViewId, this@FormTaxRegistrationPersonalActivity.javaClass)
                 }
             }
             else -> {

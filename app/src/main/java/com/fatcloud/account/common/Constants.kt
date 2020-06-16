@@ -71,7 +71,8 @@ object Constants {
     const val PARAM_TYPE = "param_type"
     const val PARAM_ID = "param_id"
     const val PARAM_ORDER_ID = "param_order_id" // 订单id
-    const val PARAM_ORDER_WORK_ID = "param_order_work_id" // 订单id
+    const val PARAM_ORDER_NUMBER = "param_order_number" // 订单号
+    const val PARAM_ORDER_WORK_ID = "param_order_work_id"
     const val PARAM_PRODUCT_WORK_TYPE = "param_product_work_type" // 产品类型
     const val PARAM_MOLD = "param_mold"// 订单类型
     const val PARAM_ACCOUNT = "param_account"// 账号

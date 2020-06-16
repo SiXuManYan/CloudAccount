@@ -14,6 +14,7 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.event.entity.ImageUploadEvent
+import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
 import com.fatcloud.account.feature.matisse.Matisse
 import com.fatcloud.account.view.CompanyMemberEditView
@@ -122,7 +123,10 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             if (fromView != null) {
                 fromView.setImageUrl(finalUrl)
             }
+        })
 
+        presenter.subsribeEventEntity<OrderPaySuccessEvent>(Consumer {
+            finish()
         })
     }
 

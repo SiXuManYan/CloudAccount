@@ -2,6 +2,7 @@ package com.fatcloud.account.network
 
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.commons.Commons
+import com.fatcloud.account.entity.defray.AliPayInfo
 import com.fatcloud.account.entity.defray.WechatPayInfo
 import com.fatcloud.account.entity.home.HomeMix
 import com.fatcloud.account.entity.news.NewDetail
@@ -377,7 +378,7 @@ interface ApiService {
 
     /**
      * 微信统一下单
-     * @param orderWorkId 订单流程id
+     * @param orderId 订单id
      */
     @GET("$API_URI/wxpay/unifiedOrder")
     fun wechatUnifiedOrder(
@@ -386,12 +387,24 @@ interface ApiService {
 
     /**
      * 支付宝统一下单
-     * @param orderWorkId 订单流程id
+     * @param orderId 订单id
      */
     @GET("$API_URI/wxpay/unifiedOrder")
     fun alipayUnifiedOrder(
         @Query("orderId") orderId: String?
-    ): Flowable<Response<EnterpriseInfo>>
+    ): Flowable<Response<AliPayInfo>>
+
+
+    /**
+     * 验证订单是否已支付
+     * @param id 订单id
+     * @param orderNo 订单号
+     */
+    @GET("$API_ACCOUNT_URI/tOrder/checkpaied")
+    fun checkOrderRealPaymentStatus(
+        @Query("id") id: String?,
+        @Query("orderNo") orderNo: String?
+    ): Flowable<Response<AliPayInfo>>
 
 
 }

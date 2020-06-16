@@ -22,6 +22,10 @@ data class Order(
      */
     val mold: String = "",
     val money: BigDecimal = BigDecimal.ZERO,
+
+    /**
+     * 订单号 order number
+     */
     val no: String = "",
     val productId: String = "",
     val productName: String = "",

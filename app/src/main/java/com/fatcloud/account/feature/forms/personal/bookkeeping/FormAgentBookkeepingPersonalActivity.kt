@@ -15,6 +15,7 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.product.NativeBookkeeping
 import com.fatcloud.account.event.entity.ImageUploadEvent
+import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.forms.personal.bookkeeping.signature.SignatureActivity
 import com.fatcloud.account.feature.matisse.Matisse
 import com.fatcloud.account.view.CompanyMemberEditView
@@ -97,7 +98,10 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
                 return@Consumer
             }
             mBusinessLicenseImgUrl = it.finalUrl
+        })
 
+        presenter.subsribeEventEntity<OrderPaySuccessEvent>(Consumer {
+            finish()
         })
     }
 
@@ -129,12 +133,12 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
                     if (fromViewId != 0) {
                         val fromView = findViewById<ImageView>(fromViewId)
                         if (fromView != null) {
-                           Glide.with(this).load(fileDirPath).into(fromView)
+                            Glide.with(this).load(fileDirPath).into(fromView)
 
                         }
                     }
                     val application = application as CloudAccountApplication
-                    application.getOssSecurityToken(true, isFaceUp, fileDirPath,fromViewId,this@FormAgentBookkeepingPersonalActivity.javaClass)
+                    application.getOssSecurityToken(true, isFaceUp, fileDirPath, fromViewId, this@FormAgentBookkeepingPersonalActivity.javaClass)
                 }
             }
             else -> {

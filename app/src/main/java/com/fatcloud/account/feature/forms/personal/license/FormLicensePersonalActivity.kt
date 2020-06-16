@@ -18,6 +18,7 @@ import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.persional.PersonalInfo
 import com.fatcloud.account.event.entity.ImageUploadEvent
+import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
 import com.fatcloud.account.feature.matisse.Glide4Engine
 import com.fatcloud.account.feature.matisse.Matisse
@@ -136,7 +137,10 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             } else {
                 faceDownUrl = finalUrl
             }
+        })
 
+        presenter.subsribeEventEntity<OrderPaySuccessEvent>(Consumer {
+            finish()
         })
     }
 

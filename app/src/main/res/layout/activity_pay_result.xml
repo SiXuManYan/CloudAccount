@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/font_white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/inc_title_bar" />
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/ic_pay_success" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="支付成功"
+        android:textColor="@color/color_zero_level"
+        android:textSize="@dimen/font_size_18"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="您可在我的订单内查看办理进度"
+        android:textColor="@color/color_first_level"
+        android:textSize="@dimen/font_size_14" />
+
+
+    <TextView
+        android:id="@+id/next_tv"
+        android:layout_width="130dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/shape_bg_4_red"
+        android:gravity="center"
+        android:text="查看"
+        android:textColor="@color/font_white"
+        android:textSize="@dimen/font_size_16" />
+
+
+</LinearLayout>

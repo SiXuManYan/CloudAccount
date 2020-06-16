@@ -11,7 +11,9 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.product.NativeBookkeeping
+import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.forms.personal.bookkeeping.wordpad.WordpadFragment
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_signature.*
 
 /**
@@ -58,6 +60,10 @@ class SignatureActivity : BaseMVPActivity<SignaturePresenter>(), SignatureView {
 //            val signatureSvg = it.signatureSvg
 //            Glide.with(this).load(signatureSvg).into(signature_iv)
 //        })
+
+        presenter.subsribeEventEntity<OrderPaySuccessEvent>(Consumer {
+            finish()
+        })
     }
 
     private fun initView() {
@@ -70,7 +76,6 @@ class SignatureActivity : BaseMVPActivity<SignaturePresenter>(), SignatureView {
                 it.legalPersonName,
                 it.idNumber
             )
-
         }
 
     }

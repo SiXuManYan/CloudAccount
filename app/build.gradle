@@ -239,6 +239,9 @@ dependencies {
     // 微信支付
     api  'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 
+    // 支付宝支付
+    compile (name: 'alipaySdk-15.7.6-20200521195109', ext: 'aar')
+
 }
 noArg {
     annotation("com.jz.cloud.activity.entity.kotlin.NoArg")

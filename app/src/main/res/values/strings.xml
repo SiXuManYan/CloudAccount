@@ -132,6 +132,6 @@
     <string name="no">否</string>
 
 
-    <string name="pay_bottom_format">去支付&#160;%1$s</string>
+    <string name="pay_bottom_format">去支付&#160;&#165;%1$s</string>
 
 </resources>

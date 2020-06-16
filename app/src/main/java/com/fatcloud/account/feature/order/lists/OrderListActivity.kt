@@ -5,15 +5,16 @@ import android.os.Handler
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.fatcloud.account.R
-import com.fatcloud.account.base.ui.list.BaseRefreshListActivity
-import com.fatcloud.account.entity.order.persional.Order
-import com.fatcloud.account.feature.order.lists.holders.OrderListHolder
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.fatcloud.account.R
+import com.fatcloud.account.base.ui.list.BaseRefreshListActivity
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.entity.order.persional.Order
+import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.event.entity.RefreshOrderEvent
 import com.fatcloud.account.feature.defray.PayActivity
+import com.fatcloud.account.feature.order.lists.holders.OrderListHolder
 import com.fatcloud.account.feature.order.progress.ScheduleActivity
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
@@ -44,6 +45,11 @@ class OrderListActivity : BaseRefreshListActivity<Order, OrderListPresenter>(), 
         presenter.subsribeEventEntity<RefreshOrderEvent>(Consumer {
             loadOnVisible()
         })
+        presenter.subsribeEventEntity<OrderPaySuccessEvent>(Consumer {
+            loadOnVisible()
+        })
+
+
     }
 
     override fun getRecyclerAdapter(): RecyclerArrayAdapter<Order> {
@@ -72,6 +78,7 @@ class OrderListActivity : BaseRefreshListActivity<Order, OrderListPresenter>(), 
                     startActivity(
                         Intent(this, PayActivity::class.java)
                             .putExtra(Constants.PARAM_ORDER_ID, data.id)
+                            .putExtra(Constants.PARAM_ORDER_NUMBER, data.no)
                             .putExtra(Constants.PARAM_MONEY, data.money.toPlainString())
                     )
                 }

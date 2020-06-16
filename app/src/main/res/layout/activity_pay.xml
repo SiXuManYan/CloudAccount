@@ -22,6 +22,7 @@
 
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_cv"
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
                 android:layout_margin="8dp"
@@ -118,7 +119,6 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toRightOf="@+id/wechat_iv"
-                        android:background="@color/font_white"
                         android:text="微信支付"
                         android:textColor="@color/color_zero_level"
                         android:textSize="@dimen/font_size_14" />
@@ -131,7 +131,6 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:checked="true"
-                        android:gravity="center_vertical"
                         android:textColor="@color/color_third_level"
                         android:theme="@style/MyCheckBox" />
 

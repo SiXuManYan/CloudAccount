@@ -228,6 +228,7 @@
         <activity
             android:name=".feature.defray.PayActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".feature.defray.result.CloudPayResultActivity" />
 
 
     </application>
