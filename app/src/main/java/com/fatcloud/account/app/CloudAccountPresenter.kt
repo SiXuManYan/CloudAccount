@@ -194,8 +194,8 @@ class CloudAccountPresenter(val view: CloudAccountView) {
             override fun onSuccess(request: PutObjectRequest?, result: PutObjectResult?) {
                 Log.d("PutObject", "UploadSuccess");
 //                val finalUrl = "https://$imageBucketName.$endpoint/$imageObjectKey"
-//                val finalUrl = StringUtils.getString(R.string.final_url_format, imageBucketName, endpoint, imageObjectKey)
-                val finalUrl = imageObjectKey
+                val finalUrl = StringUtils.getString(R.string.final_url_format, imageBucketName, endpoint, imageObjectKey)
+//                val finalUrl = imageObjectKey
 
 
                 RxBus.post(ImageUploadEvent(finalUrl, isFaceUp, fromViewId, clx))

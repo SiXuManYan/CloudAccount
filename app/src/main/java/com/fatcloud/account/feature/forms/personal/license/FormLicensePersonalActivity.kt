@@ -1,12 +1,10 @@
 package com.fatcloud.account.feature.forms.personal.license
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.text.InputType
 import android.text.TextUtils
 import android.view.View
 import butterknife.OnClick
-import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
@@ -15,16 +13,15 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
+import com.fatcloud.account.entity.commons.Form
 import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.persional.PersonalInfo
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
-import com.fatcloud.account.feature.matisse.Glide4Engine
+import com.fatcloud.account.feature.sheet.form.FormSheetFragment
 import com.fatcloud.account.feature.matisse.Matisse
-import com.fatcloud.account.view.dialog.AlertDialog
-import com.zhihu.matisse.MimeType
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_license_personal.*
 import kotlinx.android.synthetic.main.layout_bottom_action.*
@@ -55,12 +52,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
     /**
      * 用户选中的组成形式id
      */
-    private var selectFormId = "17"
-
-    /**
-     * 用户选中的一级经营范围pid名称
-     */
-    private var selectFormIdName = ""
+    private var selectFormId = ""
 
 
     /**
@@ -167,9 +159,9 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         R.id.business_scope_rl,
         R.id.bottom_left_tv,
         R.id.bottom_right_tv,
-
         R.id.id_card_front_iv,
-        R.id.id_card_back_iv
+        R.id.id_card_back_iv,
+        R.id.formation_rl
     )
     fun onClick(view: View) {
         if (CommonUtils.isDoubleClick(view)) {
@@ -189,14 +181,25 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             }
 
             R.id.id_card_front_iv -> {
-                handleMediaSelect(Matisse.IMG)
+                ProductUtils.handleMediaSelect(this, Matisse.IMG, view.id)
                 isFaceUp = true
             }
             R.id.id_card_back_iv -> {
 //                handleMediaSelect(Matisse.IMG)
                 ProductUtils.handleMediaSelect(this, Matisse.IMG, view.id)
-
                 isFaceUp = false
+            }
+            R.id.formation_rl -> {
+                FormSheetFragment.newInstance().apply {
+                    setOnFormSelectListener(object : FormSheetFragment.OnItemSelectedListener {
+                        override fun onItemSelected(currentSelected: Form) {
+                            this@FormLicensePersonalActivity.selectFormId = currentSelected.id
+                            this@FormLicensePersonalActivity.formation_value.text = currentSelected.name
+                        }
+                    })
+                    show(supportFragmentManager, this.tag)
+
+                }
             }
 
             else -> {
@@ -249,43 +252,6 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         presenter.addLicensePersonal(this, enterpriseInfo)
     }
 
-    /**
-     * @param mediaType
-     * @see Matisse.IMG
-     * @see Matisse.GIF
-     * @see Matisse.VIDEO
-     * @see Constants.I1
-     * @see Constants.I2
-     */
-    private fun handleMediaSelect(mediaType: Int) {
-        val isGranted = presenter.requestAlbumPermissions(this)
-        if (isGranted) {
-            Matisse.from(this).choose(if (mediaType == 0) MimeType.ofAll() else with(MimeType.ofImage()) {
-                remove(MimeType.GIF)
-                this
-            }, true)
-                .countable(true)
-//                .originalEnable(false)
-                .maxSelectable(1)
-                .theme(R.style.Matisse_Dracula)
-                .thumbnailScale(0.87f)
-                .imageEngine(Glide4Engine())
-                .forResult(Constants.REQUEST_MEDIA, mediaType)
-        } else {
-            AlertDialog.Builder(context).setTitle(R.string.hint)
-                .setMessage(R.string.album_need_permission)
-                .setCancelable(false)
-                .setPositiveButton(R.string.yes, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, _ ->
-                    dialog.dismiss()
-                    AppUtils.launchAppDetailsSettings()
-                })
-                .setNegativeButton(R.string.no, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
-                .create()
-                .show()
-
-        }
-    }
-
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -298,12 +264,6 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
                 // 选中的经营范围
                 selectPid = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID)
                 selectPidNames = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID_NAME)
-                business_scope_value.text = Arrays.toString(selectPidNames.toArray())
-            }
-            2 -> {
-                // 选中组成形式
-                selectFormId = data.getStringExtra(Constants.PARAM_SELECT_FORM_PID)
-                selectFormIdName = data.getStringExtra(Constants.PARAM_NAME_SELECT_FORM_PID)
                 business_scope_value.text = Arrays.toString(selectPidNames.toArray())
             }
             Constants.REQUEST_MEDIA -> {

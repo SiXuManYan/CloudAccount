@@ -99,6 +99,7 @@ class PayPrepareActivity : BaseMVPActivity<PayPreparePresenter>(), PayPrepareVie
                         .putExtra(Constants.PARAM_ORDER_NUMBER, orderNo)
                         .putExtra(Constants.PARAM_MONEY, money)
                 )
+                finish()
             }
             else -> {
             }

@@ -20,7 +20,9 @@ data class AccountNature(
      * @see Constants.AN2
      * @see Constants.AN3
      */
-    val value: String
+    val value: String,
+
+    var nativeIsSelect: Boolean = false
 )
 
 /*

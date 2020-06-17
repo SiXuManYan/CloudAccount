@@ -1,6 +1,7 @@
 package com.fatcloud.account.feature.defray
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.os.Handler
 import android.os.Message
 import android.util.Log
@@ -20,6 +21,7 @@ import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.event.entity.WechatPayResultEvent
 import com.fatcloud.account.feature.defray.result.CloudPayResultActivity
+import com.fatcloud.account.view.dialog.AlertDialog
 import com.tencent.mm.opensdk.modelpay.PayReq
 import com.tencent.mm.opensdk.openapi.IWXAPI
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
@@ -45,6 +47,9 @@ class PayActivity : BaseMVPActivity<PayPresenter>(), PayView {
      */
     private val SDK_PAY_FLAG = 1
 
+    /**
+     * 支付宝支付同步结果返回，仅作为支付结束状态判断
+     */
     @SuppressLint("HandlerLeak")
     private val handler = object : Handler() {
 
@@ -213,6 +218,7 @@ class PayActivity : BaseMVPActivity<PayPresenter>(), PayView {
     /**
      * 对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
      */
+    @Suppress("UNCHECKED_CAST")
     private fun handleAlipaySynchronizeResult(msg: Message) {
         val payResult = PayResult(msg.obj as Map<String?, String?>)
         val resultInfo = payResult.result

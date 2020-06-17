@@ -136,7 +136,6 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
                 }
             }
         }
-
     }
 
     private fun handleNext(price: Price?, extraAddSeal: Boolean) {

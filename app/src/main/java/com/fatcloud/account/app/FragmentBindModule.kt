@@ -1,5 +1,7 @@
 package com.fatcloud.account.app
 
+import com.fatcloud.account.feature.sheet.form.FormSheetFragment
+import com.fatcloud.account.feature.sheet.form.FormSheetModule
 import com.fatcloud.account.feature.forms.personal.bookkeeping.wordpad.WordpadFragment
 import com.fatcloud.account.feature.forms.personal.bookkeeping.wordpad.WordpadModule
 import com.fatcloud.account.feature.home.HomeFragment
@@ -16,6 +18,8 @@ import com.fatcloud.account.feature.product.detail.sheet.ProductSheetFragment
 import com.fatcloud.account.feature.product.detail.sheet.ProductSheetModule
 import com.fatcloud.account.feature.product.detail.spinners.ProductSpinnerFragment
 import com.fatcloud.account.feature.product.detail.spinners.ProductSpinnerModule
+import com.fatcloud.account.feature.sheet.nature.AccountNatureSheetFragment
+import com.fatcloud.account.feature.sheet.nature.AccountNatureSheetModule
 import com.fatcloud.account.scope.FragmentScope
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -58,6 +62,16 @@ abstract class FragmentBindModule {
     @FragmentScope
     @ContributesAndroidInjector(modules = [WordpadModule::class])
     abstract fun wordpadFragmentInjector(): WordpadFragment
+
+
+    @FragmentScope
+    @ContributesAndroidInjector(modules = [FormSheetModule::class])
+    abstract fun formSheetFragmentInjector(): FormSheetFragment
+
+
+    @FragmentScope
+    @ContributesAndroidInjector(modules = [AccountNatureSheetModule::class])
+    abstract fun accountNatureSheetFragmentInjector(): AccountNatureSheetFragment
 
 
 }

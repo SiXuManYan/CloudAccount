@@ -130,7 +130,7 @@ abstract class ActivityBindModule {
 
 
     @ActivityScore
-    @ContributesAndroidInjector(modules = [FormLicensePersonalModule::class])
+    @ContributesAndroidInjector(modules = [FragmentBindModule::class, FormLicensePersonalModule::class])
     abstract fun formLicensePersonalActivityInjector(): FormLicensePersonalActivity
 
     @ActivityScore

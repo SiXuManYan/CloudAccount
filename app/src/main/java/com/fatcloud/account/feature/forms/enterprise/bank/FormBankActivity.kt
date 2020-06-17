@@ -15,11 +15,13 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
+import com.fatcloud.account.entity.commons.AccountNature
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.event.entity.RefreshOrderEvent
 import com.fatcloud.account.feature.matisse.Matisse
+import com.fatcloud.account.feature.sheet.nature.AccountNatureSheetFragment
 import com.fatcloud.account.view.CompanyMemberEditView
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_bank.*
@@ -65,7 +67,7 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
     /**
      * 企业的账户性质
      */
-    var account_nature = "AN1"
+    var account_nature = ""
 
     /**
      * 队长收货单地址区域
@@ -221,7 +223,8 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
         R.id.signed_authorization_iv,
         R.id.finance_card_front_iv,
         R.id.finance_card_back_iv,
-        R.id.bottom_right_tv
+        R.id.bottom_right_tv,
+        R.id.account_nature_rl
     )
     fun onClick(view: View) {
         if (CommonUtils.isDoubleClick(view)) {
@@ -236,7 +239,19 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
             R.id.finance_card_back_iv
             -> ProductUtils.handleMediaSelect(context as Activity, 1, view.id)
             R.id.bottom_right_tv -> handleCommit()
+            R.id.account_nature_rl -> {
+                AccountNatureSheetFragment.newInstance().apply {
+                    setOnItemSelectListener(object : AccountNatureSheetFragment.OnItemSelectedListener {
+                        override fun onItemSelected(currentSelected: AccountNature) {
+                            this@FormBankActivity.account_nature = currentSelected.value
+                            this@FormBankActivity.business_scope_value.text = currentSelected.name
+                        }
 
+                    })
+
+                    show(supportFragmentManager, this.tag)
+                }
+            }
             else -> {
             }
         }

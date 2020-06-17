@@ -15,7 +15,8 @@ data class Form(
     val id: String,
     val name: String,
     val updateDt: String,
-    val version: Int
+    val version: Int,
+    var nativeIsSelect: Boolean = false
 )
 
 
