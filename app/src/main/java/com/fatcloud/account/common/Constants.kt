@@ -92,6 +92,13 @@ object Constants {
     const val PARAM_NAME_SELECT_FORM_PID = "param_name_select_form_pid"// 用户选中的组成形式id 对应名字
     const val PARAM_ADD_SEAL = "param_add_seal"// 办理个体户税务登记时是否额外添加了刻章业务
 
+    const val PARAM_APP_FORCE = "param_app_force"
+    const val PARAM_APP_VERSION = "param_app_version"
+    const val PARAM_APP_EXPLAIN = "param_app_explain"
+    const val PARAM_APP_URL = "param_app_url"
+
+
+
     /** RxBus Event */
     const val EVENT_STARTUP_DONE = 0x59//新手接口
     const val EVENT_FINISH_ALL = 0x60

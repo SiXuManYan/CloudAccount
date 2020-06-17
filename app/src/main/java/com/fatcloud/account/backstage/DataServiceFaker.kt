@@ -22,10 +22,10 @@ class DataServiceFaker {
             WorkManager.getInstance(Utils.getApp()).enqueue(
                 OneTimeWorkRequest.Builder(DataWork::class.java)
                     .setInputData(Data.Builder().putInt(Constants.ACTION_DATA_WORK, action).apply {
-                    data?.let {
-                        putAll(it)
-                    }
-                }.build()).build()
+                        data?.let {
+                            putAll(it)
+                        }
+                    }.build()).build()
             )
         }
     }

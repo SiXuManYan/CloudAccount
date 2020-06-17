@@ -234,8 +234,7 @@
 
         <activity
             android:name=".feature.upgrade.UpgradeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Dialog"
+            android:theme="@style/upgrade"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
 

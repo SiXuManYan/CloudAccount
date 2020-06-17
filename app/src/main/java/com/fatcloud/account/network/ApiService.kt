@@ -413,7 +413,7 @@ interface ApiService {
      * @param orderNo 订单号
      */
     @GET("$API_URI/common/version")
-    fun checkAppVersion(@Query("appFlag") appFlag: String? = "Android"): Flowable<Response<Upgrade>>
+    fun checkAppVersion(@Query("appFlag") appFlag: String? = "android"): Flowable<Response<Upgrade>>
 
 
 }

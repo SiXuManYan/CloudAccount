@@ -43,6 +43,15 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
+
+    <style name="upgrade"  parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:background">#00000000</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
     <!--dialog默认-->
     <style name="Dialog" parent="@android:style/Theme.Dialog">
         <!--Dialog的windowFrame框-->

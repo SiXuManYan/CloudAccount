@@ -138,5 +138,11 @@
     <string name="new_version_hint_02">存储权限</string>
     <string name="new_version_hint_03">后即可安装</string>
     <string name="app_up">软件版本更新</string>
+    <string name="downloadStart">开始下载</string>
+    <string name="downloading">正在下载</string>
+    <string name="downloadError">下载失败</string>
+    <string name="downloadOver">下载完成</string>
+    <string name="downloadOver_Install">下载完成,点击开始安装</string>
+    <string name="apk_downloading">下载中，请稍候…</string>
 
 </resources>

@@ -20,6 +20,8 @@ import com.fatcloud.account.feature.my.MyPageFragment
 import com.fatcloud.account.feature.news.NewsFragment
 import com.fatcloud.account.feature.product.ProductFragment
 import com.blankj.utilcode.util.ToastUtils
+import com.fatcloud.account.entity.upgrade.Upgrade
+import com.fatcloud.account.feature.upgrade.UpgradeActivity
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import io.reactivex.functions.Consumer
@@ -55,6 +57,8 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
 
         //  权限检测
         //  presenter.checkPermissions(this)
+
+        presenter.checkAppVersion(this)
         loginInit()
     }
 
@@ -244,4 +248,18 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
 
         }
     }
+
+    override fun doAppUpgrade(data: Upgrade) {
+
+        startActivity(
+            Intent(this, UpgradeActivity::class.java)
+                .putExtra(Constants.PARAM_APP_FORCE, data.appForce)
+                .putExtra(Constants.PARAM_APP_VERSION, data.appVersion)
+                .putExtra(Constants.PARAM_APP_EXPLAIN, data.appExplain)
+                .putExtra(Constants.PARAM_APP_URL, data.appUrl)
+
+        )
+    }
+
+
 }
