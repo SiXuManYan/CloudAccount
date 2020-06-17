@@ -1,4 +1,4 @@
-package com.fatcloud.account.wxapi
+package com.fatcloud.account.wxapi.entry
 
 import com.fatcloud.account.base.common.BaseTaskView
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler

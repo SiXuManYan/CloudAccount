@@ -6,8 +6,6 @@ import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.event.entity.WechatPayResultEvent
-import com.fatcloud.account.wxapi.entry.WXEntryPresenter
-import com.fatcloud.account.wxapi.entry.WXEntryView
 import com.tencent.mm.opensdk.constants.ConstantsAPI
 import com.tencent.mm.opensdk.modelbase.BaseReq
 import com.tencent.mm.opensdk.modelbase.BaseResp
@@ -19,15 +17,12 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory
  * </br>
  * 处理微信SDK回调
  */
-class WXEntryActivity : BaseMVPActivity<WXEntryPresenter>(), WXEntryView {
+class WXPayEntryActivity : BaseMVPActivity<WXPayEntryPresenter>(), WXPayEntryView {
 
     private var api: IWXAPI? = null
+    private var apis: String? ="66:cd:73:62:5c:96:be:40:6e:d6:b3:95:76:d4:4c:99"
 
     override fun getLayoutId(): Int = R.layout.activity_wx_entry
-
-    override fun showLoading() = Unit
-
-    override fun hideLoading() = Unit
 
     override fun initViews() {
         api = WXAPIFactory.createWXAPI(this, BuildConfig.WECHAT_APPID)
@@ -35,20 +30,20 @@ class WXEntryActivity : BaseMVPActivity<WXEntryPresenter>(), WXEntryView {
 
     }
 
+
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         setIntent(intent)
         api!!.handleIntent(intent, this)
     }
 
-    override fun onReq(p0: BaseReq?) {
+    override fun showLoading() = Unit
 
-    }
-
+    override fun hideLoading() = Unit
 
     override fun onResp(resp: BaseResp?) {
         when (resp?.type) {
-            ConstantsAPI.COMMAND_SENDAUTH -> {
+            ConstantsAPI.COMMAND_PAY_BY_WX -> {
                 handlePayResult(resp)
                 finish()
             }
@@ -62,10 +57,12 @@ class WXEntryActivity : BaseMVPActivity<WXEntryPresenter>(), WXEntryView {
         // 0 支付成功
         // -2 用户取消支付
         // -1 支付错误 (-1)
-//        RxBus.post(WechatPayResultEvent(resp.errCode))
+        RxBus.post(WechatPayResultEvent(resp.errCode))
     }
 
+    override fun onReq(p0: BaseReq?) {
 
+    }
 
 
 }

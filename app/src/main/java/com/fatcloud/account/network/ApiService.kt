@@ -391,7 +391,7 @@ interface ApiService {
      * 支付宝统一下单
      * @param orderId 订单id
      */
-    @GET("$API_URI/wxpay/unifiedOrder")
+    @GET("$API_URI/alipay/unifiedOrder")
     fun alipayUnifiedOrder(
         @Query("orderId") orderId: String?
     ): Flowable<Response<AliPayInfo>>

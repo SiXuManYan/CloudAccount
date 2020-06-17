@@ -1,4 +1,4 @@
-package com.fatcloud.account.wxapi
+package com.fatcloud.account.wxapi.entry
 
 import com.fatcloud.account.base.common.BasePresenter
 import javax.inject.Inject
@@ -8,7 +8,7 @@ import javax.inject.Inject
  * </br>
  *
  */
-class WXEntryPresenter  @Inject constructor(private var aboutView: WXEntryView) : BasePresenter(aboutView){
+class WXEntryPresenter  @Inject constructor(private var view: WXEntryView) : BasePresenter(view){
 
 
 }

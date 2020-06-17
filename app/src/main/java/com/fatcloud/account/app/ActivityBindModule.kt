@@ -50,7 +50,9 @@ import com.fatcloud.account.feature.webs.WebCommonActivity
 import com.fatcloud.account.feature.webs.WebCommonModule
 import com.fatcloud.account.scope.ActivityScore
 import com.fatcloud.account.wxapi.WXEntryActivity
-import com.fatcloud.account.wxapi.WXEntryModule
+import com.fatcloud.account.wxapi.WXPayEntryActivity
+import com.fatcloud.account.wxapi.WXPayEntryModule
+import com.fatcloud.account.wxapi.entry.WXEntryModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -152,8 +154,8 @@ abstract class ActivityBindModule {
     abstract fun formBankActivityInjector(): FormBankActivity
 
     @ActivityScore
-    @ContributesAndroidInjector(modules = [WXEntryModule::class])
-    abstract fun wXEntryActivityInjector(): WXEntryActivity
+    @ContributesAndroidInjector(modules = [WXPayEntryModule::class])
+    abstract fun wXPayEntryActivityInjector(): WXPayEntryActivity
 
     @ActivityScore
     @ContributesAndroidInjector(modules = [PayModule::class])
@@ -166,6 +168,10 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [UpgradeModule::class])
     abstract fun upgradeActivityInjector(): UpgradeActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [WXEntryModule::class])
+    abstract fun wXEntryActivityInjector(): WXEntryActivity
 
 
 }

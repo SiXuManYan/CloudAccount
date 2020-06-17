@@ -9,10 +9,10 @@ import dagger.Provides
  *
  */
 @Module
-class WXEntryModule {
+class WXPayEntryModule {
 
     @Provides
-    fun viewProvider(activity: WXEntryActivity): WXEntryView {
+    fun viewProvider(activity: WXPayEntryActivity): WXPayEntryView {
         return activity
     }
 

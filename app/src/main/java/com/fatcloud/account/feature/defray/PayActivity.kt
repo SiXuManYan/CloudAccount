@@ -95,7 +95,7 @@ class PayActivity : BaseMVPActivity<PayPresenter>(), PayView {
             return
         }
         orderId = intent.extras!!.getString(Constants.PARAM_ORDER_ID, "")
-        orderNumber = intent.extras!!.getString(Constants.PARAM_ORDER_ID, "")
+        orderNumber = intent.extras!!.getString(Constants.PARAM_ORDER_NUMBER, "")
         finalMoney = intent.extras!!.getString(Constants.PARAM_MONEY, "")
     }
 
@@ -163,23 +163,34 @@ class PayActivity : BaseMVPActivity<PayPresenter>(), PayView {
      * 异步调用
      */
     override fun doWechatPay(it: WechatPayInfo) {
-        val wechatRunnable: Runnable = Runnable {
-            api = WXAPIFactory.createWXAPI(this@PayActivity, BuildConfig.WECHAT_APPID, false).apply {
-                registerApp(BuildConfig.WECHAT_APPID)
-            }
-            val req = PayReq().apply {
-                appId = BuildConfig.WECHAT_APPID
-                partnerId = it.partnerid
-                prepayId = it.prepayid
-                nonceStr = it.noncestr
-                packageValue = it.`package`
-                sign = it.sign
-                timeStamp = it.timestamp
-                // extData = "" // 可传递extra，在回调页中获取
-            }
-            api?.sendReq(req)
+//        val wechatRunnable: Runnable = Runnable {
+//
+//        }
+//        Thread(wechatRunnable).start()
+
+        api = WXAPIFactory.createWXAPI(this@PayActivity, BuildConfig.WECHAT_APPID, false).apply {
+            registerApp(BuildConfig.WECHAT_APPID)
         }
-        Thread(wechatRunnable).start()
+        val req = PayReq().apply {
+            appId = BuildConfig.WECHAT_APPID
+            partnerId = it.partnerid
+            prepayId = it.prepayid
+            nonceStr = it.noncestr
+            packageValue = it.`package`
+            sign = it.sign
+            timeStamp = it.timestamp
+
+//            appId = "wxb4ba3c02aa476ea1"
+//            partnerId = "1900006771"
+//            prepayId = "wx17174816354052bcdd5557191272944832"
+//            nonceStr = "f21dcdcdbdeb996dce44d8ca8ee93d50"
+//
+//            packageValue ="Sign=WXPay"
+//            sign = "7B02112E6565F28A2269CCEF07597D8A"
+//            timeStamp = "1592387296"
+
+        }
+        api?.sendReq(req)
 
     }
 
