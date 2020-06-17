@@ -180,9 +180,9 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
 
 
     override fun bindShareholdersInfo(data: PersonalInfo) {
-        registered_capital_tv.text = data.investMoney.stripTrailingZeros().toPlainString()  // 注册资本。。。。。
+        registered_capital_tv.text = data.investMoney?.stripTrailingZeros()?.toPlainString()  // 注册资本。。。。。
         shareholder_container_bank_ll.removeAllViews()
-        data.shareholders.forEach {
+        data.shareholders?.forEach {
             shareholder_container_bank_ll.addView(ShareholderView(this).apply { setShareHolderView(it) })
         }
     }

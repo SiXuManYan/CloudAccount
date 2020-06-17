@@ -37,7 +37,6 @@ import kotlin.collections.ArrayList
  * </br>
  * 个体户营业执照表单
  * @see Constants.P1
- * todo imgs 图片上传
  */
 class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter>(), FormLicensePersonalView {
 
@@ -55,7 +54,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
     /**
      * 用户选中的组成形式id
      */
-    private var selectFormId = "0"
+    private var selectFormId = "17"
 
     /**
      * 用户选中的一级经营范围pid名称
@@ -227,9 +226,10 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         }
         val enterpriseInfo = PersonalInfo().apply {
             addr = detail_addr.value()
-            area = ""
+            area = "2102"
             businessScope = ProductUtils.stringList2IntList(selectPid)
             capital = BigDecimal(amount_of_funds.value())
+            income = BigDecimal(amount_of_funds.value())
             employedNum = employees_number_tv.value()
             form = selectFormId.toInt()
             gender = if (man_sex_rb.isChecked) {

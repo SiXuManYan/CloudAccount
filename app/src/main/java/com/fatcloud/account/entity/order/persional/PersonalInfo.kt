@@ -12,37 +12,37 @@ import java.math.BigDecimal
  */
 class PersonalInfo {
 
-    var accountId: String = ""
-    var addr: String= ""
-    var area: String= ""
-    var bankNo: String= ""
+    var accountId: String? = null
+    var addr: String? = null
+    var area: String? = null
+    var bankNo: String? = null
 
     /**
      * 营业执照地址
      */
-    var businessLicenseImgUrl: String= ""
-    var createDt: String= ""
-    var delFlag: Int = 0
+    var businessLicenseImgUrl: String? = null
+    var createDt: String? = null
+    var delFlag: Int? = null
 
     /**
      * 个人业务id
      */
-    var id: String = ""
+    var id: String? = null
 
     /**
      * 身份证号
      */
-    var idno: String= ""
-    var legalPersonName: String= ""
+    var idno: String? = null
+    var legalPersonName: String? = null
 
     /**
      * @see  Order.mold
      */
-    var mold: String= ""
-    var moldText: String= ""
-    var money: BigDecimal = BigDecimal.ZERO
-    var nickName: String= ""
-    var no: String= ""
+    var mold: String? = null
+    var moldText: String? = null
+    var money: BigDecimal? = null
+    var nickName: String? = null
+    var no: String? = null
 
     /**
      * PS1 未支付
@@ -51,13 +51,13 @@ class PersonalInfo {
      * PS4 微信已支付
      * PS5 支付宝已支付
      */
-    var payState: String= ""
-    var payStateText: String= ""
-    var phoneOfBank: String= ""
-    var productId: String= ""
-    var productName: String= ""
-    var productPriceId: String= ""
-    var productPriceName: String= ""
+    var payState: String? = null
+    var payStateText: String? = null
+    var phoneOfBank: String? = null
+    var productId: String? = null
+    var productName: String? = null
+    var productPriceId: String? = null
+    var productPriceName: String? = null
 
 
     /**
@@ -70,79 +70,78 @@ class PersonalInfo {
      * OS7 办理中
      * OS8 已办结
      */
-    var state: String= ""
-    var stateText: String= ""
-    var taxpayerNo: String= ""
-    var updateDt: String= ""
-    var username: String= ""
-    var version: Int = 0
-    var weixinPayMap: String= ""
+    var state: String? = null
+    var stateText: String? = null
+    var taxpayerNo: String? = null
+    var updateDt: String? = null
+    var username: String? = null
+    var version: Int? = null
+    var weixinPayMap: String? = null
 
 
     /**
      * 经营范围 id
      * @see BusinessScope.id
      */
-    var businessScope: List<Int> = ArrayList()
+    var businessScope: List<Int>? = null
 
 
-
-    var businessScopeNames: String= ""
+    var businessScopeNames: String? = null
 
 
     /**
      * 资金数额，注册资本
      */
-    var capital: BigDecimal = BigDecimal.ZERO
+    var capital: BigDecimal? = null
 
     /**
      * 从业人数
      */
-    var employedNum: String = "0"
+    var employedNum: String? = null
 
     /**
      * 组成形式的 Id
      * @see Form.id
      */
-    var form: Int = 0
-    var formName: String= ""
+    var form: Int? = 0
+    var formName: String? = null
 
     /**
      * 1 男
      * 2 女
      */
-    var gender: String= ""
-    var imgs: List<IdentityImg> = ArrayList()
+    var gender: String? = null
+    var imgs: List<IdentityImg>? = null
 
 
     /**
      * 收入
      */
-    var income: BigDecimal = BigDecimal.ZERO
-    var name0: String= ""
-    var name1: String= ""
-    var name2: String= ""
-    var nation: String= ""
+    var income: BigDecimal? = null
+    var name0: String? = null
+    var name1: String? = null
+    var name2: String? = null
+    var nation: String? = null
 
-    var realName: String= ""
-    var tel: String= ""
+    var realName: String? = null
+    var tel: String? = null
 
 
     // 公司信息
 
 
-    var enterpriseName0: String= ""
-    var enterpriseName1: String= ""
-    var enterpriseName2: String= ""
+    var enterpriseName0: String? = null
+    var enterpriseName1: String? = null
+    var enterpriseName2: String? = null
 
     /**
      * 注册资本
      */
-    var investMoney: BigDecimal = BigDecimal.ZERO
+    var investMoney: BigDecimal? = null
 
-    var investYearNum: Int = 0
+    var investYearNum: Int? = null
 
-    var shareholders: List<Shareholder> = ArrayList()
+    var shareholders: List<Shareholder>? = null
 
 
 }

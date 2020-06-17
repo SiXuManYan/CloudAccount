@@ -18,6 +18,7 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import io.reactivex.Flowable
+import org.json.JSONObject
 import retrofit2.http.*
 
 /**
@@ -256,7 +257,7 @@ interface ApiService {
      */
     @POST("$ORDER_API/addSelfemployed")
     fun addLicensePersonal(
-        @Body `in`: String? = null
+        @Body `in`: JsonObject? = null
     ): Flowable<Response<JsonObject>>
 
 

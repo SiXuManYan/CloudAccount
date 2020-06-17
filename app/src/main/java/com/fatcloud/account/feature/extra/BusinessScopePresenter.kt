@@ -26,7 +26,7 @@ class BusinessScopePresenter @Inject constructor(private var view: BusinessScope
         }
         allData.forEach {
             if (it.nativeIsSelect) {
-                allPid.add(it.pid)
+                allPid.add(it.id)
             }
         }
         return allPid

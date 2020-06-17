@@ -105,14 +105,21 @@ class CloudAccountPresenter(val view: CloudAccountView) {
      * @param objectName 文件路径
      * @param isEncryptFile 是否为加密文件
      */
-    fun getOssSecurityToken(context: Context, isEncryptFile: Boolean, isFaceUp: Boolean, localFilePatch: String, @IdRes fromViewId: Int, clx: Class<*>) {
+    fun getOssSecurityToken(
+        context: Context,
+        isEncryptFile: Boolean,
+        isFaceUp: Boolean,
+        localFilePatch: String,
+        @IdRes fromViewId: Int,
+        clx: Class<*>
+    ) {
 
         addSubscribe(
             apiService.getOssSecurityToken().compose(flowableUICompose())
                 .subscribeWith(object : BaseHttpSubscriber<SecurityTokenModel>(view) {
                     override fun onSuccess(data: SecurityTokenModel?) {
                         data?.let {
-                            uploadResources(context, it, isEncryptFile, localFilePatch, isFaceUp, fromViewId,clx)
+                            uploadResources(context, it, isEncryptFile, localFilePatch, isFaceUp, fromViewId, clx)
                         }
                     }
                 })
@@ -187,8 +194,11 @@ class CloudAccountPresenter(val view: CloudAccountView) {
             override fun onSuccess(request: PutObjectRequest?, result: PutObjectResult?) {
                 Log.d("PutObject", "UploadSuccess");
 //                val finalUrl = "https://$imageBucketName.$endpoint/$imageObjectKey"
-                val finalUrl = StringUtils.getString(R.string.final_url_format, imageBucketName, endpoint, imageObjectKey)
-                RxBus.post(ImageUploadEvent(finalUrl, isFaceUp, fromViewId,clx))
+//                val finalUrl = StringUtils.getString(R.string.final_url_format, imageBucketName, endpoint, imageObjectKey)
+                val finalUrl = imageObjectKey
+
+
+                RxBus.post(ImageUploadEvent(finalUrl, isFaceUp, fromViewId, clx))
             }
 
             override fun onFailure(request: PutObjectRequest?, clientException: ClientException?, serviceException: ServiceException?) {
