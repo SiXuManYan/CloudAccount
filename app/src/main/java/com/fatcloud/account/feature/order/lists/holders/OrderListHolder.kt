@@ -3,17 +3,17 @@ package com.fatcloud.account.feature.order.lists.holders
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.StringUtils
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.request.RequestOptions
 import com.fatcloud.account.R
 import com.fatcloud.account.app.Glide
 import com.fatcloud.account.base.ui.list.BaseItemViewHolder
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.entity.order.persional.Order
 import com.fatcloud.account.extend.RoundTransFormation
-import com.blankj.utilcode.util.SizeUtils
-import com.blankj.utilcode.util.StringUtils
-import com.bumptech.glide.load.MultiTransformation
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_order.*
 
@@ -30,7 +30,7 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
         if (data == null) {
             return
         }
-        order_id_tv.text = StringUtils.getString(R.string.order_id_format,data.productId)
+        order_id_tv.text = StringUtils.getString(R.string.order_id_format, data.no)
         Glide.with(context)
 //            .load(data.imgUrl)
             .load(CommonUtils.getTestUrl())

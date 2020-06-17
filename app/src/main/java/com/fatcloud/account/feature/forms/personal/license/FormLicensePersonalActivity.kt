@@ -15,10 +15,11 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
+import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.persional.PersonalInfo
 import com.fatcloud.account.event.entity.ImageUploadEvent
-import com.fatcloud.account.event.entity.OrderPaySuccessEvent
+import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
 import com.fatcloud.account.feature.matisse.Glide4Engine
 import com.fatcloud.account.feature.matisse.Matisse
@@ -136,10 +137,6 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             } else {
                 faceDownUrl = finalUrl
             }
-        })
-
-        presenter.subsribeEventEntity<OrderPaySuccessEvent>(Consumer {
-            finish()
         })
     }
 
@@ -337,8 +334,17 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         }
     }
 
-    override fun addLicensePersonalSuccess() {
+    override fun addLicensePersonalSuccess(preparePay: PreparePay) {
         ToastUtils.showShort("营业执照上传成功")
+        startActivity(
+            Intent(this, PayPrepareActivity::class.java)
+                .putExtra(Constants.PARAM_ORDER_ID, preparePay.orderId)
+                .putExtra(Constants.PARAM_ORDER_NUMBER, preparePay.orderNo)
+                .putExtra(Constants.PARAM_MONEY, preparePay.money.toPlainString())
+                .putExtra(Constants.PARAM_IMAGE_URL, preparePay.productLogoImgUrl)
+                .putExtra(Constants.PARAM_PRODUCT_NAME, preparePay.productName)
+                .putExtra(Constants.PARAM_DATE, preparePay.createDt)
+        )
         finish()
     }
 

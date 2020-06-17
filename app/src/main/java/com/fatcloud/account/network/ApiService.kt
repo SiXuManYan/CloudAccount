@@ -4,6 +4,7 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.commons.Commons
 import com.fatcloud.account.entity.defray.AliPayInfo
 import com.fatcloud.account.entity.defray.WechatPayInfo
+import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.entity.home.HomeMix
 import com.fatcloud.account.entity.news.NewDetail
 import com.fatcloud.account.entity.news.NewsCategory
@@ -258,7 +259,7 @@ interface ApiService {
     @POST("$ORDER_API/addSelfemployed")
     fun addLicensePersonal(
         @Body `in`: JsonObject? = null
-    ): Flowable<Response<JsonObject>>
+    ): Flowable<Response<PreparePay>>
 
 
     /**

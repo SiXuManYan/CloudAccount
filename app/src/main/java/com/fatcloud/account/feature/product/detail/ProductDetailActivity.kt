@@ -21,10 +21,12 @@ import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.product.detail.sheet.ProductSheetFragment
 import com.fatcloud.account.feature.product.detail.spinners.ProductSpinnerFragment
 import com.youth.banner.BannerConfig
 import com.youth.banner.loader.ImageLoader
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.layout_bottom_action.*
 
@@ -46,8 +48,9 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
 
         initView()
         initExtra()
-
+        initEvent()
     }
+
 
     private fun initView() {
         banner.layoutParams.apply {
@@ -85,6 +88,13 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
             presenter.getDetail(this, productId)
         }
     }
+
+    private fun initEvent() {
+        presenter.subsribeEventEntity<OrderPaySuccessEvent>(Consumer {
+            finish()
+        })
+    }
+
 
     override fun bindDetailData(data: ProductDetail) {
 

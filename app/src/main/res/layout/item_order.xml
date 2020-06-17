@@ -116,6 +116,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/content_tv"
+                        android:layout_marginTop="2dp"
                         android:ellipsize="end"
                         android:lineSpacingMultiplier="1.2"
                         android:maxLines="2"

@@ -74,7 +74,7 @@ class OrderListActivity : BaseRefreshListActivity<Order, OrderListPresenter>(), 
 
             val data = adapter.allData[it]
             when (data.state) {
-                "OS1", "OS3" -> {
+                "OS1" -> {
                     startActivity(
                         Intent(this, PayActivity::class.java)
                             .putExtra(Constants.PARAM_ORDER_ID, data.id)

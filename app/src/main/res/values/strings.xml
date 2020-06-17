@@ -35,6 +35,7 @@
     <string name="empty_text">暂无数据</string>
     <string name="sales_format">月销量：%1$s</string>
     <string name="money_symbol">&#165;</string>
+    <string name="money_symbol_with_blank">&#165;&#160;</string>
     <string name="money_symbol_format">&#165;%1$s</string>
     <string name="money_symbol_negative_format">-&#165;%1$s</string>
     <string name="un_login_name">登录/注册</string>

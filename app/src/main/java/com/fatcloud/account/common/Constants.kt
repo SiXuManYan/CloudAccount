@@ -67,7 +67,9 @@ object Constants {
     const val PARAM_HANDLE_BACK = "param_handle_back" // 处理返回键
     const val PARAM_WEB_REFRESH = "param_web_refresh" // 是否可刷新
     const val PARAM_WEB_CHANGETITLE = "param_web_changetitle" // 自动改变标题
-    const val PARAM_PRODUCT_ID = "param_productId"// 产品ID
+    const val PARAM_PRODUCT_ID = "param_product_id"// 产品ID
+    const val PARAM_PRODUCT_NAME = "param_product_name"
+    const val PARAM_DATE = "param_date"
     const val PARAM_TYPE = "param_type"
     const val PARAM_ID = "param_id"
     const val PARAM_ORDER_ID = "param_order_id" // 订单id
@@ -82,6 +84,7 @@ object Constants {
     const val PARAM_DATA = "param_data"
     const val PARAM_PRICE_DATA = "param_price_data"
     const val PARAM_MONEY = "param_money"
+    const val PARAM_IMAGE_URL = "param_image_url"
     const val PARAM_INCOME_MONEY = "param_income_money"
     const val PARAM_FINAL_MONEY = "param_final_money"
     const val PARAM_PRODUCT_PRICE_ID = "param_product_price_id"// 产品价格类型 eg:pp1 固定价格

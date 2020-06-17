@@ -7,5 +7,5 @@ import com.fatcloud.account.base.common.BaseTaskView
  * </br>
  *
  */
-interface PayPrepareView :BaseTaskView{
+interface PayPrepareView : BaseTaskView {
 }

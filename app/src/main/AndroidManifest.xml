@@ -242,6 +242,7 @@
             android:name=".feature.upgrade.UpgradeActivity"
             android:theme="@style/upgrade"
             android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name=".feature.defray.prepare.PayPrepareActivity" />
 
 
     </application>

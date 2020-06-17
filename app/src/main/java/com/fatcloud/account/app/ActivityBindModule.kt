@@ -16,6 +16,8 @@ import com.fatcloud.account.feature.account.password.login.PasswordLoginActivity
 import com.fatcloud.account.feature.account.password.login.PasswordLoginModule
 import com.fatcloud.account.feature.defray.PayActivity
 import com.fatcloud.account.feature.defray.PayModule
+import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
+import com.fatcloud.account.feature.defray.prepare.PayPrepareModule
 import com.fatcloud.account.feature.defray.result.CloudPayResultActivity
 import com.fatcloud.account.feature.defray.result.CloudPayResultModule
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
@@ -172,6 +174,11 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [WXEntryModule::class])
     abstract fun wXEntryActivityInjector(): WXEntryActivity
+
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [PayPrepareModule::class])
+    abstract fun payPrepareActivityInjector(): PayPrepareActivity
 
 
 }
