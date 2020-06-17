@@ -5,7 +5,7 @@ data class News(
     val id: String = "",
     val imgUrls: ArrayList<String> = ArrayList(),
     val likeCount: Int = 0,
-    val readCount: Int = 0,
+    var readCount: Int = 0,
     val title: String = "",
 
     // 资讯列表字段 ↓

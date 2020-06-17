@@ -248,15 +248,20 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
         if (User.isLogon()) {
             InputDialog.Builder(context!!)
                 .setTitle("修改昵称")
-                .setMessage("请输入昵称")
+                .setMessage("请输入昵称，不能超过5个字符")
                 .setPositiveButton(R.string.confirm, DialogInterface.OnClickListener { dialog, _ ->
                     val content = (dialog as InputDialog).getInputContent().toString().trim()
                     if (content.isNotEmpty()) {
-                        dialog.dismiss()
-                        name_tv.text = content
-                        presenter.updateAvatarAndNickname(this@MyPageFragment, null, content)
+                        if (content.length > 5) {
+                            ToastUtils.showShort("昵称不能超过5个字符")
+                        }else{
+                            name_tv.text = content
+                            presenter.updateAvatarAndNickname(this@MyPageFragment, null, content)
 
-                        KeyboardUtils.hideSoftInput(activity!!)
+                            KeyboardUtils.hideSoftInput(activity!!)
+                            dialog.dismiss()
+                        }
+
                     }
                 })
                 .setNegativeButton(R.string.cancel, DialogInterface.OnClickListener { dialog, _ ->

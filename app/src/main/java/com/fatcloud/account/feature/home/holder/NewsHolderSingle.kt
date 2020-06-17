@@ -34,7 +34,7 @@ class NewsHolderSingle(parent: ViewGroup?) : BaseItemViewHolder<News>(parent, R.
 
 
         title_tv.text = data.title
-        date_tv.text = TimeUtil.getTimeLag(data.createDt)
+        date_tv.text = data.createDt
         page_views_tv.text = data.readCount.toString()
 
         if (data.recommandFlag == 1) {

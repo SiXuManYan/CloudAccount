@@ -84,13 +84,16 @@ class NewsChildFragment : BaseRefreshListFragment<News, NewsChildPresenter>(), N
             if (!clickAble) {
                 return@setOnItemClickListener
             }
+            val news = adapter.allData[it]
+            startActivity(Intent(context, NewsDetailActivity::class.java).putExtra(Constants.PARAM_ID, news.id))
+
             clickAble = false
             handler.postDelayed({
+                news.readCount = (news.readCount + 1)
+                adapter.notifyItemChanged(it)
                 clickAble = true
             }, 1000)
 
-            val news = adapter.allData[it]
-            startActivity(Intent(context,NewsDetailActivity::class.java).putExtra(Constants.PARAM_ID,news.id))
         }
         return adapter
     }

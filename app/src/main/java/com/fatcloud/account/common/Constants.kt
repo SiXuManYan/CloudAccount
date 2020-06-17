@@ -254,5 +254,20 @@ object Constants {
      */
     const val OW4 = "OW4"
 
+    /** 首页Banner类型 网页H5 */
+    const val B1 = "B1"
+
+    /** 首页Banner类型 产品个体户营业执照 */
+    const val B2 = "B2"
+
+    /** 资讯 */
+    const val B3 = "B3"
+
+    /** 企业套餐 */
+    const val B4 = "B4"
+
+
+
+
 
 }
