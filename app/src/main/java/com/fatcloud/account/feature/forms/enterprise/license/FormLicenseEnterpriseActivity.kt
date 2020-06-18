@@ -5,6 +5,7 @@ import android.text.InputType
 import android.view.View
 import butterknife.OnClick
 import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.VibrateUtils
 import com.fatcloud.account.R
@@ -12,17 +13,22 @@ import com.fatcloud.account.app.CloudAccountApplication
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
+import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
+import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
 import com.fatcloud.account.feature.matisse.Matisse
 import com.fatcloud.account.view.CompanyMemberEditView
+import com.lljjcoder.Interface.OnCityItemClickListener
+import com.lljjcoder.bean.CityBean
+import com.lljjcoder.bean.DistrictBean
+import com.lljjcoder.bean.ProvinceBean
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_license_enterprise.*
 import kotlinx.android.synthetic.main.layout_bottom_action.*
 import kotlinx.android.synthetic.main.view_company_member_edit.view.*
-import java.math.BigDecimal
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -66,7 +72,16 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
      */
     private var mProductId: String = "0"
 
+
+    /**
+     * 位置信息id
+     */
+    private var areaId: String = ""
+
     var isFaceUp = false
+
+
+
 //    var faceUpUrl = ""
 //    var faceDownUrl = ""
 
@@ -277,7 +292,8 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
     @OnClick(
         R.id.business_scope_rl,
         R.id.bottom_left_tv,
-        R.id.bottom_right_tv
+        R.id.bottom_right_tv,
+        R.id.addr_rl
     )
     fun onClick(view: View) {
         when (view.id) {
@@ -292,6 +308,17 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             R.id.bottom_right_tv -> {
                 handlePost()
             }
+            R.id.addr_rl->{
+                ProductUtils.showLocationPicker(this, object : OnCityItemClickListener() {
+                    override fun onSelected(province: ProvinceBean, city: CityBean, district: DistrictBean) {
+                        addr_value_iv.text = StringUtils.getString(R.string.location_information_format, province.name, city.name, district.name)
+                        areaId = district.id
+                    }
+
+                    override fun onCancel() = Unit
+                })
+            }
+
             else -> {
             }
         }
@@ -335,17 +362,17 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
 
         val enterpriseInfo = EnterpriseInfo().apply {
             addr = detail_addr.value()
-            area = ""
+            area = areaId
             bankNo = bank_number.value()
             bankPhone = bank_phone.value()
-            businessScope.addAll(ProductUtils.stringList2IntList(selectPid))
+            businessScope?.addAll(ProductUtils.stringList2IntList(selectPid))
             enterpriseName0 = zero_choice_name.value()
             enterpriseName1 = first_choice_name.value()
             enterpriseName2 = second_choice_name.value()
-            income = BigDecimal(incomeMoney)
-            investMoney = BigDecimal(amount_of_funds.value())
+            income = ProductUtils.getEditValueToBigDecimal(incomeMoney)
+            investMoney = ProductUtils.getEditValueToBigDecimal(amount_of_funds.value())
             investYearNum = investment_period.value()
-            money = BigDecimal(finalMoney)
+            money = ProductUtils.getEditValueToBigDecimal(finalMoney)
             productId = mProductId
             productPriceId = mProductPriceId.toInt()
             shareholders = presenter.getShareHolders(
@@ -359,8 +386,19 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
 
     }
 
-    override fun addEnterpriseSuccess() {
+    override fun addEnterpriseSuccess(preparePay: PreparePay) {
         ToastUtils.showShort("套餐添加成功")
+        startActivity(
+            Intent(this, PayPrepareActivity::class.java)
+                .putExtra(Constants.PARAM_ORDER_ID, preparePay.orderId)
+                .putExtra(Constants.PARAM_ORDER_NUMBER, preparePay.orderNo)
+                .putExtra(Constants.PARAM_MONEY, preparePay.money.toPlainString())
+                .putExtra(Constants.PARAM_IMAGE_URL, preparePay.productLogoImgUrl)
+                .putExtra(Constants.PARAM_PRODUCT_NAME, preparePay.productName)
+                .putExtra(Constants.PARAM_DATE, preparePay.createDt)
+        )
+        finish()
+
     }
 
 

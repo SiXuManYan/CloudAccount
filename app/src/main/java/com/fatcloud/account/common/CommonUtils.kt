@@ -878,7 +878,7 @@ object CommonUtils {
     /**
      * 订单支付状态
      */
-    fun setPaymentStatus(payState: String, statusImage: ImageView, statusTextView: TextView) {
+    fun setPaymentStatus(payState: String?, statusImage: ImageView, statusTextView: TextView) {
         when (payState) {
             "OS1" -> {
                 statusImage.setImageResource(R.drawable.ic_status_daizhifu)

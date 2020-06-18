@@ -7,8 +7,8 @@ import com.fatcloud.account.entity.defray.WechatPayInfo
 import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.entity.home.HomeMix
 import com.fatcloud.account.entity.news.NewDetail
-import com.fatcloud.account.entity.news.NewsCategory
 import com.fatcloud.account.entity.news.News
+import com.fatcloud.account.entity.news.NewsCategory
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.persional.PersonalInfo
 import com.fatcloud.account.entity.oss.SecurityTokenModel
@@ -19,7 +19,6 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import io.reactivex.Flowable
-import org.json.JSONObject
 import retrofit2.http.*
 
 /**
@@ -248,8 +247,8 @@ interface ApiService {
      */
     @POST("$ORDER_API/addEnterprise")
     fun addEnterprise(
-        @Body `in`: String? = null
-    ): Flowable<Response<JsonObject>>
+        @Body `in`: JsonObject? = null
+    ): Flowable<Response<PreparePay>>
 
 
     /**

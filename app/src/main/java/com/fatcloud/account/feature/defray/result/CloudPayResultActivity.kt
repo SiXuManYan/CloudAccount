@@ -55,6 +55,7 @@ class CloudPayResultActivity : BaseMVPActivity<CloudPayResultPresenter>(), Cloud
         when (view.id) {
             R.id.next_tv -> {
                 startActivity(OrderListActivity::class.java)
+                finish()
             }
             else -> {
             }

@@ -104,13 +104,13 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
         first_company_name_tv.text = data.enterpriseName1
         second_company_name_tv.text = data.enterpriseName2
         invest_year_num_tv.text = data.investYearNum
-        amount_of_funds_tv.text = data.investMoney.stripTrailingZeros().toPlainString()
+        amount_of_funds_tv.text = data.investMoney?.stripTrailingZeros()?.toPlainString()
         business_scope_tv.text = data.businessScopeNames
         bank_card_number_tv.text = data.bankNo
         bank_phone_tv.text = data.bankPhone
         addr_tv.text = data.addr
         shareholder_container_ll.removeAllViews()
-        data.shareholders.forEach {
+        data.shareholders?.forEach {
             shareholder_container_ll.addView(ShareholderView(this).apply { setShareHolderView(it) })
         }
     }

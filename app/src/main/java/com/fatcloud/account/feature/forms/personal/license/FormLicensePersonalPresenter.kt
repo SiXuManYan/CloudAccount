@@ -27,10 +27,10 @@ class FormLicensePersonalPresenter @Inject constructor(private var view: FormLic
         val bodyJsonStr = gson.toJson(enterpriseInfo)
 
 
-        val example: JsonObject = gson.fromJson(bodyJsonStr, JsonObject::class.java)
+        val jsonObject: JsonObject = gson.fromJson(bodyJsonStr, JsonObject::class.java)
 
         requestApi(lifecycle, Lifecycle.Event.ON_DESTROY,
-            apiService.addLicensePersonal(example),
+            apiService.addLicensePersonal(jsonObject),
             object : BaseHttpSubscriber<PreparePay>(view) {
                 override fun onSuccess(data: PreparePay?) {
 

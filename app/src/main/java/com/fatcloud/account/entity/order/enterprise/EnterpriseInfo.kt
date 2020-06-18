@@ -6,104 +6,104 @@ import java.math.BigDecimal
  * 企业信息 表单
  */
 class EnterpriseInfo {
-    var accountId: String = ""
-    var addr: String = ""
-    var area: String = ""
-    var bankNo: String = ""
-    var bankPhone: String = ""
-    var businessScope: ArrayList<Int> = ArrayList()
-    var businessScopeNames: String = ""
-    var createDt: String = ""
-    var delFlag: Int = 0
-    var enterpriseName0: String = ""
-    var enterpriseName1: String = ""
-    var enterpriseName2: String = ""
-    var id: String = ""
-    var income: BigDecimal = BigDecimal.ZERO
+    var accountId: String? = null
+    var addr: String ? = null
+    var area: String ? = null
+    var bankNo: String ? = null
+    var bankPhone: String ? = null
+    var businessScope: ArrayList<Int> ?= ArrayList()
+    var businessScopeNames: String ? = null
+    var createDt: String ? = null
+    var delFlag: Int ? = null
+    var enterpriseName0: String ? = null
+    var enterpriseName1: String ? = null
+    var enterpriseName2: String ? = null
+    var id: String ? = null
+    var income: BigDecimal ? = null
 
     /**
      * 出资数额
      */
-    var investMoney: BigDecimal = BigDecimal.ZERO
-    var investYearNum: String = ""
-    var mold: String = ""
-    var moldText: String = ""
-    var money: BigDecimal = BigDecimal.ZERO
-    var nickName: String = ""
-    var no: String = ""
-    var payState: String = ""
-    var payStateText: String = ""
-    var productId: String = ""
-    var productName: String = ""
-    var productPriceId: Int = 0
-    var productPriceName: String = ""
+    var investMoney: BigDecimal ? = null
+    var investYearNum: String ? = null
+    var mold: String ? = null
+    var moldText: String ? = null
+    var money: BigDecimal ? = null
+    var nickName: String ? = null
+    var no: String ? = null
+    var payState: String ? = null
+    var payStateText: String ? = null
+    var productId: String ? = null
+    var productName: String ? = null
+    var productPriceId: Int ? = null
+    var productPriceName: String ? = null
 
     /**
      * 股东信息
      */
-    var shareholders: List<Shareholder> = ArrayList()
-    var state: String = ""
-    var stateText: String = ""
-    var updateDt: String = ""
-    var username: String = ""
-    var version: Int = 0
-    var weixinPayMap: String = ""
+    var shareholders: List<Shareholder> ? = null
+    var state: String ? = null
+    var stateText: String ? = null
+    var updateDt: String ? = null
+    var username: String ? = null
+    var version: Int ? = null
+    var weixinPayMap: String ? = null
 
 
     // 银行相关信息
     /** 营业执照图网址 */
-    var businessLicenseImgUrl: String = ""
+    var businessLicenseImgUrl: String ? = null
 
     /** 注册资本 */
-    var capital: String = ""
+    var capital: String ? = null
 
     /** 电子图章网址 */
-    var electronicSealImgUrl: String = ""
+    var electronicSealImgUrl: String ? = null
 
     /** 企业地址 */
-    var enterpriseAddr: String = ""
+    var enterpriseAddr: String ? = null
 
     /** 企业性质 */
-    var enterpriseMold: String = ""
+    var enterpriseMold: String ? = null
 
     /** 企业名称 */
-    var enterpriseName: String = ""
+    var enterpriseName: String ? = null
 
     /** 金融Idno */
-    var financeIdno: String = ""
+    var financeIdno: String ? = null
 
     /** 财务ID编号网址A */
-    var financeIdnoImgUrlA: String = ""
+    var financeIdnoImgUrlA: String ? = null
 
     /** 金融Idno Img Url B */
-    var financeIdnoImgUrlB: String = ""
+    var financeIdnoImgUrlB: String ? = null
 
     /** 财务名称 */
-    var financeName: String = ""
+    var financeName: String? = null
 
     /** 金融电话 */
-    var financePhone: String = ""
+    var financePhone: String ? = null
 
     /** 法人认股权证网址 */
-    var legalPersonWarrantImgUrl: String = ""
+    var legalPersonWarrantImgUrl: String ? = null
 
     /** 订单工作编号 */
-    var orderWorkId: String = ""
+    var orderWorkId: String ? = null
 
     /** 调和地址 */
-    var reconciliatAddr: String = ""
+    var reconciliatAddr: String ? = null
 
     /** 调解区 */
-    var reconciliatArea: String = ""
+    var reconciliatArea: String ? = null
 
     /** 协调联系 */
-    var reconciliatContact: String = ""
+    var reconciliatContact: String ? = null
 
     /** reconciliatPhone */
-    var reconciliatPhone: String = ""
+    var reconciliatPhone: String ? = null
 
     /** 设置状态文本 */
-    var settingStateText: String = ""
+    var settingStateText: String ? = null
 
 }
 

@@ -72,21 +72,20 @@
                     android:textColor="@color/color_first_level" />
 
                 <TextView
-                    android:layout_toRightOf="@+id/business_scope"
                     android:id="@+id/business_scope_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
                     android:layout_toLeftOf="@+id/scope_sp"
+                    android:layout_toRightOf="@+id/business_scope"
                     android:ellipsize="end"
+                    android:gravity="right"
                     android:hint="请选择经营范围"
                     android:maxLines="1"
                     android:textColor="@color/color_third_level"
                     android:textColorHint="@color/color_third_level"
                     android:textSize="@dimen/font_size_14" />
-
 
 
                 <androidx.appcompat.widget.AppCompatSpinner
@@ -122,11 +121,11 @@
                 android:paddingRight="15dp" />
 
             <RelativeLayout
+                android:id="@+id/addr_rl"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="?android:attr/selectableItemBackground"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp">
+                android:paddingLeft="15dp">
 
                 <TextView
                     android:id="@+id/addr_iv"
@@ -137,19 +136,30 @@
                     android:text="地址"
                     android:textColor="@color/color_first_level" />
 
+                <TextView
+                    android:id="@+id/addr_value_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_toLeftOf="@+id/addr_spinner"
+                    android:hint="省"
+                    android:textColor="@color/color_first_level"
+                    android:textColorHint="@color/color_third_level" />
+
+
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/addr_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@+id/addr_iv"
-                    android:minWidth="150dp" />
+                    android:layout_alignParentRight="true" />
 
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_alignParentBottom="true"
+                    android:layout_marginRight="15dp"
                     android:background="@color/split_line_color" />
 
 

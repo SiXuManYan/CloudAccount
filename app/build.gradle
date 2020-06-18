@@ -27,7 +27,7 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
 
         versionCode 1
-        versionName "1.0beta2"
+        versionName "1.0beta3"
 
         multiDexEnabled true
 

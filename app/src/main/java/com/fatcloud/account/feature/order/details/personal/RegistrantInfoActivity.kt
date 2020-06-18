@@ -66,7 +66,7 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
 
 
     override fun bindDetailInfo(data: PersonalInfo) {
-        CommonUtils.setPaymentStatus(data.state!!, payment_status_iv, payment_status_tv)
+        CommonUtils.setPaymentStatus(data.state, payment_status_iv, payment_status_tv)
 
         when (productWorkType) {
             "PW1" -> {

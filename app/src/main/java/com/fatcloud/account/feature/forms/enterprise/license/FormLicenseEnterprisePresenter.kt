@@ -5,6 +5,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
+import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.enterprise.Shareholder
 import com.fatcloud.account.view.CompanyMemberEditView
@@ -28,11 +29,15 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
 
         val bodyJsonStr = gson.toJson(enterpriseInfo)
 
+        val jsonObject: JsonObject = gson.fromJson(bodyJsonStr, JsonObject::class.java)
+
         requestApi(lifecycle, Lifecycle.Event.ON_DESTROY,
-            apiService.addEnterprise(bodyJsonStr),
-            object : BaseHttpSubscriber<JsonObject>(view) {
-                override fun onSuccess(data: JsonObject?) {
-                    view.addEnterpriseSuccess()
+            apiService.addEnterprise(jsonObject),
+            object : BaseHttpSubscriber<PreparePay>(view) {
+                override fun onSuccess(data: PreparePay?) {
+                    data?.let {
+                        view.addEnterpriseSuccess(it)
+                    }
                 }
             }
         )

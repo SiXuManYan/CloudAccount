@@ -9,12 +9,19 @@ import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.VibrateUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.feature.matisse.Glide4Engine
 import com.fatcloud.account.feature.matisse.Matisse
 import com.fatcloud.account.view.EditView
 import com.fatcloud.account.view.dialog.AlertDialog
+import com.lljjcoder.Interface.OnCityItemClickListener
+import com.lljjcoder.bean.CityBean
+import com.lljjcoder.bean.DistrictBean
+import com.lljjcoder.bean.ProvinceBean
+import com.lljjcoder.style.cityjd.JDCityConfig
+import com.lljjcoder.style.cityjd.JDCityPicker
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.zhihu.matisse.MimeType
 import io.reactivex.disposables.CompositeDisposable
@@ -184,8 +191,23 @@ object ProductUtils {
                 BigDecimal.ZERO
             }
         }
+    }
 
 
+    /**
+     * 城市信息选择
+     */
+     fun showLocationPicker(context: Context?, listener: OnCityItemClickListener) {
+        val jdCityConfig = JDCityConfig.Builder().build().apply {
+            showType = JDCityConfig.ShowType.PRO_CITY_DIS
+        }
+
+        val cityPicker = JDCityPicker().apply {
+            init(context)
+            setConfig(jdCityConfig)
+            setOnCityItemClickListener(listener)
+            showCityPicker()
+        }
     }
 
 

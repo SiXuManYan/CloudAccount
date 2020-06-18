@@ -160,7 +160,7 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
 
         // 法人、股东相关信息
         shareholder_more_container.removeAllViews()
-        data.shareholders.forEachIndexed { index, shareholder ->
+        data.shareholders?.forEachIndexed { index, shareholder ->
             shareholder_more_container.addView(presenter.getShareholderView(this, shareholder_more_container, index, shareholder))
         }
 

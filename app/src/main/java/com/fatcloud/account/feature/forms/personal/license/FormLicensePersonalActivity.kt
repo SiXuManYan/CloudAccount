@@ -5,6 +5,7 @@ import android.text.InputType
 import android.text.TextUtils
 import android.view.View
 import butterknife.OnClick
+import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.VibrateUtils
 import com.fatcloud.account.R
@@ -217,21 +218,14 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
                 }
             }
             R.id.city_rl -> {
-                val cityPicker = JDCityPicker()
-                val jdCityConfig = JDCityConfig.Builder().build()
-
-                jdCityConfig.showType = JDCityConfig.ShowType.PRO_CITY_DIS
-                cityPicker.init(this)
-                cityPicker.setConfig(jdCityConfig)
-                cityPicker.setOnCityItemClickListener(object : OnCityItemClickListener() {
+                ProductUtils.showLocationPicker(this, object : OnCityItemClickListener() {
                     override fun onSelected(province: ProvinceBean, city: CityBean, district: DistrictBean) {
-                        addr_value.text = "${province.name}${city.name}${district.name}"
+                        addr_value.text = StringUtils.getString(R.string.location_information_format, province.name, city.name, district.name)
                         areaId = district.id
                     }
 
-                    override fun onCancel() {}
+                    override fun onCancel() = Unit
                 })
-                cityPicker.showCityPicker()
             }
             else -> {
             }
