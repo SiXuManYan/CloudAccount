@@ -4,6 +4,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
+import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.google.gson.JsonObject
 import javax.inject.Inject
 
@@ -46,9 +47,11 @@ class FormTaxRegistrationPersonalPresenter @Inject constructor(private var view:
                 addr,
                 area
             ),
-            object : BaseHttpSubscriber<JsonObject>(view) {
-                override fun onSuccess(data: JsonObject?) {
-
+            object : BaseHttpSubscriber<PreparePay>(view) {
+                override fun onSuccess(data: PreparePay?) {
+                    data?.let {
+                        view.commitSuccess(it)
+                    }
                 }
 
             }

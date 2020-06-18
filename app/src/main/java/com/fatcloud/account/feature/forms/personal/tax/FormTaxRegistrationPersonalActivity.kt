@@ -5,6 +5,7 @@ import android.text.InputType
 import android.view.View
 import android.widget.ImageView
 import butterknife.OnClick
+import com.blankj.utilcode.util.ToastUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
 import com.fatcloud.account.app.Glide
@@ -12,8 +13,10 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
+import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
+import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.matisse.Matisse
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_tax_registration_personal.*
@@ -107,10 +110,6 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
             }
             businessLicenseImgUrl = it.finalUrl
 
-        })
-
-        presenter.subsribeEventEntity<OrderPaySuccessEvent>(Consumer {
-            finish()
         })
     }
 
@@ -207,8 +206,21 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
             address,
             detail_addr.value()
         )
-
-
     }
+
+    override fun commitSuccess(preparePay: PreparePay) {
+        ToastUtils.showShort("提交成功")
+        startActivity(
+            Intent(this, PayPrepareActivity::class.java)
+                .putExtra(Constants.PARAM_ORDER_ID, preparePay.orderId)
+                .putExtra(Constants.PARAM_ORDER_NUMBER, preparePay.orderNo)
+                .putExtra(Constants.PARAM_MONEY, preparePay.money.toPlainString())
+                .putExtra(Constants.PARAM_IMAGE_URL, preparePay.productLogoImgUrl)
+                .putExtra(Constants.PARAM_PRODUCT_NAME, preparePay.productName)
+                .putExtra(Constants.PARAM_DATE, preparePay.createDt)
+        )
+        finish()
+    }
+
 
 }

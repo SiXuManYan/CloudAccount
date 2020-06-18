@@ -278,7 +278,7 @@ interface ApiService {
         @Field("businessLicenseImgUrl") businessLicenseImgUrl: String?,
         @Field("addr") addr: String?, // 税务登记+刻章时传递
         @Field("area") area: String?// 税务登记+刻章时传递
-    ): Flowable<Response<JsonObject>>
+    ): Flowable<Response<PreparePay>>
 
 
     /**
