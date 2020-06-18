@@ -1,5 +1,6 @@
 package com.fatcloud.account.feature.forms.personal.bookkeeping.signature
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.view.View
 import android.widget.ImageView
@@ -10,8 +11,10 @@ import com.fatcloud.account.app.Glide
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.entity.product.NativeBookkeeping
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
+import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.forms.personal.bookkeeping.wordpad.WordpadFragment
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_signature.*
@@ -70,11 +73,7 @@ class SignatureActivity : BaseMVPActivity<SignaturePresenter>(), SignatureView {
         nativeBookkeeping?.let {
             content_tv.text = getString(
                 R.string.signature_format,
-                "定位中",
-                "定位中",
-                it.storeName,
-                it.legalPersonName,
-                it.idNumber
+                it.storeName
             )
         }
 
@@ -141,8 +140,18 @@ class SignatureActivity : BaseMVPActivity<SignaturePresenter>(), SignatureView {
 
     }
 
-    override fun addAgentBookkeepingSuccess() {
+    override fun addAgentBookkeepingSuccess(preparePay: PreparePay) {
         ToastUtils.showShort("代理记账提交成功")
+        startActivity(
+            Intent(this, PayPrepareActivity::class.java)
+                .putExtra(Constants.PARAM_ORDER_ID, preparePay.orderId)
+                .putExtra(Constants.PARAM_ORDER_NUMBER, preparePay.orderNo)
+                .putExtra(Constants.PARAM_MONEY, preparePay.money.toPlainString())
+                .putExtra(Constants.PARAM_IMAGE_URL, preparePay.productLogoImgUrl)
+                .putExtra(Constants.PARAM_PRODUCT_NAME, preparePay.productName)
+                .putExtra(Constants.PARAM_DATE, preparePay.createDt)
+        )
+        finish()
     }
 
 

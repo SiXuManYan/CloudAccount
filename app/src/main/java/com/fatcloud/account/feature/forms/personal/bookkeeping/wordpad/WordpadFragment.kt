@@ -64,7 +64,7 @@ class WordpadFragment : BaseBottomSheetDialogFragment<WordpadPresenter>(), Wordp
             }
             R.id.commit_tv -> {
                 commitWordpad()
-                dismissAllowingStateLoss()
+
             }
             else -> {
             }
@@ -104,6 +104,7 @@ class WordpadFragment : BaseBottomSheetDialogFragment<WordpadPresenter>(), Wordp
         commitCallBack?.let {
             if (!finalUrl.isNullOrEmpty()) {
                 it.uploadAutographSuccess(finalUrl)
+                dismissAllowingStateLoss()
                 return
             }
 

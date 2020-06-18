@@ -298,7 +298,7 @@ interface ApiService {
         @Field("shopName") shopName: String?,//
         @Field("businessLicenseImgUrl") businessLicenseImgUrl: String?,
         @Field("signImgUrl") signImgUrl: String?//
-    ): Flowable<Response<JsonObject>>
+    ): Flowable<Response<PreparePay>>
 
 
     /**
