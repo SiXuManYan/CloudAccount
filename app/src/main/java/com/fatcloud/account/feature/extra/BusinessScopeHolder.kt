@@ -13,7 +13,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_schedule.*
 import kotlinx.android.synthetic.main.item_spinner_view.*
 
-class BusinessScopeHolder(parent: ViewGroup?) : BaseItemViewHolder<BusinessScope>(parent, R.layout.item_spinner_view), LayoutContainer {
+class BusinessScopeHolder(parent: ViewGroup?) : BaseItemViewHolder<BusinessScope>(parent, R.layout.item_business_scope), LayoutContainer {
 
 
     override val containerView: View? get() = itemView
@@ -26,10 +26,10 @@ class BusinessScopeHolder(parent: ViewGroup?) : BaseItemViewHolder<BusinessScope
         spinner_text.text = data.name
 
         if (data.nativeIsSelect) {
-            spinner_text.setBackgroundResource(R.drawable.shape_stock_red)
+            spinner_text.setBackgroundResource(R.drawable.shape_stock_red_match_18)
             spinner_text.setTextColor(ColorUtils.getColor(R.color.color_app_red))
         } else {
-            spinner_text.setBackgroundResource(R.drawable.shape_stock_gray)
+            spinner_text.setBackgroundResource(R.drawable.shape_stock_gray_match_18)
             spinner_text.setTextColor(ColorUtils.getColor(R.color.color_third_level))
         }
 

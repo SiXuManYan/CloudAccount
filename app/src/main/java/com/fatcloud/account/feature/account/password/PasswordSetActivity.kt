@@ -6,14 +6,16 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatEditText
 import butterknife.OnClick
+import com.blankj.utilcode.util.RegexUtils
+import com.blankj.utilcode.util.VibrateUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
-import com.blankj.utilcode.util.RegexUtils
-import com.blankj.utilcode.util.VibrateUtils
 import kotlinx.android.synthetic.main.activity_login_password_set.*
 
 /**
@@ -87,9 +89,8 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
                     rule_format_cb.isChecked = false
                     return
                 }
-
                 rule_length_cb.isChecked = passwordFirst.length in 6..18
-                rule_format_cb.isChecked = RegexUtils.isMatch("^[A-Za-z0-9]+$", passwordFirst)
+                rule_format_cb.isChecked = RegexUtils.isMatch(".*[a-zA-Z].*[0-9]|.*[0-9].*[a-zA-Z]", passwordFirst)
 
                 changeActionButtonBackground(!isRegisterMode && rule_length_cb.isChecked && rule_format_cb.isChecked)
             }
@@ -144,6 +145,7 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
 
     @OnClick(
         R.id.password_rule_iv,
+        R.id.password_confirm_rule_iv,
         R.id.next_tv
     )
     fun onClick(view: View) {
@@ -152,7 +154,8 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
             return
         }
         when (view.id) {
-            R.id.password_rule_iv -> changeDisplayMethod()
+            R.id.password_rule_iv -> changeDisplayMethod(password_et, password_rule_iv)
+            R.id.password_confirm_rule_iv -> changeDisplayMethod(confirm_et, password_confirm_rule_iv)
             R.id.next_tv -> {
                 handlePasswordSet()
             }
@@ -165,22 +168,19 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
     }
 
 
-    private fun changeDisplayMethod() {
+    private fun changeDisplayMethod(editText: AppCompatEditText, switchImageView: ImageView) {
         if (isCipherText) {
 
             // 切换至明文
-            password_rule_iv.setImageResource(R.drawable.ic_login_password_visible)
-            password_et.transformationMethod = HideReturnsTransformationMethod.getInstance();
-            confirm_et.transformationMethod = HideReturnsTransformationMethod.getInstance();
+            switchImageView.setImageResource(R.drawable.ic_login_password_visible)
+            editText.transformationMethod = HideReturnsTransformationMethod.getInstance();
 
         } else {
             // 切换至密文
-            password_rule_iv.setImageResource(R.drawable.ic_login_password_gone)
-            password_et.transformationMethod = PasswordTransformationMethod.getInstance();
-            confirm_et.transformationMethod = PasswordTransformationMethod.getInstance();
+            switchImageView.setImageResource(R.drawable.ic_login_password_gone)
+            editText.transformationMethod = PasswordTransformationMethod.getInstance();
         }
-        password_et.setSelection(password_et.text.toString().length)
-        confirm_et.setSelection(confirm_et.text.toString().length)
+        editText.setSelection(password_et.text.toString().length)
 
         isCipherText = !isCipherText
 

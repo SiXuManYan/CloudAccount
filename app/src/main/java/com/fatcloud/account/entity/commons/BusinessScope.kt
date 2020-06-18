@@ -4,7 +4,7 @@ package com.fatcloud.account.entity.commons
  * 经营范围
  */
 data class BusinessScope(
-    val childs: List<BusinessScope>,
+    val childs: ArrayList<BusinessScope> = ArrayList(),
     val createDt: String,
     val delFlag: Int,
 

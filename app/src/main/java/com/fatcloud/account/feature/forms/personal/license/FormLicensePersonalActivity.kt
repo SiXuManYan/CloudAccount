@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.view.View
 import butterknife.OnClick
 import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.VibrateUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
 import com.fatcloud.account.app.Glide
@@ -20,8 +21,14 @@ import com.fatcloud.account.entity.order.persional.PersonalInfo
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
-import com.fatcloud.account.feature.sheet.form.FormSheetFragment
 import com.fatcloud.account.feature.matisse.Matisse
+import com.fatcloud.account.feature.sheet.form.FormSheetFragment
+import com.lljjcoder.Interface.OnCityItemClickListener
+import com.lljjcoder.bean.CityBean
+import com.lljjcoder.bean.DistrictBean
+import com.lljjcoder.bean.ProvinceBean
+import com.lljjcoder.style.cityjd.JDCityConfig
+import com.lljjcoder.style.cityjd.JDCityPicker
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_license_personal.*
 import kotlinx.android.synthetic.main.layout_bottom_action.*
@@ -29,6 +36,7 @@ import kotlinx.android.synthetic.main.layout_image_upload.*
 import java.math.BigDecimal
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 /**
  * Created by Wangsw on 2020/6/12 0012 13:33.
@@ -70,6 +78,11 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
      * 产品id
      */
     private var mProductId: String = "0"
+
+    /**
+     * 用户选中的城市信息id
+     */
+    private var areaId: String = ""
 
 
     var mediaType = 0
@@ -161,7 +174,9 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         R.id.bottom_right_tv,
         R.id.id_card_front_iv,
         R.id.id_card_back_iv,
-        R.id.formation_rl
+        R.id.formation_rl,
+        R.id.city_rl
+
     )
     fun onClick(view: View) {
         if (CommonUtils.isDoubleClick(view)) {
@@ -201,7 +216,23 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
 
                 }
             }
+            R.id.city_rl -> {
+                val cityPicker = JDCityPicker()
+                val jdCityConfig = JDCityConfig.Builder().build()
 
+                jdCityConfig.showType = JDCityConfig.ShowType.PRO_CITY_DIS
+                cityPicker.init(this)
+                cityPicker.setConfig(jdCityConfig)
+                cityPicker.setOnCityItemClickListener(object : OnCityItemClickListener() {
+                    override fun onSelected(province: ProvinceBean, city: CityBean, district: DistrictBean) {
+                        addr_value.text = "${province.name}${city.name}${district.name}"
+                        areaId = district.id
+                    }
+
+                    override fun onCancel() {}
+                })
+                cityPicker.showCityPicker()
+            }
             else -> {
             }
         }
@@ -210,12 +241,40 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
 
     private fun handlePost() {
 
+        if (!ProductUtils.checkEditEmptyWithVibrate(
+                nation_ev,
+                detail_addr,
+                phone,
+                id_number,
+                real_name,
+                zero_choice_name,
+                first_choice_name,
+                second_choice_name,
+                employees_number_tv,
+                amount_of_funds
+            )
+        ) {
+            return
+        }
+
+
+        if (!ProductUtils.checkViewValueEmpty(addr_value.text.toString(), addr_value)
+            || !ProductUtils.checkViewValueEmpty(business_scope_value.text.toString(), business_scope_value)
+            || !ProductUtils.checkViewValueEmpty(formation_value.text.toString(), formation_value)
+        ) {
+            return
+        }
+
         if (TextUtils.isEmpty(faceUpUrl)) {
             ToastUtils.showShort("请上传正面证件图片")
+            VibrateUtils.vibrate(10)
+            id_card_front_cv.startAnimation(CommonUtils.getShakeAnimation(2))
             return
         }
         if (TextUtils.isEmpty(faceDownUrl)) {
             ToastUtils.showShort("请上传反面证件图片")
+            VibrateUtils.vibrate(10)
+            id_card_back_cv.startAnimation(CommonUtils.getShakeAnimation(2))
             return
         }
 
@@ -226,10 +285,10 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         }
         val enterpriseInfo = PersonalInfo().apply {
             addr = detail_addr.value()
-            area = "2102"
+            area = areaId
             businessScope = ProductUtils.stringList2IntList(selectPid)
-            capital = BigDecimal(amount_of_funds.value())
-            income = BigDecimal(amount_of_funds.value())
+            capital = ProductUtils.getEditValueToBigDecimal(amount_of_funds.value())
+            income = capital
             employedNum = employees_number_tv.value()
             form = selectFormId.toInt()
             gender = if (man_sex_rb.isChecked) {
@@ -239,7 +298,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             }
             idno = id_number.value()
             imgs = identityImg
-            money = BigDecimal(finalMoney)
+            money = ProductUtils.getEditValueToBigDecimal(finalMoney)
             name0 = zero_choice_name.value()
             name1 = first_choice_name.value()
             name2 = second_choice_name.value()

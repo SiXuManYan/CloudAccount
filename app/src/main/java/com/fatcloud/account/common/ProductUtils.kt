@@ -19,6 +19,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions
 import com.zhihu.matisse.MimeType
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import java.math.BigDecimal
 
 /**
  * Created by Wangsw on 2020/6/12 0012 17:29.
@@ -88,7 +89,7 @@ object ProductUtils {
     /**
      * 相册权限申请
      */
-     fun requestAlbumPermissions(activity: Activity?): Boolean {
+    fun requestAlbumPermissions(activity: Activity?): Boolean {
         var isGranted = false
 
         activity?.let {
@@ -171,6 +172,20 @@ object ProductUtils {
             .setNegativeButton(R.string.no, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
             .create()
             .show()
+    }
+
+    fun getEditValueToBigDecimal(editValue: String): BigDecimal {
+        return if (editValue.isNullOrBlank()) {
+            BigDecimal.ZERO
+        } else {
+            try {
+                BigDecimal(editValue)
+            } catch (e: Exception) {
+                BigDecimal.ZERO
+            }
+        }
+
+
     }
 
 

@@ -64,7 +64,7 @@ class PasswordLoginActivity : BaseMVPActivity<PasswordLoginPresenter>(), Passwor
 
 
                 val passwordFirst = s.toString().trim()
-                if (passwordFirst.isNullOrBlank()) {
+                if (passwordFirst.isNullOrBlank()|| passwordFirst.length !in 6..18) {
                     next_tv.setBackgroundResource(R.drawable.shape_bg_4_gray)
                 } else {
                     next_tv.setBackgroundResource(R.drawable.shape_bg_4_red)

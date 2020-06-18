@@ -20,7 +20,7 @@ class ProductSheetHolder(parent: ViewGroup?) : BaseItemViewHolder<Price>(parent,
             return
         }
 
-        title_tv.text = data.name
+        title_tv.text = data.name.replace("\\n", "\n")
         if (data.nativeIsSelect) {
             title_tv.setTextColor(ColorUtils.getColor(R.color.color_app_red))
             title_tv.setBackgroundResource(R.drawable.shape_stock_red_match_18)

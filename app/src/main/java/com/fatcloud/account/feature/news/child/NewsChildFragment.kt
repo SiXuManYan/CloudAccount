@@ -47,6 +47,7 @@ class NewsChildFragment : BaseRefreshListFragment<News, NewsChildPresenter>(), N
     private var categoryValue: String? = null
 
     override fun initViews(parent: View) {
+        pageSize = 20
         super.initViews(parent)
         categoryValue = arguments?.getString(Constants.PARAM_TYPE)
         initEvent()

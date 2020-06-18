@@ -10,7 +10,7 @@ data class Commons(
     /**
      * 经营范围
      */
-    val businessScope: List<BusinessScope> = ArrayList(),
+    val businessScope: ArrayList<BusinessScope> = ArrayList(),
 
 
     val businessScopeInds: List<BusinessScopeInd> = ArrayList(),

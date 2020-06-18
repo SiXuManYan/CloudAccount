@@ -76,11 +76,8 @@ class CloudAccountPresenter(val view: CloudAccountView) {
 
 
                                 forEachIndexed { index, first ->
-                                    if (index == 0) {
-                                        first.nativeIsSelect = true
-                                    }
 
-
+                                    // 耳机列表默认全选
                                     first.childs.forEach { second ->
                                         second.nativeIsSelect = true
                                     }
