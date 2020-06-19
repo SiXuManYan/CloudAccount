@@ -2,7 +2,9 @@ package com.fatcloud.account.feature.account.captcha;
 
 import android.util.Log;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -15,6 +17,7 @@ public class HttpRequest {
 
     private static String cookie = null;
 
+    private static BufferedReader reader = null;
 
     /**
      * GET请求
@@ -55,6 +58,7 @@ public class HttpRequest {
                 cookie = conn.getHeaderField("Set-Cookie");
             }
             Log.i("", "------------------cookie:" + cookie);
+
             Map<String, List<String>> keys = conn.getHeaderFields();
             for (String key : keys.keySet()) {
                 List<String> list = keys.get(key);
@@ -63,15 +67,18 @@ public class HttpRequest {
                 }
             }
 
-            InputStream is = conn.getInputStream();
-            int ch;
-            StringBuilder b = new StringBuilder();
-            while ((ch = is.read()) != -1) {
-                b.append((char) ch);
+            InputStream inputStream = conn.getInputStream();
+            StringBuilder builder = new StringBuilder();
+
+
+            reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+            String strRead = null;
+            while ((strRead = reader.readLine()) != null) {
+                builder.append(strRead);
             }
-            is.close();
+            reader.close();
             conn.disconnect();
-            return b.toString();
+            return builder.toString();
         } catch (Exception e) {
             e.printStackTrace();
         }
