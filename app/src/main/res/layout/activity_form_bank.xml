@@ -181,7 +181,7 @@
                 android:layout_height="45dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:paddingLeft="15dp"
-                android:paddingRight="0dp">
+                android:paddingRight="15dp">
 
                 <TextView
                     android:id="@+id/account_nature_title"
@@ -205,16 +205,19 @@
                     android:hint="请选择账户性质"
                     android:maxLines="1"
                     android:textColor="@color/color_third_level"
-                    android:textColorHint="@color/color_third_level"
+                    android:textColorHint="@color/color_cccccc"
                     android:textSize="@dimen/font_size_14" />
 
 
-                <androidx.appcompat.widget.AppCompatSpinner
+                <TextView
                     android:id="@+id/scope_sp"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:minWidth="150dp" />
+                    android:layout_centerVertical="true"
+                    android:text=">"
+                    android:textColor="@color/color_cccccc"
+                    android:textSize="@dimen/font_size_12" />
 
 
                 <View
@@ -340,7 +343,7 @@
                 android:layout_height="45dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:paddingLeft="15dp"
-                android:paddingRight="0dp">
+                android:paddingRight="15dp">
 
                 <TextView
                     android:id="@+id/province_title"
@@ -367,12 +370,15 @@
                     android:textSize="@dimen/font_size_14" />
 
 
-                <androidx.appcompat.widget.AppCompatSpinner
+                <TextView
                     android:id="@+id/scope_sp2"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:minWidth="150dp" />
+                    android:layout_centerVertical="true"
+                    android:text=">"
+                    android:textColor="@color/color_cccccc"
+                    android:textSize="@dimen/font_size_12" />
 
 
                 <View

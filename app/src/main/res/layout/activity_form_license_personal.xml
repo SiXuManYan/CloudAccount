@@ -70,6 +70,7 @@
                 android:id="@+id/city_rl"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:paddingRight="15dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:paddingLeft="15dp">
 
@@ -94,14 +95,21 @@
                     android:hint="省"
                     android:maxLines="1"
                     android:textColor="@color/color_second_level"
-                    android:textColorHint="@color/color_third_level"
+                    android:textColorHint="@color/color_cccccc"
                     android:textSize="@dimen/font_size_14" />
 
-                <androidx.appcompat.widget.AppCompatSpinner
+
+
+                <TextView
                     android:id="@+id/addr_spinner"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true" />
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text=">"
+                    android:textColor="@color/color_cccccc"
+                    android:textSize="@dimen/font_size_12" />
+
 
 
                 <View
@@ -179,7 +187,7 @@
                 android:layout_height="45dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:paddingLeft="15dp"
-                android:paddingRight="0dp">
+                android:paddingRight="15dp">
 
                 <TextView
                     android:id="@+id/business_scope"
@@ -203,18 +211,20 @@
                     android:hint="请选择经营范围"
                     android:maxLines="1"
                     android:textColor="@color/color_third_level"
-                    android:textColorHint="@color/color_third_level"
+                    android:textColorHint="@color/color_cccccc"
                     android:textSize="@dimen/font_size_14" />
 
 
-                <androidx.appcompat.widget.AppCompatSpinner
+
+                <TextView
                     android:id="@+id/scope_sp"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-
-                    android:minWidth="150dp" />
-
+                    android:layout_centerVertical="true"
+                    android:text=">"
+                    android:textColor="@color/color_cccccc"
+                    android:textSize="@dimen/font_size_12" />
 
                 <View
                     android:layout_width="match_parent"
@@ -251,7 +261,7 @@
                 android:layout_height="45dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:paddingLeft="15dp"
-                android:paddingRight="0dp">
+                android:paddingRight="15dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -272,16 +282,22 @@
                     android:hint="请选择组成形式"
                     android:maxLines="1"
                     android:textColor="@color/color_second_level"
-                    android:textColorHint="@color/color_third_level"
+                    android:textColorHint="@color/color_cccccc"
                     android:textSize="@dimen/font_size_14" />
 
 
-                <androidx.appcompat.widget.AppCompatSpinner
+
+
+
+                <TextView
                     android:id="@+id/formation_sp"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:minWidth="150dp" />
+                    android:layout_centerVertical="true"
+                    android:text=">"
+                    android:textColor="@color/color_cccccc"
+                    android:textSize="@dimen/font_size_12" />
 
 
                 <View
