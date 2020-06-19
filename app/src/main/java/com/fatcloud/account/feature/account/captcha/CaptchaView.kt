@@ -17,5 +17,10 @@ interface CaptchaView : BaseTaskView {
     /**
      * 验证码校验通过
      */
-    fun captchaVerified(captcha:String)
+    fun captchaVerified(captcha: String, account: String)
+
+    /**
+     * 微信注册成功
+     */
+    fun wechatRegisterSuccess()
 }

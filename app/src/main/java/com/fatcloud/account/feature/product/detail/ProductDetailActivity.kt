@@ -9,19 +9,21 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.ImageView
 import android.widget.LinearLayout
 import butterknife.OnClick
-import com.fatcloud.account.R
-import com.fatcloud.account.base.ui.BaseMVPActivity
-import com.fatcloud.account.common.AndroidUtil
-import com.fatcloud.account.common.CommonUtils
-import com.fatcloud.account.common.Constants
-import com.fatcloud.account.entity.product.ProductDetail
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.fatcloud.account.R
+import com.fatcloud.account.base.ui.BaseMVPActivity
+import com.fatcloud.account.common.AndroidUtil
+import com.fatcloud.account.common.CommonUtils
+import com.fatcloud.account.common.Constants
+import com.fatcloud.account.entity.product.ProductDetail
+import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
+import com.fatcloud.account.feature.account.login.LoginActivity
 import com.fatcloud.account.feature.product.detail.sheet.ProductSheetFragment
 import com.fatcloud.account.feature.product.detail.spinners.ProductSpinnerFragment
 import com.youth.banner.BannerConfig
@@ -85,15 +87,30 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
     private fun initExtra() {
         intent.getStringExtra(Constants.PARAM_PRODUCT_ID)?.let {
             productId = it
-            presenter.getDetail(this, productId)
+            getData()
         }
     }
+
 
     private fun initEvent() {
         presenter.subsribeEventEntity<OrderPaySuccessEvent>(Consumer {
             finish()
         })
+
+//        presenter.subsribeEvent(Consumer {
+//            when (it.code) {
+//                Constants.EVENT_NEED_REFRESH -> getData()
+//                else -> {
+//                }
+//            }
+//        })
+
     }
+
+    private fun getData() {
+        presenter.getDetail(this, productId)
+    }
+
 
 
     override fun bindDetailData(data: ProductDetail) {
@@ -167,7 +184,6 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
     @OnClick(
         R.id.back_iv,
         R.id.title_rl,
-        R.id.share_iv,
         R.id.bottom_left_tv,
         R.id.bottom_right_tv
 
@@ -180,13 +196,15 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
                     scroll_nsv.smoothScrollTo(0, 0)
                 }
             }
-            R.id.share_iv -> {
-                ToastUtils.showShort("分享功能开发中")
-            }
+
             R.id.bottom_left_tv -> {
                 startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Constants.CONSUMER_HOT_LINE)))
             }
             R.id.bottom_right_tv -> {
+                if (!User.isLogon()) {
+                    startActivity(LoginActivity::class.java)
+                    return
+                }
                 if (!protocol.isChecked) {
                     ToastUtils.showShort("请同意用户服务协议")
                 }

@@ -2,6 +2,7 @@ package com.fatcloud.account.base.ui
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.text.TextUtils
 import android.view.View
 import android.webkit.JavascriptInterface
@@ -21,8 +22,8 @@ import com.fatcloud.account.R
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.common.*
 import com.fatcloud.account.view.error.AccidentView
-import com.google.gson.JsonParser
 import com.fatcloud.account.view.web.JsWebViewX5
+import com.google.gson.JsonParser
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
@@ -35,6 +36,8 @@ import com.tencent.smtt.sdk.WebChromeClient
 import com.tencent.smtt.sdk.WebView
 import com.tencent.smtt.sdk.WebViewClient
 import kotlinx.android.synthetic.main.activity_web_common.*
+import java.lang.reflect.InvocationTargetException
+import java.lang.reflect.Method
 
 /**
  * Created by Wangsw on 2019/9/3 16:55.
@@ -63,6 +66,8 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
 
 
     var contentUrl = ""
+
+    var loadLocalHtml: Boolean = false
 
     /** 标题 */
     var webTitle = ""
@@ -116,6 +121,9 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
 
         intent.getBooleanExtra(Constants.PARAM_WEB_REFRESH, true).let {
             refresh = it
+        }
+        intent.getBooleanExtra(Constants.PARAM_WEB_LOAD_LOCAL_HTML, true).let {
+            loadLocalHtml = it
         }
 
     }
@@ -198,6 +206,29 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
                 }
             }
         }
+
+        // 加载Html
+        x5_web.settings.defaultTextEncodingName = "utf-8";//文本编码
+//        x5_web.setDomStorageEnabled(true);//设置DOM存储已启用（注释后文本显示变成js代码）
+
+        //本地HTML里面有跨域的请求 原生webview需要设置之后才能实现跨域请求
+        try {
+            val clazz: Class<*> = x5_web.getSettings().javaClass
+            val method: Method? = clazz.getMethod(
+                "setAllowUniversalAccessFromFileURLs", Boolean::class.javaPrimitiveType
+            )
+            method?.invoke(x5_web.getSettings(), true)
+        } catch (e: IllegalArgumentException) {
+
+        } catch (e: NoSuchMethodException) {
+
+        } catch (e: IllegalAccessException) {
+
+        } catch (e: InvocationTargetException) {
+
+        }
+
+
         x5_web.clearCache(true)
         showLoadingDialog()
 
@@ -206,13 +237,18 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
 
     fun initLoadUrl() {
         if (!TextUtils.isEmpty(contentUrl)) {
-            if (RegexUtils.isURL(contentUrl)) {
-                x5_web.loadUrl(contentUrl)
+            if (loadLocalHtml) {
+                x5_web.loadUrl("file:///android_asset/$contentUrl");
             } else {
-                var body = Common.WEB_STYLE + contentUrl
-                body += "<div style='margin-bottom: 80px;'/>"
-                x5_web.loadDataWithBaseURL(null, body, "text/html", "utf-8", null)
+                if (RegexUtils.isURL(contentUrl)) {
+                    x5_web.loadUrl(contentUrl)
+                } else {
+                    var body = Common.WEB_STYLE + contentUrl
+                    body += "<div style='margin-bottom: 80px;'/>"
+                    x5_web.loadDataWithBaseURL(null, body, "text/html", "utf-8", null)
+                }
             }
+
         }
     }
 

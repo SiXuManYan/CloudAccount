@@ -116,7 +116,10 @@ class CloudAccountPresenter(val view: CloudAccountView) {
                 .subscribeWith(object : BaseHttpSubscriber<SecurityTokenModel>(view) {
                     override fun onSuccess(data: SecurityTokenModel?) {
                         data?.let {
-                            uploadResources(context, it, isEncryptFile, localFilePatch, isFaceUp, fromViewId, clx)
+                            val runnable = Runnable {
+                                uploadResources(context, it, isEncryptFile, localFilePatch, isFaceUp, fromViewId, clx)
+                            }
+                            Thread(runnable).start()
                         }
                     }
                 })

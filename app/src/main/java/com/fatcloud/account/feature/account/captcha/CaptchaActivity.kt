@@ -5,6 +5,7 @@ import android.view.View
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.entity.wechat.WechatAuthInfo
 import com.fatcloud.account.feature.account.password.PasswordSetActivity
 import com.fatcloud.account.view.extend.VerificationCodeView
 import io.reactivex.functions.Consumer
@@ -26,10 +27,16 @@ class CaptchaActivity : BaseMVPActivity<CaptchaPresenter>(), CaptchaView {
          */
         var MODE_REGISTER = 0
 
+
         /**
          *  验证码用途 ：忘记密码进行密码重置，验证身份
          */
         var MODE_FORGET_PASSWORD = 1
+
+        /**
+         * 微信注册
+         */
+        var MODE_REGISTER_WECHAT = 3
     }
 
     /**
@@ -41,6 +48,8 @@ class CaptchaActivity : BaseMVPActivity<CaptchaPresenter>(), CaptchaView {
      * 验证码用途
      */
     private var captchaMode = 0
+
+    var wechatAuthInfo: WechatAuthInfo? = null
 
     override fun showLoading() = showLoadingDialog()
 
@@ -79,7 +88,7 @@ class CaptchaActivity : BaseMVPActivity<CaptchaPresenter>(), CaptchaView {
                 Constants.EVENT_LOGIN -> {
                     finish()
                 }
-                Constants.EVENT_PASSWORD_RESET_SUCCESS->{
+                Constants.EVENT_PASSWORD_RESET_SUCCESS -> {
                     finish()
                 }
                 else -> {
@@ -97,13 +106,17 @@ class CaptchaActivity : BaseMVPActivity<CaptchaPresenter>(), CaptchaView {
             captchaMode = this
         }
 
+        intent.getSerializableExtra(Constants.PARAM_DATA)?.let {
+            wechatAuthInfo = it as WechatAuthInfo
+        }
+
     }
 
     override fun captchaSendResult() {
         captcha_target_tv.text = getString(R.string.captcha_target_format, currentAccount)
     }
 
-    override fun captchaVerified(captcha: String) {
+    override fun captchaVerified(captcha: String, account: String) {
         when (captchaMode) {
             MODE_REGISTER -> {
                 // 注册
@@ -125,9 +138,23 @@ class CaptchaActivity : BaseMVPActivity<CaptchaPresenter>(), CaptchaView {
                 )
                 finish()
             }
+
+            MODE_REGISTER_WECHAT -> {
+                // 进行微信注册
+                wechatAuthInfo?.let {
+                    presenter.getWechatUserInfoFromWechatApi(this, it, account)
+
+                }
+
+            }
             else -> {
             }
         }
+    }
+
+
+    override fun wechatRegisterSuccess() {
+        finish()
     }
 
 

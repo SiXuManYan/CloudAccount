@@ -35,9 +35,10 @@ class AboutActivity : BaseMVPActivity<AboutPresenter>(), AboutView {
             R.id.privacy_statement_rl -> {
                 startActivity(
                     Intent(this, WebCommonActivity::class.java)
-                        .putExtra(Constants.PARAM_URL, Html5Url.PRIVACY_STATEMENT_URL)
-                        .putExtra(Constants.PARAM_TITLE, getString(R.string.privacy_statement))
+                        .putExtra(Constants.PARAM_URL, "yinsishengming.html")
+                        .putExtra(Constants.PARAM_TITLE, "隐私声明")
                         .putExtra(Constants.PARAM_WEB_REFRESH, false)
+                        .putExtra(Constants.PARAM_WEB_LOAD_LOCAL_HTML, true)
                 )
 
             }

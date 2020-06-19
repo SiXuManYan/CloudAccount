@@ -12,6 +12,7 @@ import com.fatcloud.account.R
 import com.fatcloud.account.app.Glide
 import com.fatcloud.account.base.ui.list.BaseItemViewHolder
 import com.fatcloud.account.common.CommonUtils
+import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.order.persional.Order
 import com.fatcloud.account.extend.RoundTransFormation
 import kotlinx.android.extensions.LayoutContainer
@@ -30,6 +31,9 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
         if (data == null) {
             return
         }
+
+
+
         order_id_tv.text = StringUtils.getString(R.string.order_id_format, data.no)
         Glide.with(context)
 //            .load(data.imgUrl)
@@ -61,8 +65,15 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
             }
         }
 
+        when (data.state) {
 
-        // todo  订单有效期倒计时 ,
+            Constants.OS1,Constants.OS4 -> {
+                payment_tv.visibility = View.VISIBLE
+            }
+            else -> {
+                payment_tv.visibility = View.GONE
+            }
+        }
 
 
     }

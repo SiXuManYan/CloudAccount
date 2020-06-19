@@ -5,6 +5,7 @@ import android.text.InputType
 import android.view.View
 import android.widget.ImageView
 import butterknife.OnClick
+import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
@@ -15,9 +16,12 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.event.entity.ImageUploadEvent
-import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.matisse.Matisse
+import com.lljjcoder.Interface.OnCityItemClickListener
+import com.lljjcoder.bean.CityBean
+import com.lljjcoder.bean.DistrictBean
+import com.lljjcoder.bean.ProvinceBean
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_tax_registration_personal.*
 
@@ -54,6 +58,11 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
      * 地址
      */
     private var address: String = ""
+
+    /**
+     * 城市编码
+     */
+    private var areaId: String = ""
 
     /**
      * 图片地址
@@ -118,17 +127,13 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
         trn_ev.setTitleAndHint(R.string.taxpayer_registration_number, R.string.taxpayer_registration_number_hint)
             .setInputType(InputType.TYPE_CLASS_NUMBER)
         legal_name.setTitleAndHint(R.string.legal_person_name, R.string.legal_person_name)
-        id_number.setTitleAndHint(R.string.identity_number, R.string.identity_number_hint).setInputType(InputType.TYPE_CLASS_NUMBER)
+        id_number.setTitleAndHint(R.string.identity_number, R.string.identity_number_hint)
         bank_number.setTitleAndHint(R.string.bank_card_number, R.string.bank_card_number_hint).setInputType(InputType.TYPE_CLASS_NUMBER)
         bank_phone.setTitleAndHint(R.string.bank_phone, R.string.bank_phone_hint).setInputType(InputType.TYPE_CLASS_NUMBER)
 
-        if (addSeal) {
-            addr_rl.visibility = View.VISIBLE
-            detail_addr.setTitleAndHint(R.string.detailed_address, R.string.detailed_address).visibility = View.VISIBLE
-        } else {
-            addr_rl.visibility = View.GONE
-            detail_addr.visibility = View.GONE
-        }
+        addr_rl.visibility = View.VISIBLE
+        detail_addr.setTitleAndHint(R.string.detailed_address, R.string.detailed_address).visibility = View.VISIBLE
+
 
     }
 
@@ -168,7 +173,8 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
 
     @OnClick(
         R.id.commit_tv,
-        R.id.id_card_front_iv
+        R.id.id_card_front_iv,
+        R.id.addr_rl
     )
     fun onClick(view: View) {
         if (CommonUtils.isDoubleClick(view)) {
@@ -180,6 +186,18 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
             }
             R.id.id_card_front_iv -> {
                 ProductUtils.handleMediaSelect(this, Matisse.IMG, view.id)
+            }
+            R.id.addr_rl -> {
+                ProductUtils.showLocationPicker(this, object : OnCityItemClickListener() {
+                    override fun onSelected(province: ProvinceBean, city: CityBean, district: DistrictBean) {
+                        val result = StringUtils.getString(R.string.location_information_format, province.name, city.name, district.name)
+                        addr_value.text = result
+                        address = result
+                        areaId = district.id
+                    }
+
+                    override fun onCancel() = Unit
+                })
             }
             else -> {
             }
@@ -193,18 +211,18 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
         }
 
         presenter.addLicensePersonal(
-            this,
-            finalMoney,
-            mProductId,
-            mProductPriceId,
-            trn_ev.value(),
-            legal_name.value(),
-            id_number.value(),
-            bank_number.value(),
-            bank_phone.value(),
-            businessLicenseImgUrl,
-            address,
-            detail_addr.value()
+            lifecycle = this,
+            money = finalMoney,
+            productId = mProductId,
+            productPriceId = mProductPriceId,
+            taxpayerNo = trn_ev.value(),
+            legalPersonName = legal_name.value(),
+            idno = id_number.value(),
+            bankNo = bank_number.value(),
+            phoneOfBank = bank_phone.value(),
+            businessLicenseImgUrl = businessLicenseImgUrl,
+            addr = detail_addr.value(),
+            area = areaId
         )
     }
 

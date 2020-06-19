@@ -157,7 +157,6 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         detail_addr.setTitleAndHint(getString(R.string.detailed_address), getString(R.string.detailed_address_hint))
         phone.setTitleAndHint("联系方式", "请输入联系方式").setInputType(InputType.TYPE_CLASS_NUMBER)
         id_number.setTitleAndHint(getString(R.string.identity_number), getString(R.string.identity_number_hint))
-            .setInputType(InputType.TYPE_CLASS_NUMBER)
         real_name.setTitleAndHint("真实姓名", "请输入真实姓名")
         zero_choice_name.setTitleAndHint("首选名称", getString(R.string.no_less_than_3_word))
         first_choice_name.setTitleAndHint("备选名称1", getString(R.string.no_less_than_3_word))

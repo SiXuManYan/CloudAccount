@@ -3,16 +3,16 @@ package com.fatcloud.account.feature.home.holder
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import com.fatcloud.account.R
-import com.fatcloud.account.app.Glide
-import com.fatcloud.account.base.ui.list.BaseItemViewHolder
-import com.fatcloud.account.common.CommonUtils
-import com.fatcloud.account.common.TimeUtil
-import com.fatcloud.account.entity.news.News
-import com.fatcloud.account.extend.RoundTransFormation
+import com.alibaba.sdk.android.oss.common.utils.DateUtil
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
+import com.fatcloud.account.R
+import com.fatcloud.account.app.Glide
+import com.fatcloud.account.base.ui.list.BaseItemViewHolder
+import com.fatcloud.account.common.TimeUtil
+import com.fatcloud.account.entity.news.News
+import com.fatcloud.account.extend.RoundTransFormation
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_news_pural.*
 import java.util.*
@@ -31,8 +31,10 @@ class NewsHolderPlural(parent: ViewGroup?) : BaseItemViewHolder<News>(parent, R.
         }
 
         title_tv.text = data.title
-        date_tv.text = data.createDt
+        date_tv.text = TimeUtil.getFormatTimeYMD(data.createDt)
         page_views_tv.text = data.readCount.toString()
+
+
 
         val imgUrls = data.imgUrls
         if (!imgUrls.isNullOrEmpty()) {

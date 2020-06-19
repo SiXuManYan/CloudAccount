@@ -1,7 +1,6 @@
 package com.fatcloud.account.feature.order.progress
 
 import android.content.Intent
-import android.icu.lang.UScript.HAN
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +10,7 @@ import com.fatcloud.account.base.ui.list.BaseRefreshListActivity
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.order.persional.Order
 import com.fatcloud.account.entity.order.progress.BusinessProgress
-import com.fatcloud.account.event.Event
+import com.fatcloud.account.event.entity.BankFormCommitSuccessEvent
 import com.fatcloud.account.event.entity.RefreshOrderEvent
 import com.fatcloud.account.feature.forms.enterprise.bank.FormBankActivity
 import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterInfoActivity
@@ -52,8 +51,8 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
     private fun initEvent() {
 
         // 更新当前页面
-        presenter.subsribeEventEntity<RefreshOrderEvent>(Consumer {
-            loadDetailData()
+        presenter.subsribeEventEntity<BankFormCommitSuccessEvent>(Consumer {
+            finish()
         })
 
     }

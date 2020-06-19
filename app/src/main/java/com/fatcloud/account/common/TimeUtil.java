@@ -163,6 +163,23 @@ public class TimeUtil {
         return format.format(date);
 
     }
+  /**
+     * yyyy-MM-dd HH:mm:ss  -->  MM-dd HH:mm
+     *
+     * @return
+     */
+    public static String getFormatTimeYMD(String time) {
+
+        if (TextUtils.isEmpty(time)) {
+            return "";
+        }
+
+        Long millisecond = timeStrToSecond(time);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(millisecond);
+        return format.format(date);
+
+    }
 
 
     /**

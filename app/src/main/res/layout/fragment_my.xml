@@ -180,8 +180,7 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
-                android:visibility="gone"
-                tools:visibility="visible">
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/income_tag_iv"
@@ -228,8 +227,7 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
-                android:visibility="gone"
-                tools:visibility="visible">
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/qr_tag_iv"
@@ -276,8 +274,7 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
-                android:visibility="gone"
-                tools:visibility="visible">
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/money_tag_iv"

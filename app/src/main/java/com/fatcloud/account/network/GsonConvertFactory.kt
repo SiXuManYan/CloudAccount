@@ -15,27 +15,31 @@ import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.lang.reflect.Type
 
-class GsonConvertFactory private constructor(private var gson: Gson): Converter.Factory() {
+class GsonConvertFactory private constructor(private var gson: Gson) : Converter.Factory() {
 
     companion object {
         fun create() = GsonConvertFactory(Gson())
     }
 
-    override fun responseBodyConverter(type: Type?,
-                                       annotations: Array<out Annotation>?,
-                                       retrofit: Retrofit?): Converter<ResponseBody, *> {
+    override fun responseBodyConverter(
+        type: Type?,
+        annotations: Array<out Annotation>?,
+        retrofit: Retrofit?
+    ): Converter<ResponseBody, *> {
         val adapter = gson.getAdapter(TypeToken.get(type))
         return GsonResponseBodyConverter(gson, adapter)
     }
 
-    override fun requestBodyConverter(type: Type?,
-                                      parameterAnnotations: Array<out Annotation>?,
-                                      methodAnnotations: Array<out Annotation>?,
-                                      retrofit: Retrofit?): Converter<*, RequestBody> {
+    override fun requestBodyConverter(
+        type: Type?,
+        parameterAnnotations: Array<out Annotation>?,
+        methodAnnotations: Array<out Annotation>?,
+        retrofit: Retrofit?
+    ): Converter<*, RequestBody> {
         return GsonRequestBodyConverter(gson, gson.getAdapter(TypeToken.get(type)))
     }
 
-    private class GsonRequestBodyConverter<T>(private var gson: Gson, private var adapter: TypeAdapter<T>): Converter<T, RequestBody> {
+    private class GsonRequestBodyConverter<T>(private var gson: Gson, private var adapter: TypeAdapter<T>) : Converter<T, RequestBody> {
 
         companion object {
             @JvmField
@@ -52,20 +56,27 @@ class GsonConvertFactory private constructor(private var gson: Gson): Converter.
         }
     }
 
-    private class GsonResponseBodyConverter<T>(private var gson: Gson, private var adapter: TypeAdapter<T>): Converter<ResponseBody, T> {
+    private class GsonResponseBodyConverter<T>(private var gson: Gson, private var adapter: TypeAdapter<T>) : Converter<ResponseBody, T> {
 
-        override fun convert(value: ResponseBody) : T {
+        override fun convert(value: ResponseBody): T {
             val source = value.source()
             source.request(Long.MAX_VALUE)
             val buffer = source.buffer().clone()
 
+
             val response = gson.fromJson(buffer.readUtf8(), Response::class.java)
+
+
             if (response.isApiError()) {
                 value.close()
+                var code = 0
+                response.code?.let {
+                    code = it
+                }
                 throw ApiException(
-                        response.code !!.toInt(),
-                        response.msg,
-                        response.data as LinkedTreeMap<String, String>?
+                    code,
+                    response.msg,
+                    response.data as LinkedTreeMap<String, String>?
                 )
             }
             val inputStream = ByteArrayInputStream(source.readByteArray())

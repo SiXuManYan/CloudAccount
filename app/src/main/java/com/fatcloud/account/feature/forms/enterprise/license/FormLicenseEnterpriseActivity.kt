@@ -21,6 +21,7 @@ import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
 import com.fatcloud.account.feature.matisse.Matisse
 import com.fatcloud.account.view.CompanyMemberEditView
+import com.fatcloud.account.view.EditView
 import com.lljjcoder.Interface.OnCityItemClickListener
 import com.lljjcoder.bean.CityBean
 import com.lljjcoder.bean.DistrictBean
@@ -35,7 +36,7 @@ import kotlin.collections.ArrayList
 /**
  * Created by Wangsw on 2020/6/10 0010 18:30.
  * </br>
- *  企业营业执照表单
+ *  企业套餐表单
  */
 class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePresenter>(), FormLicenseEnterpriseView {
 
@@ -79,7 +80,6 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
     private var areaId: String = ""
 
     var isFaceUp = false
-
 
 
 //    var faceUpUrl = ""
@@ -174,7 +174,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             initIdNumberTitleHint(
                 getString(R.string.identity_number),
                 getString(R.string.identity_number_hint)
-            ).setInputType(InputType.TYPE_CLASS_NUMBER)
+            )
             initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
             initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
             initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
@@ -189,7 +189,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             initIdNumberTitleHint(
                 getString(R.string.identity_number),
                 getString(R.string.identity_number_hint)
-            ).setInputType(InputType.TYPE_CLASS_NUMBER)
+            )
             initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
             initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
             initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint_2)).setInputType(InputType.TYPE_CLASS_NUMBER)
@@ -203,7 +203,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             initIdNumberTitleHint(
                 getString(R.string.identity_number),
                 getString(R.string.identity_number_hint)
-            ).setInputType(InputType.TYPE_CLASS_NUMBER)
+            )
             initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
             initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
             initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint_2)).setInputType(InputType.TYPE_CLASS_NUMBER)
@@ -230,7 +230,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             initIdNumberTitleHint(
                 getString(R.string.identity_number),
                 getString(R.string.identity_number_hint)
-            ).setInputType(InputType.TYPE_CLASS_NUMBER)
+            )
             initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
             initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
             initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint_2)).setInputType(InputType.TYPE_CLASS_NUMBER)
@@ -308,7 +308,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             R.id.bottom_right_tv -> {
                 handlePost()
             }
-            R.id.addr_rl->{
+            R.id.addr_rl -> {
                 ProductUtils.showLocationPicker(this, object : OnCityItemClickListener() {
                     override fun onSelected(province: ProvinceBean, city: CityBean, district: DistrictBean) {
                         addr_value_iv.text = StringUtils.getString(R.string.location_information_format, province.name, city.name, district.name)

@@ -3,6 +3,7 @@ package com.fatcloud.account.feature.order.lists
 import android.content.Intent
 import android.os.Handler
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ColorUtils
@@ -11,6 +12,7 @@ import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.list.BaseRefreshListActivity
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.order.persional.Order
+import com.fatcloud.account.event.entity.BankFormCommitSuccessEvent
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.event.entity.RefreshOrderEvent
 import com.fatcloud.account.feature.defray.PayActivity
@@ -20,6 +22,7 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import com.jude.easyrecyclerview.decoration.DividerDecoration
 import io.reactivex.functions.Consumer
+import kotlinx.android.synthetic.main.item_order.*
 
 /**
  * Created by Wangsw on 2020/6/3 0003 17:42.
@@ -42,7 +45,7 @@ class OrderListActivity : BaseRefreshListActivity<Order, OrderListPresenter>(), 
     }
 
     private fun initEvent() {
-        presenter.subsribeEventEntity<RefreshOrderEvent>(Consumer {
+        presenter.subsribeEventEntity<BankFormCommitSuccessEvent>(Consumer {
             loadOnVisible()
         })
         presenter.subsribeEventEntity<OrderPaySuccessEvent>(Consumer {
@@ -58,42 +61,57 @@ class OrderListActivity : BaseRefreshListActivity<Order, OrderListPresenter>(), 
 
             override fun OnCreateViewHolder(parent: ViewGroup?, viewType: Int): BaseViewHolder<Order> {
 
-                return OrderListHolder(parent)
+                val orderListHolder = OrderListHolder(parent)
+
+
+                getAdapter()?.let {
+                    val adapterPosition = orderListHolder.adapterPosition - it.headerCount
+                    if (adapterPosition < 0 || adapterPosition >= it.allData.size) return@let
+
+                    val order = it.allData[adapterPosition]
+                }
+
+                orderListHolder.itemView.findViewById<TextView>(R.id.payment_tv).setOnClickListener {
+                    getAdapter()?.let {
+                        val adapterPosition = orderListHolder.adapterPosition - it.headerCount
+                        if (adapterPosition < 0 || adapterPosition >= it.allData.size) return@let
+
+                        val order = it.allData[adapterPosition]
+
+                        startActivity(
+                            Intent(this@OrderListActivity, PayActivity::class.java)
+                                .putExtra(Constants.PARAM_ORDER_ID, order.id)
+                                .putExtra(Constants.PARAM_ORDER_NUMBER, order.no)
+                                .putExtra(Constants.PARAM_MONEY, order.money.toPlainString())
+                        )
+
+                    }
+
+
+                }
+
+
+                orderListHolder.itemView.findViewById<TextView>(R.id.look_detail_tv).setOnClickListener {
+                    getAdapter()?.let {
+                        val adapterPosition = orderListHolder.adapterPosition - it.headerCount
+                        if (adapterPosition < 0 || adapterPosition >= it.allData.size) return@let
+                        val model = it.allData[adapterPosition]
+
+                        startActivity(
+                            Intent(this@OrderListActivity, ScheduleActivity::class.java)
+                                .putExtra(Constants.PARAM_ORDER_ID, model.id)
+                                .putExtra(Constants.PARAM_MOLD, model.mold)
+                        )
+                    }
+
+                }
+
+
+                return orderListHolder
             }
 
         }
 
-        adapter.setOnItemClickListener {
-            if (!clickAble) {
-                return@setOnItemClickListener
-            }
-            clickAble = false
-            handler.postDelayed({
-                clickAble = true
-            }, 1000)
-
-            val data = adapter.allData[it]
-            when (data.state) {
-                "OS1" -> {
-                    startActivity(
-                        Intent(this, PayActivity::class.java)
-                            .putExtra(Constants.PARAM_ORDER_ID, data.id)
-                            .putExtra(Constants.PARAM_ORDER_NUMBER, data.no)
-                            .putExtra(Constants.PARAM_MONEY, data.money.toPlainString())
-                    )
-                }
-                else -> {
-                    startActivity(
-                        Intent(this, ScheduleActivity::class.java)
-                            .putExtra(Constants.PARAM_ORDER_ID, data.id)
-                            .putExtra(Constants.PARAM_MOLD, data.mold)
-                    )
-
-                }
-            }
-
-
-        }
         return adapter
     }
 

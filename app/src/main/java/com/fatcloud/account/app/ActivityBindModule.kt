@@ -10,6 +10,8 @@ import com.fatcloud.account.feature.account.captcha.CaptchaActivity
 import com.fatcloud.account.feature.account.captcha.CaptchaModule
 import com.fatcloud.account.feature.account.login.LoginActivity
 import com.fatcloud.account.feature.account.login.LoginModule
+import com.fatcloud.account.feature.account.login.wechat.WechatLoginRegisterActivity
+import com.fatcloud.account.feature.account.login.wechat.WechatLoginRegisterModule
 import com.fatcloud.account.feature.account.password.PasswordSetActivity
 import com.fatcloud.account.feature.account.password.PasswordSetModule
 import com.fatcloud.account.feature.account.password.login.PasswordLoginActivity
@@ -179,6 +181,10 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [PayPrepareModule::class])
     abstract fun payPrepareActivityInjector(): PayPrepareActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [WechatLoginRegisterModule::class])
+    abstract fun wechatLoginRegisterActivityInjector(): WechatLoginRegisterActivity
 
 
 }

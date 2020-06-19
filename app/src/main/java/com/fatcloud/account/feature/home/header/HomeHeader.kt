@@ -29,6 +29,7 @@ import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
+import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.feature.news.detail.NewsDetailActivity
 import com.google.android.flexbox.FlexboxLayout
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
@@ -184,12 +185,10 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
                         )
                     }
                     Constants.B2, Constants.B4 -> {
-                        context.startActivity(
-                            Intent(context, ProductDetailActivity::class.java).putExtra(Constants.PARAM_PRODUCT_ID, banners.id)
-                        )
+                        context.startActivity(Intent(context, ProductDetailActivity::class.java).putExtra(Constants.PARAM_PRODUCT_ID, banners.link))
                     }
                     Constants.B3 -> {
-                        context.startActivity(Intent(context, NewsDetailActivity::class.java).putExtra(Constants.PARAM_ID, banners.id))
+                        context.startActivity(Intent(context, NewsDetailActivity::class.java).putExtra(Constants.PARAM_ID, banners.link))
                     }
 
 

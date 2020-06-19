@@ -14,10 +14,10 @@ class Response<T> constructor() {
     /**
      * result code
      */
-    var code: Int? = null
+    var code: Int? = 0
 
     /** 错误信息 */
-    var msg: String? = null
+    var msg: String? = ""
 
 
     /** 接口数据 */

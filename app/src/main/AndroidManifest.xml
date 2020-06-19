@@ -242,7 +242,16 @@
             android:name=".feature.upgrade.UpgradeActivity"
             android:theme="@style/upgrade"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name=".feature.defray.prepare.PayPrepareActivity" />
+
+        <activity
+            android:name=".feature.defray.prepare.PayPrepareActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".feature.account.login.wechat.WechatLoginRegisterActivity"
+            android:configChanges="keyboard"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
 
 
     </application>

@@ -15,10 +15,14 @@ import com.fatcloud.account.entity.oss.SecurityTokenModel
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.entity.upgrade.Upgrade
 import com.fatcloud.account.entity.users.User
+import com.fatcloud.account.entity.wechat.WechatLogin
+import com.fatcloud.account.entity.wechat.WechatUserInfo
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import io.reactivex.Flowable
+import me.jessyan.retrofiturlmanager.RetrofitUrlManager
+import me.jessyan.retrofiturlmanager.RetrofitUrlManager.DOMAIN_NAME_HEADER
 import retrofit2.http.*
 
 /**
@@ -28,6 +32,11 @@ import retrofit2.http.*
  */
 interface ApiService {
     companion object {
+
+        /**
+         * 微信相关接口
+         */
+        const val API_WECHAT_OFFICIAL = "wechat"
 
         private const val USE_CACHED = "cache:60"
 
@@ -415,6 +424,48 @@ interface ApiService {
      */
     @GET("$API_URI/common/version")
     fun checkAppVersion(@Query("appFlag") appFlag: String? = "android"): Flowable<Response<Upgrade>>
+
+
+    /**
+     * 获取 微信 AccessToken
+     * @param code APP获取到的微信授权的code
+     */
+    @GET("$API_URI/wxpay/getAccessToken")
+    fun getWechatAccessToken(
+        @Query("code") code: String?
+    ): Flowable<Response<JsonObject>>
+
+    /**
+     * 获取微信个人信息
+     * https://developers.weixin.qq.com/doc/oplatform/Mobile_App/WeChat_Login/Authorized_API_call_UnionID.html
+     * https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID
+     * @param access_token
+     * @param openid
+     */
+    @Headers(DOMAIN_NAME_HEADER.plus(API_WECHAT_OFFICIAL))
+    @GET("/sns/userinfo")
+    fun getWechatUserInfo(
+        @Query("access_token") access_token: String?,
+        @Query("openid") openid: String?
+    ): Flowable<Response<WechatUserInfo>>
+
+
+    /**
+     * 微信注册或登录
+     */
+    @POST("$T_ACCOUNT_API/registwx")
+    @FormUrlEncoded
+    fun doWechatLoginOrRegister(
+        @Field("headUrl") headUrl: String?,
+        @Field("nickName") nickName: String?,
+        @Field("openid") openid: String?,
+        @Field("phone") phone: String?,
+        @Field("city") city: String?,
+        @Field("lat") lat: String?,
+        @Field("lng") lng: String?
+
+
+    ): Flowable<Response<User>>
 
 
 }

@@ -116,7 +116,7 @@ class AppModule {
     @Provides
     @Singleton
     internal fun apiServiceProvider(okHttpClient: OkHttpClient): ApiService {
-//        RetrofitUrlManager.getInstance().putDomain(ApiService.NEW_SERVICE, UrlUtil.SERVER_HOST)
+//        RetrofitUrlManager.getInstance().putDomain(ApiService.API_WECHAT_OFFICIAL, BuildConfig.WECHAT_OFFICIAL_API)
         return Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(UrlUtil.SERVER_HOST)

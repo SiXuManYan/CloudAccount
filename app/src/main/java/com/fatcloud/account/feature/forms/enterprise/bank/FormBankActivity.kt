@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import butterknife.OnClick
+import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
@@ -18,11 +19,16 @@ import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.commons.AccountNature
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.event.RxBus
+import com.fatcloud.account.event.entity.BankFormCommitSuccessEvent
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.event.entity.RefreshOrderEvent
 import com.fatcloud.account.feature.matisse.Matisse
 import com.fatcloud.account.feature.sheet.nature.AccountNatureSheetFragment
 import com.fatcloud.account.view.CompanyMemberEditView
+import com.lljjcoder.Interface.OnCityItemClickListener
+import com.lljjcoder.bean.CityBean
+import com.lljjcoder.bean.DistrictBean
+import com.lljjcoder.bean.ProvinceBean
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_bank.*
 
@@ -72,7 +78,7 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
     /**
      * 队长收货单地址区域
      */
-    var reconciliation_area_code = "210202"
+    var reconciliation_area_code = ""
 
     override fun getLayoutId() = R.layout.activity_form_bank
 
@@ -224,7 +230,8 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
         R.id.finance_card_front_iv,
         R.id.finance_card_back_iv,
         R.id.bottom_right_tv,
-        R.id.account_nature_rl
+        R.id.account_nature_rl,
+        R.id.recipient_address_rl
     )
     fun onClick(view: View) {
         if (CommonUtils.isDoubleClick(view)) {
@@ -246,11 +253,20 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
                             this@FormBankActivity.account_nature = currentSelected.value
                             this@FormBankActivity.business_scope_value.text = currentSelected.name
                         }
-
                     })
 
                     show(supportFragmentManager, this.tag)
                 }
+            }
+            R.id.recipient_address_rl -> {
+                ProductUtils.showLocationPicker(this, object : OnCityItemClickListener() {
+                    override fun onSelected(province: ProvinceBean, city: CityBean, district: DistrictBean) {
+                        province_title_tv.text = StringUtils.getString(R.string.location_information_format, province.name, city.name, district.name)
+                        reconciliation_area_code = district.id
+                    }
+
+                    override fun onCancel() = Unit
+                })
             }
             else -> {
             }
@@ -276,8 +292,8 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
         }
 
         if (
-//            !ProductUtils.checkViewValueEmpty(business_scope_value.text.toString(), business_scope_value) ||
-//            !ProductUtils.checkViewValueEmpty(province_title_tv.text.toString(), province_title_tv) ||
+            !ProductUtils.checkViewValueEmpty(business_scope_value.text.toString(), business_scope_value) ||
+            !ProductUtils.checkViewValueEmpty(province_title_tv.text.toString(), province_title_tv) ||
             !ProductUtils.checkViewValueEmpty(business_license_url, business_license_iv) ||
             !ProductUtils.checkViewValueEmpty(electronic_seal_url, electronic_seal_iv) ||
             !ProductUtils.checkViewValueEmpty(signed_authorization_url, signed_authorization_iv)
@@ -309,8 +325,8 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
 
     override fun addSuccess() {
         ToastUtils.showShort("添加成功")
-        RxBus.post(RefreshOrderEvent())
-
+        RxBus.post(BankFormCommitSuccessEvent())
+        finish()
     }
 
 

@@ -18,7 +18,6 @@ import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.forms.personal.bookkeeping.signature.SignatureActivity
 import com.fatcloud.account.feature.matisse.Matisse
-import com.fatcloud.account.view.CompanyMemberEditView
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_agent_bookkeeping_personal.*
 
@@ -109,7 +108,7 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
         setMainTitle("法人信息")
         legal_name.setTitleAndHint(R.string.legal_person_name, R.string.legal_person_name_hint)
         legal_phone.setTitleAndHint(R.string.contact_number, R.string.legal_person_phone_hint).setInputType(InputType.TYPE_CLASS_NUMBER)
-        id_number.setTitleAndHint(R.string.legal_person_id_number, R.string.legal_person_id_number_hint).setInputType(InputType.TYPE_CLASS_NUMBER)
+        id_number.setTitleAndHint(R.string.legal_person_id_number, R.string.legal_person_id_number_hint)
         store_name.setTitleAndHint(R.string.store_name, R.string.store_name_hint)
     }
 

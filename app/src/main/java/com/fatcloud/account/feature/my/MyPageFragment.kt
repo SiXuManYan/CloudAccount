@@ -74,7 +74,6 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
             when (it.code) {
                 Constants.EVENT_NEED_REFRESH -> {
                     loadOnVisible()
-
                 }
                 else -> {
                 }
@@ -180,11 +179,7 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
     @OnClick(
         R.id.login_out_tv,
         R.id.ic_avatar_civ,
-        R.id.user_info_ll,
         R.id.order_rl,
-        R.id.income_rl,
-        R.id.qr_rl,
-        R.id.spread_rl,
         R.id.about_rl,
         R.id.name_tv
 
@@ -217,26 +212,14 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
             R.id.ic_avatar_civ -> {
                 ProductUtils.handleMediaSelectForFragment(this, Matisse.IMG, view.id)
             }
-            R.id.user_info_ll -> {
 
-            }
             R.id.order_rl -> {
-                startActivity(OrderListActivity::class.java)
-            }
-            R.id.income_rl -> {
-
-            }
-            R.id.qr_rl -> {
-
-            }
-            R.id.spread_rl -> {
-
+                startActivityAfterLogin(OrderListActivity::class.java)
             }
 
             R.id.about_rl -> {
                 startActivity(AboutActivity::class.java)
             }
-
 
             else -> {
             }

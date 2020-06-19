@@ -3,22 +3,22 @@ package com.fatcloud.account.base.common
 import android.Manifest
 import android.app.Activity
 import android.content.Context
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import com.blankj.utilcode.util.LogUtils
+import com.fatcloud.account.BuildConfig
+import com.fatcloud.account.R
 import com.fatcloud.account.base.net.BaseHttpSubscriber
+import com.fatcloud.account.common.Constants
 import com.fatcloud.account.event.Event
 import com.fatcloud.account.event.RxBus
-import com.fatcloud.account.network.ApiService
-import com.fatcloud.account.network.Response
-import com.blankj.utilcode.util.LogUtils
-import com.fatcloud.account.R
-import com.fatcloud.account.common.Constants
 import com.fatcloud.account.feature.matisse.Glide4Engine
 import com.fatcloud.account.feature.matisse.Matisse
+import com.fatcloud.account.network.ApiService
+import com.fatcloud.account.network.Response
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonObject
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -33,6 +33,7 @@ import io.reactivex.functions.Consumer
 import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subscribers.ResourceSubscriber
+import me.jessyan.retrofiturlmanager.RetrofitUrlManager
 import javax.inject.Inject
 
 /**
@@ -103,6 +104,21 @@ open class BasePresenter constructor(private var view: BaseView?) {
                 .subscribeWith(subscriber)
         )
     }
+
+    protected fun <T> requestWechatApi(
+        lifecycle: LifecycleOwner,
+        event: Lifecycle.Event,
+        flowable: Flowable<Response<T>>,
+        subscriber: BaseHttpSubscriber<T>
+    ) {
+        RetrofitUrlManager.getInstance().putDomain(ApiService.API_WECHAT_OFFICIAL, BuildConfig.WECHAT_OFFICIAL_API)
+        addSubscribe(
+            flowable.bindUntilEvent(lifecycle, event)
+                .compose(flowableUICompose())
+                .subscribeWith(subscriber)
+        )
+    }
+
 
     /**
      * 网络请求及处理

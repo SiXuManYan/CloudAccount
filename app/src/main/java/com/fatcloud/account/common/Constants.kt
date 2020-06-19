@@ -66,6 +66,7 @@ object Constants {
     const val PARAM_URL = "param_url"
     const val PARAM_HANDLE_BACK = "param_handle_back" // 处理返回键
     const val PARAM_WEB_REFRESH = "param_web_refresh" // 是否可刷新
+    const val PARAM_WEB_LOAD_LOCAL_HTML = "param_web_load_local_html"
     const val PARAM_WEB_CHANGETITLE = "param_web_changetitle" // 自动改变标题
     const val PARAM_PRODUCT_ID = "param_product_id"// 产品ID
     const val PARAM_PRODUCT_NAME = "param_product_name"
@@ -76,7 +77,7 @@ object Constants {
     const val PARAM_ORDER_NUMBER = "param_order_number" // 订单号
     const val PARAM_ORDER_WORK_ID = "param_order_work_id"
     const val PARAM_PRODUCT_WORK_TYPE = "param_product_work_type" // 产品类型
-    const val PARAM_MOLD = "param_mold"// 订单类型
+    const val PARAM_MOLD = "param_mold"  // 类型
     const val PARAM_ACCOUNT = "param_account"// 账号
     const val PARAM_CAPTCHA_MODE = "param_captcha_mode"// 验证码用途类型
     const val PARAM_CAPTCHA = "param_captcha"// 验证码用途类型
@@ -101,7 +102,6 @@ object Constants {
     const val PARAM_APP_URL = "param_app_url"
 
 
-
     /** RxBus Event */
     const val EVENT_STARTUP_DONE = 0x59//新手接口
     const val EVENT_FINISH_ALL = 0x60
@@ -116,6 +116,7 @@ object Constants {
     const val EVENT_AUTH_CANCEL = 0x81 // 微信授权取消
     const val EVENT_AUTH_FAIL = 0x82 // 微信授权取消
     const val EVENT_WECHAT_REGISTER = 0x83 // 微信注册成功
+    const val EVENT_WECHAT_REGISTER_CAPTCHA_SUCCESS = 0x97 // 微信注册 验证码校验通过
 
     const val EVENT_MORE_TRANSPARENT = 0x94
     const val EVENT_MORE_SATURATION = 0x95
@@ -136,6 +137,11 @@ object Constants {
      * 客服热线
      */
     const val CONSUMER_HOT_LINE = "4007772556"
+
+    /**
+     * 身份证
+     */
+    const val idNumberDigits = "1234567890xX"
 
     // 企业股东类型
     /** 企业股东类型 企业法人*/
@@ -270,7 +276,34 @@ object Constants {
     const val B4 = "B4"
 
 
+    /** 待支付 */
+    const val OS1 = "OS1"
 
+    /** 取消订单 */
+    const val OS2 = "OS2"
 
+    /** 支付超时 */
+    const val OS3 = "OS3"
+
+    /** 支付中 */
+    const val OS4 = "OS4"
+
+    /** 已支付 */
+    const val OS5 = "OS5"
+
+    /** 已受理 */
+    const val OS6 = "OS6"
+
+    /** 办理中 */
+    const val OS7 = "OS7"
+
+    /** 已办结 */
+    const val OS8 = "OS8"
+
+    /** 新用户 */
+    const val L0 = "L0"
+
+    /** 老用户，微信直接登陆 */
+    const val L1 = "L1"
 
 }

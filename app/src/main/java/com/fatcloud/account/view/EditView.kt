@@ -1,7 +1,7 @@
 package com.fatcloud.account.view
 
 import android.content.Context
-import android.text.InputType
+import android.text.method.DigitsKeyListener
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
@@ -106,9 +106,22 @@ class EditView : LinearLayout {
      * @see android.text.InputType.TYPE_CLASS_DATETIME
      * @see android.text.InputType.TYPE_CLASS_PHONE
      */
-    fun setInputType(type: Int) {
+    fun setInputType(type: Int) :EditView{
         content_et.inputType = type
+        return  this
     }
+
+
+    /**
+     * 设置输入限制
+     */
+    fun setInputDigits(digits:String):EditView{
+        content_et.keyListener = DigitsKeyListener.getInstance(digits);
+        return  this
+    }
+
+
+
 
 
 }

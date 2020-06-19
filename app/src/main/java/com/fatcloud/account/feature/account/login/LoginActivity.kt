@@ -2,6 +2,7 @@ package com.fatcloud.account.feature.account.login
 
 import android.content.Intent
 import android.graphics.Color
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextPaint
 import android.text.TextWatcher
@@ -27,6 +28,9 @@ import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.VibrateUtils
+import com.fatcloud.account.common.ShareUtil
+import com.fatcloud.account.entity.wechat.WechatAuthInfo
+import com.fatcloud.account.feature.account.login.wechat.WechatLoginRegisterActivity
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -63,7 +67,11 @@ class LoginActivity : BaseMVPActivity<LoginPresenter>(), LoginView {
 
 
     override fun initViews() {
+        initPageView()
+        initEvent()
+    }
 
+    private fun initPageView() {
         phone_aet.requestFocus()
         phone_aet.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_GO) {
@@ -101,9 +109,10 @@ class LoginActivity : BaseMVPActivity<LoginPresenter>(), LoginView {
                 override fun onClick(widget: View) {
                     startActivity(
                         Intent(this@LoginActivity, WebCommonActivity::class.java)
-                            .putExtra(Constants.PARAM_URL, Html5Url.SERVICE_AGREEMENT_URL)
-                            .putExtra(Constants.PARAM_TITLE, getString(R.string.privacy_statement))
+                            .putExtra(Constants.PARAM_URL, "zhuce.html")
+                            .putExtra(Constants.PARAM_TITLE, "服务协议")
                             .putExtra(Constants.PARAM_WEB_REFRESH, false)
+                            .putExtra(Constants.PARAM_WEB_LOAD_LOCAL_HTML, true)
                     )
                 }
 
@@ -114,7 +123,6 @@ class LoginActivity : BaseMVPActivity<LoginPresenter>(), LoginView {
             }).create()
 
         setSignViews()
-        initEvent()
     }
 
     private fun initEvent() {
@@ -123,6 +131,12 @@ class LoginActivity : BaseMVPActivity<LoginPresenter>(), LoginView {
                 Constants.EVENT_LOGIN -> {
                     finish()
                 }
+                Constants.EVENT_AUTH_SUCCESS -> {
+                    presenter.getWechatAccessToken(this, it.content)
+                }
+                Constants.EVENT_AUTH_CANCEL -> ToastUtils.showShort(getString(R.string.wechat_auth_user_cancel))
+                Constants.EVENT_AUTH_FAIL -> ToastUtils.showShort(getString(R.string.wechat_auth_fail))
+
                 else -> {
                 }
             }
@@ -170,8 +184,7 @@ class LoginActivity : BaseMVPActivity<LoginPresenter>(), LoginView {
     @OnClick(
         R.id.next_tv,
         R.id.switch_model_tv,
-        R.id.wechat_login_iv,
-        R.id.alipay_login_iv
+        R.id.wechat_login_iv
 
     )
     fun onClick(view: View) {
@@ -199,6 +212,8 @@ class LoginActivity : BaseMVPActivity<LoginPresenter>(), LoginView {
                 if (isRegisterMode && !register_protocol.isChecked) {
                     VibrateUtils.vibrate(10)
                     register_protocol.startAnimation(CommonUtils.getShakeAnimation(3))
+
+
                     return
                 }
                 presenter.checkAccountIsExisted(this, account)
@@ -209,12 +224,9 @@ class LoginActivity : BaseMVPActivity<LoginPresenter>(), LoginView {
             }
             R.id.wechat_login_iv -> {
                 VibrateUtils.vibrate(10)
-                ToastUtils.showShort("开发中")
+                ShareUtil.wechatAuth(this)
             }
-            R.id.alipay_login_iv -> {
-                VibrateUtils.vibrate(10)
-                ToastUtils.showShort("开发中")
-            }
+
 
         }
 
@@ -238,10 +250,17 @@ class LoginActivity : BaseMVPActivity<LoginPresenter>(), LoginView {
                     .putExtra(Constants.PARAM_ACCOUNT, account)
                     .putExtra(Constants.PARAM_CAPTCHA_MODE, MODE_REGISTER)
             )
-
         }
+    }
 
+    override fun getWechatAccessTokenSuccess( wechatAuthInfo: WechatAuthInfo?) {
+        startActivity(WechatLoginRegisterActivity::class.java, Bundle().apply {
+            putSerializable(Constants.PARAM_DATA, wechatAuthInfo)
+        })
+    }
 
+    override fun wechatLoginSuccess() {
+        finish()
     }
 
 

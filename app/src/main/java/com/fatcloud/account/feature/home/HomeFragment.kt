@@ -9,10 +9,9 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
-import butterknife.OnClick
+import com.blankj.utilcode.util.SizeUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseFragment
-import com.fatcloud.account.common.AndroidUtil
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.home.Banners
 import com.fatcloud.account.entity.news.News
@@ -21,15 +20,13 @@ import com.fatcloud.account.event.entity.TabRefreshEvent
 import com.fatcloud.account.feature.home.adapters.NewsChildAdapter
 import com.fatcloud.account.feature.home.header.HomeHeader
 import com.fatcloud.account.feature.news.detail.NewsDetailActivity
-import com.blankj.utilcode.util.SizeUtils
-import com.blankj.utilcode.util.ToastUtils
-import com.jude.easyrecyclerview.EasyRecyclerView
-import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
-import com.jude.easyrecyclerview.decoration.DividerDecoration
+import com.fatcloud.account.view.swipe.NoMoreItemView
 import com.fatcloud.account.view.swipe.footer.EmptyImageFooter
 import com.fatcloud.account.view.swipe.footer.EmptyLoadingFooter
 import com.fatcloud.account.view.swipe.footer.EmptyRetryFooter
-import com.fatcloud.account.view.swipe.NoMoreItemView
+import com.jude.easyrecyclerview.EasyRecyclerView
+import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
+import com.jude.easyrecyclerview.decoration.DividerDecoration
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
@@ -275,21 +272,6 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
             mAdapter.removeAllFooter()
             mAdapter.addFooter(emptyRetryFooter)
         }
-    }
-
-    @OnClick(R.id.share_iv)
-    fun click(view: View) {
-        if (AndroidUtil.isDoubleClick(view)) {
-            return
-        }
-        when (view.id) {
-            R.id.share_iv -> {
-                ToastUtils.showShort("分享功能开发中")
-            }
-            else -> {
-            }
-        }
-
     }
 
 
