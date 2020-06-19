@@ -12,6 +12,7 @@ import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.common.BaseView
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.users.User
+import com.fatcloud.account.feature.account.login.LoginActivity
 import com.fatcloud.account.view.dialog.LoadingDialog
 
 import dagger.android.support.DaggerFragment
@@ -133,7 +134,7 @@ abstract class BaseFragment<P : BasePresenter> : DaggerFragment(), BaseView {
         if (User.isLogon()) {
             startActivityForResult(Intent(context!!.applicationContext, target).putExtras(bundle), requestCode)
         } else {
-//            startActivity(SignUpActivity::class.java)
+            startActivity(LoginActivity::class.java)
         }
     }
 
@@ -141,7 +142,7 @@ abstract class BaseFragment<P : BasePresenter> : DaggerFragment(), BaseView {
         if (User.isLogon()) {
             startActivity(target)
         } else {
-//            startActivity(SignUpActivity::class.java)
+            startActivity(LoginActivity::class.java)
         }
     }
 
@@ -149,7 +150,7 @@ abstract class BaseFragment<P : BasePresenter> : DaggerFragment(), BaseView {
         if (User.isLogon()) {
             startActivity(target, bundle)
         } else {
-//            startActivity(SignUpActivity::class.java)
+           startActivity(LoginActivity::class.java)
         }
     }
 
@@ -158,7 +159,7 @@ abstract class BaseFragment<P : BasePresenter> : DaggerFragment(), BaseView {
         if (User.isLogon()) {
             startActivity(intent)
         } else {
-//            startActivity(SignUpActivity::class.java)
+            startActivity(LoginActivity::class.java)
         }
     }
 

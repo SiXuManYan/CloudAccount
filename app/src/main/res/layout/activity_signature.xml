@@ -84,7 +84,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/color_app_red"
+            android:background="@color/color_second_level"
             android:gravity="center"
             android:text="提交"
             android:textColor="@color/font_white"

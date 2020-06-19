@@ -216,7 +216,7 @@ dependencies {
     implementation 'com.google.android:flexbox:1.0.0'
 
     // tbs v43697(2019-08-08)
-    implementation 'com.tencent.tbs.tbssdk:sdk:43697'
+    implementation 'com.tencent.tbs.tbssdk:sdk:43903'
 
     // 刷新
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'

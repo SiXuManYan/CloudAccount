@@ -116,13 +116,15 @@ object Constants {
     const val EVENT_AUTH_CANCEL = 0x81 // 微信授权取消
     const val EVENT_AUTH_FAIL = 0x82 // 微信授权取消
     const val EVENT_WECHAT_REGISTER = 0x83 // 微信注册成功
-    const val EVENT_WECHAT_REGISTER_CAPTCHA_SUCCESS = 0x97 // 微信注册 验证码校验通过
+
 
     const val EVENT_MORE_TRANSPARENT = 0x94
     const val EVENT_MORE_SATURATION = 0x95
     const val EVENT_PASSWORD_RESET_SUCCESS = 0x96 //密码重置成功
     const val EVENT_CLOSE_PAY = 0x97 // 关闭支付页面
-
+    const val EVENT_WECHAT_REGISTER_CAPTCHA_SUCCESS = 0x98 // 微信注册 验证码校验通过
+    const val EVENT_FORM_COMMIT_SUCCESS = 0x99 // 表单提交成功
+    const val EVENT_FORM_CLOSE = 0x100 // 表单关闭，未提交
     // 列表数据 key
     const val KEY_DATA = "data"
 

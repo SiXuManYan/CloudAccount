@@ -177,11 +177,23 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
                 val banners = mBannersData[it]
                 when (banners.mold) {
                     Constants.B1 -> {
+
+                        var url = ""
+                        var loadLocalHtml = false
+                        if (banners.link.contains("trxback.html")) {
+                            url = "trxback.html"
+                            loadLocalHtml = true
+                        }else{
+                            url = banners.link
+                            loadLocalHtml = false
+                        }
+
                         context.startActivity(
                             Intent(context, WebCommonActivity::class.java)
-                                .putExtra(Constants.PARAM_URL, banners.link)
+                                .putExtra(Constants.PARAM_URL, url)
                                 .putExtra(Constants.PARAM_TITLE, banners.name)
                                 .putExtra(Constants.PARAM_WEB_REFRESH, false)
+                                .putExtra(Constants.PARAM_WEB_LOAD_LOCAL_HTML, loadLocalHtml)
                         )
                     }
                     Constants.B2, Constants.B4 -> {
@@ -280,9 +292,6 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
             else -> product_3_cv
         }
     }
-
-
-
 
 
 }

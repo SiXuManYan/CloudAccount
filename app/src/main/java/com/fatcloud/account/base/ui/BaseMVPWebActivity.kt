@@ -122,7 +122,7 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
         intent.getBooleanExtra(Constants.PARAM_WEB_REFRESH, true).let {
             refresh = it
         }
-        intent.getBooleanExtra(Constants.PARAM_WEB_LOAD_LOCAL_HTML, true).let {
+        intent.getBooleanExtra(Constants.PARAM_WEB_LOAD_LOCAL_HTML, false).let {
             loadLocalHtml = it
         }
 
@@ -209,7 +209,9 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
 
         // 加载Html
         x5_web.settings.defaultTextEncodingName = "utf-8";//文本编码
-//        x5_web.setDomStorageEnabled(true);//设置DOM存储已启用（注释后文本显示变成js代码）
+        x5_web.settings.domStorageEnabled = true //设置DOM存储已启用（注释后文本显示变成js代码）
+        x5_web.settings.blockNetworkImage = false //设置DOM存储已启用（注释后文本显示变成js代码）
+
 
         //本地HTML里面有跨域的请求 原生webview需要设置之后才能实现跨域请求
         try {
@@ -242,6 +244,7 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
             } else {
                 if (RegexUtils.isURL(contentUrl)) {
                     x5_web.loadUrl(contentUrl)
+
                 } else {
                     var body = Common.WEB_STYLE + contentUrl
                     body += "<div style='margin-bottom: 80px;'/>"

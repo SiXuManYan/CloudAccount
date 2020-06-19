@@ -76,7 +76,7 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
         // shareSdk
         MobSDK.init(this)
 
-        // initX5WebView()
+//        initX5WebView()
         registerActivityLifecycleCallbacks(this)
         presenter.getCommonList()
     }

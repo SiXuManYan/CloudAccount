@@ -22,6 +22,7 @@ import com.blankj.utilcode.util.BarUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.users.User
+import com.fatcloud.account.feature.account.login.LoginActivity
 import com.fatcloud.account.view.dialog.LoadingDialog
 
 
@@ -183,12 +184,12 @@ abstract class BaseActivity : AppCompatActivity() {
         if (User.isLogon()) {
             startActivity(target)
         } else {
-//            startActivity(SignUpActivity::class.java)
+            startActivity(LoginActivity::class.java)
         }
     }
 
     protected fun startLogin() {
-//        startActivity(SignUpActivity::class.java)
+        startActivity(LoginActivity::class.java)
     }
 
     protected fun startWebActivity(bundle: Bundle) {

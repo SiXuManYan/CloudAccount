@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import butterknife.OnClick
+import com.blankj.utilcode.util.ToastUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
 import com.fatcloud.account.app.Glide
@@ -102,6 +104,16 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
         presenter.subsribeEventEntity<OrderPaySuccessEvent>(Consumer {
             finish()
         })
+        presenter.subsribeEvent(Consumer {
+            when (it.code) {
+                Constants.EVENT_FORM_COMMIT_SUCCESS -> {
+                    finish()
+                }
+                else -> {
+                }
+            }
+        })
+
     }
 
     private fun initView() {
@@ -175,6 +187,11 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
         if (!ProductUtils.checkEditEmptyWithVibrate(legal_name, legal_phone, id_number, store_name)) {
             return
         }
+        if (id_number.value().length < 18) {
+            ToastUtils.showShort("请输入正确的法人身份证号")
+            return
+        }
+
 
         startActivity(SignatureActivity::class.java,
             Bundle().apply {

@@ -3,8 +3,8 @@ package com.fatcloud.account.feature.forms.personal.bookkeeping.signature
 import android.content.Intent
 import android.graphics.Bitmap
 import android.view.View
-import android.widget.ImageView
 import butterknife.OnClick
+import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.app.Glide
@@ -13,6 +13,8 @@ import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.entity.product.NativeBookkeeping
+import com.fatcloud.account.event.Event
+import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.forms.personal.bookkeeping.wordpad.WordpadFragment
@@ -77,6 +79,7 @@ class SignatureActivity : BaseMVPActivity<SignaturePresenter>(), SignatureView {
             )
         }
 
+
     }
 
 
@@ -111,12 +114,15 @@ class SignatureActivity : BaseMVPActivity<SignaturePresenter>(), SignatureView {
             commitCallBack = object : WordpadFragment.CommitCallBack {
 
                 override fun showAutographForImageView(signatureBitmap: Bitmap?) {
-                    val signature_iv = this@SignatureActivity.findViewById<ImageView>(R.id.signature_iv)
-                    Glide.with(this@SignatureActivity).load(signatureBitmap).into(signature_iv)
+
+                    Glide.with(this@SignatureActivity).load(signatureBitmap).into(this@SignatureActivity.signature_iv)
+
                 }
 
                 override fun uploadAutographSuccess(finalUrl: String) {
                     autographFinalUrl = finalUrl
+                    this@SignatureActivity.bottom_right_tv.setBackgroundColor(ColorUtils.getColor(R.color.color_app_red))
+
                 }
             }
         }
@@ -124,6 +130,10 @@ class SignatureActivity : BaseMVPActivity<SignaturePresenter>(), SignatureView {
 
     private fun handleCommit() {
 
+
+        if (autographFinalUrl.isEmpty()) {
+            return
+        }
         nativeBookkeeping?.let {
             presenter.addAgentBookkeeping(
                 this, it.finalMoney,
@@ -141,6 +151,7 @@ class SignatureActivity : BaseMVPActivity<SignaturePresenter>(), SignatureView {
     }
 
     override fun addAgentBookkeepingSuccess(preparePay: PreparePay) {
+        RxBus.post(Event(Constants.EVENT_FORM_COMMIT_SUCCESS))
         ToastUtils.showShort("代理记账提交成功")
         startActivity(
             Intent(this, PayPrepareActivity::class.java)

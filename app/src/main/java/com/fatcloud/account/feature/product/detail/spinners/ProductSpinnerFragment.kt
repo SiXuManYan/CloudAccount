@@ -118,6 +118,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
 
         productDetail?.let {
 
+            amount_tv.text = getString(R.string.money_symbol_format, it.money.stripTrailingZeros().toPlainString())
             initFirstSpinner(it)
         }
 

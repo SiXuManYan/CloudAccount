@@ -107,7 +107,11 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
 
         presenter.subsribeEvent(Consumer {
             when (it.code) {
-                Constants.EVENT_CLOSE_PAY -> finish()
+                Constants.EVENT_CLOSE_PAY,
+                Constants.EVENT_FORM_COMMIT_SUCCESS,
+                Constants.EVENT_FORM_CLOSE -> {
+                    finish()
+                }
                 else -> {
                 }
             }
@@ -254,7 +258,7 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
                     return
                 }
                 if (!protocol.isChecked) {
-                    ToastUtils.showShort("请先同意用户服务协议")
+                    ToastUtils.showShort("请先同意服务协议")
                     VibrateUtils.vibrate(10)
                     protocol.startAnimation(CommonUtils.getShakeAnimation(2))
 

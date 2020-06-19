@@ -42,7 +42,7 @@ class NativeBookkeeping : Serializable {
 
 
     /**
-     * 银行卡号
+     * 身份证号
      */
     var idNumber: String = ""
 

@@ -9,6 +9,8 @@ import com.fatcloud.account.app.Glide
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.event.Event
+import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.defray.PayActivity
 import com.fatcloud.account.feature.order.lists.OrderListActivity
@@ -109,6 +111,26 @@ class PayPrepareActivity : BaseMVPActivity<PayPreparePresenter>(), PayPrepareVie
             else -> {
             }
         }
+    }
+
+    override fun onBackPressed() {
+        RxBus.post(Event(Constants.EVENT_FORM_CLOSE))
+        AlertDialog.Builder(this)
+            .setTitle("提示")
+            .setMessage("订单已提交")
+            .setCancelable(false)
+            .setPositiveButton("返回首页", AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
+                super.onBackPressed()
+                dialog.dismiss()
+            })
+            .setNegativeButton("查看订单", AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
+                startActivity(OrderListActivity::class.java)
+                super.onBackPressed()
+                dialog.dismiss()
+            })
+            .create()
+            .show()
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

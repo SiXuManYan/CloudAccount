@@ -61,7 +61,7 @@
 
     <!-- 订单相关 -->
     <string name="order_list_title">我的订单</string>
-    <string name="order_id_format">订单ID:%1$s</string>
+    <string name="order_id_format">订单号:%1$s</string>
     <string name="expiration_date_format">订单有效期:%1$s</string>
     <string name="go_payment">去付款</string>
     <string name="view">查看</string>
@@ -122,7 +122,7 @@
     <string name="taxpayer_registration_number_hint">请输入纳税人识别号</string>
     <string name="store_name">店铺名称</string>
     <string name="store_name_hint">请输入店铺名称</string>
-    <string name="signature_format">营口市国家税务局：\n营口市地方税务局：\n\u3000\u3000兹有我单位：\n&#160;%1$s&#160;店铺，\n现委托于孙尚强同志（身份证号码:\n210283 19860602 7812）\n前往贵局办理税务登记事宜，望贵局给予办理。\n\n\n\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000承诺人签字</string>
+    <string name="signature_format">营口市国家税务局：\n营口市地方税务局：\n\u3000\u3000兹有我单位：&#160;%1$s&#160;，\n现委托于孙尚强同志（身份证号码:\n210283 19860602 7812）\n前往贵局办理税务登记事宜，望贵局给予办理。\n\n\n\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000承诺人签字</string>
 
 
 

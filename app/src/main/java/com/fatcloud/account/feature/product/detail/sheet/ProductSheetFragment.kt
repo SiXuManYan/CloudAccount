@@ -58,23 +58,32 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
             productDetail = arguments!!.getSerializable(Constants.PARAM_DATA) as ProductDetail
         }
 
-        Glide.with(this)
-            .load(productDetail?.logoImgUrl)
-            .apply(
-                RequestOptions().transform(
-                    MultiTransformation(
-                        CenterCrop(),
-                        RoundTransFormation(context, 4)
+
+        productDetail?.let {
+
+            amount_tv.text = getString(R.string.money_symbol_format,  it.money.stripTrailingZeros()?.toPlainString())
+
+            Glide.with(this)
+                .load(it.logoImgUrl)
+                .apply(
+                    RequestOptions().transform(
+                        MultiTransformation(
+                            CenterCrop(),
+                            RoundTransFormation(context, 4)
+                        )
                     )
                 )
-            )
-            .error(R.drawable.ic_error_image_load)
-            .into(image_iv)
+                .error(R.drawable.ic_error_image_load)
+                .into(image_iv)
 
-        content_tv.text = productDetail?.name
-        adapter = getRecyclerAdapter()
-        adapter?.addAll(productDetail?.prices)
-        content_rv.adapter = adapter
+            content_tv.text = it.name
+            adapter = getRecyclerAdapter()
+            adapter?.addAll(it.prices)
+            content_rv.adapter = adapter
+        }
+
+
+
     }
 
     private fun getRecyclerAdapter(): RecyclerArrayAdapter<Price>? {
