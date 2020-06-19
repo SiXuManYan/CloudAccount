@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.VibrateUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
 import com.fatcloud.account.base.ui.BaseMVPActivity
+import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.defray.prepare.PreparePay
@@ -296,6 +297,9 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
         R.id.addr_rl
     )
     fun onClick(view: View) {
+        if (CommonUtils.isDoubleClick(view)) {
+            return
+        }
         when (view.id) {
             R.id.business_scope_rl -> {
                 // 参照 EnterpriseInfo

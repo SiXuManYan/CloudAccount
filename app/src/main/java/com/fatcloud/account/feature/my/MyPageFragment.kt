@@ -2,6 +2,7 @@ package com.fatcloud.account.feature.my
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -114,19 +115,7 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
 
         val user = User.get()
 
-        Glide.with(context!!)
-            .load(User.get().headUrl)
-            .apply(
-                RequestOptions().transform(
-                    MultiTransformation(
-                        CenterCrop(),
-                        RoundTransFormation(context, 4)
-                    )
-                )
-            )
-            .error(R.drawable.ic_error_image_load)
-            .into(ic_avatar_civ)
-        ic_avatar_civ.isClickable = true
+        initAvatar()
 
         name_tv.text = user.nickName
         user_id_tv.apply {
@@ -139,6 +128,51 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
         income_rl.visibility = View.GONE
         qr_rl.visibility = View.GONE
         spread_rl.visibility = View.GONE
+    }
+
+    private fun initAvatar() {
+        ic_avatar_civ.isClickable = true
+        val headUrl = User.get().headUrl
+        if (headUrl.isNullOrBlank()) {
+            return
+        }
+
+        if (ProductUtils.isOssSignUrl(headUrl)) {
+
+            ProductUtils.getRealOssUrl(activity, headUrl, object : CloudAccountApplication.OssSignCallBack {
+                override fun ossUrlSignEnd(url: String) {
+                    Glide.with(context!!)
+                        .load(url)
+                        .apply(
+                            RequestOptions().transform(
+                                MultiTransformation(
+                                    CenterCrop(),
+                                    RoundTransFormation(context, 4)
+                                )
+                            )
+                        )
+                        .error(R.drawable.ic_error_image_load)
+                        .into(ic_avatar_civ)
+                }
+
+            })
+
+        } else {
+            Glide.with(context!!)
+                .load(headUrl)
+                .apply(
+                    RequestOptions().transform(
+                        MultiTransformation(
+                            CenterCrop(),
+                            RoundTransFormation(context, 4)
+                        )
+                    )
+                )
+                .error(R.drawable.ic_error_image_load)
+                .into(ic_avatar_civ)
+        }
+
+
     }
 
 
@@ -237,7 +271,7 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
                     if (content.isNotEmpty()) {
                         if (content.length > 5) {
                             ToastUtils.showShort("昵称不能超过5个字符")
-                        }else{
+                        } else {
                             name_tv.text = content
                             presenter.updateAvatarAndNickname(this@MyPageFragment, null, content)
 
