@@ -36,8 +36,7 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
 
         order_id_tv.text = StringUtils.getString(R.string.order_id_format, data.no)
         Glide.with(context)
-//            .load(data.imgUrl)
-            .load(CommonUtils.getTestUrl())
+            .load(data.imgUrl)
             .apply(
                 RequestOptions().transform(
                     MultiTransformation(
@@ -67,7 +66,7 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
 
         when (data.state) {
 
-            Constants.OS1,Constants.OS4 -> {
+            Constants.OS1, Constants.OS4 -> {
                 payment_tv.visibility = View.VISIBLE
             }
             else -> {

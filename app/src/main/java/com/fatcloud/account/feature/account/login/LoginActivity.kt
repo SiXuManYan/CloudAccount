@@ -18,7 +18,6 @@ import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
-import com.fatcloud.account.common.Html5Url
 import com.fatcloud.account.feature.account.captcha.CaptchaActivity
 import com.fatcloud.account.feature.account.captcha.CaptchaActivity.Companion.MODE_REGISTER
 import com.fatcloud.account.feature.account.password.login.PasswordLoginActivity
@@ -102,6 +101,7 @@ class LoginActivity : BaseMVPActivity<LoginPresenter>(), LoginView {
         register_protocol.movementMethod = LinkMovementMethod.getInstance()
         val ruleTitle = getString(R.string.register_protocol_title)
         val ruleValue = getString(R.string.register_protocol_value)
+
         register_protocol.text = SpanUtils()
             .append(ruleTitle)
             .append(ruleValue)
@@ -109,7 +109,7 @@ class LoginActivity : BaseMVPActivity<LoginPresenter>(), LoginView {
                 override fun onClick(widget: View) {
                     startActivity(
                         Intent(this@LoginActivity, WebCommonActivity::class.java)
-                            .putExtra(Constants.PARAM_URL, "zhuce.html")
+                            .putExtra(Constants.PARAM_URL, "fu_wu_xie_yi.html")
                             .putExtra(Constants.PARAM_TITLE, "服务协议")
                             .putExtra(Constants.PARAM_WEB_REFRESH, false)
                             .putExtra(Constants.PARAM_WEB_LOAD_LOCAL_HTML, true)

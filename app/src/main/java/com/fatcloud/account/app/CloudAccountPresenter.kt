@@ -12,6 +12,7 @@ import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider
 import com.alibaba.sdk.android.oss.model.PutObjectRequest
 import com.alibaba.sdk.android.oss.model.PutObjectResult
 import com.blankj.utilcode.util.StringUtils
+import com.blankj.utilcode.util.ThreadUtils
 import com.blankj.utilcode.util.Utils
 import com.fatcloud.account.BuildConfig
 import com.fatcloud.account.R
@@ -77,7 +78,7 @@ class CloudAccountPresenter(val view: CloudAccountView) {
 
                                 forEachIndexed { index, first ->
 
-                                    // 耳机列表默认全选
+                                    // 二级列表默认全选
                                     first.childs.forEach { second ->
                                         second.nativeIsSelect = true
                                     }
@@ -193,10 +194,13 @@ class CloudAccountPresenter(val view: CloudAccountView) {
         val task = oss.asyncPutObject(put, object : OSSCompletedCallback<PutObjectRequest, PutObjectResult> {
             override fun onSuccess(request: PutObjectRequest?, result: PutObjectResult?) {
                 Log.d("PutObject", "UploadSuccess");
-//                val finalUrl = "https://$imageBucketName.$endpoint/$imageObjectKey"
-                val finalUrl = StringUtils.getString(R.string.final_url_format, imageBucketName, endpoint, imageObjectKey)
-//                val finalUrl = imageObjectKey
 
+                var finalUrl = ""
+                if (isEncryptFile) {
+                    finalUrl = imageObjectKey
+                } else {
+                    finalUrl = StringUtils.getString(R.string.final_url_format, imageBucketName, endpoint, imageObjectKey)
+                }
 
                 RxBus.post(ImageUploadEvent(finalUrl, isFaceUp, fromViewId, clx))
             }
@@ -219,6 +223,83 @@ class CloudAccountPresenter(val view: CloudAccountView) {
 //        Toast.makeText(getActivity(), "上传成功", Toast.LENGTH_SHORT).show();
 
 
+    }
+
+
+    /**
+     * 获取 token
+     * @param objectName 文件路径
+     * @param isEncryptFile 是否为加密文件
+     */
+    fun getOssSecurityTokenForSignUrl(
+        context: Context,
+        objectKey: String,
+        ossCallBack: CloudAccountApplication.OssSignCallBack
+    ) {
+
+
+        addSubscribe(
+            apiService.getOssSecurityToken().compose(flowableUICompose())
+                .subscribeWith(object : BaseHttpSubscriber<SecurityTokenModel>(view) {
+                    override fun onSuccess(data: SecurityTokenModel?) {
+                        data?.let {
+                            val runnable = Runnable {
+                                // 节点
+                                val endpoint = BuildConfig.OSS_END_POINT
+
+                                val credentialProvider: OSSCredentialProvider =
+                                    OSSStsTokenCredentialProvider(it.AccessKeyId, it.AccessKeySecret, it.SecurityToken)
+
+                                val conf = ClientConfiguration().apply {
+                                    connectionTimeout = 15 * 1000   // 连接超时，默认15秒
+                                    socketTimeout = 15 * 1000       // socket超时，默认15秒
+                                    maxConcurrentRequest = 5        // 最大并发请求数，默认5个
+                                    maxErrorRetry = 2               // 失败后最大重试次数，默认2次
+                                }
+
+                                val oss: OSS = OSSClient(context, "https://$endpoint", credentialProvider, conf)
+
+                                val url: String = oss.presignConstrainedObjectURL(it.AccessBucketName, objectKey, 30 * 60)
+                                ThreadUtils.runOnUiThread {
+                                    ossCallBack.ossUrlSignEnd(url)
+                                }
+                            }
+                            Thread(runnable).start()
+                        }
+                    }
+                })
+        )
+
+
+    }
+
+
+    /**
+     * 签名URL
+     */
+    fun preSignConstrainedObjectURL(
+        context: Context,
+        stsModel: SecurityTokenModel,
+        objectKey: String
+    ): String {
+
+        // 节点
+        val endpoint = BuildConfig.OSS_END_POINT
+
+        val credentialProvider: OSSCredentialProvider =
+            OSSStsTokenCredentialProvider(stsModel.AccessKeyId, stsModel.AccessKeySecret, stsModel.SecurityToken)
+
+        val conf = ClientConfiguration().apply {
+            connectionTimeout = 15 * 1000   // 连接超时，默认15秒
+            socketTimeout = 15 * 1000       // socket超时，默认15秒
+            maxConcurrentRequest = 5        // 最大并发请求数，默认5个
+            maxErrorRetry = 2               // 失败后最大重试次数，默认2次
+        }
+
+        val oss: OSS = OSSClient(context, "https://$endpoint", credentialProvider, conf)
+
+        val url: String = oss.presignConstrainedObjectURL(stsModel.AccessBucketName, objectKey, 30 * 60)
+        return url
     }
 
 

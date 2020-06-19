@@ -207,5 +207,17 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
         presenter.getOssSecurityToken(this, isEncryptFile, isFaceUp, localFilePatch, fromViewId, clx)
     }
 
+    var ossCallBack: OssSignCallBack? = null
+
+    interface OssSignCallBack {
+        fun ossUrlSignEnd(url: String)
+
+    }
+
+    fun getOssSecurityTokenForSignUrl(objectKey: String, ossCallBack: OssSignCallBack) {
+
+        presenter.getOssSecurityTokenForSignUrl(this, objectKey, ossCallBack)
+    }
+
 
 }

@@ -5,10 +5,12 @@ import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
 import com.fatcloud.account.R
+import com.fatcloud.account.app.CloudAccountApplication
 import com.fatcloud.account.app.Glide
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.persional.PersonalInfo
 import com.fatcloud.account.extend.RoundTransFormation
@@ -16,6 +18,7 @@ import com.fatcloud.account.view.ShareholderView
 import kotlinx.android.synthetic.main.activity_order_detail_company.*
 import kotlinx.android.synthetic.main.layout_bank_info.*
 import kotlinx.android.synthetic.main.layout_company_info.*
+import java.net.URL
 
 /**
  * Created by Wangsw on 2020/6/4 0004 14:03.
@@ -133,49 +136,107 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
 
 
         // 营业执照
-        Glide.with(this)
-//                    .load(data.businessLicenseImgUrl)
-            .load(CommonUtils.getTestUrl())
-            .apply(
-                RequestOptions().transform(
-                    MultiTransformation(
-                        CenterCrop(),
-                        RoundTransFormation(context, 4)
+        data.businessLicenseImgUrl?.let {
+            Glide.with(this)
+                .load(presenter.getOssSecurityTokenForSignUrl(this, it))
+                .apply(
+                    RequestOptions().transform(
+                        MultiTransformation(
+                            CenterCrop(),
+                            RoundTransFormation(context, 4)
+                        )
                     )
                 )
-            )
-            .error(R.drawable.ic_error_image_load)
-            .into(business_license_iv)
+                .error(R.drawable.ic_error_image_load)
+                .into(business_license_iv)
+        }
+
 
         // 电子公章
-        Glide.with(this)
-//            .load(data.electronicSealImgUrl)
-            .load(CommonUtils.getTestUrl())
-            .apply(
-                RequestOptions().transform(
-                    MultiTransformation(
-                        CenterCrop(),
-                        RoundTransFormation(context, 4)
+        val electronicSealImgUrl = data.electronicSealImgUrl
+        if (!electronicSealImgUrl.isNullOrBlank()) {
+            if (ProductUtils.isOssSignUrl(electronicSealImgUrl)) {
+                ProductUtils.getRealOssUrl(this, electronicSealImgUrl, object : CloudAccountApplication.OssSignCallBack {
+                    override fun ossUrlSignEnd(url: String) {
+                        Glide.with(this@CompanyRegisterInfoActivity)
+                            .load(url)
+                            .apply(
+                                RequestOptions().transform(
+                                    MultiTransformation(
+                                        CenterCrop(),
+                                        RoundTransFormation(context, 4)
+                                    )
+                                )
+                            )
+                            .error(R.drawable.ic_error_image_load)
+                            .into(electronic_seal_iv)
+                    }
+
+                })
+            } else {
+                Glide.with(this)
+                    .load(electronicSealImgUrl)
+                    .apply(
+                        RequestOptions().transform(
+                            MultiTransformation(
+                                CenterCrop(),
+                                RoundTransFormation(context, 4)
+                            )
+                        )
                     )
-                )
-            )
-            .error(R.drawable.ic_error_image_load)
-            .into(electronic_seal_iv)
+                    .error(R.drawable.ic_error_image_load)
+                    .into(electronic_seal_iv)
+            }
+
+        }
+
 
         // 法人签字授权书
-        Glide.with(this)
-//            .load(data.legalPersonWarrantImgUrl)
-            .load(CommonUtils.getTestUrl())
-            .apply(
-                RequestOptions().transform(
-                    MultiTransformation(
-                        CenterCrop(),
-                        RoundTransFormation(context, 4)
+        val legalPersonWarrantImgUrl = data.legalPersonWarrantImgUrl
+        if (!legalPersonWarrantImgUrl.isNullOrBlank()) {
+            if (ProductUtils.isOssSignUrl(legalPersonWarrantImgUrl)) {
+
+                ProductUtils.getRealOssUrl(this, legalPersonWarrantImgUrl, object : CloudAccountApplication.OssSignCallBack {
+                    override fun ossUrlSignEnd(url: String) {
+
+                        Glide.with(this@CompanyRegisterInfoActivity)
+                            .load(legalPersonWarrantImgUrl)
+                            .apply(
+                                RequestOptions().transform(
+                                    MultiTransformation(
+                                        CenterCrop(),
+                                        RoundTransFormation(context, 4)
+                                    )
+                                )
+                            )
+                            .error(R.drawable.ic_error_image_load)
+                            .into(Legal_signature_authorization_iv)
+
+
+                    }
+
+                })
+
+
+            } else {
+                Glide.with(this)
+                    .load(legalPersonWarrantImgUrl)
+                    .apply(
+                        RequestOptions().transform(
+                            MultiTransformation(
+                                CenterCrop(),
+                                RoundTransFormation(context, 4)
+                            )
+                        )
                     )
-                )
-            )
-            .error(R.drawable.ic_error_image_load)
-            .into(Legal_signature_authorization_iv)
+                    .error(R.drawable.ic_error_image_load)
+                    .into(Legal_signature_authorization_iv)
+            }
+
+
+        }
+
+
     }
 
 

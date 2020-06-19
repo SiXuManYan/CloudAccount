@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.VibrateUtils
+import com.fatcloud.account.BuildConfig
 import com.fatcloud.account.R
+import com.fatcloud.account.app.CloudAccountApplication
 import com.fatcloud.account.feature.matisse.Glide4Engine
 import com.fatcloud.account.feature.matisse.Matisse
 import com.fatcloud.account.view.EditView
@@ -197,7 +199,7 @@ object ProductUtils {
     /**
      * 城市信息选择
      */
-     fun showLocationPicker(context: Context?, listener: OnCityItemClickListener) {
+    fun showLocationPicker(context: Context?, listener: OnCityItemClickListener) {
         val jdCityConfig = JDCityConfig.Builder().build().apply {
             showType = JDCityConfig.ShowType.PRO_CITY_DIS
         }
@@ -208,6 +210,42 @@ object ProductUtils {
             setOnCityItemClickListener(listener)
             showCityPicker()
         }
+    }
+
+
+    /**
+     * 是否为加密url
+     */
+    fun isOssSignUrl(url: String): Boolean {
+        if (url.contains(BuildConfig.OSS_END_POINT)) {
+            return true
+        }
+        return false
+    }
+
+    /**
+     * https://ftacloud-bucket-private.oss-cn-qingdao.aliyuncs.com/android/dev/image/encryption/image_1592462141234.jpg
+     * oss-cn-qingdao.aliyuncs.com
+     */
+    fun getOssSignUrlObjectKey(url: String): String {
+
+        if (url.contains(BuildConfig.OSS_PRIVATE_BUCKET_NAME)) {
+            return url.replace(BuildConfig.OSS_PRIVATE_BUCKET_NAME, "")
+        } else {
+            return url
+        }
+
+
+    }
+
+
+    fun getRealOssUrl(context: Context?, url: String, ossCallBack: CloudAccountApplication.OssSignCallBack) {
+
+        val activity = context as Activity
+        val application = activity.application as CloudAccountApplication
+
+        application.getOssSecurityTokenForSignUrl(getOssSignUrlObjectKey(url), ossCallBack)
+
     }
 
 

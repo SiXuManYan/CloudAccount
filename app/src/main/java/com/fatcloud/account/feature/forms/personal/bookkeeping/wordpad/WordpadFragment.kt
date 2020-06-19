@@ -77,7 +77,7 @@ class WordpadFragment : BaseBottomSheetDialogFragment<WordpadPresenter>(), Wordp
             // 回传Bitmap
             it.showAutographForImageView(signatureBitmap)
 
-            val byteArray = ConvertUtils.bitmap2Bytes(signatureBitmap, Bitmap.CompressFormat.PNG)
+            val byteArray = ConvertUtils.bitmap2Bytes(signatureBitmap, Bitmap.CompressFormat.PNG,90)
             // 上传图片至oss
            presenter.getOssSecurityToken(this,byteArray)
 

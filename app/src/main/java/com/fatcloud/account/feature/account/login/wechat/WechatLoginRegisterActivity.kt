@@ -21,7 +21,6 @@ import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
-import com.fatcloud.account.common.Html5Url
 import com.fatcloud.account.entity.wechat.WechatAuthInfo
 import com.fatcloud.account.feature.account.captcha.CaptchaActivity
 import com.fatcloud.account.feature.webs.WebCommonActivity
@@ -112,9 +111,11 @@ class WechatLoginRegisterActivity : BaseMVPActivity<WechatLoginRegisterPresenter
                 override fun onClick(widget: View) {
                     startActivity(
                         Intent(this@WechatLoginRegisterActivity, WebCommonActivity::class.java)
-                            .putExtra(Constants.PARAM_URL, Html5Url.SERVICE_AGREEMENT_URL)
-                            .putExtra(Constants.PARAM_TITLE, getString(R.string.privacy_statement))
+                            .putExtra(Constants.PARAM_URL, "fu_wu_xie_yi.html")
+                            .putExtra(Constants.PARAM_TITLE, "服务协议")
                             .putExtra(Constants.PARAM_WEB_REFRESH, false)
+                            .putExtra(Constants.PARAM_WEB_LOAD_LOCAL_HTML, true)
+
                     )
                 }
 
@@ -161,9 +162,19 @@ class WechatLoginRegisterActivity : BaseMVPActivity<WechatLoginRegisterPresenter
 
 
                 // 检查用户是否存在
-                presenter.checkAccountIsExisted(this,account)
+//                presenter.checkAccountIsExisted(this,account)
 
 
+                wechatAuthInfo?.let {
+
+                    // 微信登陆校验验证码
+                    startActivity(CaptchaActivity::class.java, Bundle().apply {
+                        putString(Constants.PARAM_ACCOUNT, account)
+                        putInt(Constants.PARAM_CAPTCHA_MODE, CaptchaActivity.MODE_REGISTER_WECHAT)
+                        putSerializable(Constants.PARAM_DATA, it)
+                    })
+
+                }
 
 
             }

@@ -2,7 +2,11 @@ package com.fatcloud.account.feature.product.detail
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
@@ -11,6 +15,7 @@ import android.widget.LinearLayout
 import butterknife.OnClick
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -26,6 +31,7 @@ import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.account.login.LoginActivity
 import com.fatcloud.account.feature.product.detail.sheet.ProductSheetFragment
 import com.fatcloud.account.feature.product.detail.spinners.ProductSpinnerFragment
+import com.fatcloud.account.feature.webs.WebCommonActivity
 import com.youth.banner.BannerConfig
 import com.youth.banner.loader.ImageLoader
 import io.reactivex.functions.Consumer
@@ -82,6 +88,8 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
         }
         bottom_left_tv.text = "联系客服"
         bottom_right_tv.text = "立即办理"
+
+
     }
 
     private fun initExtra() {
@@ -110,7 +118,6 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
     private fun getData() {
         presenter.getDetail(this, productId)
     }
-
 
 
     override fun bindDetailData(data: ProductDetail) {
@@ -170,9 +177,49 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
                 .into(imageView)
 
             image_container_ll.addView(imageView)
-
-
         }
+
+
+        // 服务协议
+        protocol.movementMethod = LinkMovementMethod.getInstance()
+        val ruleTitle = getString(R.string.register_protocol_title)
+        val ruleValue = getString(R.string.register_protocol_product_detail_value)
+        protocol.text = SpanUtils()
+            .append(ruleTitle)
+            .append(ruleValue)
+            .setClickSpan(object : ClickableSpan() {
+                override fun onClick(widget: View) {
+
+                    var url = ""
+                    when (data.mold) {
+                        Constants.P1 -> {
+                            url = "ying_ye_zhi_zhao_ge_ti.html"
+                        }
+                        Constants.P2 -> {
+                            url = "ying_ye_zhi_zhao_qi_ye.html"
+                        }
+                        Constants.P3, Constants.P4 -> {
+                            url = "shui_wu_deng_ji_dai_li_ji_zhang.html"
+                        }
+                        else -> {
+                            url = "fu_wu_xie_yi.html"
+                        }
+                    }
+
+                    startActivity(
+                        Intent(this@ProductDetailActivity, WebCommonActivity::class.java)
+                            .putExtra(Constants.PARAM_URL, url)
+                            .putExtra(Constants.PARAM_TITLE, "服务协议")
+                            .putExtra(Constants.PARAM_WEB_REFRESH, false)
+                            .putExtra(Constants.PARAM_WEB_LOAD_LOCAL_HTML, true)
+                    )
+                }
+
+                override fun updateDrawState(ds: TextPaint) {
+                    ds.color = Color.BLUE
+                    ds.isUnderlineText = false
+                }
+            }).create()
 
     }
 

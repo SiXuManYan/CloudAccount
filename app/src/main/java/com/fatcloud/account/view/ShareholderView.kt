@@ -1,5 +1,7 @@
 package com.fatcloud.account.view
 
+import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -9,9 +11,11 @@ import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
 import com.fatcloud.account.R
+import com.fatcloud.account.app.CloudAccountApplication
 import com.fatcloud.account.app.Glide
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.order.enterprise.Shareholder
 import com.fatcloud.account.extend.RoundTransFormation
 import kotlinx.android.synthetic.main.view_shareholder.view.*
@@ -71,37 +75,41 @@ class ShareholderView : LinearLayout {
         id_address_tv.text = data.idnoAddr
         phone_tv.text = data.phone
         share_ratio_tv.text = "${data.shareProportion}%"
+
+
         data.imgs.forEachIndexed { index, identityImg ->
 
-            if (index == 0) {
-                Glide.with(this)
-//                    .load(identityImg.imgUrl)
-                    .load(CommonUtils.getTestUrl())
-                    .apply(
-                        RequestOptions().transform(
-                            MultiTransformation(
-                                CenterCrop(),
-                                RoundTransFormation(context, 4)
-                            )
-                        )
-                    )
-                    .error(R.drawable.ic_error_image_load)
-                    .into(id_card_front_iv)
+            val imgUrl = identityImg.imgUrl
+            if (imgUrl.isNotEmpty()) {
 
-            } else {
-                Glide.with(this)
-//                    .load(identityImg.imgUrl)
-                    .load(CommonUtils.getTestUrl())
-                    .apply(
-                        RequestOptions().transform(
-                            MultiTransformation(
-                                CenterCrop(),
-                                RoundTransFormation(context, 4)
+                ProductUtils.getRealOssUrl(context, imgUrl, object : CloudAccountApplication.OssSignCallBack {
+                    override fun ossUrlSignEnd(url: String) {
+
+                        Glide.with(this@ShareholderView)
+                            .load(url)
+                            .apply(
+                                RequestOptions().transform(
+                                    MultiTransformation(
+                                        CenterCrop(),
+                                        RoundTransFormation(context, 4)
+                                    )
+                                )
                             )
-                        )
-                    )
-                    .error(R.drawable.ic_error_image_load)
-                    .into(id_card_obverse_iv)
+                            .error(R.drawable.ic_error_image_load)
+                            .into(
+                                if (index == 0) {
+                                    id_card_front_iv
+                                } else {
+                                    id_card_obverse_iv
+                                }
+                            )
+
+
+                    }
+
+                })
+
+
             }
 
 

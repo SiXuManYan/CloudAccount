@@ -35,7 +35,7 @@ class AboutActivity : BaseMVPActivity<AboutPresenter>(), AboutView {
             R.id.privacy_statement_rl -> {
                 startActivity(
                     Intent(this, WebCommonActivity::class.java)
-                        .putExtra(Constants.PARAM_URL, "yinsishengming.html")
+                        .putExtra(Constants.PARAM_URL, "yin_si_sheng_ming.html")
                         .putExtra(Constants.PARAM_TITLE, "隐私声明")
                         .putExtra(Constants.PARAM_WEB_REFRESH, false)
                         .putExtra(Constants.PARAM_WEB_LOAD_LOCAL_HTML, true)
@@ -45,9 +45,10 @@ class AboutActivity : BaseMVPActivity<AboutPresenter>(), AboutView {
             R.id.copyright_rl -> {
                 startActivity(
                     Intent(this, WebCommonActivity::class.java)
-                        .putExtra(Constants.PARAM_URL, Html5Url.COPYRIGHT_URL)
+                        .putExtra(Constants.PARAM_URL, "ban_quan_bao_hu.html")
                         .putExtra(Constants.PARAM_TITLE, getString(R.string.copyright_protection))
                         .putExtra(Constants.PARAM_WEB_REFRESH, false)
+                        .putExtra(Constants.PARAM_WEB_LOAD_LOCAL_HTML, true)
                 )
 
             }

@@ -5,10 +5,12 @@ import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
 import com.fatcloud.account.R
+import com.fatcloud.account.app.CloudAccountApplication
 import com.fatcloud.account.app.Glide
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.order.persional.PersonalInfo
 import com.fatcloud.account.extend.RoundTransFormation
 import kotlinx.android.synthetic.main.activity_order_detail_personal.*
@@ -106,35 +108,63 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
 
         data.imgs?.forEachIndexed { index, identityImg ->
 
-            if (index == 0) {
-                Glide.with(this)
-//                    .load(identityImg.imgUrl)
-                    .load(CommonUtils.getTestUrl())
-                    .apply(
-                        RequestOptions().transform(
-                            MultiTransformation(
-                                CenterCrop(),
-                                RoundTransFormation(context, 4)
-                            )
-                        )
-                    )
-                    .error(R.drawable.ic_error_image_load)
-                    .into(id_card_front_iv)
 
-            } else {
-                Glide.with(this)
-//                    .load(identityImg.imgUrl)
-                    .load(CommonUtils.getTestUrl())
-                    .apply(
-                        RequestOptions().transform(
-                            MultiTransformation(
-                                CenterCrop(),
-                                RoundTransFormation(context, 4)
+            val imgUrl = identityImg.imgUrl
+            if (!imgUrl.isNullOrBlank()) {
+
+
+                if (ProductUtils.isOssSignUrl(imgUrl)) {
+                    ProductUtils.getRealOssUrl(context, imgUrl, object : CloudAccountApplication.OssSignCallBack {
+                        override fun ossUrlSignEnd(url: String) {
+
+
+                            Glide.with(this@RegistrantInfoActivity)
+                                .load(url)
+                                .apply(
+                                    RequestOptions().transform(
+                                        MultiTransformation(
+                                            CenterCrop(),
+                                            RoundTransFormation(context, 4)
+                                        )
+                                    )
+                                )
+                                .error(R.drawable.ic_error_image_load)
+                                .into(
+                                    if (index == 0) {
+                                        id_card_front_iv
+                                    } else {
+                                        id_card_obverse_iv
+                                    }
+                                )
+
+                        }
+
+                    })
+
+
+                } else {
+                    Glide.with(this)
+                        .load(imgUrl)
+                        .apply(
+                            RequestOptions().transform(
+                                MultiTransformation(
+                                    CenterCrop(),
+                                    RoundTransFormation(context, 4)
+                                )
                             )
                         )
-                    )
-                    .error(R.drawable.ic_error_image_load)
-                    .into(id_card_obverse_iv)
+                        .error(R.drawable.ic_error_image_load)
+                        .into(
+                            if (index == 0) {
+                                id_card_front_iv
+                            } else {
+                                id_card_obverse_iv
+                            }
+                        )
+
+                }
+
+
             }
 
 
@@ -153,19 +183,48 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
         bank_phone_tv.text = data.phoneOfBank
         legal_person_name_tv.text = data.legalPersonName
 
-        Glide.with(this)
-//            .load(data.businessLicenseImgUrl)
-            .load(CommonUtils.getTestUrl())
-            .apply(
-                RequestOptions().transform(
-                    MultiTransformation(
-                        CenterCrop(),
-                        RoundTransFormation(context, 4)
+        val businessLicenseImgUrl = data.businessLicenseImgUrl
+        if (!businessLicenseImgUrl.isNullOrBlank()) {
+
+            if (ProductUtils.isOssSignUrl(businessLicenseImgUrl)) {
+                ProductUtils.getRealOssUrl(this, businessLicenseImgUrl, object : CloudAccountApplication.OssSignCallBack {
+                    override fun ossUrlSignEnd(url: String) {
+
+
+                        Glide.with(this@RegistrantInfoActivity)
+                            .load(url)
+                            .apply(
+                                RequestOptions().transform(
+                                    MultiTransformation(
+                                        CenterCrop(),
+                                        RoundTransFormation(context, 4)
+                                    )
+                                )
+                            )
+                            .error(R.drawable.ic_error_image_load)
+                            .into(business_license_iv)
+
+                    }
+
+                })
+            } else {
+                Glide.with(this)
+                    .load(businessLicenseImgUrl)
+                    .apply(
+                        RequestOptions().transform(
+                            MultiTransformation(
+                                CenterCrop(),
+                                RoundTransFormation(context, 4)
+                            )
+                        )
                     )
-                )
-            )
-            .error(R.drawable.ic_error_image_load)
-            .into(business_license_iv)
+                    .error(R.drawable.ic_error_image_load)
+                    .into(business_license_iv)
+            }
+
+
+        }
+
 
     }
 

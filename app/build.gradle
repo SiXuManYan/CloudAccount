@@ -78,6 +78,7 @@ android {
             buildConfigField "String", "WECHAT_APPID", WECHAT_APPID
             buildConfigField "String", "WECHAT_APPSECRET", WECHAT_APPSECRET
             buildConfigField "String", "WECHAT_OFFICIAL_API", WECHAT_OFFICIAL_API
+            buildConfigField "String", "OSS_PRIVATE_BUCKET_NAME", OSS_PRIVATE_BUCKET_NAME
 
             buildConfigField "String", "OSS_END_POINT", OSS_END_POINT
             buildConfigField "String", "BUGLY_APP_ID", '"1"'
@@ -92,6 +93,7 @@ android {
             buildConfigField "String", "WECHAT_APPID", WECHAT_APPID
             buildConfigField "String", "WECHAT_APPSECRET", WECHAT_APPSECRET
             buildConfigField "String", "WECHAT_OFFICIAL_API", WECHAT_OFFICIAL_API
+            buildConfigField "String", "OSS_PRIVATE_BUCKET_NAME", OSS_PRIVATE_BUCKET_NAME
 
             buildConfigField "String", "OSS_END_POINT", OSS_END_POINT
             buildConfigField "String", "BUGLY_APP_ID", '"1"'
@@ -180,7 +182,7 @@ dependencies {
     implementation "me.jessyan:retrofit-url-manager:$rootProject.retrofitManager" // 可在 App 运行时,随时切换 BaseUrl
 
     //工具类
-    implementation "com.blankj:utilcodex:$rootProject.utilcode"
+    implementation 'com.blankj:utilcodex:1.29.0'
 
     // Glide
     kapt "com.github.bumptech.glide:compiler:$rootProject.glide"

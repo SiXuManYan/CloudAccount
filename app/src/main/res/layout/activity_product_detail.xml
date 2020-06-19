@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@color/font_white"
-                android:checked="true"
+                android:checked="false"
                 android:gravity="center_vertical"
                 android:text="我已阅读并接受服务协议"
                 android:textColor="@color/color_third_level"
