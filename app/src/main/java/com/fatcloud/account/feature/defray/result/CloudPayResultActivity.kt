@@ -31,6 +31,7 @@ class CloudPayResultActivity : BaseMVPActivity<CloudPayResultPresenter>(), Cloud
     override fun onBackPressed() {
         AlertDialog.Builder(this)
             .setMessage("提示")
+            .setCancelable(false)
             .setPositiveButton("返回首页", AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
                 super.onBackPressed()
                 dialog.dismiss()

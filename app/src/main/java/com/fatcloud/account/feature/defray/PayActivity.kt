@@ -1,6 +1,7 @@
 package com.fatcloud.account.feature.defray
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.DialogInterface
 import android.os.Handler
 import android.os.Message
@@ -17,6 +18,7 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.defray.AlipayResultStatus
 import com.fatcloud.account.entity.defray.PayResult
 import com.fatcloud.account.entity.defray.WechatPayInfo
+import com.fatcloud.account.event.Event
 import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.event.entity.WechatPayResultEvent
@@ -237,5 +239,12 @@ class PayActivity : BaseMVPActivity<PayPresenter>(), PayView {
         finish()
     }
 
+
+    override fun finish() {
+
+        RxBus.post(Event(Constants.EVENT_CLOSE_PAY))
+        setResult(Activity.RESULT_OK)
+        super.finish()
+    }
 
 }

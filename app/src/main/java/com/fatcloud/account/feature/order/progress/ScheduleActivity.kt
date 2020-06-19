@@ -13,6 +13,7 @@ import com.fatcloud.account.entity.order.progress.BusinessProgress
 import com.fatcloud.account.event.entity.BankFormCommitSuccessEvent
 import com.fatcloud.account.event.entity.RefreshOrderEvent
 import com.fatcloud.account.feature.forms.enterprise.bank.FormBankActivity
+import com.fatcloud.account.feature.order.details.bookkeeping.BookkeepingInfoActivity
 import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterInfoActivity
 import com.fatcloud.account.feature.order.details.personal.RegistrantInfoActivity
 import com.fatcloud.account.feature.order.progress.holders.ScheduleHolder
@@ -123,7 +124,11 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
 
             }
             Constants.PW4 -> {
-                
+                startActivity(
+                    Intent(this@ScheduleActivity, BookkeepingInfoActivity::class.java)
+                        .putExtra(Constants.PARAM_ORDER_ID, orderId)
+                        .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
+                )
 
             }
 
@@ -169,6 +174,11 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
                 }
             }
             Constants.PW4 -> {
+                startActivity(
+                    Intent(this@ScheduleActivity, BookkeepingInfoActivity::class.java)
+                        .putExtra(Constants.PARAM_ORDER_ID, orderId)
+                        .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
+                )
 
             }
 

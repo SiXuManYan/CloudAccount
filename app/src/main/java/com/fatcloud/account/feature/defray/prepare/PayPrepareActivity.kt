@@ -1,5 +1,6 @@
 package com.fatcloud.account.feature.defray.prepare
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.view.View
 import butterknife.OnClick
@@ -10,6 +11,8 @@ import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.defray.PayActivity
+import com.fatcloud.account.feature.order.lists.OrderListActivity
+import com.fatcloud.account.view.dialog.AlertDialog
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_pay_prepare.*
 import java.math.BigDecimal
@@ -27,6 +30,7 @@ class PayPrepareActivity : BaseMVPActivity<PayPreparePresenter>(), PayPrepareVie
     private var productLogoImgUrl = ""
     private var productName = ""
     private var createDt = ""
+    private var closePayListenerRequest = 1
 
 
     override fun getLayoutId(): Int = R.layout.activity_pay_prepare
@@ -47,6 +51,8 @@ class PayPrepareActivity : BaseMVPActivity<PayPreparePresenter>(), PayPrepareVie
         presenter.subsribeEventEntity<OrderPaySuccessEvent>(Consumer {
             finish()
         })
+
+
     }
 
     private fun initExtra() {
@@ -93,18 +99,37 @@ class PayPrepareActivity : BaseMVPActivity<PayPreparePresenter>(), PayPrepareVie
         }
         when (view.id) {
             R.id.defray -> {
-                startActivity(
+                startActivityForResult(
                     Intent(this, PayActivity::class.java)
                         .putExtra(Constants.PARAM_ORDER_ID, orderId)
                         .putExtra(Constants.PARAM_ORDER_NUMBER, orderNo)
-                        .putExtra(Constants.PARAM_MONEY, money)
+                        .putExtra(Constants.PARAM_MONEY, money), closePayListenerRequest
                 )
-                finish()
             }
             else -> {
             }
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == closePayListenerRequest) {
+            AlertDialog.Builder(this)
+                .setTitle("提示")
+                .setMessage("订单已提交")
+                .setCancelable(false)
+                .setPositiveButton("返回首页", AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
+                    super.onBackPressed()
+                    dialog.dismiss()
+                })
+                .setNegativeButton("查看订单", AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
+                    startActivity(OrderListActivity::class.java)
+                    super.onBackPressed()
+                    dialog.dismiss()
+                })
+                .create()
+                .show()
+        }
+    }
 
 }

@@ -121,6 +121,7 @@ object Constants {
     const val EVENT_MORE_TRANSPARENT = 0x94
     const val EVENT_MORE_SATURATION = 0x95
     const val EVENT_PASSWORD_RESET_SUCCESS = 0x96 //密码重置成功
+    const val EVENT_CLOSE_PAY = 0x97 // 关闭支付页面
 
     // 列表数据 key
     const val KEY_DATA = "data"

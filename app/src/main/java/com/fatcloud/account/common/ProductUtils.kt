@@ -217,7 +217,7 @@ object ProductUtils {
      * 是否为加密url
      */
     fun isOssSignUrl(url: String): Boolean {
-        if (url.contains(BuildConfig.OSS_END_POINT)) {
+        if (url.contains(BuildConfig.OSS_PRIVATE_BUCKET_NAME)) {
             return true
         }
         return false

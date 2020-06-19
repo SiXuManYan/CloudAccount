@@ -38,6 +38,8 @@ import com.fatcloud.account.feature.forms.personal.tax.FormTaxRegistrationPerson
 import com.fatcloud.account.feature.forms.personal.tax.FormTaxRegistrationPersonalModule
 import com.fatcloud.account.feature.news.detail.NewsDetailActivity
 import com.fatcloud.account.feature.news.detail.NewsDetailModule
+import com.fatcloud.account.feature.order.details.bookkeeping.BookkeepingInfoActivity
+import com.fatcloud.account.feature.order.details.bookkeeping.BookkeepingInfoModule
 import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterInfoModule
 import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterInfoActivity
 import com.fatcloud.account.feature.order.details.personal.RegistrantInfoActivity
@@ -185,6 +187,10 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [WechatLoginRegisterModule::class])
     abstract fun wechatLoginRegisterActivityInjector(): WechatLoginRegisterActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [BookkeepingInfoModule::class])
+    abstract fun bookkeepingInfoActivityInjector(): BookkeepingInfoActivity
 
 
 }

@@ -1,6 +1,7 @@
 package com.fatcloud.account.feature.product.detail
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -26,9 +27,11 @@ import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.account.login.LoginActivity
+import com.fatcloud.account.feature.order.lists.OrderListActivity
 import com.fatcloud.account.feature.product.detail.sheet.ProductSheetFragment
 import com.fatcloud.account.feature.product.detail.spinners.ProductSpinnerFragment
 import com.fatcloud.account.feature.webs.WebCommonActivity
+import com.fatcloud.account.view.dialog.AlertDialog
 import com.youth.banner.BannerConfig
 import com.youth.banner.loader.ImageLoader
 import io.reactivex.functions.Consumer
@@ -102,13 +105,14 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
             finish()
         })
 
-//        presenter.subsribeEvent(Consumer {
-//            when (it.code) {
-//                Constants.EVENT_NEED_REFRESH -> getData()
-//                else -> {
-//                }
-//            }
-//        })
+        presenter.subsribeEvent(Consumer {
+            when (it.code) {
+                Constants.EVENT_CLOSE_PAY -> finish()
+                else -> {
+                }
+            }
+        })
+
 
     }
 
