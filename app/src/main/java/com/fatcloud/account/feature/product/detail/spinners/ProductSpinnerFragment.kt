@@ -2,10 +2,13 @@ package com.fatcloud.account.feature.product.detail.spinners
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import butterknife.OnClick
+import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.VibrateUtils
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -50,7 +53,8 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
      * 注意，超过2000万时，后台返回的Money为 0.001，
      * 需要用前台的2000万来乘以倍数
      */
-    private val multipleBigIncome = 20000000
+    private var multipleBigIncome = 2000
+    private val multipleBigIncomeMin = 2000
 
 
     /**
@@ -91,6 +95,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
     private var mFinalMoney: BigDecimal = BigDecimal.ZERO
 
 
+    private var checkActualIncome = false
 
     companion object {
         fun newInstance(productDetail: ProductDetail): ProductSpinnerFragment {
@@ -139,6 +144,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
             .into(image_iv)
 
         content_tv.text = productDetail?.name
+
     }
 
 
@@ -245,19 +251,84 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
      */
     private fun handleAmountEnterprise(price: Price) {
 
+
         // 根据用户选择的收入获取原始金额
         val originalMoney: BigDecimal
         when (price.mold) {
             Constants.PP2 -> {
-                originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multipleBigIncome))
+                checkActualIncome = true
+                originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multipleBigIncome * 10000))
                 actual_income_rl.visibility = View.VISIBLE
+
+                // 添加动态输入监听
+                addExtraTextChangeForEnterprise(price)
             }
             else -> {
                 originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multipleEnterprise)) // PP1
                 actual_income_rl.visibility = View.INVISIBLE
+                checkActualIncome = false
             }
         }
 
+        mFinalMoney = getEnterpriseFinalMoney(originalMoney)
+
+        if (isThirdSelect) {
+            amount_tv.text = getString(R.string.money_symbol_format, mFinalMoney.stripTrailingZeros().toPlainString())
+        }
+
+
+    }
+
+    /**
+     * 企业代理记账输入监听
+     */
+    private fun addExtraTextChangeForEnterprise(price: Price) {
+
+        var originalMoney: BigDecimal
+        actual_income_et.addTextChangedListener(object : TextWatcher {
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
+
+            override fun afterTextChanged(s: Editable?) {
+                val afterText = s.toString().trim()
+                if (afterText.isBlank()) {
+                    multipleBigIncome = multipleBigIncomeMin
+                } else {
+
+                    try {
+                        val intNumber = afterText.toInt()
+                        if (intNumber < multipleBigIncomeMin) {
+                            multipleBigIncome = multipleBigIncomeMin
+                        } else {
+                            multipleBigIncome = intNumber
+                        }
+
+                    } catch (e: Exception) {
+                        multipleBigIncome = multipleBigIncomeMin
+                    }
+                }
+
+                // 2000万*服务器返回的 0.001
+                originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multipleBigIncome * 10000))
+
+                // 最终金额
+                mFinalMoney = getEnterpriseFinalMoney(originalMoney)
+
+                if (isThirdSelect) {
+                    amount_tv.text = getString(R.string.money_symbol_format, mFinalMoney.stripTrailingZeros().toPlainString())
+                }
+            }
+
+        })
+    }
+
+    /**
+     * 获取企业最终金额 = 企业额外默认金额 + 动态金额
+     *
+     */
+    private fun getEnterpriseFinalMoney(originalMoney: BigDecimal): BigDecimal {
         // 企业额外默认金额（其他绑定业务 营业执照+对公账户+刻章+税务登记）
         val extraDefaultMoney = BigDecimalUtil
             .add(BigDecimal(priceBusinessLicense), BigDecimal(priceBankPublicAccount))
@@ -265,14 +336,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
             .add(BigDecimal(priceTaxRegistration))
 
         // 最终金额
-         mFinalMoney = BigDecimalUtil.add(originalMoney, extraDefaultMoney)
-
-
-        if (isThirdSelect) {
-            amount_tv.text = getString(R.string.money_symbol_format, mFinalMoney.stripTrailingZeros().toPlainString())
-        }
-
-
+        return BigDecimalUtil.add(originalMoney, extraDefaultMoney)
     }
 
 
@@ -285,20 +349,67 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
 
         when (price.mold) {
             Constants.PP2 -> {
-                originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multipleBigIncome))
+
                 actual_income_rl.visibility = View.VISIBLE
+                checkActualIncome = true
+
+                originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multipleBigIncome * 10000))
+                addPersonalTextChangeForEnterprise(price)
             }
             else -> {
                 originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multiplePersonal))// PP1
                 actual_income_rl.visibility = View.INVISIBLE
+                checkActualIncome = false
             }
         }
 
+        mFinalMoney = originalMoney
         // 个人只计算代理记账最终金额即可
         if (isThirdSelect) {
-            mFinalMoney = originalMoney
             amount_tv.text = getString(R.string.money_symbol_format, mFinalMoney.stripTrailingZeros().toPlainString())
         }
+    }
+
+    private fun addPersonalTextChangeForEnterprise(price: Price) {
+        var originalMoney: BigDecimal
+        actual_income_et.addTextChangedListener(object : TextWatcher {
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
+
+            override fun afterTextChanged(s: Editable?) {
+                val afterText = s.toString().trim()
+                if (afterText.isBlank()) {
+                    multipleBigIncome = multipleBigIncomeMin
+                } else {
+
+                    try {
+                        val intNumber = afterText.toInt()
+                        if (intNumber < multipleBigIncomeMin) {
+                            multipleBigIncome = multipleBigIncomeMin
+                        } else {
+                            multipleBigIncome = intNumber
+                        }
+
+                    } catch (e: Exception) {
+                        multipleBigIncome = multipleBigIncomeMin
+                    }
+                }
+
+                // 2000万*服务器返回的 0.001
+                originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multipleBigIncome * 10000))
+
+
+                // 个人只计算代理记账最终金额即可
+                if (isThirdSelect) {
+                    mFinalMoney = originalMoney
+                    amount_tv.text = getString(R.string.money_symbol_format, mFinalMoney.stripTrailingZeros().toPlainString())
+                }
+            }
+
+        })
+
     }
 
 
@@ -319,6 +430,26 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
             third_rl.startAnimation(CommonUtils.getShakeAnimation(2))
             return
         }
+        if (checkActualIncome) {
+            val text = actual_income_et.text.toString().trim()
+            if (text.isBlank()) {
+                ToastUtils.showShort("请输入实际收入")
+                return
+            }
+            try {
+                val intInputNumber = text.toInt()
+                if (intInputNumber < multipleBigIncomeMin) {
+                    ToastUtils.showShort("金额输入错误，请重新输入")
+                    return
+                }
+            } catch (e: Exception) {
+                ToastUtils.showShort("金额输入错误，请重新输入")
+                return
+            }
+
+
+        }
+
 
         when (productDetail?.mold) {
             Constants.P2 -> {

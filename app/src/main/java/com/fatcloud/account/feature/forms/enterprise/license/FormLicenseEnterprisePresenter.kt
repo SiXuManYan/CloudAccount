@@ -58,9 +58,9 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
         holders.add(shareHolder1)
         holders.add(shareHolder2)
 
-        val max = shareholderMoreContainer.childCount
+        val max = shareholderMoreContainer.childCount-1
         if (max > 0) {
-            for (i in 0..max) {
+            for (i in 0 until max) {
                 val companyMemberEditView = shareholderMoreContainer.getChildAt(i) as CompanyMemberEditView
                 holders.add(companyMemberEditView.getShareHolder())
             }
