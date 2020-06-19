@@ -12,6 +12,7 @@ import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
 import com.fatcloud.account.R
+import com.fatcloud.account.app.CloudAccountApplication
 import com.fatcloud.account.app.Glide
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
@@ -266,32 +267,63 @@ class CompanyMemberEditView : LinearLayout {
 
     /**
      * 加载服务器图片地址
-     * todo 解析图片路径
      */
     fun setServerImage(images: ArrayList<IdentityImg>) {
         if (images.isNullOrEmpty()) {
             return
         }
 
-
         images.forEach {
-            Glide.with(this)
-                .load(it.imgUrl)
-                .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
-                .error(R.drawable.ic_error_image_load)
-                .into(
-                    when (it.mold) {
-                        Constants.I1 -> getFrontImage()
-                        else -> getBackImage()
-                    }
-                )
+
+            val sourceImageUrl = it.imgUrl
+            if (!sourceImageUrl.isNullOrBlank()) {
+                if (ProductUtils.isOssSignUrl(sourceImageUrl)) {
+                    ProductUtils.getRealOssUrl(context, sourceImageUrl, object : CloudAccountApplication.OssSignCallBack {
+                        override fun ossUrlSignEnd(url: String) {
+
+                            Glide.with(this@CompanyMemberEditView)
+                                .load(url)
+                                .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
+                                .error(R.drawable.ic_error_image_load)
+                                .into(
+                                    when (it.mold) {
+                                        Constants.I1 -> getFrontImage()
+                                        else -> getBackImage()
+                                    }
+                                )
+
+
+                        }
+
+                    })
+
+
+                } else {
+                    Glide.with(this)
+                        .load(sourceImageUrl)
+                        .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
+                        .error(R.drawable.ic_error_image_load)
+                        .into(
+                            when (it.mold) {
+                                Constants.I1 -> getFrontImage()
+                                else -> getBackImage()
+                            }
+                        )
+
+                }
+
+
+            }
+
+
+
 
             when (it.mold) {
                 Constants.I1 -> {
-                    frontImageUrl = it.imgUrl
+                    frontImageUrl = sourceImageUrl
                 }
                 Constants.I2 -> {
-                    backImageUrl = it.imgUrl
+                    backImageUrl = sourceImageUrl
                 }
 
             }
@@ -300,9 +332,9 @@ class CompanyMemberEditView : LinearLayout {
 
     }
 
-    fun disableImageViewClick(){
+    fun disableImageViewClick() {
         id_card_front_iv.isClickable = false
-        id_card_back_iv .isClickable = false
+        id_card_back_iv.isClickable = false
 
     }
 

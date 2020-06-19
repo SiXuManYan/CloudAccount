@@ -13,10 +13,7 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.ImageView
 import android.widget.LinearLayout
 import butterknife.OnClick
-import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.ScreenUtils
-import com.blankj.utilcode.util.SpanUtils
-import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -216,7 +213,7 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
                 }
 
                 override fun updateDrawState(ds: TextPaint) {
-                    ds.color = Color.BLUE
+                    ds.color = ColorUtils.getColor(R.color.color_red_foreground)
                     ds.isUnderlineText = false
                 }
             }).create()
@@ -253,30 +250,35 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
                     return
                 }
                 if (!protocol.isChecked) {
-                    ToastUtils.showShort("请同意用户服务协议")
-                }
-                mData?.let {
-                    when (it.mold) {
-                        Constants.P1, Constants.P4 -> {
-                            // P1个体户营业执照 ，P4 个体户税务登记
-                            ProductSheetFragment.newInstance(it).apply {
-                                show(supportFragmentManager, this.tag)
+                    ToastUtils.showShort("请先同意用户服务协议")
+                    VibrateUtils.vibrate(10)
+                    protocol.startAnimation(CommonUtils.getShakeAnimation(2))
+
+                } else {
+                    mData?.let {
+                        when (it.mold) {
+                            Constants.P1, Constants.P4 -> {
+                                // P1个体户营业执照 ，P4 个体户税务登记
+                                ProductSheetFragment.newInstance(it).apply {
+                                    show(supportFragmentManager, this.tag)
+                                }
+
+                            }
+                            Constants.P2, Constants.P3 -> {
+                                // P2 企业套餐 ,P3个体户代理记账
+                                ProductSpinnerFragment.newInstance(it).apply {
+                                    show(supportFragmentManager, this.tag)
+                                }
+
                             }
 
-                        }
-                        Constants.P2, Constants.P3 -> {
-                            // P2 企业套餐 ,P3个体户代理记账
-                            ProductSpinnerFragment.newInstance(it).apply {
-                                show(supportFragmentManager, this.tag)
+                            else -> {
                             }
-
                         }
 
-                        else -> {
-                        }
                     }
-
                 }
+
             }
             else -> {
             }

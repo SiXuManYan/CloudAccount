@@ -137,18 +137,43 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
 
         // 营业执照
         data.businessLicenseImgUrl?.let {
-            Glide.with(this)
-                .load(presenter.getOssSecurityTokenForSignUrl(this, it))
-                .apply(
-                    RequestOptions().transform(
-                        MultiTransformation(
-                            CenterCrop(),
-                            RoundTransFormation(context, 4)
+            if (ProductUtils.isOssSignUrl(it)) {
+                ProductUtils.getRealOssUrl(this,it,object :CloudAccountApplication.OssSignCallBack{
+                    override fun ossUrlSignEnd(url: String) {
+
+                        Glide.with(this@CompanyRegisterInfoActivity)
+                            .load(url)
+                            .apply(
+                                RequestOptions().transform(
+                                    MultiTransformation(
+                                        CenterCrop(),
+                                        RoundTransFormation(context, 4)
+                                    )
+                                )
+                            )
+                            .error(R.drawable.ic_error_image_load)
+                            .into(business_license_iv)
+
+                    }
+
+                })
+            }else{
+                Glide.with(this)
+                    .load(it)
+                    .apply(
+                        RequestOptions().transform(
+                            MultiTransformation(
+                                CenterCrop(),
+                                RoundTransFormation(context, 4)
+                            )
                         )
                     )
-                )
-                .error(R.drawable.ic_error_image_load)
-                .into(business_license_iv)
+                    .error(R.drawable.ic_error_image_load)
+                    .into(business_license_iv)
+            }
+
+
+
         }
 
 
@@ -200,7 +225,7 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
                     override fun ossUrlSignEnd(url: String) {
 
                         Glide.with(this@CompanyRegisterInfoActivity)
-                            .load(legalPersonWarrantImgUrl)
+                            .load(url)
                             .apply(
                                 RequestOptions().transform(
                                     MultiTransformation(

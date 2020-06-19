@@ -112,14 +112,7 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
      */
     private fun handlePersonalProduct(it: BusinessProgress) {
         when (it.code) {
-            Constants.PW1 -> {
-                startActivity(
-                    Intent(this@ScheduleActivity, RegistrantInfoActivity::class.java)
-                        .putExtra(Constants.PARAM_ORDER_ID, orderId)
-                        .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
-                )
-            }
-            Constants.PW2 -> {
+            Constants.PW1, Constants.PW2 -> {
                 startActivity(
                     Intent(this@ScheduleActivity, RegistrantInfoActivity::class.java)
                         .putExtra(Constants.PARAM_ORDER_ID, orderId)
@@ -130,6 +123,7 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
 
             }
             Constants.PW4 -> {
+                
 
             }
 

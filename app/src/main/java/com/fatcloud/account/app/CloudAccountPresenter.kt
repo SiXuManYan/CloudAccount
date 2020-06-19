@@ -73,21 +73,6 @@ class CloudAccountPresenter(val view: CloudAccountView) {
                     override fun onSuccess(data: Commons?) {
                         data?.let {
 
-                            data.businessScope.apply {
-
-
-                                forEachIndexed { index, first ->
-
-                                    // 二级列表默认全选
-                                    first.childs.forEach { second ->
-                                        second.nativeIsSelect = true
-                                    }
-
-                                }
-
-
-                            }
-
                             view.receiveCommonData(data)
 
                         }

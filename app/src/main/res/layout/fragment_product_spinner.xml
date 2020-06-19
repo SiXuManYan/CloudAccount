@@ -153,7 +153,7 @@
         android:id="@+id/actual_income_rl"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="150dp"
         android:visibility="invisible"
         tools:visibility="visible">
 
@@ -173,20 +173,30 @@
             android:id="@+id/actual_income_et"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@+id/tag_tv"
             android:background="@null"
             android:gravity="center_vertical"
-            android:hint="填写实际收入(万)"
+            android:hint="填写实际收入"
             android:imeOptions="actionGo"
             android:inputType="phone"
             android:lines="1"
-            android:maxLength="11"
             android:minWidth="100dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:textColor="@color/color_first_level"
             android:textColorHint="@color/color_cccccc"
             android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tag_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:text="(万)"
+            android:textColor="@color/color_first_level"
+            android:textSize="@dimen/font_size_14" />
+
 
     </RelativeLayout>
 

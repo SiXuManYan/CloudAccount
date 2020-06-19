@@ -47,8 +47,10 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
 
     /**
      * 个人或企业代理记账，超过2000万收入时的最终金额倍数 0.1%
+     * 注意，超过2000万时，后台返回的Money为 0.001，
+     * 需要用前台的2000万来乘以倍数
      */
-    private val multipleBigIncome = 0.001
+    private val multipleBigIncome = 20000000
 
 
     /**

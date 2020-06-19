@@ -8,6 +8,7 @@ import com.fatcloud.account.app.CloudAccountApplication
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.commons.BusinessScope
+import com.fatcloud.account.entity.commons.Commons
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import kotlinx.android.synthetic.main.activity_business_scope.*
@@ -42,8 +43,13 @@ class BusinessScopeActivity() : BaseMVPActivity<BusinessScopePresenter>(), Busin
         val businessScope = loudAccountApplication.commonData?.businessScope
 
         if (businessScope.isNullOrEmpty() || businessScope[0].childs.isNullOrEmpty()) {
+            presenter.getCommonList(this)
             return
         }
+        initRecyclerView(businessScope)
+    }
+
+    private fun initRecyclerView(businessScope: ArrayList<BusinessScope>?) {
         firstAdapter = getFirstRecyclerAdapter().apply {
             addAll(businessScope)
         }
@@ -67,18 +73,30 @@ class BusinessScopeActivity() : BaseMVPActivity<BusinessScopePresenter>(), Busin
             if (!nativeIsSelect) {
                 VibrateUtils.vibrate(10)
             }
-            businessScope.nativeIsSelect = !nativeIsSelect
 
+            businessScope.nativeIsSelect = !nativeIsSelect
             adapter.notifyItemChanged(it)
-            performFirstAdapterClick(businessScope.childs)
+
+            performFirstAdapterClick(businessScope.childs, businessScope.nativeIsSelect)
+
+
         }
 
         return adapter
     }
 
-    private fun performFirstAdapterClick(businessScope: List<BusinessScope>) {
+    private fun performFirstAdapterClick(businessScope: List<BusinessScope>, firstIsSelect: Boolean) {
+
         secondAdapter?.apply {
             clear()
+
+
+            businessScope.forEach {
+
+                it.nativeIsSelect = firstIsSelect
+
+            }
+
             addAll(businessScope)
         }
     }
@@ -147,6 +165,12 @@ class BusinessScopeActivity() : BaseMVPActivity<BusinessScopePresenter>(), Busin
 
         }
 
+    }
+
+    override fun receiveCommonData(data: Commons) {
+        val application = application as CloudAccountApplication
+        application.receiveCommonData(data)
+        initRecyclerView(data.businessScope)
     }
 
 
