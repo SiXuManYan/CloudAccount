@@ -97,12 +97,27 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
     private var incomeMoney = 0
 
     /**
-     *
+     * app 计算的金额，只用于显示
      */
     private var mFinalMoney: BigDecimal = BigDecimal.ZERO
 
 
+    /**
+     * 检查输入金额
+     */
     private var checkActualIncome = false
+
+    /**
+     * 超过2000万，传给后台的money
+     */
+    private val bigAmount = 2000
+
+
+    /**
+     * 最终传给服务器的金额
+     */
+    private var serverFinalMoney: BigDecimal = BigDecimal.ZERO
+
 
     companion object {
         fun newInstance(productDetail: ProductDetail): ProductSpinnerFragment {
@@ -267,6 +282,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
             Constants.PP2 -> {
 
                 checkActualIncome = true
+
                 originalMoney = BigDecimalUtil.mul(
                     price.money,
                     BigDecimalUtil.mul(BigDecimal(multipleBigIncome), BigDecimal(10000))
@@ -274,6 +290,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
 
                 actual_income_rl.visibility = View.VISIBLE
 
+                serverFinalMoney = BigDecimal(bigAmount)
                 // 添加动态输入监听
                 addExtraTextChangeForEnterprise(price)
             }
@@ -281,6 +298,8 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multipleEnterprise)) // PP1
                 actual_income_rl.visibility = View.INVISIBLE
                 checkActualIncome = false
+
+                serverFinalMoney = price.money
             }
         }
 
@@ -309,21 +328,28 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 val afterText = s.toString().trim()
                 if (afterText.isBlank()) {
                     multipleBigIncome = multipleBigIncomeMin
-                    incomeMoney = 0
+//                    incomeMoney = 0
+
+                    serverFinalMoney = BigDecimal(bigAmount)
+
                 } else {
 
                     try {
                         val intNumber = afterText.toInt()
                         if (intNumber < multipleBigIncomeMin) {
                             multipleBigIncome = multipleBigIncomeMin
+                            serverFinalMoney = BigDecimal(bigAmount)
                         } else {
                             multipleBigIncome = intNumber
+                            serverFinalMoney = BigDecimal(intNumber)
                         }
 
                     } catch (e: Exception) {
                         multipleBigIncome = multipleBigIncomeMin
+
+                        serverFinalMoney = BigDecimal(bigAmount)
                     }
-                    incomeMoney = multipleBigIncome
+//                    incomeMoney = multipleBigIncome
                 }
 
                 // 2000万*服务器返回的 0.001
@@ -375,11 +401,13 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                     BigDecimalUtil.mul(BigDecimal(multipleBigIncome), BigDecimal(10000))
                 )
 
+                serverFinalMoney = BigDecimal(bigAmount)
                 addPersonalTextChangeForEnterprise(price)
             }
             else -> {
                 originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multiplePersonal))// PP1
                 actual_income_rl.visibility = View.INVISIBLE
+                serverFinalMoney = price.money
                 checkActualIncome = false
             }
         }
@@ -403,21 +431,24 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 val afterText = s.toString().trim()
                 if (afterText.isBlank()) {
                     multipleBigIncome = multipleBigIncomeMin
-                    incomeMoney = 0
+//                    incomeMoney = 0
+                    serverFinalMoney = BigDecimal(bigAmount)
                 } else {
 
                     try {
                         val intNumber = afterText.toInt()
                         if (intNumber < multipleBigIncomeMin) {
                             multipleBigIncome = multipleBigIncomeMin
+                            serverFinalMoney = BigDecimal(bigAmount)
                         } else {
                             multipleBigIncome = intNumber
+                            serverFinalMoney = BigDecimal(intNumber)
                         }
 
                     } catch (e: Exception) {
                         multipleBigIncome = multipleBigIncomeMin
                     }
-                    incomeMoney = multipleBigIncome
+//                    incomeMoney = multipleBigIncome
                 }
 
                 // 2000万*服务器返回的 0.001
@@ -483,8 +514,8 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 startActivity(
                     Intent(activity, FormLicenseEnterpriseActivity::class.java)
                         .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
-                        .putExtra(Constants.PARAM_INCOME_MONEY, incomeMoney.toString())
-                        .putExtra(Constants.PARAM_FINAL_MONEY, mFinalMoney.stripTrailingZeros().toPlainString())
+                        .putExtra(Constants.PARAM_INCOME_MONEY, serverFinalMoney.toPlainString())
+                        .putExtra(Constants.PARAM_FINAL_MONEY, serverFinalMoney.toPlainString())
                         .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, thirdProductPriceId)
                 )
             }
@@ -495,7 +526,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 startActivity(
                     Intent(activity, FormAgentBookkeepingPersonalActivity::class.java)
                         .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
-                        .putExtra(Constants.PARAM_FINAL_MONEY, mFinalMoney.stripTrailingZeros().toPlainString())
+                        .putExtra(Constants.PARAM_FINAL_MONEY, serverFinalMoney.toPlainString())
                         .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, thirdProductPriceId)
                 )
 

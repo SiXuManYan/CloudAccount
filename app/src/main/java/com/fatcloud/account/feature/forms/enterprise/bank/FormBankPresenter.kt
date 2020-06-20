@@ -78,7 +78,11 @@ class FormBankPresenter @Inject constructor(private var view: FormBankView) : Ba
                     data?.let {
                         view.bindDetailInfo(data)
                     }
+                }
 
+                override fun onError(e: Throwable) {
+                    // 接口未上线 404
+                    onComplete()
                 }
             }
         )

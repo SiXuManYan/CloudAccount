@@ -156,13 +156,7 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp" />
 
-            <!-- 邮编 -->
-            <com.fatcloud.account.view.EditView
-                android:id="@+id/postcode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp" />
+
 
             <!-- 注册资金 (万元)-->
             <com.fatcloud.account.view.EditView

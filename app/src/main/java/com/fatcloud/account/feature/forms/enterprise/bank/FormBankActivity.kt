@@ -144,7 +144,7 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
         // 公司名称
         company_name.setTitleAndHint("公司名称", "请输入公司名称")
         company_address.setTitleAndHint("公司地址", "请输入公司地址")
-        postcode.setTitleAndHint("邮编", "请输入邮编").setInputType(InputType.TYPE_CLASS_NUMBER)
+//        postcode.setTitleAndHint("邮编", "请输入邮编").setInputType(InputType.TYPE_CLASS_NUMBER)
         registered_capital.setTitleAndHint("注册资金(万元)", "请输入注册资金(万元)").setInputType(InputType.TYPE_CLASS_NUMBER)
 
         // 对账服务
@@ -277,7 +277,7 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
         if (!ProductUtils.checkEditEmptyWithVibrate(
                 company_name,
                 company_address,
-                postcode,
+//                postcode,
                 registered_capital,
                 reconciliation_name,
                 reconciliation_phone,
@@ -328,6 +328,8 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
         RxBus.post(BankFormCommitSuccessEvent())
         finish()
     }
+
+
 
 
 }

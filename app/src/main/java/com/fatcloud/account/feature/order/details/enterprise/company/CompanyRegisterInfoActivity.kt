@@ -84,6 +84,7 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
 
 
     override fun bindDetailInfo(data: EnterpriseInfo) {
+        registered_capital_tv.text = data.capital
         CommonUtils.setPaymentStatus(data.state, payment_status_iv, payment_status_tv)
 
 
@@ -121,10 +122,9 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
 
     private fun setBankInfo(data: EnterpriseInfo) {
 
-        bank_name_tv.text = data.financeName // 银行
         company_name_tv.text = data.enterpriseName
         company_address_tv.text = data.enterpriseAddr
-        postcode_tv.text = data.capital // 邮编
+//        postcode_tv.text = data.capital // 邮编
 
 
         account_nature_tv.text = data.enterpriseMold
@@ -273,7 +273,7 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
 
 
     override fun bindShareholdersInfo(data: PersonalInfo) {
-        registered_capital_tv.text = data.investMoney?.stripTrailingZeros()?.toPlainString()  // 注册资本。。。。。
+
         shareholder_container_bank_ll.removeAllViews()
         data.shareholders?.forEach {
             shareholder_container_bank_ll.addView(ShareholderView(this).apply { setShareHolderView(it) })

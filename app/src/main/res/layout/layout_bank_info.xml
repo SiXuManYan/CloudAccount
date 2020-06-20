@@ -81,7 +81,7 @@
             android:maxLines="1"
             android:textColor="@color/color_first_level"
             android:textSize="@dimen/font_size_14"
-            tools:text="中国银行" />
+            android:text="渤海银行" />
 
     </LinearLayout>
 
@@ -207,6 +207,7 @@
         android:orientation="horizontal"
         android:paddingLeft="15dp"
         android:paddingTop="3dp"
+        android:visibility="gone"
         android:paddingRight="15dp"
         android:paddingBottom="3dp">
 
@@ -444,7 +445,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
-            android:maxLines="1"
             android:textColor="@color/color_first_level"
             android:textSize="@dimen/font_size_14"
             tools:text="大连市" />

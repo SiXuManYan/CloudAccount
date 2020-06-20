@@ -2,21 +2,22 @@ package com.fatcloud.account.app
 
 import android.content.Context
 import android.util.Log
+import com.blankj.utilcode.util.LogUtils
 import com.fatcloud.account.BuildConfig
-import com.fatcloud.account.R2.id.original
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
-import com.fatcloud.account.common.Constants.DEVICE_ANDROID
 import com.fatcloud.account.data.CloudDataBase
 import com.fatcloud.account.network.ApiService
 import com.fatcloud.account.network.GsonConvertFactory
 import com.fatcloud.account.network.UrlUtil
-import com.blankj.utilcode.util.LogUtils
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import me.jessyan.retrofiturlmanager.RetrofitUrlManager
-import okhttp3.*
+import okhttp3.Cache
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.Protocol
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -78,7 +79,7 @@ class AppModule {
             e.printStackTrace()
         }
 
-//        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
 
             // 日志拦截器
             val loggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
@@ -95,7 +96,7 @@ class AppModule {
 
             builder.addInterceptor(loggingInterceptor)
             builder.addInterceptor(bodyInterceptor)
-//        }
+        }
 
 
 
