@@ -1,7 +1,6 @@
 package com.fatcloud.account.app
 
 import android.content.Context
-import android.util.Log
 import androidx.annotation.IdRes
 import com.alibaba.sdk.android.oss.*
 import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback
@@ -173,12 +172,12 @@ class CloudAccountPresenter(val view: CloudAccountView) {
         // 构造上传请求,第二个数参是ObjectName，第三个参数是本地文件路径
         val put = PutObjectRequest(imageBucketName, imageObjectKey, localFilePatch)
         put.progressCallback = OSSProgressCallback<PutObjectRequest> { request, currentSize, totalSize ->
-            Log.i("上传进度：", "当前进度$currentSize   总进度$totalSize");
+//            Log.i("上传进度：", "当前进度$currentSize   总进度$totalSize");
         }
 
         val task = oss.asyncPutObject(put, object : OSSCompletedCallback<PutObjectRequest, PutObjectResult> {
             override fun onSuccess(request: PutObjectRequest?, result: PutObjectResult?) {
-                Log.d("PutObject", "UploadSuccess");
+//                Log.d("PutObject", "UploadSuccess");
 
                 var finalUrl = ""
                 if (isEncryptFile) {
@@ -192,13 +191,13 @@ class CloudAccountPresenter(val view: CloudAccountView) {
 
             override fun onFailure(request: PutObjectRequest?, clientException: ClientException?, serviceException: ServiceException?) {
                 clientException?.printStackTrace()
-                if (serviceException != null) {
+//                if (serviceException != null) {
                     // 服务异常。
-                    Log.e("ErrorCode", serviceException.getErrorCode());
-                    Log.e("RequestId", serviceException.getRequestId());
-                    Log.e("HostId", serviceException.getHostId());
-                    Log.e("RawMessage", serviceException.getRawMessage());
-                }
+//                    Log.e("ErrorCode", serviceException.getErrorCode());
+//                    Log.e("RequestId", serviceException.getRequestId());
+//                    Log.e("HostId", serviceException.getHostId());
+//                    Log.e("RawMessage", serviceException.getRawMessage());
+//                }
             }
 
         })

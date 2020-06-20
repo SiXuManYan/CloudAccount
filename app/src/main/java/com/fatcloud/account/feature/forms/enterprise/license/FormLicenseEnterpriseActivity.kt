@@ -114,7 +114,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             return
         }
 
-        intent.extras!!.getString(Constants.PARAM_INCOME_MONEY)?.let {
+        intent.extras!!.getString(Constants.PARAM_INCOME_MONEY, "0")?.let {
             incomeMoney = it
         }
 
@@ -386,7 +386,6 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
         }
 
 
-
         val enterpriseInfo = EnterpriseInfo().apply {
             addr = areaName + detail_addr.value()
             area = areaId
@@ -419,7 +418,8 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             Intent(this, PayPrepareActivity::class.java)
                 .putExtra(Constants.PARAM_ORDER_ID, preparePay.orderId)
                 .putExtra(Constants.PARAM_ORDER_NUMBER, preparePay.orderNo)
-                .putExtra(Constants.PARAM_MONEY, preparePay.money.toPlainString())
+//                .putExtra(Constants.PARAM_MONEY, preparePay.money.stripTrailingZeros().toPlainString())
+                .putExtra(Constants.PARAM_MONEY, finalMoney)
                 .putExtra(Constants.PARAM_IMAGE_URL, preparePay.productLogoImgUrl)
                 .putExtra(Constants.PARAM_PRODUCT_NAME, preparePay.productName)
                 .putExtra(Constants.PARAM_DATE, preparePay.createDt)

@@ -808,57 +808,6 @@ object CommonUtils {
     }
 
 
-    public fun getTestUrl(): Int {
-
-        val randoms = (1..14).random()
-        val id: Int
-
-        when (randoms) {
-            1 -> {
-                id = R.mipmap.test1
-            }
-            2 -> {
-                id = R.mipmap.test2
-            }
-            3 -> {
-                id = R.mipmap.test3
-            }
-            4 -> {
-                id = R.mipmap.test4
-            }
-            5 -> {
-                id = R.mipmap.test5
-            }
-            6 -> {
-                id = R.mipmap.test6
-            }
-            7 -> {
-                id = R.mipmap.test7
-            }
-            8 -> {
-                id = R.mipmap.test8
-            }
-            9 -> {
-                id = R.mipmap.test9
-            }
-            10 -> {
-                id = R.mipmap.test10
-            }
-            11 -> {
-                id = R.mipmap.test11
-            }
-            12 -> {
-                id = R.mipmap.test12
-            }
-            13 -> {
-                id = R.mipmap.test13
-            }
-            else -> {
-                id = R.mipmap.test14
-            }
-        }
-        return id
-    }
 
 
     /**

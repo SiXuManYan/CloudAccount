@@ -89,7 +89,12 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
     private var isSecondSelect = false
     private var isThirdSelect = false
 
-    private var incomeMoney: BigDecimal = BigDecimal.ZERO
+    /**
+     * 收入，
+     * 注：超过2000万时，后台返回的值为0.001
+     * app需要做容错处理
+     */
+    private var incomeMoney = 0
 
     /**
      *
@@ -232,7 +237,8 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
 
                     val price = thirdAdapter.mList[position]
                     isThirdSelect = !TextUtils.isEmpty(price.mold)
-                    incomeMoney = price.money
+
+
                     thirdProductPriceId = price.id
 
 
@@ -259,6 +265,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
         val originalMoney: BigDecimal
         when (price.mold) {
             Constants.PP2 -> {
+
                 checkActualIncome = true
                 originalMoney = BigDecimalUtil.mul(
                     price.money,
@@ -302,6 +309,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 val afterText = s.toString().trim()
                 if (afterText.isBlank()) {
                     multipleBigIncome = multipleBigIncomeMin
+                    incomeMoney = 0
                 } else {
 
                     try {
@@ -315,6 +323,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                     } catch (e: Exception) {
                         multipleBigIncome = multipleBigIncomeMin
                     }
+                    incomeMoney = multipleBigIncome
                 }
 
                 // 2000万*服务器返回的 0.001
@@ -322,6 +331,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
 
                 // 最终金额
                 mFinalMoney = getEnterpriseFinalMoney(originalMoney)
+
 
                 if (isThirdSelect) {
                     amount_tv.text = getString(R.string.money_symbol_format, mFinalMoney.stripTrailingZeros().toPlainString())
@@ -393,6 +403,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 val afterText = s.toString().trim()
                 if (afterText.isBlank()) {
                     multipleBigIncome = multipleBigIncomeMin
+                    incomeMoney = 0
                 } else {
 
                     try {
@@ -406,6 +417,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                     } catch (e: Exception) {
                         multipleBigIncome = multipleBigIncomeMin
                     }
+                    incomeMoney = multipleBigIncome
                 }
 
                 // 2000万*服务器返回的 0.001
@@ -471,7 +483,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 startActivity(
                     Intent(activity, FormLicenseEnterpriseActivity::class.java)
                         .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
-                        .putExtra(Constants.PARAM_INCOME_MONEY, incomeMoney.stripTrailingZeros().toPlainString())
+                        .putExtra(Constants.PARAM_INCOME_MONEY, incomeMoney.toString())
                         .putExtra(Constants.PARAM_FINAL_MONEY, mFinalMoney.stripTrailingZeros().toPlainString())
                         .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, thirdProductPriceId)
                 )

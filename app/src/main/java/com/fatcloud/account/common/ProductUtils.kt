@@ -189,7 +189,7 @@ object ProductUtils {
             BigDecimal.ZERO
         } else {
             try {
-                BigDecimal(editValue)
+                BigDecimal(editValue).stripTrailingZeros()
             } catch (e: Exception) {
                 BigDecimal.ZERO
             }

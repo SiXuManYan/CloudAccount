@@ -27,6 +27,7 @@ import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.VibrateUtils
+import com.fatcloud.account.common.AndroidUtil
 import com.fatcloud.account.common.ShareUtil
 import com.fatcloud.account.entity.wechat.WechatAuthInfo
 import com.fatcloud.account.feature.account.login.wechat.WechatLoginRegisterActivity
@@ -223,6 +224,9 @@ class LoginActivity : BaseMVPActivity<LoginPresenter>(), LoginView {
                 animateChangeView()
             }
             R.id.wechat_login_iv -> {
+                if (!AndroidUtil.isWeixinAvilible(this)) {
+                    return
+                }
                 VibrateUtils.vibrate(10)
                 ShareUtil.wechatAuth(this)
             }
@@ -253,7 +257,7 @@ class LoginActivity : BaseMVPActivity<LoginPresenter>(), LoginView {
         }
     }
 
-    override fun getWechatAccessTokenSuccess( wechatAuthInfo: WechatAuthInfo?) {
+    override fun getWechatAccessTokenSuccess(wechatAuthInfo: WechatAuthInfo?) {
         startActivity(WechatLoginRegisterActivity::class.java, Bundle().apply {
             putSerializable(Constants.PARAM_DATA, wechatAuthInfo)
         })

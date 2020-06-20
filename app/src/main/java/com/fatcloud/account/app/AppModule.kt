@@ -78,7 +78,7 @@ class AppModule {
             e.printStackTrace()
         }
 
-        if (BuildConfig.DEBUG) {
+//        if (BuildConfig.DEBUG) {
 
             // 日志拦截器
             val loggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
@@ -95,7 +95,7 @@ class AppModule {
 
             builder.addInterceptor(loggingInterceptor)
             builder.addInterceptor(bodyInterceptor)
-        }
+//        }
 
 
 
