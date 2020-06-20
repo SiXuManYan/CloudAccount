@@ -142,7 +142,7 @@
                             android:textSize="@dimen/font_size_10"
                             tools:text="2020-6-3 18:20:19" />
 
-                        <TextView
+                        <com.fatcloud.account.view.countdown.CountDownTextView
                             android:id="@+id/countdown_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

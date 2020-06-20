@@ -17,8 +17,8 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 class EmptyImageFooter constructor(context: Context) : RecyclerArrayAdapter.ItemView {
 
     var mContext = context
-    var emptyImageResId: Int = R.drawable.ic_empy_helpless
-    var emptyText: String = mContext.getString(R.string.hint_data_no_found)
+    var emptyImageResId: Int = R.drawable.img_data_no_found
+    var emptyText: String = ""
 
     override fun onBindView(headerView: View?) = Unit
 

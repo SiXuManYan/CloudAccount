@@ -64,6 +64,10 @@ class PayPresenter @Inject constructor(private var view: PayView) : BasePresente
                 override fun onSuccess(data: AliPayInfo?) {
                     view.orderPaySuccess()
                 }
+
+                override fun onError(e: Throwable) {
+                    view.checkOrderRealPaymentStatusFailure()
+                }
             })
     }
 

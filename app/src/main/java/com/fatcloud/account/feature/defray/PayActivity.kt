@@ -13,8 +13,10 @@ import com.blankj.utilcode.util.ToastUtils
 import com.fatcloud.account.BuildConfig
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
+import com.fatcloud.account.common.AndroidUtil
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.common.ShareUtil
 import com.fatcloud.account.entity.defray.AlipayResultStatus
 import com.fatcloud.account.entity.defray.PayResult
 import com.fatcloud.account.entity.defray.WechatPayInfo
@@ -23,6 +25,7 @@ import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.event.entity.WechatPayResultEvent
 import com.fatcloud.account.feature.defray.result.CloudPayResultActivity
+import com.fatcloud.account.feature.defray.unknown.PayUnknownActivity
 import com.fatcloud.account.view.dialog.AlertDialog
 import com.tencent.mm.opensdk.modelpay.PayReq
 import com.tencent.mm.opensdk.openapi.IWXAPI
@@ -115,7 +118,9 @@ class PayActivity : BaseMVPActivity<PayPresenter>(), PayView {
 
         wechat_rb.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
+
                 alipay_rb.isChecked = false
+                AndroidUtil.isWeixinAvilible(this)
             }
         }
         alipay_rb.setOnCheckedChangeListener { _, isChecked ->
@@ -158,6 +163,9 @@ class PayActivity : BaseMVPActivity<PayPresenter>(), PayView {
 
     private fun handlePayment() {
         if (wechat_rb.isChecked) {
+            if (!AndroidUtil.isWeixinAvilible(this)) {
+                return
+            }
             presenter.wechatUnifiedOrder(this, orderId)
         } else {
             presenter.alipayUnifiedOrder(this, orderId)
@@ -241,10 +249,17 @@ class PayActivity : BaseMVPActivity<PayPresenter>(), PayView {
 
 
     override fun finish() {
-
         RxBus.post(Event(Constants.EVENT_CLOSE_PAY))
         setResult(Activity.RESULT_OK)
         super.finish()
     }
+
+    override fun checkOrderRealPaymentStatusFailure() {
+        RxBus.post(Event(Constants.EVENT_CLOSE_PAY_UNKNOWN))
+        startActivityClearTop(PayUnknownActivity::class.java,null)
+        finish()
+
+    }
+
 
 }

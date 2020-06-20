@@ -2,6 +2,7 @@ package com.fatcloud.account.feature.forms.personal.tax
 
 import android.content.Intent
 import android.text.InputType
+import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import butterknife.OnClick
@@ -209,6 +210,10 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
         if (!ProductUtils.checkEditEmptyWithVibrate(trn_ev, legal_name, id_number, bank_number, bank_phone)) {
             return
         }
+        if (TextUtils.isEmpty(businessLicenseImgUrl)) {
+            ToastUtils.showShort("请上传营业执照副本")
+        }
+
 
         presenter.addLicensePersonal(
             lifecycle = this,

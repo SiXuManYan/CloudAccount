@@ -71,12 +71,13 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
         presenter.subsribeEvent(Consumer {
             when (it.code) {
                 Constants.EVENT_LOGIN -> {
-                    tabs_navigator.currentTab = 0
-                    onTabSelect(0)
+                    selectFirstTab()
                 }
                 Constants.EVENT_NEED_REFRESH -> {
-
                     loginInit()
+                }
+                Constants.EVENT_SWITCH_HOME_TAB->{
+                    selectFirstTab()
                 }
                 else -> {
                 }
@@ -216,8 +217,7 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
                 }
             }
             tabs_navigator.post {
-                tabs_navigator.currentTab = 0
-                this@MainActivity.onTabSelect(0)
+                selectFirstTab()
             }
         }
 
@@ -247,6 +247,11 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
                 }
 
         }
+    }
+
+    private fun selectFirstTab() {
+        tabs_navigator.currentTab = 0
+        onTabSelect(0)
     }
 
     override fun doAppUpgrade(data: Upgrade) {

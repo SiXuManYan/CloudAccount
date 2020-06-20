@@ -62,7 +62,7 @@ class NewsHolderPlural(parent: ViewGroup?) : BaseItemViewHolder<News>(parent, R.
             val itemView = View.inflate(context, R.layout.item_news_pural_image, null)
             val image_iv = itemView.findViewById<ImageView>(R.id.image_iv)
             Glide.with(context)
-                .load(imgUrls[0])
+                .load(imgUrls[index])
                 .apply(
                     RequestOptions().transform(
                         MultiTransformation(

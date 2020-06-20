@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="45dp"
-    android:background="?android:attr/selectableItemBackground">
+    android:background="?android:attr/selectableItemBackground"
+    tools:background="@color/font_white"
+
+    >
 
     <TextView
         android:id="@+id/title_iv"
@@ -11,8 +14,12 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.1"
+        android:maxWidth="150dp"
+        android:maxLines="2"
         android:textColor="@color/color_first_level"
-        tools:text="名称" />
+        tools:text="纳税人识别号(社会统一代码)" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/content_et"
@@ -20,18 +27,18 @@
         android:layout_height="match_parent"
         android:layout_marginStart="1dp"
         android:layout_marginLeft="1dp"
-        android:layout_toRightOf="@id/title_iv"
+        android:layout_toRightOf="@+id/title_iv"
         android:background="@null"
         android:gravity="center_vertical|right"
         android:imeOptions="actionNext"
-        android:singleLine="true"
         android:inputType="text"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:singleLine="true"
         android:textColor="@color/color_first_level"
         android:textColorHint="@color/color_cccccc"
         android:textSize="14sp"
-        tools:hint="提示信息" />
+        tools:hint="请输入纳税人识别号" />
 
 
     <View

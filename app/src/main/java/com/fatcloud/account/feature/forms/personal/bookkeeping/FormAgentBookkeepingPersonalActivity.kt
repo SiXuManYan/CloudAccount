@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import butterknife.OnClick
+import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
@@ -121,7 +122,7 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
         legal_name.setTitleAndHint(R.string.legal_person_name, R.string.legal_person_name_hint)
         legal_phone.setTitleAndHint(R.string.contact_number, R.string.legal_person_phone_hint).setInputType(InputType.TYPE_CLASS_NUMBER)
         id_number.setTitleAndHint(R.string.legal_person_id_number, R.string.legal_person_id_number_hint)
-        store_name.setTitleAndHint(R.string.store_name, R.string.store_name_hint)
+        store_name.setTitleAndHint(R.string.business_license_name, R.string.business_license_name_hint)
     }
 
 
@@ -187,10 +188,16 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
         if (!ProductUtils.checkEditEmptyWithVibrate(legal_name, legal_phone, id_number, store_name)) {
             return
         }
-        if (id_number.value().length < 18) {
+        if (!RegexUtils.isIDCard18(id_number.value())) {
             ToastUtils.showShort("请输入正确的法人身份证号")
             return
         }
+        if (mBusinessLicenseImgUrl.isNullOrBlank()) {
+            ToastUtils.showShort("请上传营业执照副本")
+            return
+        }
+
+
 
 
         startActivity(SignatureActivity::class.java,

@@ -38,6 +38,7 @@ import androidx.annotation.RequiresApi;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.fatcloud.account.BuildConfig;
 import com.fatcloud.account.R;
 import com.google.android.material.tabs.TabLayout;
@@ -1499,7 +1500,7 @@ public class AndroidUtil {
         if (iwxapi.isWXAppInstalled()) {
             return true;
         } else {
-            Toast.makeText(context, context.getString(R.string.wechat_noting), Toast.LENGTH_SHORT).show();
+            ToastUtils.showShort( "检测到手机未安装微信");
             return false;
         }
     }

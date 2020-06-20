@@ -6,7 +6,7 @@
     android:background="@color/font_white"
     android:orientation="vertical">
 
-    <include layout="@layout/inc_title_bar" />
+
 
 
     <androidx.core.widget.NestedScrollView
@@ -216,6 +216,8 @@
 
     </androidx.core.widget.NestedScrollView>
 
+
+    <include layout="@layout/inc_title_bar" />
 
     <TextView
         android:id="@+id/commit_tv"

@@ -26,5 +26,10 @@ interface PayView : BaseTaskView {
      */
     fun orderPaySuccess()
 
+    /**
+     * 后台未查询到支付结果，提示用户
+     */
+    fun checkOrderRealPaymentStatusFailure()
+
 
 }

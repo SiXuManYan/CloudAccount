@@ -115,8 +115,8 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
         // header 、 footer 空view (footer 代替 emptyView)
         noMoreItemView = NoMoreItemView()
         emptyImageFooter = EmptyImageFooter(context!!).apply {
-            emptyImageResId = R.drawable.ic_empty
-            emptyText = getString(R.string.empty_text)
+            emptyImageResId = R.drawable.img_data_no_found
+            emptyText = ""
         }
 
         emptyLoadingFooter = EmptyLoadingFooter(context!!)

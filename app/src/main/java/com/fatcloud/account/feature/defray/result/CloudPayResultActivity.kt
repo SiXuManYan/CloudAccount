@@ -6,6 +6,9 @@ import butterknife.OnClick
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
+import com.fatcloud.account.common.Constants
+import com.fatcloud.account.event.Event
+import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.feature.order.lists.OrderListActivity
 import com.fatcloud.account.view.dialog.AlertDialog
 
@@ -33,6 +36,7 @@ class CloudPayResultActivity : BaseMVPActivity<CloudPayResultPresenter>(), Cloud
             .setMessage("提示")
             .setCancelable(false)
             .setPositiveButton("返回首页", AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
+                RxBus.post(Event(Constants.EVENT_SWITCH_HOME_TAB))
                 super.onBackPressed()
                 dialog.dismiss()
             })

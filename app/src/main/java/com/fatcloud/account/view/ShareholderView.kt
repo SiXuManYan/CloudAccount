@@ -80,7 +80,7 @@ class ShareholderView : LinearLayout {
         data.imgs.forEachIndexed { index, identityImg ->
 
             val imgUrl = identityImg.imgUrl
-            if (imgUrl.isNotEmpty()) {
+            if (!imgUrl.isNullOrEmpty()) {
 
                 ProductUtils.getRealOssUrl(context, imgUrl, object : CloudAccountApplication.OssSignCallBack {
                     override fun ossUrlSignEnd(url: String) {

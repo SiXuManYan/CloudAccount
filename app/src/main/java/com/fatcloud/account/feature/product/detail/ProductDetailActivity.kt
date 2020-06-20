@@ -108,6 +108,7 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
         presenter.subsribeEvent(Consumer {
             when (it.code) {
                 Constants.EVENT_CLOSE_PAY,
+                Constants.EVENT_CLOSE_PAY_UNKNOWN,
                 Constants.EVENT_FORM_COMMIT_SUCCESS,
                 Constants.EVENT_FORM_CLOSE -> {
                     finish()

@@ -1,5 +1,6 @@
 package com.fatcloud.account.feature.order.lists.holders
 
+import android.os.SystemClock
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -11,10 +12,13 @@ import com.bumptech.glide.request.RequestOptions
 import com.fatcloud.account.R
 import com.fatcloud.account.app.Glide
 import com.fatcloud.account.base.ui.list.BaseItemViewHolder
-import com.fatcloud.account.common.CommonUtils
+import com.fatcloud.account.common.AndroidUtil
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.order.persional.Order
+import com.fatcloud.account.event.Event
+import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.extend.RoundTransFormation
+import com.fatcloud.account.view.countdown.CountDownTextView
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_order.*
 
@@ -22,6 +26,7 @@ import kotlinx.android.synthetic.main.item_order.*
  * Created by Wangsw on 2020/6/3 0003 18:06.
  * </br>
  * 订单列表
+ * // 支付中和待支付，显示倒计时
  */
 class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.layout.item_order), LayoutContainer {
 
@@ -68,11 +73,53 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
 
             Constants.OS1, Constants.OS4 -> {
                 payment_tv.visibility = View.VISIBLE
+                initCountDown(data)
             }
             else -> {
                 payment_tv.visibility = View.GONE
             }
         }
+
+
+    }
+
+    private fun initCountDown(data: Order) {
+        val createDt = data.createDt
+        if (createDt.isBlank()) {
+            return
+        }
+
+        // 订单创建时间一小时倒计时
+        val endTime: Long = AndroidUtil.dataStringToLong("yyyy-MM-dd HH:mm:ss", createDt) + 1000 * 60 * 60
+        val millisInFuture: Long = endTime - System.currentTimeMillis()
+        if (millisInFuture <= 0) {
+            countdown_tv.visibility = View.GONE
+        }else{
+            countdown_tv.apply {
+                visibility = View.VISIBLE
+                cancel()
+                setTimeInFuture(SystemClock.elapsedRealtime() + millisInFuture)
+                setAutoDisplayText(true)
+                setTimeFormat(CountDownTextView.TIME_SHOW_D_H_M_S);
+                setModifierText("订单有效期:");
+                start()
+                addCountDownCallback(object :CountDownTextView.CountDownCallback{
+
+
+                    override fun onTick(countDownTextView: CountDownTextView?, millisUntilFinished: Long) = Unit
+
+                    override fun onFinish(countDownTextView: CountDownTextView?) {
+                        countdown_tv.visibility = View.GONE
+                        payment_tv.visibility = View.GONE
+                        RxBus.post(Event(Constants.EVENT_REFRESH_ORDER_LIST_FROM_END_COUNT_DOWN))
+
+                    }
+
+                })
+
+            }
+        }
+
 
 
     }

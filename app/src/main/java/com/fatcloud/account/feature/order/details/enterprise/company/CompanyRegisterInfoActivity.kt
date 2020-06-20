@@ -136,44 +136,47 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
 
 
         // 营业执照
-        data.businessLicenseImgUrl?.let {
-            if (ProductUtils.isOssSignUrl(it)) {
-                ProductUtils.getRealOssUrl(this,it,object :CloudAccountApplication.OssSignCallBack{
-                    override fun ossUrlSignEnd(url: String) {
+        if (data.businessLicenseImgUrl.isNullOrBlank()) {
+            business_license_ll.visibility = View.GONE
+        } else {
+            data.businessLicenseImgUrl?.let {
+                if (ProductUtils.isOssSignUrl(it)) {
+                    ProductUtils.getRealOssUrl(this, it, object : CloudAccountApplication.OssSignCallBack {
+                        override fun ossUrlSignEnd(url: String) {
 
-                        Glide.with(this@CompanyRegisterInfoActivity)
-                            .load(url)
-                            .apply(
-                                RequestOptions().transform(
-                                    MultiTransformation(
-                                        CenterCrop(),
-                                        RoundTransFormation(context, 4)
+                            Glide.with(this@CompanyRegisterInfoActivity)
+                                .load(url)
+                                .apply(
+                                    RequestOptions().transform(
+                                        MultiTransformation(
+                                            CenterCrop(),
+                                            RoundTransFormation(context, 4)
+                                        )
                                     )
                                 )
-                            )
-                            .error(R.drawable.ic_error_image_load)
-                            .into(business_license_iv)
+                                .error(R.drawable.ic_error_image_load)
+                                .into(business_license_iv)
 
-                    }
+                        }
 
-                })
-            }else{
-                Glide.with(this)
-                    .load(it)
-                    .apply(
-                        RequestOptions().transform(
-                            MultiTransformation(
-                                CenterCrop(),
-                                RoundTransFormation(context, 4)
+                    })
+                } else {
+                    Glide.with(this)
+                        .load(it)
+                        .apply(
+                            RequestOptions().transform(
+                                MultiTransformation(
+                                    CenterCrop(),
+                                    RoundTransFormation(context, 4)
+                                )
                             )
                         )
-                    )
-                    .error(R.drawable.ic_error_image_load)
-                    .into(business_license_iv)
+                        .error(R.drawable.ic_error_image_load)
+                        .into(business_license_iv)
+                }
+
+
             }
-
-
-
         }
 
 
@@ -213,6 +216,8 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
                     .into(electronic_seal_iv)
             }
 
+        } else {
+            electronic_seal_ll.visibility = View.GONE
         }
 
 
@@ -259,6 +264,8 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
             }
 
 
+        } else {
+            Legal_signature_authorization_ll.visibility = View.GONE
         }
 
 

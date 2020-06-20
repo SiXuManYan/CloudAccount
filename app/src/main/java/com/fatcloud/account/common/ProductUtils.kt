@@ -9,6 +9,7 @@ import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.VibrateUtils
 import com.fatcloud.account.BuildConfig
@@ -217,7 +218,7 @@ object ProductUtils {
      * 是否为加密url
      */
     fun isOssSignUrl(url: String): Boolean {
-        if (url.contains(BuildConfig.OSS_PRIVATE_BUCKET_NAME)) {
+        if (url.contains(BuildConfig.OSS_PRIVATE_BUCKET_NAME) || !RegexUtils.isURL(url)) {
             return true
         }
         return false

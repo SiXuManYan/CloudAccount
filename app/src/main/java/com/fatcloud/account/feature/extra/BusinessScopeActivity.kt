@@ -1,6 +1,7 @@
 package com.fatcloud.account.feature.extra
 
 import android.content.Intent
+import android.view.View
 import android.view.ViewGroup
 import com.blankj.utilcode.util.VibrateUtils
 import com.fatcloud.account.R
@@ -18,12 +19,17 @@ import kotlinx.android.synthetic.main.activity_business_scope.*
  * </br>
  *  经营范围
  */
-class BusinessScopeActivity() : BaseMVPActivity<BusinessScopePresenter>(), BusinessScopeView {
+class BusinessScopeActivity : BaseMVPActivity<BusinessScopePresenter>(), BusinessScopeView {
 
 
     private var firstAdapter: RecyclerArrayAdapter<BusinessScope>? = null
     private var secondAdapter: RecyclerArrayAdapter<BusinessScope>? = null
 
+    /**
+     * 产品类型
+     * P1 P2 ....
+     */
+    private var mProductType: String = ""
 
     override fun getLayoutId() = R.layout.activity_business_scope
 
@@ -32,8 +38,13 @@ class BusinessScopeActivity() : BaseMVPActivity<BusinessScopePresenter>(), Busin
     override fun hideLoading() = dismissLoadingDialog()
 
     override fun initViews() {
-
+        initExtra()
         initView()
+    }
+
+    private fun initExtra() {
+        mProductType = intent.getStringExtra(Constants.PARAM_PRODUCT_TYPE)
+
     }
 
 
@@ -53,9 +64,16 @@ class BusinessScopeActivity() : BaseMVPActivity<BusinessScopePresenter>(), Busin
         firstAdapter = getFirstRecyclerAdapter().apply {
             addAll(businessScope)
         }
-        secondAdapter = getSecondRecyclerAdapter()
         first_rv.adapter = firstAdapter
-        second_rv.adapter = secondAdapter
+
+        if (mProductType.isBlank() || mProductType == Constants.P2) {
+            // 企业套餐显示二级列表
+            secondAdapter = getSecondRecyclerAdapter()
+            second_rv.adapter = secondAdapter
+            second_rv.visibility = View.VISIBLE
+        } else {
+            second_rv.visibility = View.GONE
+        }
     }
 
 
@@ -77,7 +95,10 @@ class BusinessScopeActivity() : BaseMVPActivity<BusinessScopePresenter>(), Busin
             businessScope.nativeIsSelect = !nativeIsSelect
             adapter.notifyItemChanged(it)
 
-            performFirstAdapterClick(businessScope.childs, businessScope.nativeIsSelect)
+            if (mProductType.isBlank() || mProductType == Constants.P2) {
+                // 企业套餐才显示二级列表
+                performFirstAdapterClick(businessScope.childs, businessScope.nativeIsSelect)
+            }
 
 
         }

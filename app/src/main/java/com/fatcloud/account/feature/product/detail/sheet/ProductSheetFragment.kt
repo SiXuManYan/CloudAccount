@@ -158,6 +158,7 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
                         .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
                         .putExtra(Constants.PARAM_FINAL_MONEY, finalMoneyStr)
                         .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, price?.id)
+                        .putExtra(Constants.PARAM_PRODUCT_TYPE, productDetail?.mold)
                 )
 
             }

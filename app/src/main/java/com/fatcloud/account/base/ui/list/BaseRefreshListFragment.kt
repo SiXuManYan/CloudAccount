@@ -46,6 +46,7 @@ abstract class BaseRefreshListFragment<T, P : BasePresenter> : BaseFragment<P>()
     protected var emptyImageFooter: EmptyImageFooter? = null
     protected var emptyRetryFooter: EmptyRetryFooter? = null
     protected var emptyLoadingFooter: EmptyLoadingFooter? = null
+    protected var disableLoadMoreView = false
 
 
     private var adapter: RecyclerArrayAdapter<T>? = null
@@ -67,7 +68,7 @@ abstract class BaseRefreshListFragment<T, P : BasePresenter> : BaseFragment<P>()
 
     override fun getLayoutId() = R.layout.fragment_refresh_list2
 
-    open fun emptyMessage() = getString(R.string.hint_data_no_found)
+    open fun emptyMessage() = ""
     open fun emptyImage() = R.drawable.img_data_no_found
 
     override fun initViews(parent: View) {
@@ -137,10 +138,14 @@ abstract class BaseRefreshListFragment<T, P : BasePresenter> : BaseFragment<P>()
 
         // 是否可以上拉加载
         swipeLayout.setEnableLoadMore(!last)
-        if (last && adapter?.allData!!.size > 0) {
-            if (adapter?.footerCount!! > 0) adapter?.removeAllFooter()
-            adapter?.addFooter(noMoreItemView)
+
+        if (!disableLoadMoreView) {
+            if (last && adapter?.allData!!.size > 0) {
+                if (adapter?.footerCount!! > 0) adapter?.removeAllFooter()
+                adapter?.addFooter(noMoreItemView)
+            }
         }
+
 
     }
 

@@ -51,6 +51,15 @@ class OrderListActivity : BaseRefreshListActivity<Order, OrderListPresenter>(), 
         presenter.subsribeEventEntity<OrderPaySuccessEvent>(Consumer {
             loadOnVisible()
         })
+        presenter.subsribeEvent(Consumer {
+            when (it.code) {
+                Constants.EVENT_REFRESH_ORDER_LIST_FROM_END_COUNT_DOWN -> {
+                    loadOnVisible()
+                }
+                else -> {
+                }
+            }
+        })
 
 
     }

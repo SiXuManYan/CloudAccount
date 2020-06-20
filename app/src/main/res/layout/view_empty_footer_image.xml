@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_empy_helpless" />
+        android:src="@drawable/img_data_no_found" />
 
     <TextView
         android:id="@+id/empty_tv"

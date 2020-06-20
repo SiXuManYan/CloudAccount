@@ -157,7 +157,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginRight="15dp"
             android:lineSpacingMultiplier="1.2"
-            android:text="@string/amount_of_funds"
+            android:text="资金数额(万元)"
             android:textColor="@color/color_third_level"
             android:textSize="@dimen/font_size_14" />
 

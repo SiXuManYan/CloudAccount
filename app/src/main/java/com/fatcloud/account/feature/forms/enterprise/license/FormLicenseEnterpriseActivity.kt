@@ -76,6 +76,12 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
 
 
     /**
+     * 产品类型
+     * P1 P2 ....
+     */
+    private var mProductType: String = Constants.P2
+
+    /**
      * 位置信息id
      */
     private var areaId: String = ""
@@ -121,6 +127,10 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
 
         intent.extras!!.getString(Constants.PARAM_PRODUCT_PRICE_ID)?.let {
             mProductPriceId = it
+        }
+
+        intent.extras!!.getString(Constants.PARAM_PRODUCT_TYPE)?.let {
+            mProductType = it
         }
 
 
@@ -303,7 +313,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
         when (view.id) {
             R.id.business_scope_rl -> {
                 // 参照 EnterpriseInfo
-                startActivityForResult(BusinessScopeActivity::class.java, 1, null)
+                startActivityForResult(Intent(this,BusinessScopeActivity::class.java).putExtra(Constants.PARAM_PRODUCT_TYPE, mProductType), 1)
             }
             R.id.bottom_left_tv -> {
                 // 保存

@@ -89,6 +89,7 @@ object Constants {
     const val PARAM_INCOME_MONEY = "param_income_money"
     const val PARAM_FINAL_MONEY = "param_final_money"
     const val PARAM_PRODUCT_PRICE_ID = "param_product_price_id"// 产品价格类型 eg:pp1 固定价格
+    const val PARAM_PRODUCT_TYPE = "param_product_type"// 产品类型 P1 P2 ...
     const val PARAM_SELECT_PID = "param_select_pid"// 用户选中的经营范围pid
     const val PARAM_SELECT_PID_NAME = "param_select_pid_name"
     const val PARAM_NAME = "param_name"
@@ -125,6 +126,10 @@ object Constants {
     const val EVENT_WECHAT_REGISTER_CAPTCHA_SUCCESS = 0x98 // 微信注册 验证码校验通过
     const val EVENT_FORM_COMMIT_SUCCESS = 0x99 // 表单提交成功
     const val EVENT_FORM_CLOSE = 0x100 // 表单关闭，未提交
+    const val EVENT_CLOSE_PAY_UNKNOWN = 0x101 // 未查询到支付结果，关闭页面
+
+    const val EVENT_SWITCH_HOME_TAB = 0x102// 切换到首页tab
+    const val EVENT_REFRESH_ORDER_LIST_FROM_END_COUNT_DOWN = 0x103// 订单倒计时结束，刷新订单列表
     // 列表数据 key
     const val KEY_DATA = "data"
 

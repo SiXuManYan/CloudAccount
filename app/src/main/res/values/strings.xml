@@ -19,11 +19,11 @@
 
     <!--  android/开发环境/资源类型/是否为加密文件/时间戳.jpg-->
 
-    <string name="upload_image_path_format">android/formal/image/general/image_%1$s.jpg</string>
-    <string name="upload_image_path_dev_format">android/dev/image/general/image_%1$s.jpg</string>
+    <string name="upload_image_path_format">android/formal/image/general/%1$s.jpg</string>
+    <string name="upload_image_path_dev_format">android/dev/image/general/%1$s.jpg</string>
 
-    <string name="upload_image_encryption_path_format">android/formal/image/encryption/image_%1$s.jpg</string>
-    <string name="upload_image_encryption_path_dev_format">android/dev/image/encryption/image_%1$s.jpg</string>
+    <string name="upload_image_encryption_path_format">android/formal/image/encryption/%1$s.jpg</string>
+    <string name="upload_image_encryption_path_dev_format">android/dev/image/encryption/%1$s.jpg</string>
 
     <!-- 上传成功后的最终URL val finalUrl = "https://$imageBucketName.$endpoint/$imageObjectKey" -->
     <string name="final_url_format">https://%1$s.%2$s/%3$s</string>
@@ -121,8 +121,12 @@
     <string name="taxpayer_registration_number">纳税人识别号(社会统一代码)</string>
     <string name="taxpayer_registration_number_hint">请输入纳税人识别号</string>
     <string name="store_name">店铺名称</string>
+
     <string name="store_name_hint">请输入店铺名称</string>
-    <string name="signature_format">营口市国家税务局：\n营口市地方税务局：\n\u3000\u3000兹有我单位：&#160;%1$s&#160;，\n现委托于孙尚强同志（身份证号码:\n210283 19860602 7812）\n前往贵局办理税务登记事宜，望贵局给予办理。\n\n\n\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000承诺人签字</string>
+    <string name="business_license_name">营业执照名称</string>
+    <string name="business_license_name_hint">营业执照名称</string>
+
+    <string name="signature_format">营口市国家税务局：\n营口市地方税务局：\n\u3000\u3000兹有我单位：&#160;%1$s&#160;，\n现委托于于翔红同志（身份证号码:\n210281 19880301 6829）\n前往贵局办理税务登记事宜，望贵局给予办理。\n\n\n\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000承诺人签字</string>
 
 
 

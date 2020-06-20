@@ -54,6 +54,15 @@ class PayPrepareActivity : BaseMVPActivity<PayPreparePresenter>(), PayPrepareVie
             finish()
         })
 
+        presenter.subsribeEvent(Consumer {
+            when (it.code) {
+                Constants.EVENT_CLOSE_PAY_UNKNOWN -> {
+                    finish()
+                }
+                else -> {
+                }
+            }
+        })
 
     }
 
@@ -120,6 +129,7 @@ class PayPrepareActivity : BaseMVPActivity<PayPreparePresenter>(), PayPrepareVie
             .setMessage("订单已提交")
             .setCancelable(false)
             .setPositiveButton("返回首页", AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
+                RxBus.post(Event(Constants.EVENT_SWITCH_HOME_TAB))
                 super.onBackPressed()
                 dialog.dismiss()
             })
@@ -133,25 +143,5 @@ class PayPrepareActivity : BaseMVPActivity<PayPreparePresenter>(), PayPrepareVie
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == closePayListenerRequest) {
-            AlertDialog.Builder(this)
-                .setTitle("提示")
-                .setMessage("订单已提交")
-                .setCancelable(false)
-                .setPositiveButton("返回首页", AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
-                    super.onBackPressed()
-                    dialog.dismiss()
-                })
-                .setNegativeButton("查看订单", AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
-                    startActivity(OrderListActivity::class.java)
-                    super.onBackPressed()
-                    dialog.dismiss()
-                })
-                .create()
-                .show()
-        }
-    }
 
 }

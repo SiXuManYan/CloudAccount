@@ -22,6 +22,8 @@ import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.defray.prepare.PayPrepareModule
 import com.fatcloud.account.feature.defray.result.CloudPayResultActivity
 import com.fatcloud.account.feature.defray.result.CloudPayResultModule
+import com.fatcloud.account.feature.defray.unknown.PayUnknownActivity
+import com.fatcloud.account.feature.defray.unknown.PayUnknownModule
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
 import com.fatcloud.account.feature.extra.BusinessScopeModule
 import com.fatcloud.account.feature.forms.enterprise.bank.FormBankActivity
@@ -191,6 +193,10 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [BookkeepingInfoModule::class])
     abstract fun bookkeepingInfoActivityInjector(): BookkeepingInfoActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [PayUnknownModule::class])
+    abstract fun payUnknownActivityInjector(): PayUnknownActivity
 
 
 }
