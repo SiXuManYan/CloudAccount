@@ -23,7 +23,7 @@ import java.net.URL
 /**
  * Created by Wangsw on 2020/6/4 0004 14:03.
  * </br>
- *  公司信息
+ *  公司信息 ,银行信息
  */
 class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter>(),
     CompanyRegisterInfoView {

@@ -890,7 +890,7 @@ object CommonUtils {
             }
             "OS3" -> {
                 statusImage.setImageResource(R.drawable.ic_status_dingdanshixiao)
-                statusTextView.text = "订单实效"
+                statusTextView.text = "订单失效"
             }
             "OS4" -> {
                 statusImage.setImageResource(R.drawable.ic_status_zhifuzhong)

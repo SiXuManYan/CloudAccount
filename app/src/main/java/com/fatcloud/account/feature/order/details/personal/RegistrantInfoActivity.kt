@@ -93,14 +93,14 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
             "女"
         }
         nation_tv.text = data.nation
-        addr_tv.text = data.area
+        addr_tv.text = data.addr
         phone_tv.text = data.tel
         first_choice_name_tv.text = data.name0
         alternative_name_01_tv.text = data.name1
         alternative_name_02_tv.text = data.name2
         business_scope_tv.text = data.businessScopeNames
         employees_number_tv.text = data.employedNum.toString()
-        employment_amount_tv.text = data.money?.stripTrailingZeros()?.toPlainString()
+        employment_amount_tv.text = data.income?.stripTrailingZeros()?.toPlainString()
         form_tv.text = data.formName
         identity_number_tv.text = data.idno
         name_tv.text = data.realName

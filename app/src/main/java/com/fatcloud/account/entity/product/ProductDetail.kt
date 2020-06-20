@@ -8,6 +8,7 @@ class ProductDetail : Serializable {
     val bannerImgUrls: List<String> = ArrayList()
     val detailImgUrls: List<String> = ArrayList()
     val publicImgUrls: List<String> = ArrayList()
+    val serviceImgUrls: List<String> = ArrayList()
     val id: String = ""
     val introduce: String = ""
     val logoImgUrl: String = ""
@@ -34,4 +35,30 @@ class ProductDetail : Serializable {
     val name: String = ""
     val prices: ArrayList<Price> = ArrayList()
     val state: String = ""
+
+
+/*    "id": "1262568059554496512",
+    "name": "企业套餐办理",
+    "introduce": "企业营业执照办理+企业刻章+开立银行对公账户+代理记账",
+    "state": "S1",
+    "money": 3176,
+    "mold": "P2",
+    "logoImgUrl": "https://ftacloud-bucket-public.oss-cn-qingdao.aliyuncs.com/product/web-20206313291886329903-logo.jpg",
+    "bannerImgUrls": [
+    "https://ftacloud-bucket-public.oss-cn-qingdao.aliyuncs.com/product/web-202063132943890573-banner.jpg"
+    ],
+    "detailImgUrls": [
+    "https://ftacloud-bucket-public.oss-cn-qingdao.aliyuncs.com/product/web-20206179273952894652-qiyejiage.jpg",
+    "https://ftacloud-bucket-public.oss-cn-qingdao.aliyuncs.com/product/web-202063950392211774-2.jpg",
+    "https://ftacloud-bucket-public.oss-cn-qingdao.aliyuncs.com/product/web-2020639501357593311-3.jpg"
+    ],
+    "serviceImgUrls": [
+    "https://ftacloud-bucket-public.oss-cn-qingdao.aliyuncs.com/product/web-2020631161340765416-4.jpg",
+    "https://ftacloud-bucket-public.oss-cn-qingdao.aliyuncs.com/product/web-2020639504760218392-5.jpg"
+    ],
+    "publicImgUrls": [
+    "https://ftacloud-bucket-public.oss-cn-qingdao.aliyuncs.com/product/web-202061613392240213673-police20200616133806.jpg"
+    ],
+    "prices": [*/
+
 }

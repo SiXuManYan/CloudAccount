@@ -364,10 +364,12 @@
                     android:layout_toRightOf="@+id/province_title"
                     android:ellipsize="end"
                     android:gravity="right"
-                    android:maxLines="1"
+                    android:lineSpacingMultiplier="1.2"
+                    android:maxLines="2"
                     android:textColor="@color/color_third_level"
                     android:textColorHint="@color/color_third_level"
-                    android:textSize="@dimen/font_size_14" />
+                    android:textSize="@dimen/font_size_14"
+                    tools:text="阿萨德撒大声地撒大叔大叔的阿萨德撒大声地" />
 
 
                 <TextView

@@ -79,8 +79,9 @@
                 android:background="@color/color_list_gray_background" />
 
 
+            <!-- 小人物 publicImgUrls -->
             <LinearLayout
-                android:id="@+id/image_container_ll"
+                android:id="@+id/public_image_container_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -91,20 +92,79 @@
                     android:scaleType="centerCrop"
                     tools:src="@tools:sample/backgrounds/scenic" />
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:scaleType="centerCrop"
-                    tools:src="@tools:sample/backgrounds/scenic" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:scaleType="centerCrop"
-                    tools:src="@tools:sample/backgrounds/scenic" />
-
-
             </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingRight="0dp">
+
+                <ImageView
+                    android:id="@+id/tag_iv"
+                    android:layout_width="3dp"
+                    android:layout_height="13dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/shape_vertical_line_red" />
+
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tag_iv"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/good_tab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:button="@null"
+                        android:checked="true"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="商品详情"
+                        android:textColor="@color/color_zero_level"
+                        android:textSize="@dimen/font_size_16" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/service_tab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="服务内容"
+                        android:textColor="@color/color_third_level"
+                        android:textSize="@dimen/font_size_16" />
+
+                </RadioGroup>
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/split_line_color" />
+
+            <!-- 商品详情 -->
+            <LinearLayout
+                android:id="@+id/good_image_container_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <!-- 服务内容 -->
+            <LinearLayout
+                android:id="@+id/service_image_container_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone" />
 
 
         </LinearLayout>

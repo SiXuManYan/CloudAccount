@@ -201,10 +201,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
-            android:maxLines="3"
+            android:lineSpacingMultiplier="1.2"
             android:textColor="@color/color_first_level"
             android:textSize="@dimen/font_size_14"
-            tools:text="食品食品食品食品食品食品食品食品食品食品食品食品食品食品" />
+            tools:text="食品食品食品食品食品食品食品食品食连市甘井子食品" />
 
     </LinearLayout>
 
@@ -302,10 +302,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
-            android:maxLines="1"
             android:textColor="@color/color_first_level"
+            android:lineSpacingMultiplier="1.2"
             android:textSize="@dimen/font_size_14"
-            tools:text="辽宁省大连市甘井子区" />
+            tools:text="辽宁省大连市甘井子区连市甘井子连市甘井子连市甘井子连市甘井子连市甘井子连市甘井子连市甘井子" />
 
     </LinearLayout>
 

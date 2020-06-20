@@ -249,7 +249,7 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
                 AccountNatureSheetFragment.newInstance().apply {
                     setOnItemSelectListener(object : AccountNatureSheetFragment.OnItemSelectedListener {
                         override fun onItemSelected(currentSelected: AccountNature) {
-                            this@FormBankActivity.account_nature = currentSelected.value
+                            this@FormBankActivity.account_nature = currentSelected.name
                             this@FormBankActivity.business_scope_value.text = currentSelected.name
                         }
                     })

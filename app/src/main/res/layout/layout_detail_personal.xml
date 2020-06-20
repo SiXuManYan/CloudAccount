@@ -40,7 +40,7 @@
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/color_first_level"
+            android:textColor="@color/color_zero_level"
             android:textSize="@dimen/font_size_14"
             tools:text="男" />
 
@@ -73,7 +73,7 @@
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/color_first_level"
+            android:textColor="@color/color_zero_level"
             android:textSize="@dimen/font_size_14"
             tools:text="汉" />
 
@@ -106,10 +106,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/color_first_level"
+            android:textColor="@color/color_zero_level"
             android:textSize="@dimen/font_size_14"
-            tools:text="辽宁省大连市甘井子区" />
+            tools:text="辽宁省大连市甘井子区大连市甘井子大连市甘井子大连市甘井子大连市甘井子大连市甘井子大连市甘井子大连市甘井子大连市甘井子" />
 
     </LinearLayout>
 
@@ -141,7 +140,7 @@
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/color_first_level"
+            android:textColor="@color/color_zero_level"
             android:textSize="@dimen/font_size_14"
             tools:text="12000000000" />
 
@@ -175,7 +174,7 @@
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/color_first_level"
+            android:textColor="@color/color_zero_level"
             android:textSize="@dimen/font_size_14"
             tools:text="锅巴" />
 
@@ -209,7 +208,7 @@
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/color_first_level"
+            android:textColor="@color/color_zero_level"
             android:textSize="@dimen/font_size_14"
             tools:text="饮料" />
 
@@ -242,7 +241,7 @@
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/color_first_level"
+            android:textColor="@color/color_zero_level"
             android:textSize="@dimen/font_size_14"
             tools:text="锅包肉" />
 
@@ -274,10 +273,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
-            android:maxLines="3"
-            android:textColor="@color/color_first_level"
+            android:textColor="@color/color_zero_level"
             android:textSize="@dimen/font_size_14"
-            tools:text="食品食品食品食品食品食品食品食品食品食品食品食品食品食品" />
+            tools:text="食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品" />
 
     </LinearLayout>
 
@@ -308,7 +306,7 @@
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/color_first_level"
+            android:textColor="@color/color_zero_level"
             android:textSize="@dimen/font_size_14"
             tools:text="2222" />
 
@@ -330,7 +328,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginRight="15dp"
             android:lineSpacingMultiplier="1.2"
-            android:text="从业数额（元）"
+            android:text="资金数额（元）"
             android:textColor="@color/color_third_level"
             android:textSize="@dimen/font_size_14" />
 
@@ -342,7 +340,7 @@
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/color_first_level"
+            android:textColor="@color/color_zero_level"
             android:textSize="@dimen/font_size_14"
             tools:text="50" />
 
@@ -376,7 +374,7 @@
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/color_first_level"
+            android:textColor="@color/color_zero_level"
             android:textSize="@dimen/font_size_14"
             tools:text="餐饮服务" />
 
@@ -410,7 +408,7 @@
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/color_first_level"
+            android:textColor="@color/color_zero_level"
             android:textSize="@dimen/font_size_14"
             tools:text="宫本武藏" />
 
@@ -444,7 +442,7 @@
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/color_first_level"
+            android:textColor="@color/color_zero_level"
             android:textSize="@dimen/font_size_14"
             tools:text="23232222222222222" />
 

@@ -1,9 +1,7 @@
 package com.fatcloud.account.feature.product.detail
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
@@ -27,11 +25,9 @@ import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.account.login.LoginActivity
-import com.fatcloud.account.feature.order.lists.OrderListActivity
 import com.fatcloud.account.feature.product.detail.sheet.ProductSheetFragment
 import com.fatcloud.account.feature.product.detail.spinners.ProductSpinnerFragment
 import com.fatcloud.account.feature.webs.WebCommonActivity
-import com.fatcloud.account.view.dialog.AlertDialog
 import com.youth.banner.BannerConfig
 import com.youth.banner.loader.ImageLoader
 import io.reactivex.functions.Consumer
@@ -89,6 +85,26 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
         bottom_left_tv.text = "联系客服"
         bottom_right_tv.text = "立即办理"
 
+        good_tab.setOnCheckedChangeListener{_, isChecked ->
+            if (isChecked) {
+                good_image_container_ll.visibility = View.VISIBLE
+                good_tab.setTextColor(ColorUtils.getColor(R.color.color_zero_level))
+            }else{
+                good_image_container_ll.visibility = View.GONE
+                good_tab.setTextColor(ColorUtils.getColor(R.color.color_third_level))
+            }
+        }
+
+        service_tab.setOnCheckedChangeListener{_, isChecked ->
+            if (isChecked) {
+                service_image_container_ll.visibility = View.VISIBLE
+                service_tab.setTextColor(ColorUtils.getColor(R.color.color_zero_level))
+            }else{
+                service_image_container_ll.visibility = View.GONE
+                service_tab.setTextColor(ColorUtils.getColor(R.color.color_third_level))
+            }
+
+        }
 
     }
 
@@ -152,11 +168,13 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
         }
 
         // image
-        image_container_ll.removeAllViews()
+        good_image_container_ll.removeAllViews()
+        service_image_container_ll.removeAllViews()
+        public_image_container_ll.removeAllViews()
 
 
+        // 小人物提示
         data.publicImgUrls.forEachIndexed { index, url ->
-
             val imageView = ImageView(this).apply {
                 layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
             }
@@ -166,11 +184,11 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
                 .error(R.drawable.ic_error_image_load)
                 .into(imageView)
 
-            image_container_ll.addView(imageView)
-
+            public_image_container_ll.addView(imageView)
 
         }
 
+        // 商品详情
         data.detailImgUrls.forEachIndexed { index, url ->
 
             val imageView = ImageView(this).apply {
@@ -182,7 +200,30 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
                 .error(R.drawable.ic_error_image_load)
                 .into(imageView)
 
-            image_container_ll.addView(imageView)
+            good_image_container_ll.addView(imageView)
+        }
+
+        // 服务内容
+        if (data.serviceImgUrls.isNullOrEmpty()) {
+            service_tab.visibility = View.GONE
+            service_image_container_ll.visibility = View.GONE
+        } else {
+            service_tab.visibility = View.VISIBLE
+
+            data.serviceImgUrls.forEachIndexed { index, url ->
+
+                val imageView = ImageView(this).apply {
+                    layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+                }
+
+                Glide.with(this)
+                    .load(url)
+                    .error(R.drawable.ic_error_image_load)
+                    .into(imageView)
+
+                service_image_container_ll.addView(imageView)
+            }
+
         }
 
 
