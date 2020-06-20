@@ -1,5 +1,6 @@
 package com.fatcloud.account.feature.splash
 
+import android.os.Bundle
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import com.fatcloud.account.feature.MainActivity
@@ -19,7 +20,10 @@ class SplashActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_splash
 
     override fun initViews() {
-
+        if (!isTaskRoot) {
+            finish();
+            return;
+        }
         CommonUtils.setStatusBarTransparent(this)
         BarUtils.setNavBarVisibility(this, false)
 

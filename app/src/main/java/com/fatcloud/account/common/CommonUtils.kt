@@ -926,7 +926,7 @@ object CommonUtils {
                 statusTextView.text = "已办结"
             }
             "OW4" -> {
-                statusImage.setImageResource(R.drawable.ic_status_dingdanshixiao)
+                statusImage.setImageResource(R.drawable.ic_status_weijihuo)
                 statusTextView.text = "未激活"
             }
 

@@ -71,7 +71,7 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
         presenter.subsribeEvent(Consumer {
             when (it.code) {
                 Constants.EVENT_LOGIN -> {
-                    selectFirstTab()
+//                    selectFirstTab()
                 }
                 Constants.EVENT_NEED_REFRESH -> {
                     loginInit()
@@ -161,8 +161,9 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
             ToastUtils.showShort("再按一次退出")
             tapTime = System.currentTimeMillis()
         } else {
-            finish()
-            System.exit(0)
+            moveTaskToBack(false);
+//            finish()
+//            System.exit(0)
         }
     }
 

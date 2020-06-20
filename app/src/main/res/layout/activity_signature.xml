@@ -17,16 +17,16 @@
             android:layout_height="wrap_content"
             android:background="@color/font_white"
             android:orientation="vertical"
-            android:paddingTop="50dp">
+            android:paddingTop="80dp"
+            android:paddingBottom="200dp">
 
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="30dp"
                 android:gravity="center"
                 android:lineSpacingMultiplier="2.0"
-                android:paddingTop="50dp"
-                android:paddingBottom="50dp"
                 android:text="委托授权书"
                 android:textColor="@color/color_zero_level"
                 android:textSize="@dimen/font_size_22"

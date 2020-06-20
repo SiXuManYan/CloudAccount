@@ -1,19 +1,15 @@
 package com.fatcloud.account.view
 
-import android.app.Activity
-import android.app.Application
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import android.widget.TextView
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
 import com.fatcloud.account.app.Glide
-import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.order.enterprise.Shareholder
@@ -82,32 +78,54 @@ class ShareholderView : LinearLayout {
             val imgUrl = identityImg.imgUrl
             if (!imgUrl.isNullOrEmpty()) {
 
-                ProductUtils.getRealOssUrl(context, imgUrl, object : CloudAccountApplication.OssSignCallBack {
-                    override fun ossUrlSignEnd(url: String) {
+                if (ProductUtils.isOssSignUrl(imgUrl)) {
+                    ProductUtils.getRealOssUrl(context, imgUrl, object : CloudAccountApplication.OssSignCallBack {
+                        override fun ossUrlSignEnd(url: String) {
 
-                        Glide.with(this@ShareholderView)
-                            .load(url)
-                            .apply(
-                                RequestOptions().transform(
-                                    MultiTransformation(
-                                        CenterCrop(),
-                                        RoundTransFormation(context, 4)
+                            Glide.with(this@ShareholderView)
+                                .load(url)
+                                .apply(
+                                    RequestOptions().transform(
+                                        MultiTransformation(
+                                            CenterCrop(),
+                                            RoundTransFormation(context, 4)
+                                        )
                                     )
                                 )
+                                .error(R.drawable.ic_error_image_load)
+                                .into(
+                                    if (index == 0) {
+                                        id_card_front_iv
+                                    } else {
+                                        id_card_obverse_iv
+                                    }
+                                )
+
+
+                        }
+
+                    })
+
+                } else {
+                    Glide.with(this@ShareholderView)
+                        .load(imgUrl)
+                        .apply(
+                            RequestOptions().transform(
+                                MultiTransformation(
+                                    CenterCrop(),
+                                    RoundTransFormation(context, 4)
+                                )
                             )
-                            .error(R.drawable.ic_error_image_load)
-                            .into(
-                                if (index == 0) {
-                                    id_card_front_iv
-                                } else {
-                                    id_card_obverse_iv
-                                }
-                            )
-
-
-                    }
-
-                })
+                        )
+                        .error(R.drawable.ic_error_image_load)
+                        .into(
+                            if (index == 0) {
+                                id_card_front_iv
+                            } else {
+                                id_card_obverse_iv
+                            }
+                        )
+                }
 
 
             }
