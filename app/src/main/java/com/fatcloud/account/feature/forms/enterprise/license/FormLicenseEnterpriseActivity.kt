@@ -219,7 +219,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             )
             initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
             initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
-            initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint_2)).setInputType(InputType.TYPE_CLASS_NUMBER)
+            initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
             showAddActionView().setOnClickListener {
                 VibrateUtils.vibrate(10)
                 // it.visibility = View.GONE
@@ -246,7 +246,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             )
             initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
             initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
-            initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint_2)).setInputType(InputType.TYPE_CLASS_NUMBER)
+            initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
 
             //  添加股东
             showAddActionView().setOnClickListener {
@@ -359,23 +359,33 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
                 legal_person_ev.ev_01_id_number,
                 legal_person_ev.ev_02_id_addr,
                 legal_person_ev.ev_03_phone,
-                legal_person_ev.ev_04_share_ratio,
+
                 // 监事
                 supervisor_ev.ev_00_name,
                 supervisor_ev.ev_01_id_number,
                 supervisor_ev.ev_02_id_addr,
                 supervisor_ev.ev_03_phone,
-                supervisor_ev.ev_04_share_ratio,
+
                 // 默认股东 shareholder_ev
                 shareholder_ev.ev_00_name,
                 shareholder_ev.ev_01_id_number,
                 shareholder_ev.ev_02_id_addr,
-                shareholder_ev.ev_03_phone,
-                shareholder_ev.ev_04_share_ratio
+                shareholder_ev.ev_03_phone
             )
         ) {
             return
         }
+
+        if (legal_person_ev.getShareRatioValue().isBlank()) {
+            ToastUtils.showShort("请输入法人股份占比")
+            return
+        }
+        if (shareholder_ev.getShareRatioValue().isBlank()) {
+            ToastUtils.showShort("请输入股东股份占比")
+            return
+        }
+
+
 
         val enterpriseInfo = EnterpriseInfo().apply {
             addr = areaName + detail_addr.value()

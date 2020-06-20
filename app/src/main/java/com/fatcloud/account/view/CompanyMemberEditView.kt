@@ -214,6 +214,10 @@ class CompanyMemberEditView : LinearLayout {
     fun getIdNumberValue() = ev_01_id_number.value()
     fun getIdAddressValue() = ev_02_id_addr.value()
     fun getPhoneValue() = ev_03_phone.value()
+
+    /**
+     * 股份占比
+     */
     fun getShareRatioValue() = ev_04_share_ratio.value()
 
     fun getFrontImage(): ImageView = id_card_front_iv

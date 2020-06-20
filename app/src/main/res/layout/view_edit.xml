@@ -19,7 +19,7 @@
         android:maxWidth="150dp"
         android:maxLines="2"
         android:textColor="@color/color_first_level"
-        tools:text="纳税人识别号(社会统一代码)" />
+        tools:text="标题" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/content_et"
@@ -38,7 +38,7 @@
         android:textColor="@color/color_first_level"
         android:textColorHint="@color/color_cccccc"
         android:textSize="14sp"
-        tools:hint="请输入纳税人识别号" />
+        tools:hint="提示" />
 
 
     <View

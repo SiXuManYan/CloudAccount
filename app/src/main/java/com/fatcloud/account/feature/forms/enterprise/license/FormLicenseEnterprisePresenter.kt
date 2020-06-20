@@ -5,12 +5,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
+import com.fatcloud.account.common.BigDecimalUtil
 import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.enterprise.Shareholder
 import com.fatcloud.account.view.CompanyMemberEditView
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import java.math.BigDecimal
 import javax.inject.Inject
 
 /**
@@ -58,16 +60,13 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
         holders.add(shareHolder1)
         holders.add(shareHolder2)
 
-        val max = shareholderMoreContainer.childCount-1
+        val max = shareholderMoreContainer.childCount - 1
         if (max > 0) {
             for (i in 0 until max) {
                 val companyMemberEditView = shareholderMoreContainer.getChildAt(i) as CompanyMemberEditView
                 holders.add(companyMemberEditView.getShareHolder())
             }
-
         }
-
-
         return holders
 
     }

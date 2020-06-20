@@ -57,6 +57,9 @@ class OrderListActivity : BaseRefreshListActivity<Order, OrderListPresenter>(), 
                 Constants.EVENT_REFRESH_ORDER_LIST_FROM_END_COUNT_DOWN -> {
                     loadOnVisible()
                 }
+                Constants.EVENT_NEED_REFRESH -> {
+                    loadOnVisible()
+                }
                 else -> {
                 }
             }

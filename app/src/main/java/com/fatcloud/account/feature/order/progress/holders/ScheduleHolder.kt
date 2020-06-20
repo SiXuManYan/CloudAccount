@@ -93,7 +93,7 @@ class ScheduleHolder(parent: ViewGroup?) : BaseItemViewHolder<BusinessProgress>(
                 look_detail_tv.visibility = View.INVISIBLE
             }
             Constants.PW3 -> {
-                if (data.state != "OW4") {
+                if (data.state != Constants.OW4) {
                     look_detail_tv.visibility = View.VISIBLE
                     look_detail_tv.text = "查看"
                 } else {
@@ -101,8 +101,11 @@ class ScheduleHolder(parent: ViewGroup?) : BaseItemViewHolder<BusinessProgress>(
                 }
             }
             Constants.PW4 -> {
-                look_detail_tv.visibility = View.VISIBLE
-                look_detail_tv.text = "查看"
+
+                if (data.state == Constants.OW2 || data.state == Constants.OS7) {
+                    look_detail_tv.visibility = View.VISIBLE
+                    look_detail_tv.text = "查看"
+                }
             }
 
         }
