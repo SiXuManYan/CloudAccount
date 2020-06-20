@@ -151,7 +151,7 @@
                             android:ellipsize="end"
                             android:lineSpacingMultiplier="1.2"
                             android:maxLines="2"
-                            android:textColor="@color/color_third_level"
+                            android:textColor="@color/color_app_red"
                             android:textSize="@dimen/font_size_10"
                             android:visibility="gone"
                             tools:text="订单有效期:23:2:30"

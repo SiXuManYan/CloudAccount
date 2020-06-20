@@ -52,6 +52,8 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
      * 个人或企业代理记账，超过2000万收入时的最终金额倍数 0.1%
      * 注意，超过2000万时，后台返回的Money为 0.001，
      * 需要用前台的2000万来乘以倍数
+     *
+     * 此为初始金额2000万，或用户输入金额
      */
     private var multipleBigIncome = 2000
     private val multipleBigIncomeMin = 2000
@@ -258,7 +260,11 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
         when (price.mold) {
             Constants.PP2 -> {
                 checkActualIncome = true
-                originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multipleBigIncome * 10000))
+                originalMoney = BigDecimalUtil.mul(
+                    price.money,
+                    BigDecimalUtil.mul(BigDecimal(multipleBigIncome), BigDecimal(10000))
+                )
+
                 actual_income_rl.visibility = View.VISIBLE
 
                 // 添加动态输入监听
@@ -312,7 +318,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 }
 
                 // 2000万*服务器返回的 0.001
-                originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multipleBigIncome * 10000))
+                originalMoney = BigDecimalUtil.mul(price.money, BigDecimalUtil.mul(BigDecimal(multipleBigIncome), BigDecimal(10000)))
 
                 // 最终金额
                 mFinalMoney = getEnterpriseFinalMoney(originalMoney)
@@ -354,7 +360,11 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 actual_income_rl.visibility = View.VISIBLE
                 checkActualIncome = true
 
-                originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multipleBigIncome * 10000))
+                originalMoney = BigDecimalUtil.mul(
+                    price.money,
+                    BigDecimalUtil.mul(BigDecimal(multipleBigIncome), BigDecimal(10000))
+                )
+
                 addPersonalTextChangeForEnterprise(price)
             }
             else -> {
@@ -399,7 +409,10 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 }
 
                 // 2000万*服务器返回的 0.001
-                originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multipleBigIncome * 10000))
+                originalMoney = BigDecimalUtil.mul(
+                    price.money,
+                    BigDecimalUtil.mul(BigDecimal(multipleBigIncome), BigDecimal(10000))
+                )
 
 
                 // 个人只计算代理记账最终金额即可

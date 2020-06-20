@@ -1,15 +1,14 @@
 package com.fatcloud.account.base.ui
 
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
-import android.view.ViewGroup
-import android.widget.TextView
 import com.blankj.utilcode.util.ToastUtils
-import com.fatcloud.account.R
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.common.BaseView
 import com.fatcloud.account.common.Constants
-import com.fatcloud.account.feature.matisse.Matisse
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.fatcloud.account.feature.account.login.LoginActivity
+import com.fatcloud.account.view.dialog.AlertDialog
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -47,16 +46,35 @@ abstract class BaseMVPActivity<P : BasePresenter> : BaseActivity(), BaseView, Ha
         return fragmentInjector
     }
 
+
+
     override fun showError(code: Int, message: String) {
+
         if (code >= 0) {
-            ToastUtils.showShort(if (message.isNullOrEmpty()) "出现错误($code)" else message)
+
+
+            if (code == 401) {
+                AlertDialog.Builder(this)
+                    .setTitle("提示")
+                    .setMessage("您的账号已在其他设备登录，请重新登录")
+                    .setCancelable(false)
+                    .setPositiveButton("去登录", AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
+                        startActivityClearTop(LoginActivity::class.java,null)
+                        dialog.dismiss()
+                    })
+                    .setNegativeButton("我知道了", AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
+                        dialog.dismiss()
+                    })
+                    .create()
+                    .show()
+            } else {
+                ToastUtils.showShort(if (message.isNullOrEmpty()) "出现错误($code)" else message)
+            }
+
         } else {
             ToastUtils.showShort(message)
         }
     }
-
-
-
 
 
 }

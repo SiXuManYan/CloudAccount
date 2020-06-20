@@ -17,8 +17,11 @@ import com.blankj.utilcode.util.LogUtils
 import com.fatcloud.account.BuildConfig
 import com.fatcloud.account.R
 import com.fatcloud.account.base.net.BaseHttpSubscriber
+import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.data.CloudDataBase
 import com.fatcloud.account.entity.oss.SecurityTokenModel
+import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.event.Event
 import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.feature.matisse.Glide4Engine
@@ -46,6 +49,8 @@ import javax.inject.Inject
  * 数据提供器基类
  */
 open class BasePresenter constructor(private var view: BaseView?) {
+
+
 
     //Reactive收集
     private var compositeDisposable: CompositeDisposable? = null
@@ -342,6 +347,8 @@ open class BasePresenter constructor(private var view: BaseView?) {
 
         return finalUrl
     }
+
+
 
 
 

@@ -66,6 +66,7 @@ abstract class BaseActivity : AppCompatActivity() {
         initViews()
     }
 
+
     override fun onDestroy() {
         super.onDestroy()
         if (clicked != null) {
@@ -235,8 +236,9 @@ abstract class BaseActivity : AppCompatActivity() {
         if (ev.action == MotionEvent.ACTION_DOWN && currentFocus != null) {
             if (isShouldHideKeyboard(currentFocus!!, ev)) {
                 val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken,
-                        InputMethodManager.HIDE_NOT_ALWAYS
+                inputMethodManager.hideSoftInputFromWindow(
+                    currentFocus!!.windowToken,
+                    InputMethodManager.HIDE_NOT_ALWAYS
                 )
             }
         }
@@ -287,5 +289,6 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onPause()
 //        StatService.onPause(this)// "baidu统计"： 基本统计，统计一次页面访问的结束。
     }
+
 
 }

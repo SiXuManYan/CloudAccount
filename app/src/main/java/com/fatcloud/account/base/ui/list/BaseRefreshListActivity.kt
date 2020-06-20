@@ -64,6 +64,7 @@ abstract class BaseRefreshListActivity<T, P : BasePresenter> : BaseMVPActivity<P
      */
     var lastItemId: String? = null
 
+    protected var disableLoadMoreView = false
 
 
 
@@ -151,10 +152,15 @@ abstract class BaseRefreshListActivity<T, P : BasePresenter> : BaseMVPActivity<P
 
         // 是否可以上拉加载
         swipeLayout.setEnableLoadMore(!last)
-        if (last && adapter?.allData!!.size > 0) {
-            if (adapter?.footerCount!! > 0) adapter?.removeAllFooter()
-            adapter?.addFooter(noMoreItemView)
+
+        if (!disableLoadMoreView) {
+            if (last && adapter?.allData!!.size > 0) {
+                if (adapter?.footerCount!! > 0) adapter?.removeAllFooter()
+                adapter?.addFooter(noMoreItemView)
+            }
         }
+
+
 
     }
 

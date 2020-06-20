@@ -38,6 +38,7 @@ class OrderListActivity : BaseRefreshListActivity<Order, OrderListPresenter>(), 
     override fun getMainTitle(): Int? = R.string.order_list_title
 
     override fun initViews() {
+        disableLoadMoreView = true
         super.initViews()
         initEvent()
         parent_container.setBackgroundColor(ColorUtils.getColor(R.color.color_list_gray_background))

@@ -73,7 +73,7 @@ class AccidentView @JvmOverloads constructor(context: Context, attrs: AttributeS
      * 无数据提示
      * @param msgRes 提示信息
      */
-    fun showEmpty(msgRes: Int, imageRes: Int = R.mipmap.ic_launcher) {
+    fun showEmpty(msgRes: Int, imageRes: Int = R.drawable.ic_net_error) {
         visibility = View.VISIBLE
         hintText?.setCompoundDrawablesWithIntrinsicBounds(0, imageRes, 0, 0)
         hintText?.compoundDrawablePadding = SizeUtils.dp2px(20f)
@@ -89,7 +89,7 @@ class AccidentView @JvmOverloads constructor(context: Context, attrs: AttributeS
      * 无数据提示
      * @param msgRes 提示信息
      */
-    fun showEmpty(msgRes: String, imageRes: Int = R.mipmap.ic_launcher) {
+    fun showEmpty(msgRes: String, imageRes: Int = R.drawable.ic_net_error) {
         visibility = View.VISIBLE
         hintText?.setCompoundDrawablesWithIntrinsicBounds(0, imageRes, 0, 0)
         hintText?.compoundDrawablePadding = SizeUtils.dp2px(20f)
@@ -107,7 +107,7 @@ class AccidentView @JvmOverloads constructor(context: Context, attrs: AttributeS
      */
     fun showEmpty(msgRes: Int) {
         visibility = View.VISIBLE
-        hintText?.setCompoundDrawablesWithIntrinsicBounds(0, R.mipmap.ic_launcher, 0, 0)
+        hintText?.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_net_error, 0, 0)
         hintText?.compoundDrawablePadding = SizeUtils.dp2px(20f)
         hintText?.setText(msgRes)
         hintText?.visibility = View.VISIBLE
@@ -155,7 +155,7 @@ class AccidentView @JvmOverloads constructor(context: Context, attrs: AttributeS
      */
     fun showRetry() {
         visibility = View.VISIBLE
-        hintText?.setCompoundDrawablesWithIntrinsicBounds(0, R.mipmap.ic_launcher, 0, 0)
+        hintText?.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_net_error, 0, 0)
         hintText?.compoundDrawablePadding = SizeUtils.dp2px(20f)
         hintText?.setText(R.string.error_network_load_failed)
         hintText?.visibility = View.VISIBLE
@@ -165,7 +165,7 @@ class AccidentView @JvmOverloads constructor(context: Context, attrs: AttributeS
         tvLoading.visibility = View.GONE
     }
 
-    fun setEmpty(msgRes: Int, imageRes: Int = R.mipmap.ic_launcher) {
+    fun setEmpty(msgRes: Int, imageRes: Int = R.drawable.ic_net_error) {
         hintText?.setCompoundDrawablesWithIntrinsicBounds(0, imageRes, 0, 0)
         hintText?.compoundDrawablePadding = SizeUtils.dp2px(20f)
         hintText?.setText(msgRes)

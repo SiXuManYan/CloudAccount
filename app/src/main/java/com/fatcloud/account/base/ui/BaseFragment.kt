@@ -1,5 +1,6 @@
 package com.fatcloud.account.base.ui
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,9 +14,11 @@ import com.fatcloud.account.base.common.BaseView
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.feature.account.login.LoginActivity
+import com.fatcloud.account.view.dialog.AlertDialog
 import com.fatcloud.account.view.dialog.LoadingDialog
 
 import dagger.android.support.DaggerFragment
+import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 /**
@@ -39,14 +42,17 @@ abstract class BaseFragment<P : BasePresenter> : DaggerFragment(), BaseView {
 
     fun presenterIsInitialized() = this::presenter.isInitialized
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?) = inflater.inflate(getLayoutId(), container, false)!!
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = inflater.inflate(getLayoutId(), container, false)!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         unbinder = ButterKnife.bind(this, view)
         initViews(view)
         isViewCreated = true
     }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -101,7 +107,25 @@ abstract class BaseFragment<P : BasePresenter> : DaggerFragment(), BaseView {
 
     override fun showError(code: Int, message: String) {
         if (code >= 0) {
-            ToastUtils.showShort(if (message.isNullOrEmpty()) "出现错误($code)" else message)
+            if (code == 401) {
+                AlertDialog.Builder(context)
+                    .setTitle("提示")
+                    .setMessage("您的账号已在其他设备登录，请重新登录")
+                    .setCancelable(false)
+                    .setPositiveButton("去登录", AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
+                        startActivity(Intent(activity, LoginActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                        dialog.dismiss()
+                    })
+                    .setNegativeButton("我知道了", AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
+                        dialog.dismiss()
+                    })
+                    .create()
+                    .show()
+            } else {
+                ToastUtils.showShort(if (message.isNullOrEmpty()) "出现错误($code)" else message)
+            }
+
+
         } else {
             ToastUtils.showShort(message)
         }
@@ -150,7 +174,7 @@ abstract class BaseFragment<P : BasePresenter> : DaggerFragment(), BaseView {
         if (User.isLogon()) {
             startActivity(target, bundle)
         } else {
-           startActivity(LoginActivity::class.java)
+            startActivity(LoginActivity::class.java)
         }
     }
 
@@ -208,8 +232,6 @@ abstract class BaseFragment<P : BasePresenter> : DaggerFragment(), BaseView {
      * 延迟加载
      */
     abstract fun loadOnVisible()
-
-
 
 
 }
