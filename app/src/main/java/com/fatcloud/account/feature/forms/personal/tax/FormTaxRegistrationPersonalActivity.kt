@@ -64,6 +64,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
      * 城市编码
      */
     private var areaId: String = ""
+    private var areaName: String = ""
 
     /**
      * 图片地址
@@ -191,9 +192,8 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
             R.id.addr_rl -> {
                 ProductUtils.showLocationPicker(this, object : OnCityItemClickListener() {
                     override fun onSelected(province: ProvinceBean, city: CityBean, district: DistrictBean) {
-                        val result = StringUtils.getString(R.string.location_information_format, province.name, city.name, district.name)
-                        addr_value.text = result
-                        address = result
+                        address = StringUtils.getString(R.string.location_information_format, province.name, city.name, district.name)
+                        addr_value.text = address
                         areaId = district.id
                     }
 
@@ -226,7 +226,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
             bankNo = bank_number.value(),
             phoneOfBank = bank_phone.value(),
             businessLicenseImgUrl = businessLicenseImgUrl,
-            addr = detail_addr.value(),
+            addr = address + detail_addr.value(),
             area = areaId
         )
     }

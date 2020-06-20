@@ -86,6 +86,8 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
      */
     private var areaId: String = ""
 
+    private var areaName: String = ""
+
     var isFaceUp = false
 
 
@@ -313,7 +315,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
         when (view.id) {
             R.id.business_scope_rl -> {
                 // 参照 EnterpriseInfo
-                startActivityForResult(Intent(this,BusinessScopeActivity::class.java).putExtra(Constants.PARAM_PRODUCT_TYPE, mProductType), 1)
+                startActivityForResult(Intent(this, BusinessScopeActivity::class.java).putExtra(Constants.PARAM_PRODUCT_TYPE, mProductType), 1)
             }
             R.id.bottom_left_tv -> {
                 // 保存
@@ -325,7 +327,8 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             R.id.addr_rl -> {
                 ProductUtils.showLocationPicker(this, object : OnCityItemClickListener() {
                     override fun onSelected(province: ProvinceBean, city: CityBean, district: DistrictBean) {
-                        addr_value_iv.text = StringUtils.getString(R.string.location_information_format, province.name, city.name, district.name)
+                        areaName = StringUtils.getString(R.string.location_information_format, province.name, city.name, district.name)
+                        addr_value_iv.text = areaName
                         areaId = district.id
                     }
 
@@ -375,7 +378,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
         }
 
         val enterpriseInfo = EnterpriseInfo().apply {
-            addr = detail_addr.value()
+            addr = areaName + detail_addr.value()
             area = areaId
             bankNo = bank_number.value()
             bankPhone = bank_phone.value()

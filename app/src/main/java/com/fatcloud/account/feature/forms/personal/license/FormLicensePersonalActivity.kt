@@ -90,6 +90,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
      * 用户选中的城市信息id
      */
     private var areaId: String = ""
+    private var areaName: String = ""
 
 
     var mediaType = 0
@@ -229,7 +230,8 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             R.id.city_rl -> {
                 ProductUtils.showLocationPicker(this, object : OnCityItemClickListener() {
                     override fun onSelected(province: ProvinceBean, city: CityBean, district: DistrictBean) {
-                        addr_value.text = StringUtils.getString(R.string.location_information_format, province.name, city.name, district.name)
+                        areaName = StringUtils.getString(R.string.location_information_format, province.name, city.name, district.name)
+                        addr_value.text = areaName
                         areaId = district.id
                     }
 
@@ -287,7 +289,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             add(IdentityImg(imgUrl = faceDownUrl, mold = Constants.I2))
         }
         val enterpriseInfo = PersonalInfo().apply {
-            addr = detail_addr.value()
+            addr = areaName + detail_addr.value()
             area = areaId
             businessScope = ProductUtils.stringList2IntList(selectPid)
             capital = ProductUtils.getEditValueToBigDecimal(amount_of_funds.value())

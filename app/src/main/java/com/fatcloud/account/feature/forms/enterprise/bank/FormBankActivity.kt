@@ -5,7 +5,6 @@ import android.content.Intent
 import android.text.InputType
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
 import butterknife.OnClick
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -21,7 +20,6 @@ import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.event.entity.BankFormCommitSuccessEvent
 import com.fatcloud.account.event.entity.ImageUploadEvent
-import com.fatcloud.account.event.entity.RefreshOrderEvent
 import com.fatcloud.account.feature.matisse.Matisse
 import com.fatcloud.account.feature.sheet.nature.AccountNatureSheetFragment
 import com.fatcloud.account.view.CompanyMemberEditView
@@ -78,7 +76,8 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
     /**
      * 队长收货单地址区域
      */
-    var reconciliation_area_code = ""
+    var areaCodeId = ""
+    var areaName = ""
 
     override fun getLayoutId() = R.layout.activity_form_bank
 
@@ -261,8 +260,9 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
             R.id.recipient_address_rl -> {
                 ProductUtils.showLocationPicker(this, object : OnCityItemClickListener() {
                     override fun onSelected(province: ProvinceBean, city: CityBean, district: DistrictBean) {
-                        province_title_tv.text = StringUtils.getString(R.string.location_information_format, province.name, city.name, district.name)
-                        reconciliation_area_code = district.id
+                        areaName = StringUtils.getString(R.string.location_information_format, province.name, city.name, district.name)
+                        province_title_tv.text = areaName
+                        areaCodeId = district.id
                     }
 
                     override fun onCancel() = Unit
@@ -316,8 +316,8 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
             financePhone = finance_phone.value(),
             financeShares = finance_share_ratio.value(),
             legalPersonWarrantImgUrl = signed_authorization_url,
-            reconciliatAddr = detail_addr.value(),
-            reconciliatArea = reconciliation_area_code,
+            reconciliatAddr = areaName + detail_addr.value(),
+            reconciliatArea = areaCodeId,
             reconciliatContact = reconciliation_name.value(),
             reconciliatPhone = reconciliation_phone.value()
         )
