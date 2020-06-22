@@ -63,7 +63,6 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
 
     private fun initView() {
         password_et.requestFocus()
-//        KeyboardUtils.showSoftInput(password_et)
         if (isRegisterMode) {
             confirm_rl.visibility = View.VISIBLE
             rule_same_cb.visibility = View.VISIBLE
@@ -112,7 +111,7 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
                 val isSame = (password == password_et.text.toString().trim())
                 rule_same_cb.isChecked = isSame
 
-                changeActionButtonBackground(isSame)
+                changeActionButtonBackground(rule_length_cb.isChecked && rule_format_cb.isChecked && rule_same_cb.isChecked)
 
             }
         })
@@ -180,7 +179,7 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
             switchImageView.setImageResource(R.drawable.ic_login_password_gone)
             editText.transformationMethod = PasswordTransformationMethod.getInstance();
         }
-        editText.setSelection(password_et.text.toString().length)
+        editText.setSelection(editText.text.toString().length)
 
         isCipherText = !isCipherText
 
