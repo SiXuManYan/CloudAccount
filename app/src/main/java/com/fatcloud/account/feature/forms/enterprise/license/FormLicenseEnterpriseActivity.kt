@@ -387,8 +387,8 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
 
 
         val enterpriseInfo = EnterpriseInfo().apply {
-            addr = areaName + detail_addr.value()
-            area = areaId
+            addr = detail_addr.value()
+            area = areaName
             bankNo = bank_number.value()
             bankPhone = bank_phone.value()
             businessScope?.addAll(ProductUtils.stringList2IntList(selectPid))

@@ -289,8 +289,8 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             add(IdentityImg(imgUrl = faceDownUrl, mold = Constants.I2))
         }
         val enterpriseInfo = PersonalInfo().apply {
-            addr = areaName + detail_addr.value()
-            area = areaId
+            addr = detail_addr.value()
+            area = areaName
             businessScope = ProductUtils.stringList2IntList(selectPid)
             capital = ProductUtils.getEditValueToBigDecimal(amount_of_funds.value())
             income = capital

@@ -226,8 +226,8 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
             bankNo = bank_number.value(),
             phoneOfBank = bank_phone.value(),
             businessLicenseImgUrl = businessLicenseImgUrl,
-            addr = address + detail_addr.value(),
-            area = areaId
+            addr = detail_addr.value(),
+            area = address
         )
     }
 

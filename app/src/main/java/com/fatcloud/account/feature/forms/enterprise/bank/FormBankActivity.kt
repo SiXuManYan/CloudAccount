@@ -316,8 +316,8 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
             financePhone = finance_phone.value(),
             financeShares = finance_share_ratio.value(),
             legalPersonWarrantImgUrl = signed_authorization_url,
-            reconciliatAddr = areaName + detail_addr.value(),
-            reconciliatArea = areaCodeId,
+            reconciliatAddr = detail_addr.value(),
+            reconciliatArea = areaName,
             reconciliatContact = reconciliation_name.value(),
             reconciliatPhone = reconciliation_phone.value()
         )
@@ -328,8 +328,6 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
         RxBus.post(BankFormCommitSuccessEvent())
         finish()
     }
-
-
 
 
 }

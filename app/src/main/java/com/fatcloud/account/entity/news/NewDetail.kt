@@ -21,6 +21,9 @@ data class NewDetail(
     val showFlagText: String = "",
     val title: String = "",
     val updateDt: String = "",
+
+    /** 作者 */
+    val editor: String = "",
     val version: Int = 0
 )
 /*
