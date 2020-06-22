@@ -112,6 +112,15 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
         business_scope_tv.text = data.businessScopeNames
         bank_card_number_tv.text = data.bankNo
         bank_phone_tv.text = data.bankPhone
+
+        if (data.area ==null) {
+            data.area = ""
+        }
+        if (data.addr ==null) {
+            data.addr = ""
+        }
+
+
         addr_tv.text = data.addr
         shareholder_container_ll.removeAllViews()
         data.shareholders?.forEach {

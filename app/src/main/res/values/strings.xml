@@ -153,6 +153,7 @@
 
     <!-- 省市区 -->
     <string name="location_information_format">%1$s%2$s%3$s</string>
+    <string name="two_format">%1$s%2$s</string>
 
     <string name="wechat_auth_user_cancel">微信授权已取消</string>
     <string name="wechat_auth_fail">微信授权失败！</string>

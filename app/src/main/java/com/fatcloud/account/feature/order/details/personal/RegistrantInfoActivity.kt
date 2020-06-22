@@ -93,7 +93,16 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
             "女"
         }
         nation_tv.text = data.nation
-        addr_tv.text = data.addr
+
+
+        if (data.area == null) {
+            data.area = ""
+        }
+        if (data.addr == null) {
+            data.addr = ""
+        }
+        addr_tv.text = getString(R.string.two_format, data.area, data.addr)
+
         phone_tv.text = data.tel
         first_choice_name_tv.text = data.name0
         alternative_name_01_tv.text = data.name1
