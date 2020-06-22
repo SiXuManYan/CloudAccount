@@ -68,7 +68,7 @@ open class JsWebViewX5 @JvmOverloads constructor(context: Context?, attrs: Attri
         settings.domStorageEnabled = true
 
         // 去掉滚动条
-        x5WebViewExtension?.setScrollBarFadingEnabled(false)
+        x5WebViewExtension?.setScrollBarFadingEnabled(true)
 
         webChromeClient = object : WebChromeClient() {
 

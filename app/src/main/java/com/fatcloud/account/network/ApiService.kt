@@ -463,9 +463,21 @@ interface ApiService {
         @Field("city") city: String?,
         @Field("lat") lat: String?,
         @Field("lng") lng: String?
-
-
     ): Flowable<Response<User>>
+
+
+    /**
+     * 获取资讯点赞状态
+     */
+    @GET("$NEWS_API/thumbsUpState")
+    fun getNewsLikeStatus(@Query("newsId") newsId: String?): Flowable<Response<JsonElement>>
+
+
+    /**
+     * 资讯点赞操作
+     */
+    @GET("$NEWS_API/thumbsUpClick")
+    fun newsLike(@Query("newsId") newsId: String?): Flowable<Response<JsonElement>>
 
 
 }

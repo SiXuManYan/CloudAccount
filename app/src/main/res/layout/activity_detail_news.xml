@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,7 +32,7 @@
             android:lines="1"
             android:textColor="@color/color_first_level"
             android:textSize="16sp"
-            tools:text="web page title " />
+            android:text="资讯详情 " />
 
         <TextView
             android:id="@+id/tv_action"
@@ -49,13 +49,14 @@
 
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/mScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/title_rl">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -235,10 +236,10 @@
             </LinearLayout>
 
 
-            <com.fatcloud.account.view.extend.DisableScrollWebView
+            <com.fatcloud.account.view.web.JsWebViewX5
                 android:id="@+id/x5_web"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -246,4 +247,4 @@
     </androidx.core.widget.NestedScrollView>
 
 
-</RelativeLayout>
+</LinearLayout>
