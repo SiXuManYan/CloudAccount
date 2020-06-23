@@ -4,7 +4,6 @@ import android.content.Context
 import android.widget.LinearLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import com.blankj.utilcode.util.StringUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
@@ -55,9 +54,8 @@ class FormBankPresenter @Inject constructor(private var view: FormBankView) : Ba
             initIdNumberTitleValue(context.getString(R.string.identity_number), shareholder.idno)
             initIdAddressTitleValue(context.getString(R.string.id_address), shareholder.idnoAddr)
             initPhoneTitleValue(context.getString(R.string.contact_number), shareholder.phone)
-            initShareRatioTitleValue(
-                context.getString(R.string.share_ratio),
-                shareholder.shareProportion + " %"
+            initShareRatioValue(
+                shareholder.shareProportion
             )
             setServerImage(shareholder.imgs)
             disableImageViewClick()

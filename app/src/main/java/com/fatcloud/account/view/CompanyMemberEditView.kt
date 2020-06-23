@@ -187,26 +187,22 @@ class CompanyMemberEditView : LinearLayout {
 
 
     // 股份占比
-    fun initShareRatioTitleHint(title: CharSequence, hint: CharSequence): EditView {
-        ev_04_share_ratio.setTitleAndHint(title, hint)
-        return ev_04_share_ratio
+    fun initShareRatioHint(hint: CharSequence) {
+        ev_04_share_ratio_et.hint = hint
     }
 
-    fun initShareRatioTitleValue(title: CharSequence, value: CharSequence): EditView {
-        initShareRatioTitle(title)
-        setShareRatioValue(value)
-        ev_04_share_ratio.setEditAble(false)
-        return ev_04_share_ratio
-    }
+    /**
+     * 设置股份占比值
+     */
+    fun initShareRatioValue(value: CharSequence) {
 
-    fun initShareRatioTitle(title: CharSequence): EditView {
-        ev_04_share_ratio.setTitle(title)
-        return ev_04_share_ratio
-    }
+        ev_04_share_ratio_et.setText(value)
+        ev_04_share_ratio_et.apply {
+            isFocusable = false
+            isFocusableInTouchMode = false
+            isEnabled = false
+        }
 
-    fun setShareRatioValue(title: CharSequence): EditView {
-        ev_04_share_ratio.setValue(title)
-        return ev_04_share_ratio
     }
 
 
@@ -218,7 +214,7 @@ class CompanyMemberEditView : LinearLayout {
     /**
      * 股份占比
      */
-    fun getShareRatioValue() = ev_04_share_ratio.value()
+    fun getShareRatioValue() = ev_04_share_ratio_et.text.toString().trim()
 
     fun getFrontImage(): ImageView = id_card_front_iv
     fun getBackImage(): ImageView = id_card_back_iv

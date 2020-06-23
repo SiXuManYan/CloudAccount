@@ -22,7 +22,6 @@ import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
 import com.fatcloud.account.feature.matisse.Matisse
 import com.fatcloud.account.view.CompanyMemberEditView
-import com.fatcloud.account.view.EditView
 import com.lljjcoder.Interface.OnCityItemClickListener
 import com.lljjcoder.bean.CityBean
 import com.lljjcoder.bean.DistrictBean
@@ -190,7 +189,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             )
             initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
             initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
-            initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
+            initShareRatioHint(getString(R.string.share_ratio_hint))
 
         }
 
@@ -205,7 +204,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             )
             initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
             initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
-            initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint_2)).setInputType(InputType.TYPE_CLASS_NUMBER)
+            initShareRatioHint(getString(R.string.share_ratio_hint_2))
         }
 
         // 默认股东信息
@@ -219,7 +218,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             )
             initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
             initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
-            initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
+            initShareRatioHint(getString(R.string.share_ratio_hint))
             showAddActionView().setOnClickListener {
                 VibrateUtils.vibrate(10)
                 // it.visibility = View.GONE
@@ -246,7 +245,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             )
             initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
             initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
-            initShareRatioTitleHint(getString(R.string.share_ratio), getString(R.string.share_ratio_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
+            initShareRatioHint(getString(R.string.share_ratio_hint))
 
             //  添加股东
             showAddActionView().setOnClickListener {

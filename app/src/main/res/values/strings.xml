@@ -95,8 +95,8 @@
     <string name="contact_number">联系电话</string>
     <string name="contact_number_hint">请输入联系电话</string>
     <string name="share_ratio">股份占比</string>
-    <string name="share_ratio_hint">请输入股份占比%</string>
-    <string name="share_ratio_hint_2">请输入股份占比（选填）%</string>
+    <string name="share_ratio_hint">请输入股份占比</string>
+    <string name="share_ratio_hint_2">请输入股份占比（选填）</string>
     <string name="share_ratio_value_format">股份占比%1$s</string>
     <string name="registered_capital">注册资金(万元)</string>
     <string name="account_nature">账户性质</string>
