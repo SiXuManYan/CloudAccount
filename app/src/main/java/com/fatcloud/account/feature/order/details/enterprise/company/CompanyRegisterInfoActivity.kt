@@ -18,7 +18,6 @@ import com.fatcloud.account.view.ShareholderView
 import kotlinx.android.synthetic.main.activity_order_detail_company.*
 import kotlinx.android.synthetic.main.layout_bank_info.*
 import kotlinx.android.synthetic.main.layout_company_info.*
-import java.net.URL
 
 /**
  * Created by Wangsw on 2020/6/4 0004 14:03.
@@ -103,6 +102,9 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
     }
 
 
+    /**
+     * 财务负责人在详情接口获取
+     */
     private fun setCompanyInfo(data: EnterpriseInfo) {
         zero_company_name_tv.text = data.enterpriseName0
         first_company_name_tv.text = data.enterpriseName1
@@ -113,10 +115,10 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
         bank_card_number_tv.text = data.bankNo
         bank_phone_tv.text = data.bankPhone
 
-        if (data.area ==null) {
+        if (data.area == null) {
             data.area = ""
         }
-        if (data.addr ==null) {
+        if (data.addr == null) {
             data.addr = ""
         }
 
@@ -278,6 +280,10 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
         }
 
 
+
+
+
+
     }
 
 
@@ -285,6 +291,8 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
 
         shareholder_container_bank_ll.removeAllViews()
         data.shareholders?.forEach {
+
+
             shareholder_container_bank_ll.addView(ShareholderView(this).apply { setShareHolderView(it) })
         }
     }

@@ -4,8 +4,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
+import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
+import com.fatcloud.account.entity.order.enterprise.Shareholder
 import com.fatcloud.account.entity.order.persional.PersonalInfo
 import javax.inject.Inject
 
@@ -30,15 +33,36 @@ class CompanyRegisterInfoPresenter @Inject constructor(private var companyRegist
             object : BaseHttpSubscriber<EnterpriseInfo>(companyRegisterInfoView) {
 
 
-
                 override fun onSuccess(data: EnterpriseInfo?) {
 
+                    var financeShareholder: Shareholder? = null
+
                     data?.let {
-                        companyRegisterInfoView.bindDetailInfo(data)
+                        companyRegisterInfoView.bindDetailInfo(it)
+
+                        // 为银行时回显时获取 财务负责人信息
+                        if (productWorkType == Constants.PW3) {
+
+                            financeShareholder = Shareholder(
+                                idno = CommonUtils.convertString(it.financeIdno),
+                                idnoAddr = "",
+                                imgs = ArrayList<IdentityImg>().apply {
+                                    add(IdentityImg(imgUrl = CommonUtils.convertString(it.financeIdnoImgUrlA), mold = Constants.I1))
+                                    add(IdentityImg(imgUrl = CommonUtils.convertString(it.financeIdnoImgUrlB), mold = Constants.I2))
+                                },
+                                mold = Constants.SH4_N,
+                                name = CommonUtils.convertString(it.financeName),
+                                phone = CommonUtils.convertString(it.financePhone),
+                                shareProportion = CommonUtils.convertString(it.financeShares)
+                            )
+                        }
+
                     }
 
+
                     if (productWorkType == Constants.PW3) {
-                        getRegistrantInfo(lifecycleOwner, orderId)
+                        // 银行对公账户时，获取额外信息
+                        getRegistrantInfo(lifecycleOwner, orderId, financeShareholder)
                     }
 
 
@@ -50,7 +74,11 @@ class CompanyRegisterInfoPresenter @Inject constructor(private var companyRegist
     }
 
 
-    fun getRegistrantInfo(lifecycle: LifecycleOwner, orderId: String?) {
+    fun getRegistrantInfo(
+        lifecycle: LifecycleOwner,
+        orderId: String?,
+        financeShareholder: Shareholder?
+    ) {
         requestApi(lifecycle, Lifecycle.Event.ON_DESTROY,
             apiService.getPersonalOrderDetail(orderId),
 
@@ -58,9 +86,18 @@ class CompanyRegisterInfoPresenter @Inject constructor(private var companyRegist
 
                 override fun onSuccess(data: PersonalInfo?) {
 
-                    data?.let {
-                        companyRegisterInfoView.bindShareholdersInfo(data)
+                    if (data == null) {
+                        return
                     }
+
+                    //  添加财务负责人
+                    financeShareholder?.let {
+                        if (data.shareholders.isNullOrEmpty()) {
+                            data.shareholders = ArrayList()
+                        }
+                        data.shareholders?.add(0, it)
+                    }
+                    companyRegisterInfoView.bindShareholdersInfo(data)
 
                 }
             }

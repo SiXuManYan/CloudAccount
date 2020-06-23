@@ -141,7 +141,7 @@ class PersonalInfo {
 
     var investYearNum: Int? = null
 
-    var shareholders: List<Shareholder>? = null
+    var shareholders: ArrayList<Shareholder>? = null
 
 
 }

@@ -65,6 +65,11 @@ class ShareholderView : LinearLayout {
                 title_tv.text = context.getString(R.string.shareholder_info)
                 name_title_tv.text = context.getString(R.string.shareholder_name)
             }
+            Constants.SH4_N -> {
+                title_tv.text = "财务负责人信息"
+                name_title_tv.text = "财务负责人姓名"
+            }
+
         }
         name_tv.text = data.name
         id_number_tv.text = data.idno

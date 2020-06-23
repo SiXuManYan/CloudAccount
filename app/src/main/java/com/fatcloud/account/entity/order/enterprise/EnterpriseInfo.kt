@@ -84,6 +84,11 @@ class EnterpriseInfo {
     /** 金融电话 */
     var financePhone: String ? = null
 
+    /**
+     * 财务负责人股占比
+     */
+    var financeShares: String ? = null
+
     /** 法人认股权证网址 */
     var legalPersonWarrantImgUrl: String ? = null
 

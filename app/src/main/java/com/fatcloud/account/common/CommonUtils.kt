@@ -919,5 +919,12 @@ object CommonUtils {
         return fileName
     }
 
+    fun convertString(oldString:String?):String {
+        return if (oldString.isNullOrBlank()) {
+            ""
+        }else{
+            oldString
+        }
+    }
 
 }
