@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingTop="50dp"
-            android:paddingBottom="100dp">
+            android:paddingBottom="200dp">
 
 
             <RadioGroup

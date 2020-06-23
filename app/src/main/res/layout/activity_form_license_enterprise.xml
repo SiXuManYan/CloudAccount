@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingTop="50dp"
-            android:paddingBottom="50dp">
+            android:paddingBottom="200dp">
 
             <com.fatcloud.account.view.EditView
                 android:id="@+id/zero_choice_name"

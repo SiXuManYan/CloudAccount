@@ -4,9 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="45dp"
     android:background="?android:attr/selectableItemBackground"
-    tools:background="@color/font_white"
-
-    >
+    tools:background="@color/font_white">
 
     <TextView
         android:id="@+id/title_iv"
@@ -33,7 +31,7 @@
         android:imeOptions="actionNext"
         android:inputType="text"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:paddingRight="0dp"
         android:singleLine="true"
         android:textColor="@color/color_first_level"
         android:textColorHint="@color/color_cccccc"
