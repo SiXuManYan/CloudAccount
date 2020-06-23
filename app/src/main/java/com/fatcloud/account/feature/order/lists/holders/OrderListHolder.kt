@@ -77,6 +77,7 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
             }
             else -> {
                 payment_tv.visibility = View.GONE
+                countdown_tv.visibility =View.GONE
             }
         }
 
