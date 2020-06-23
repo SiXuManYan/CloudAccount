@@ -275,7 +275,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             1 -> {
                 selectPid = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID)
                 selectPidNames = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID_NAME)
-                business_scope_value.text = Arrays.toString(selectPidNames.toArray())
+                business_scope_value.text = Arrays.toString(selectPidNames.toArray()).replace("[", "").replace("]", "")
             }
 
             Constants.REQUEST_MEDIA -> {

@@ -328,7 +328,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
                 // 选中的经营范围
                 selectPid = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID)
                 selectPidNames = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID_NAME)
-                business_scope_value.text = Arrays.toString(selectPidNames.toArray())
+                business_scope_value.text = Arrays.toString(selectPidNames.toArray()).replace("[","").replace("]","")
             }
             Constants.REQUEST_MEDIA -> {
                 // 相册选择图片
