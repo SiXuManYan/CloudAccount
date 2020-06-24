@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_splash_bottom" />
+                    android:src="@drawable/ic_my_page" />
 
 
                 <RelativeLayout
@@ -144,15 +144,14 @@
                     android:textColor="@color/color_first_level"
                     android:textSize="@dimen/font_size_14" />
 
-                <TextView
+                <ImageView
                     android:id="@+id/order_tag_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text=">"
-                    android:textColor="@color/color_third_level"
-                    android:textSize="@dimen/font_size_12" />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_right_gray" />
 
                 <View
                     android:layout_width="match_parent"
@@ -180,7 +179,8 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <ImageView
                     android:id="@+id/income_tag_iv"
@@ -200,15 +200,14 @@
                     android:textSize="@dimen/font_size_14" />
 
 
-                <TextView
+                <ImageView
                     android:id="@+id/income_tag_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text=">"
-                    android:textColor="@color/color_third_level"
-                    android:textSize="@dimen/font_size_12" />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_right_gray" />
 
 
                 <View
@@ -227,7 +226,8 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <ImageView
                     android:id="@+id/qr_tag_iv"
@@ -247,14 +247,13 @@
                     android:textSize="@dimen/font_size_14" />
 
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text=">"
-                    android:textColor="@color/color_third_level"
-                    android:textSize="@dimen/font_size_12" />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_right_gray" />
 
 
                 <View
@@ -274,7 +273,8 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <ImageView
                     android:id="@+id/money_tag_iv"
@@ -294,15 +294,14 @@
                     android:textSize="@dimen/font_size_14" />
 
 
-                <TextView
+                <ImageView
                     android:id="@+id/money_tag_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text=">"
-                    android:textColor="@color/color_third_level"
-                    android:textSize="@dimen/font_size_12" />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_right_gray" />
 
 
                 <ImageView
@@ -320,7 +319,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_alignParentBottom="true"
-
                     android:background="@color/color_list_gray_background" />
 
 
@@ -352,14 +350,13 @@
                     android:textSize="@dimen/font_size_14" />
 
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text=">"
-                    android:textColor="@color/color_third_level"
-                    android:textSize="@dimen/font_size_12" />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_right_gray" />
 
                 <View
                     android:layout_width="match_parent"

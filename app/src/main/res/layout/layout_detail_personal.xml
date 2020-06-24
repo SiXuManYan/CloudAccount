@@ -28,6 +28,73 @@
             android:layout_gravity="center_vertical"
             android:layout_marginRight="15dp"
             android:lineSpacingMultiplier="1.2"
+            android:text="姓名"
+            android:textColor="@color/color_third_level"
+            android:textSize="@dimen/font_size_14" />
+
+
+        <TextView
+            android:id="@+id/name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/color_zero_level"
+            android:textSize="@dimen/font_size_14"
+            tools:text="宫本武藏" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingTop="3dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="3dp">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="15dp"
+            android:lineSpacingMultiplier="1.2"
+            android:text="身份证号"
+            android:textColor="@color/color_third_level"
+            android:textSize="@dimen/font_size_14" />
+
+
+        <TextView
+            android:id="@+id/identity_number_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/color_zero_level"
+            android:textSize="@dimen/font_size_14"
+            tools:text="23232222222222222" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingTop="3dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="3dp">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="15dp"
+            android:lineSpacingMultiplier="1.2"
             android:text="性别"
             android:textColor="@color/color_third_level"
             android:textSize="@dimen/font_size_14" />
@@ -381,72 +448,7 @@
     </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="15dp"
-        android:paddingTop="3dp"
-        android:paddingRight="15dp"
-        android:paddingBottom="3dp">
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="15dp"
-            android:lineSpacingMultiplier="1.2"
-            android:text="姓名"
-            android:textColor="@color/color_third_level"
-            android:textSize="@dimen/font_size_14" />
-
-
-        <TextView
-            android:id="@+id/name_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/color_zero_level"
-            android:textSize="@dimen/font_size_14"
-            tools:text="宫本武藏" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="15dp"
-        android:paddingTop="3dp"
-        android:paddingRight="15dp"
-        android:paddingBottom="3dp">
-
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="15dp"
-            android:lineSpacingMultiplier="1.2"
-            android:text="身份证号"
-            android:textColor="@color/color_third_level"
-            android:textSize="@dimen/font_size_14" />
-
-
-        <TextView
-            android:id="@+id/identity_number_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/color_zero_level"
-            android:textSize="@dimen/font_size_14"
-            tools:text="23232222222222222" />
-
-    </LinearLayout>
 
 
     <RelativeLayout

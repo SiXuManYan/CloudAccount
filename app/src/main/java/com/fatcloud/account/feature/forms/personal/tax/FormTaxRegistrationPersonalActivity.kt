@@ -212,6 +212,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
         }
         if (TextUtils.isEmpty(businessLicenseImgUrl)) {
             ToastUtils.showShort("请上传营业执照副本")
+            return
         }
 
 
