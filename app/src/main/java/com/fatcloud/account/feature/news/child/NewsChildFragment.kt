@@ -15,6 +15,7 @@ import com.fatcloud.account.event.entity.TabRefreshEvent
 import com.fatcloud.account.feature.home.adapters.NewsChildAdapter
 import com.fatcloud.account.feature.news.detail.NewsDetailActivity
 import com.blankj.utilcode.util.SizeUtils
+import com.fatcloud.account.event.Event
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import com.jude.easyrecyclerview.decoration.DividerDecoration
 import io.reactivex.functions.Consumer
@@ -74,6 +75,34 @@ class NewsChildFragment : BaseRefreshListFragment<News, NewsChildPresenter>(), N
             }
             recyclerView.smoothScrollToPosition(0)
         })
+
+        presenter.subsribeEvent(Consumer {
+            when (it.code) {
+                Constants.EVENT_ADD_NEWS_PAGE_VIEWS -> addPageViews(it)
+                else -> {
+                }
+            }
+        })
+    }
+
+    /**
+     * 增加浏览量
+     */
+    private fun addPageViews(it: Event) {
+
+        val newsId = it.content
+        if (!newsId.isNullOrBlank()) {
+            val allData = getAdapter()?.allData
+            allData?.forEachIndexed { index, news ->
+                if (news.id == newsId) {
+                    news.readCount = (news.readCount + 1)
+                    getAdapter()?.notifyItemChanged(index)
+                    return@forEachIndexed
+                }
+
+            }
+
+        }
     }
 
 
@@ -90,8 +119,6 @@ class NewsChildFragment : BaseRefreshListFragment<News, NewsChildPresenter>(), N
 
             clickAble = false
             handler.postDelayed({
-                news.readCount = (news.readCount + 1)
-                adapter.notifyItemChanged(it)
                 clickAble = true
             }, 1000)
 

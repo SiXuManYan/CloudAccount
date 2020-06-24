@@ -39,6 +39,13 @@ class User {
             return isLogin
         }
 
+        fun getToken():String{
+            if (isLogon()) {
+                return CommonUtils.getShareDefault().getString(Constants.SP_TOKEN, "")
+            }
+            return ""
+        }
+
         fun update() {
             instance = null
         }

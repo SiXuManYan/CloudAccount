@@ -3,6 +3,7 @@ package com.fatcloud.account.feature.news.detail
 import android.text.TextUtils
 import android.view.View
 import butterknife.OnClick
+import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.RegexUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
@@ -10,6 +11,10 @@ import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.TimeUtil
 import com.fatcloud.account.entity.news.NewDetail
+import com.fatcloud.account.entity.users.User
+import com.fatcloud.account.event.Event
+import com.fatcloud.account.event.RxBus
+import com.fatcloud.account.feature.account.login.LoginActivity
 import com.fatcloud.account.view.web.JsWebViewX5
 import com.tencent.smtt.export.external.interfaces.SslError
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler
@@ -17,6 +22,7 @@ import com.tencent.smtt.export.external.interfaces.WebResourceError
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest
 import com.tencent.smtt.sdk.WebView
 import com.tencent.smtt.sdk.WebViewClient
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_detail_news.*
 import java.lang.reflect.Method
 
@@ -43,7 +49,6 @@ class NewsDetailActivity : BaseMVPActivity<NewsDetailPresenter>(), NewsDetailVie
         initView()
         newsId = intent.getStringExtra(Constants.PARAM_ID)
         presenter.getNewsDetail(this, newsId)
-
     }
 
     private fun initView() {
@@ -122,6 +127,9 @@ class NewsDetailActivity : BaseMVPActivity<NewsDetailPresenter>(), NewsDetailVie
         likeCount = it.likeCount
         like_tv.text = likeCount.toString()
         collect_tv.text = it.moldText
+
+        // 更新页面浏览量
+        RxBus.post(Event(Constants.EVENT_ADD_NEWS_PAGE_VIEWS, newsId))
     }
 
     override fun newsLikeStatus(status: Int) {
@@ -146,10 +154,14 @@ class NewsDetailActivity : BaseMVPActivity<NewsDetailPresenter>(), NewsDetailVie
                 likeCount = 0
             }
             like_tv.text = likeCount.toString()
+            like_tv.setTextColor(ColorUtils.getColor(R.color.color_third_level))
+            liked = false
         } else {
             like_iv.setImageResource(R.drawable.ic_like_red)
             likeCount++
             like_tv.text = likeCount.toString()
+            like_tv.setTextColor(ColorUtils.getColor(R.color.color_app_red))
+            liked = true
         }
     }
 
@@ -163,7 +175,11 @@ class NewsDetailActivity : BaseMVPActivity<NewsDetailPresenter>(), NewsDetailVie
         }
         when (view.id) {
             R.id.like_ll -> {
-                presenter.doLikeAction(this, newsId)
+                if (!User.isLogon()) {
+                    startActivity(LoginActivity::class.java)
+                    return
+                }
+                presenter.doLikeAction(this, newsId, liked)
             }
             R.id.iv_back -> onBackPressed()
             else -> {

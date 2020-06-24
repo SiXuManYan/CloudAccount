@@ -2,9 +2,13 @@ package com.fatcloud.account.feature.news.detail
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import com.blankj.utilcode.util.VibrateUtils
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
+import com.fatcloud.account.common.CommonUtils
+import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.news.NewDetail
+import com.fatcloud.account.entity.users.User
 import com.google.gson.JsonElement
 import javax.inject.Inject
 
@@ -18,6 +22,7 @@ class NewsDetailPresenter @Inject constructor(private var newsDetailView: NewsDe
 
     fun getNewsDetail(lifecycle: LifecycleOwner, newsId: String?) {
 
+
         requestApi(lifecycle, Lifecycle.Event.ON_DESTROY,
             apiService.getNewsDetail(newsId),
             object : BaseHttpSubscriber<NewDetail>(newsDetailView, false) {
@@ -25,8 +30,12 @@ class NewsDetailPresenter @Inject constructor(private var newsDetailView: NewsDe
 
                     data?.let {
                         newsDetailView.bindDetailData(it)
-
                     }
+
+                    if (User.isLogon()) {
+                        getNewsLikeStatus(lifecycle, newsId)
+                    }
+
                 }
 
             })
@@ -39,7 +48,7 @@ class NewsDetailPresenter @Inject constructor(private var newsDetailView: NewsDe
     fun getNewsLikeStatus(lifecycle: LifecycleOwner, newsId: String?) {
 
         requestApi(lifecycle, Lifecycle.Event.ON_DESTROY,
-            apiService.getNewsLikeStatus(newsId),
+            apiService.getNewsLikeStatus(newsId, User.getToken()),
             object : BaseHttpSubscriber<JsonElement>(newsDetailView, false) {
                 override fun onSuccess(data: JsonElement?) {
 
@@ -75,10 +84,13 @@ class NewsDetailPresenter @Inject constructor(private var newsDetailView: NewsDe
     /**
      * 进行点赞和取消赞
      */
-    fun doLikeAction(lifecycle: LifecycleOwner, newsId: String?) {
-
+    fun doLikeAction(lifecycle: LifecycleOwner, newsId: String?, liked: Boolean) {
+        if (!liked) {
+            VibrateUtils.vibrate(10)
+        }
+        val token = CommonUtils.getShareDefault().getString(Constants.SP_TOKEN, "")
         requestApi(lifecycle, Lifecycle.Event.ON_DESTROY,
-            apiService.newsLike(newsId),
+            apiService.newsLike(newsId, User.getToken()),
             object : BaseHttpSubscriber<JsonElement>(newsDetailView, false) {
                 override fun onSuccess(data: JsonElement?) {
                     newsDetailView.handleLikeSuccess()

@@ -16,6 +16,7 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.home.Banners
 import com.fatcloud.account.entity.news.News
 import com.fatcloud.account.entity.product.Product
+import com.fatcloud.account.event.Event
 import com.fatcloud.account.event.entity.TabRefreshEvent
 import com.fatcloud.account.feature.home.adapters.NewsChildAdapter
 import com.fatcloud.account.feature.home.header.HomeHeader
@@ -101,8 +102,17 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
                     }, 200)
                 }
             }
-
         })
+
+        // 增加新闻浏览量
+        presenter.subsribeEvent(Consumer {
+            when (it.code) {
+                Constants.EVENT_ADD_NEWS_PAGE_VIEWS -> addPageViews(it)
+                else -> {
+                }
+            }
+        })
+
     }
 
     private fun initRecyclerView() {
@@ -162,7 +172,27 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
     }
 
 
-    private fun getRecyclerAdapter(): RecyclerArrayAdapter<News> {
+    /**
+     * 增加浏览量
+     */
+    private fun addPageViews(it: Event) {
+
+        val newsId = it.content
+        if (!newsId.isNullOrBlank()) {
+            val allData = mAdapter?.allData
+            allData?.forEachIndexed { index, news ->
+                if (news.id == newsId) {
+                    news.readCount = (news.readCount + 1)
+                    mAdapter?.notifyItemChanged(index + mAdapter.headerCount)
+                    return@forEachIndexed
+                }
+
+            }
+
+        }
+    }
+
+    private fun getRecyclerAdapter(): NewsChildAdapter {
 
         val adapter = NewsChildAdapter(context)
 

@@ -150,7 +150,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_marginLeft="15dp"
-                            tools:src="@drawable/ic_page_views" />
+                            android:src="@drawable/ic_page_views" />
 
 
                         <TextView
@@ -178,7 +178,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_marginLeft="15dp"
-                            tools:src="@drawable/ic_like_gray" />
+                            android:src="@drawable/ic_like_gray" />
 
 
                         <TextView

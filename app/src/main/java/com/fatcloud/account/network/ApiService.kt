@@ -57,11 +57,7 @@ interface ApiService {
          */
         private const val PRODUCT_API_PREFIX = "$API_ACCOUNT_URI/tProduct/"
 
-        /**
-         * 资讯相关接口前缀
-         *
-         */
-        private const val NEWS_API = "$API_ACCOUNT_URI/tNews/"
+
 
         /**
          * 账户相关接口前缀
@@ -110,7 +106,7 @@ interface ApiService {
      * @see NewsCategory
      * @see <a href="http://192.168.1.139:8881/api/account/tNews/mold">点击查看接口返回</a>
      */
-    @GET("$NEWS_API/mold")
+    @GET("$API_ACCOUNT_URI/tNews/mold")
     fun getNewsCategory(): Flowable<Response<JsonArray>>
 
     /**
@@ -122,7 +118,7 @@ interface ApiService {
      * @param mold 资讯列别，即：资讯tab列表中的 value 字段
      *
      */
-    @GET(NEWS_API)
+    @GET("$API_ACCOUNT_URI/tNews/")
     fun getNewsList(
         @Query("pageSize") pageSize: Int,
         @Query("tailId") tailId: String? = null,
@@ -134,8 +130,10 @@ interface ApiService {
      * http://192.168.1.191:8881/api/account/tNews/detail?newsId=1265846914897674240
      *
      */
-    @GET("$NEWS_API/detail")
-    fun getNewsDetail(@Query("newsId") newsId: String?): Flowable<Response<NewDetail>>
+    @GET("$API_ACCOUNT_URI/tNews/detail")
+    fun getNewsDetail(
+        @Query("newsId") newsId: String?
+    ): Flowable<Response<NewDetail>>
 
     /**
      * 校验账户是否存在
@@ -469,15 +467,21 @@ interface ApiService {
     /**
      * 获取资讯点赞状态
      */
-    @GET("$NEWS_API/thumbsUpState")
-    fun getNewsLikeStatus(@Query("newsId") newsId: String?): Flowable<Response<JsonElement>>
+    @GET("$API_ACCOUNT_URI/tNews/thumbsUpState")
+    fun getNewsLikeStatus(
+        @Query("newsId") newsId: String?,
+        @Query("token") token: String?
+    ): Flowable<Response<JsonElement>>
 
 
     /**
      * 资讯点赞操作
      */
-    @GET("$NEWS_API/thumbsUpClick")
-    fun newsLike(@Query("newsId") newsId: String?): Flowable<Response<JsonElement>>
+    @GET("$API_ACCOUNT_URI/tNews/thumbsUpClick")
+    fun newsLike(
+        @Query("newsId") newsId: String?,
+        @Query("token") token: String?
+    ): Flowable<Response<JsonElement>>
 
 
 }

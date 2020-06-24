@@ -227,6 +227,7 @@ object ProductUtils {
     /**
      * https://ftacloud-bucket-private.oss-cn-qingdao.aliyuncs.com/android/dev/image/encryption/image_1592462141234.jpg
      * oss-cn-qingdao.aliyuncs.com
+     * 获取加密图片的 Oss object key
      */
     fun getOssSignUrlObjectKey(url: String): String {
 
@@ -240,6 +241,9 @@ object ProductUtils {
     }
 
 
+    /**
+     * 获取OSS 签名
+     */
     fun getRealOssUrl(context: Context?, url: String, ossCallBack: CloudAccountApplication.OssSignCallBack) {
 
         val activity = context as Activity
