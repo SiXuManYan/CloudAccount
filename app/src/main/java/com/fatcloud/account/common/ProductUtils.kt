@@ -4,13 +4,13 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
+import android.os.Build
 import android.text.TextUtils
 import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.RegexUtils
-import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.VibrateUtils
 import com.fatcloud.account.BuildConfig
 import com.fatcloud.account.R
@@ -20,9 +20,6 @@ import com.fatcloud.account.feature.matisse.Matisse
 import com.fatcloud.account.view.EditView
 import com.fatcloud.account.view.dialog.AlertDialog
 import com.lljjcoder.Interface.OnCityItemClickListener
-import com.lljjcoder.bean.CityBean
-import com.lljjcoder.bean.DistrictBean
-import com.lljjcoder.bean.ProvinceBean
 import com.lljjcoder.style.cityjd.JDCityConfig
 import com.lljjcoder.style.cityjd.JDCityPicker
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -129,45 +126,56 @@ object ProductUtils {
      */
     fun handleMediaSelect(activity: Activity, mediaType: Int, @IdRes fromViewId: Int) {
 
-        val isGranted = requestAlbumPermissions(activity)
-
-        if (isGranted) {
-            Matisse.from(activity).choose(if (mediaType == 0) MimeType.ofAll() else with(MimeType.ofImage()) {
-                remove(MimeType.GIF)
-                this
-            }, true)
-                .countable(true)
+        //
+        PermissionUtils.permissionAny(
+            activity, PermissionUtils.OnPermissionCallBack { granted ->
+                if (granted) {
+                    Matisse.from(activity).choose(if (mediaType == 0) MimeType.ofAll() else with(MimeType.ofImage()) {
+                        remove(MimeType.GIF)
+                        this
+                    }, true)
+                        .countable(true)
 //                .originalEnable(false)
-                .maxSelectable(1)
-                .theme(R.style.Matisse_Dracula)
-                .thumbnailScale(0.87f)
-                .imageEngine(Glide4Engine())
-                .forResult(Constants.REQUEST_MEDIA, mediaType, fromViewId)
+                        .maxSelectable(1)
+                        .theme(R.style.Matisse_Dracula)
+                        .thumbnailScale(0.87f)
+                        .imageEngine(Glide4Engine())
+                        .forResult(Constants.REQUEST_MEDIA, mediaType, fromViewId)
 
-        } else {
-            showPermissionFailure(activity)
-        }
+                } else {
+                    showPermissionFailure(activity)
+                }
+            }, Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+
+
     }
 
     fun handleMediaSelectForFragment(fragment: Fragment, mediaType: Int, @IdRes fromViewId: Int) {
-        val isGranted = requestAlbumPermissions(fragment.activity)
 
-        if (isGranted) {
-            Matisse.from(fragment).choose(if (mediaType == 0) MimeType.ofAll() else with(MimeType.ofImage()) {
-                remove(MimeType.GIF)
-                this
-            }, true)
-                .countable(true)
-//                .originalEnable(false)
-                .maxSelectable(1)
-                .theme(R.style.Matisse_Dracula)
-                .thumbnailScale(0.87f)
-                .imageEngine(Glide4Engine())
-                .forResult(Constants.REQUEST_MEDIA, mediaType, fromViewId)
+        PermissionUtils.permissionAny(
+            fragment.activity, PermissionUtils.OnPermissionCallBack { granted ->
+                if (granted) {
+                    Matisse.from(fragment).choose(if (mediaType == 0) MimeType.ofAll() else with(MimeType.ofImage()) {
+                        remove(MimeType.GIF)
+                        this
+                    }, true)
+                        .countable(true)
+                        //                .originalEnable(false)
+                        .maxSelectable(1)
+                        .theme(R.style.Matisse_Dracula)
+                        .thumbnailScale(0.87f)
+                        .imageEngine(Glide4Engine())
+                        .forResult(Constants.REQUEST_MEDIA, mediaType, fromViewId)
 
-        } else {
-            showPermissionFailure(fragment.context)
-        }
+                } else {
+                    showPermissionFailure(fragment.context)
+                }
+            }, Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+
     }
 
 
@@ -252,8 +260,6 @@ object ProductUtils {
         application.getOssSecurityTokenForSignUrl(getOssSignUrlObjectKey(url), ossCallBack)
 
     }
-
-
 
 
 }

@@ -110,7 +110,7 @@ interface ApiService {
     fun getNewsCategory(): Flowable<Response<JsonArray>>
 
     /**
-     * 获取资讯页tab
+     * 资讯页列表
      * @see NewsCategory
      * @see News
      * @see <a href="http://192.168.1.191:8881/api/account/tNews/?pageSize=10">资讯列表</a>

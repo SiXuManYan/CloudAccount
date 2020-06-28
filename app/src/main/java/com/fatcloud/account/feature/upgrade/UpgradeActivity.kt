@@ -1,5 +1,6 @@
 package com.fatcloud.account.feature.upgrade
 
+import android.Manifest
 import android.content.DialogInterface
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -10,6 +11,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.common.PermissionUtils
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.upgrade.Upgrade
 import com.fatcloud.account.view.dialog.AlertDialog
@@ -90,20 +92,25 @@ class UpgradeActivity : BaseMVPActivity<UpgradePresenter>(), UpgradeView {
 
     private fun handlePermission() {
 
-        if (ProductUtils.requestAlbumPermissions(this)) {
-            showUpgradeDialog()
-        } else {
-            if (appForce == UN_INHIBITED) {
-                // 非强制升级
-                doUninhibited()
-            } else {
-                // 强制升级直接关闭页面
-                finish()
-                System.exit(0)
-            }
+        PermissionUtils.permissionAny(
+            this, PermissionUtils.OnPermissionCallBack { granted ->
+                if (granted) {
+                    showUpgradeDialog()
+                } else {
+                    if (appForce == UN_INHIBITED) {
+                        // 非强制升级
+                        doUninhibited()
+                    } else {
+                        // 强制升级直接关闭页面
+                        finish()
+                        System.exit(0)
+                    }
+                }
+            }, Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
 
 
-        }
     }
 
 
