@@ -73,7 +73,7 @@ class SplashActivity : BaseActivity() {
                 }
 
                 override fun updateDrawState(ds: TextPaint) {
-                    ds.color = ColorUtils.getColor(R.color.color_red_foreground)
+                    ds.color = ColorUtils.getColor(R.color.color_118EEA)
                     ds.isUnderlineText = false
                 }
             })
@@ -91,7 +91,7 @@ class SplashActivity : BaseActivity() {
                 }
 
                 override fun updateDrawState(ds: TextPaint) {
-                    ds.color = ColorUtils.getColor(R.color.color_red_foreground)
+                    ds.color = ColorUtils.getColor(R.color.color_118EEA)
                     ds.isUnderlineText = false
                 }
             })
@@ -108,9 +108,9 @@ class SplashActivity : BaseActivity() {
                 .setCancelable(false)
                 .setMessage(message)
                 .setMessageMargins(11f, 15f, 11f, 25f)
-                .setMessageScrollViewHeight(360f)
+                .setMessageScrollViewHeight(350f)
                 .setMovementMethod()
-                .setPositiveButton(R.string.agree_and_continue, ActionAlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
+                .setPositiveButton(R.string.agree_and_continue, ActionAlertDialog.SPECIAL, DialogInterface.OnClickListener { dialog, which ->
                     CommonUtils.getShareDefault().put(Constants.SP_IS_SHOW_USER_AGREEMENT, true)
                     afterAnimation()
                     dialog.dismiss()

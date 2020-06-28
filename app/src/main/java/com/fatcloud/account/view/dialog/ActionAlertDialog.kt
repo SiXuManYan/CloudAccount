@@ -95,7 +95,7 @@ class ActionAlertDialog private constructor(context: Context) : BaseDialog(conte
             dialog!!.positiveText.setTextColor(if (textColor == AlertDialog.STANDARD) {
                 ColorUtils.getColor(R.color.color_third_level)
             } else {
-                ColorUtils.getColor(R.color.color_F74B31)
+                ColorUtils.getColor(R.color.color_118EEA)
             })
             dialog!!.positiveText.setOnClickListener { listener.onClick(dialog, 0) }
             return this
@@ -106,7 +106,7 @@ class ActionAlertDialog private constructor(context: Context) : BaseDialog(conte
             dialog!!.positiveText.setTextColor(if (textColor == AlertDialog.STANDARD) {
                 ColorUtils.getColor(R.color.color_third_level)
             } else {
-                ColorUtils.getColor(R.color.color_F74B31)
+                ColorUtils.getColor(R.color.color_118EEA)
             })
             dialog!!.positiveText.setOnClickListener { listener.onClick(dialog, 0) }
             return this
@@ -117,7 +117,7 @@ class ActionAlertDialog private constructor(context: Context) : BaseDialog(conte
             dialog!!.negativeText.setTextColor(if (textColor == AlertDialog.STANDARD) {
                 ColorUtils.getColor(R.color.color_third_level)
             } else {
-                ColorUtils.getColor(R.color.color_F74B31)
+                ColorUtils.getColor(R.color.color_118EEA)
             })
             dialog!!.negativeText.setOnClickListener { listener.onClick(dialog, 0) }
             return this
@@ -128,7 +128,7 @@ class ActionAlertDialog private constructor(context: Context) : BaseDialog(conte
             dialog!!.negativeText.setTextColor(if (textColor == AlertDialog.STANDARD) {
                 ColorUtils.getColor(R.color.color_third_level)
             } else {
-                ColorUtils.getColor(R.color.color_F74B31)
+                ColorUtils.getColor(R.color.color_118EEA)
             })
             dialog!!.negativeText.setOnClickListener { listener.onClick(dialog, 0) }
             return this
