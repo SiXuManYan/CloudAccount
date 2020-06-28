@@ -40,7 +40,7 @@
                 android:lineSpacingMultiplier="1.2"
                 android:textColor="@color/color_second_level"
                 android:textSize="14sp"
-                tools:text="@string/use_agreement_content" />
+                tools:text="@string/use_agreement_content_4" />
 
         </LinearLayout>
 

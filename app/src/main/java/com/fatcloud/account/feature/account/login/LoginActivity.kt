@@ -23,10 +23,7 @@ import com.fatcloud.account.feature.account.captcha.CaptchaActivity.Companion.MO
 import com.fatcloud.account.feature.account.password.login.PasswordLoginActivity
 import com.fatcloud.account.feature.webs.WebCommonActivity
 import com.blankj.utilcode.constant.RegexConstants.REGEX_MOBILE_EXACT
-import com.blankj.utilcode.util.RegexUtils
-import com.blankj.utilcode.util.SpanUtils
-import com.blankj.utilcode.util.ToastUtils
-import com.blankj.utilcode.util.VibrateUtils
+import com.blankj.utilcode.util.*
 import com.fatcloud.account.common.AndroidUtil
 import com.fatcloud.account.common.ShareUtil
 import com.fatcloud.account.entity.wechat.WechatAuthInfo
@@ -118,28 +115,11 @@ class LoginActivity : BaseMVPActivity<LoginPresenter>(), LoginView {
                 }
 
                 override fun updateDrawState(ds: TextPaint) {
-                    ds.color = Color.BLUE
+                    ds.color = ColorUtils.getColor(R.color.color_118EEA)
                     ds.isUnderlineText = false
                 }
             })
-            .append("与")
-            .append(getString(R.string.register_protocol_value2))
-            .setClickSpan(object : ClickableSpan() {
-                override fun onClick(widget: View) {
-                    startActivity(
-                        Intent(this@LoginActivity, WebCommonActivity::class.java)
-                            .putExtra(Constants.PARAM_URL, "yin_si_sheng_ming.html")
-                            .putExtra(Constants.PARAM_TITLE, "隐私政策")
-                            .putExtra(Constants.PARAM_WEB_REFRESH, false)
-                            .putExtra(Constants.PARAM_WEB_LOAD_LOCAL_HTML, true)
-                    )
-                }
 
-                override fun updateDrawState(ds: TextPaint) {
-                    ds.color = Color.BLUE
-                    ds.isUnderlineText = false
-                }
-            })
             .create()
 
         setSignViews()
