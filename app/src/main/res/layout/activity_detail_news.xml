@@ -66,7 +66,7 @@
 
                 <TextView
                     android:id="@+id/title_tv"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/original_iv"
                     android:lineSpacingMultiplier="1.2"
@@ -81,7 +81,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginLeft="15dp"
                     android:visibility="gone"
-                    tools:src="@drawable/ic_original" />
+                    tools:visibility="visible"
+                    android:src="@drawable/ic_original" />
 
 
             </RelativeLayout>

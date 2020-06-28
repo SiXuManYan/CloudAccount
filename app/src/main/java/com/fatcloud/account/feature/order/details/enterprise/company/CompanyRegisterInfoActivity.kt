@@ -280,10 +280,6 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
         }
 
 
-
-
-
-
     }
 
 

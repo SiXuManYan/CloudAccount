@@ -121,7 +121,26 @@ class LoginActivity : BaseMVPActivity<LoginPresenter>(), LoginView {
                     ds.color = Color.BLUE
                     ds.isUnderlineText = false
                 }
-            }).create()
+            })
+            .append("与")
+            .append(getString(R.string.register_protocol_value2))
+            .setClickSpan(object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    startActivity(
+                        Intent(this@LoginActivity, WebCommonActivity::class.java)
+                            .putExtra(Constants.PARAM_URL, "yin_si_sheng_ming.html")
+                            .putExtra(Constants.PARAM_TITLE, "隐私政策")
+                            .putExtra(Constants.PARAM_WEB_REFRESH, false)
+                            .putExtra(Constants.PARAM_WEB_LOAD_LOCAL_HTML, true)
+                    )
+                }
+
+                override fun updateDrawState(ds: TextPaint) {
+                    ds.color = Color.BLUE
+                    ds.isUnderlineText = false
+                }
+            })
+            .create()
 
         setSignViews()
     }

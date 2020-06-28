@@ -5,6 +5,7 @@ import android.view.View
 import butterknife.OnClick
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.RegexUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
@@ -127,6 +128,11 @@ class NewsDetailActivity : BaseMVPActivity<NewsDetailPresenter>(), NewsDetailVie
         likeCount = it.likeCount
         like_tv.text = likeCount.toString()
         collect_tv.text = it.moldText
+        if (it.recommandMold == "4") {
+            original_iv.visibility = View.VISIBLE
+        } else {
+            original_iv.visibility = View.GONE
+        }
 
         // 更新页面浏览量
         RxBus.post(Event(Constants.EVENT_ADD_NEWS_PAGE_VIEWS, newsId))
@@ -156,12 +162,14 @@ class NewsDetailActivity : BaseMVPActivity<NewsDetailPresenter>(), NewsDetailVie
             like_tv.text = likeCount.toString()
             like_tv.setTextColor(ColorUtils.getColor(R.color.color_third_level))
             liked = false
+            ToastUtils.showShort("取消成功")
         } else {
             like_iv.setImageResource(R.drawable.ic_like_red)
             likeCount++
             like_tv.text = likeCount.toString()
             like_tv.setTextColor(ColorUtils.getColor(R.color.color_app_red))
             liked = true
+            ToastUtils.showShort("点赞成功")
         }
     }
 

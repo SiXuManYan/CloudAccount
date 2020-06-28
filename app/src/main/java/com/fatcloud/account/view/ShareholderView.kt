@@ -73,7 +73,8 @@ class ShareholderView : LinearLayout {
         }
         name_tv.text = data.name
         id_number_tv.text = data.idno
-        id_address_tv.text = data.idnoAddr
+//        id_address_tv.text = data.idnoAddr
+//        id_address_ll.visibility = View.GONE
         phone_tv.text = data.phone
         share_ratio_tv.text = "${data.shareProportion}%"
 

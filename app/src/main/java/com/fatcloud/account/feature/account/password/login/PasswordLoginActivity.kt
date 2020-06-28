@@ -113,16 +113,19 @@ class PasswordLoginActivity : BaseMVPActivity<PasswordLoginPresenter>(), Passwor
         R.id.forget_password_tv
     )
     fun onClick(view: View) {
-        if (CommonUtils.isDoubleClick(view)) {
-            return
-        }
+
         when (view.id) {
             R.id.password_rule_iv -> changeDisplayMethod()
             R.id.next_tv -> {
+                if (CommonUtils.isDoubleClick(view)) {
+                    return
+                }
                 passwordLogin()
             }
             R.id.forget_password_tv -> {
-
+                if (CommonUtils.isDoubleClick(view)) {
+                    return
+                }
                 // 忘记密码
                 startActivity(
                     Intent(this, CaptchaActivity::class.java)
