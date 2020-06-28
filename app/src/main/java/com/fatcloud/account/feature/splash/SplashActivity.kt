@@ -1,13 +1,23 @@
 package com.fatcloud.account.feature.splash
 
-import android.os.Bundle
+import android.content.DialogInterface
+import android.content.Intent
+import android.graphics.Color
+import android.text.TextPaint
+import android.text.style.ClickableSpan
+import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import com.fatcloud.account.feature.MainActivity
+import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.SpanUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseActivity
 import com.fatcloud.account.common.CommonUtils
-import com.blankj.utilcode.util.BarUtils
+import com.fatcloud.account.common.Constants
+import com.fatcloud.account.feature.MainActivity
+import com.fatcloud.account.feature.webs.WebCommonActivity
+import com.fatcloud.account.view.dialog.ActionAlertDialog
 import kotlinx.android.synthetic.main.activity_splash.*
 
 /**
@@ -34,7 +44,7 @@ class SplashActivity : BaseActivity() {
                 }
 
                 override fun onAnimationEnd(p0: Animation?) {
-                    afterAnimation()
+                    initUserAgreement()
                 }
 
                 override fun onAnimationStart(p0: Animation?) {
@@ -43,18 +53,80 @@ class SplashActivity : BaseActivity() {
         }
         splash_container_ll.startAnimation(alphaAnimation)
 
-        // todo 开启服务
-//        DataService.startService(this, Constants.ACTION_SYNC)
-//        if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_COARSE_LOCATION)
-//            == PackageManager.PERMISSION_GRANTED) {
-//            DataService.startService(this, Constants.ACTION_START_LOCATION)
-//        }
-
 
     }
 
-    private fun afterAnimation() {
+    private fun initUserAgreement() {
 
+        val message = SpanUtils()
+            .append(getString(R.string.use_agreement_content_0))
+            .append(getString(R.string.use_agreement_content_1))
+            .setClickSpan(object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    startActivity(
+                        Intent(this@SplashActivity, WebCommonActivity::class.java)
+                            .putExtra(Constants.PARAM_URL, "fu_wu_xie_yi.html")
+                            .putExtra(Constants.PARAM_TITLE, "服务协议")
+                            .putExtra(Constants.PARAM_WEB_REFRESH, false)
+                            .putExtra(Constants.PARAM_WEB_LOAD_LOCAL_HTML, true)
+                    )
+                }
+
+                override fun updateDrawState(ds: TextPaint) {
+                    ds.color = ColorUtils.getColor(R.color.color_red_foreground)
+                    ds.isUnderlineText = false
+                }
+            })
+            .append(getString(R.string.use_agreement_content_2))
+            .append(getString(R.string.use_agreement_content_3))
+            .setClickSpan(object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    startActivity(
+                        Intent(this@SplashActivity, WebCommonActivity::class.java)
+                            .putExtra(Constants.PARAM_URL, "yin_si_sheng_ming.html")
+                            .putExtra(Constants.PARAM_TITLE, "隐私政策")
+                            .putExtra(Constants.PARAM_WEB_REFRESH, false)
+                            .putExtra(Constants.PARAM_WEB_LOAD_LOCAL_HTML, true)
+                    )
+                }
+
+                override fun updateDrawState(ds: TextPaint) {
+                    ds.color = ColorUtils.getColor(R.color.color_red_foreground)
+                    ds.isUnderlineText = false
+                }
+            })
+            .append(getString(R.string.use_agreement_content_4))
+            .create()
+
+        val ishowUserAgreement = CommonUtils.getShareDefault().getBoolean(Constants.SP_IS_SHOW_USER_AGREEMENT, false)
+        if (ishowUserAgreement) {
+            afterAnimation()
+        } else {
+
+            ActionAlertDialog.Builder(this)
+                .setTitle(R.string.tips_0)
+                .setCancelable(false)
+                .setMessage(message)
+                .setMessageMargins(11f, 15f, 11f, 25f)
+                .setMessageScrollViewHeight(360f)
+                .setMovementMethod()
+                .setPositiveButton(R.string.agree_and_continue, ActionAlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
+                    CommonUtils.getShareDefault().put(Constants.SP_IS_SHOW_USER_AGREEMENT, true)
+                    afterAnimation()
+                    dialog.dismiss()
+                })
+                .setNegativeButton(R.string.disagree, ActionAlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
+                    CommonUtils.getShareDefault().put(Constants.SP_IS_SHOW_USER_AGREEMENT, true)
+                    afterAnimation()
+                    dialog.dismiss()
+                })
+                .create()
+                .show()
+
+        }
+    }
+
+    private fun afterAnimation() {
         startActivityClearTop(MainActivity::class.java, null)
         finish()
     }
