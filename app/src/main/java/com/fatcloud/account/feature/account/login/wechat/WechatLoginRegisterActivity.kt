@@ -13,10 +13,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import butterknife.OnClick
 import com.blankj.utilcode.constant.RegexConstants
-import com.blankj.utilcode.util.RegexUtils
-import com.blankj.utilcode.util.SpanUtils
-import com.blankj.utilcode.util.ToastUtils
-import com.blankj.utilcode.util.VibrateUtils
+import com.blankj.utilcode.util.*
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
@@ -120,7 +117,7 @@ class WechatLoginRegisterActivity : BaseMVPActivity<WechatLoginRegisterPresenter
                 }
 
                 override fun updateDrawState(ds: TextPaint) {
-                    ds.color = Color.BLUE
+                    ds.color = ColorUtils.getColor(R.color.color_118EEA)
                     ds.isUnderlineText = false
                 }
             }).create()
