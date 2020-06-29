@@ -8,8 +8,7 @@
     android:layout_height="45dp"
     android:layout_alignParentBottom="true"
     android:alpha="0.9"
-    android:orientation="horizontal"
-   >
+    android:orientation="horizontal">
 
 
     <TextView
@@ -19,9 +18,9 @@
         android:layout_weight="1"
         android:background="@color/color_first_level"
         android:gravity="center"
-        tools:text="文案自行设置"
         android:textColor="@color/font_white"
-        android:textSize="@dimen/font_size_16" />
+        android:textSize="@dimen/font_size_16"
+        tools:text="文案自行设置" />
 
     <TextView
         android:id="@+id/bottom_right_tv"
@@ -30,8 +29,8 @@
         android:layout_weight="1"
         android:background="@color/color_app_red"
         android:gravity="center"
-        tools:text="文案自行设置"
         android:textColor="@color/font_white"
-        android:textSize="@dimen/font_size_16" />
+        android:textSize="@dimen/font_size_16"
+        tools:text="文案自行设置" />
 
 </LinearLayout>

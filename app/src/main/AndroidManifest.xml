@@ -313,6 +313,7 @@
         <activity
             android:name=".feature.gallery.GalleryActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".feature.forms.enterprise.license.basic.FormEnterpriseBasicActivity" />
 
 
     </application>

@@ -30,6 +30,8 @@ import com.fatcloud.account.feature.forms.enterprise.bank.FormBankActivity
 import com.fatcloud.account.feature.forms.enterprise.bank.FormBankModule
 import com.fatcloud.account.feature.forms.enterprise.license.FormLicenseEnterpriseActivity
 import com.fatcloud.account.feature.forms.enterprise.license.FormLicenseEnterpriseModule
+import com.fatcloud.account.feature.forms.enterprise.license.basic.FormEnterpriseBasicActivity
+import com.fatcloud.account.feature.forms.enterprise.license.basic.FormEnterpriseBasicModule
 import com.fatcloud.account.feature.forms.personal.bookkeeping.FormAgentBookkeepingPersonalActivity
 import com.fatcloud.account.feature.forms.personal.bookkeeping.FormAgentBookkeepingPersonalModule
 import com.fatcloud.account.feature.forms.personal.bookkeeping.signature.SignatureActivity
@@ -197,6 +199,12 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [PayUnknownModule::class])
     abstract fun payUnknownActivityInjector(): PayUnknownActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [FormEnterpriseBasicModule::class])
+    abstract fun formEnterpriseBasicActivityInjector(): FormEnterpriseBasicActivity
+
+
 
 
 }

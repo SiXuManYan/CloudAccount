@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:alpha="0.99"
+    android:id="@+id/title_container_rl"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/shape_title_bar"
     android:paddingBottom="1dp">
