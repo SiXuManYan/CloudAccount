@@ -11,6 +11,7 @@ import android.widget.TextView
 import butterknife.BindView
 import cn.sharesdk.framework.Platform
 import cn.sharesdk.framework.PlatformActionListener
+import com.baidu.mobstat.StatService
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -167,7 +168,7 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
             }
         }
         x5_web.addJavascriptInterface(this@BaseMVPWebActivity, JsWebViewX5.BRIDGE_NAME)
-        x5_web.webChromeClient = object : WebChromeClient() {
+        val webChromeClient = object : WebChromeClient() {
             override fun onReceivedTitle(view: WebView?, title: String?) {
                 super.onReceivedTitle(view, title)
                 if (!title.isNullOrEmpty() && changeTitle) {
@@ -175,6 +176,9 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
                 }
             }
         }
+        x5_web.webChromeClient = webChromeClient
+//        StatService.trackWebView(this, x5_web, webChromeClient)
+
         x5_web.webViewClient = object : WebViewClient() {
 
             override fun shouldOverrideUrlLoading(webView: WebView?, url: String?): Boolean {

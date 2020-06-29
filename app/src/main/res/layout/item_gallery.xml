@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/photo_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+
+    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+        android:id="@+id/cpb_image_progress"
+        android:layout_width="@dimen/dp72"
+        android:layout_height="@dimen/dp72"
+        android:layout_centerInParent="true"
+        app:cpb_background_progressbar_color="#D4D4D4"
+        app:cpb_background_progressbar_width="2dp"
+        app:cpb_progress_direction="to_right"
+        app:cpb_progressbar_color="#ffffffff"
+        app:cpb_progressbar_width="2dp"
+        android:visibility="gone"
+        app:cpb_round_border="false"
+        tools:visibility="visible"/>
+
+</RelativeLayout>

@@ -38,3 +38,7 @@
 -keep class com.tencent.mm.sdk.** {
     *;
 }
+
+# 百度OCR 文字识别
+-keep class com.baidu.ocr.sdk.**{*;}
+-dontwarn com.baidu.ocr.**

@@ -14,6 +14,8 @@ data class News(
 
     /**
      * 1 置顶
+     * 2 推荐
+     * 3 普通
      */
     val recommandFlag: Int = 0,
     val recommandFlagText: String = ""

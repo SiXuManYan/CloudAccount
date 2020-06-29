@@ -26,6 +26,9 @@ buildscript {
 
         classpath 'com.jakewharton:butterknife-gradle-plugin:10.1.0'
 
+//        // 百度统计
+//        classpath 'com.baidu.mobstat:mtj-circle-plugin:1.4.0'
+
     }
 }
 

@@ -6,6 +6,7 @@ apply plugin: 'kotlin-noarg'
 apply plugin: "kotlin-allopen"
 apply plugin: 'com.jakewharton.butterknife'
 apply from: './mob.gradle'
+//apply plugin: 'mtj-circle-plugin'
 
 static def releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
@@ -45,6 +46,14 @@ android {
         }
     }
 
+//    MtjCirclePluginConfig {
+//        // 设置appkey
+//        appkey = '5976a52011'
+//        // 设置debug 开关，如果需要查看日志则打开开关，为避免影响性能建议上线前关闭（设置为false）
+//        debug = false
+//        // 默认启动此插件，如果开发者不需要可以禁用（设置为false）
+//        enabled = true
+//    }
 
     buildTypes {
 
@@ -70,7 +79,6 @@ android {
     productFlavors {
         dev {
 
-
             // 测试环境
             buildConfigField "String", "SERVER_HOST", SERVER_HOST_TEST
             buildConfigField "String", "H5_BASE_URL", H5_BASE_URL_TEST
@@ -83,6 +91,9 @@ android {
             buildConfigField "String", "OSS_END_POINT", OSS_END_POINT
             buildConfigField "String", "BUGLY_APP_ID", '"1"'
             buildConfigField "boolean", "BUGLY_ENABLE_DEBUG", 'false'
+
+            buildConfigField "String", "OCR_API_KEY", OCR_API_KEY
+            buildConfigField "String", "OCR_SECRET_KEY", OCR_SECRET_KEY
         }
 
         formal {
@@ -98,12 +109,15 @@ android {
             buildConfigField "String", "OSS_END_POINT", OSS_END_POINT
             buildConfigField "String", "BUGLY_APP_ID", '"1"'
             buildConfigField "boolean", "BUGLY_ENABLE_DEBUG", 'false'
+
+            buildConfigField "String", "OCR_API_KEY", OCR_API_KEY
+            buildConfigField "String", "OCR_SECRET_KEY", OCR_SECRET_KEY
         }
 
         sourceSets {
             main {
                 jniLibs.srcDirs = ['src/main/jniLibs']
-                java.srcDirs = ['src/main/java', 'src/main/old']
+                java.srcDirs = ['src/main/java']
             }
         }
     }
@@ -130,6 +144,7 @@ android {
 
 
 }
+
 
 dependencies {
 
@@ -179,7 +194,9 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofit2"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofit2"
     implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.retrofitLogger"
-    implementation "me.jessyan:retrofit-url-manager:$rootProject.retrofitManager" // 可在 App 运行时,随时切换 BaseUrl
+    implementation "me.jessyan:retrofit-url-manager:$rootProject.retrofitManager"
+
+    // 可在 App 运行时,随时切换 BaseUrl
 
     //工具类
     implementation 'com.blankj:utilcodex:1.29.0'
@@ -241,14 +258,23 @@ dependencies {
     implementation 'com.github.gcacace:signature-pad:1.3.1'
 
     // 微信支付
-    api  'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 
     // 支付宝支付
-    implementation (name: 'alipaySdk-15.7.6-20200521195109', ext: 'aar')
+    implementation(name: 'alipaySdk-15.7.6-20200521195109', ext: 'aar')
 
-    // 城市选择
-    // https://github.com/crazyandcoder/citypicker
+
+    // 城市选择 https://github.com/crazyandcoder/citypicker
     implementation 'liji.library.dev:citypickerview:5.2.2'
+
+    // 百度ocr 文字识别
+    implementation files('libs/ocr-sdk.jar')
+
+    // ocr 原有UI
+    implementation 'com.github.wenchaosong:OCR_identify:3.0.8'
+
+    // 百度统计
+    implementation 'com.baidu.mobstat:mtj-sdk-circle:latest.integration'
 
 }
 noArg {

@@ -5,12 +5,20 @@ import android.app.Application
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.annotation.IdRes
 import androidx.multidex.MultiDex
+import com.baidu.mobstat.StatService
+import com.baidu.ocr.sdk.OCR
+import com.baidu.ocr.sdk.OnResultListener
+import com.baidu.ocr.sdk.exception.OCRError
+import com.baidu.ocr.sdk.model.AccessToken
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
+import com.fatcloud.account.BuildConfig
 import com.fatcloud.account.backstage.DataServiceFaker
+import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.CrashHandler
 import com.fatcloud.account.data.CloudDataBase
@@ -59,6 +67,8 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
         super.onCreate()
         initHandle()
         DataServiceFaker.startService(this, Constants.ACTION_SYNC)
+        registerActivityLifecycleCallbacks(this)
+        presenter.getCommonList()
     }
 
     private fun initHandle() {
@@ -77,8 +87,39 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
         MobSDK.init(this)
 
 //        initX5WebView()
-        registerActivityLifecycleCallbacks(this)
-        presenter.getCommonList()
+
+        initBaiduOcr()
+
+        initBaiduMtj()
+
+    }
+
+    /**
+     * https://mtj.baidu.com/static/userguide/book/android/adconfig/circle/circle.html
+     */
+    private fun initBaiduMtj() {
+        if (BuildConfig.DEBUG) {
+
+            // 打开调试开关，可以查看logcat日志。版本发布前，为避免影响性能，移除此代码
+            // 查看方法：adb logcat -s sdkstat
+            StatService.setDebugOn(true)
+
+
+            // 获取测试设备ID
+            val testDeviceId = StatService.getTestDeviceId(this)
+            // 日志输出
+            Log.d("BaiduMobStat", "Test DeviceId : $testDeviceId")
+        }
+
+        // 开启自动埋点统计，为保证所有页面都能准确统计，建议在Application中调用。
+        // 第三个参数：autoTrackWebview：
+        // 如果设置为true，则自动track所有webview；如果设置为false，则不自动track webview，
+        // 如需对webview进行统计，需要对特定webview调用trackWebView() 即可。
+        // 重要：如果有对webview设置过webchromeclient，则需要调用trackWebView() 接口将WebChromeClient对象传入，
+        // 否则开发者自定义的回调无法收到。
+        StatService.autoTrace(this, true, false)
+
+
     }
 
 
@@ -98,8 +139,28 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
         })
     }
 
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
-        DaggerAppComponent.builder().application(this).build()
+    private fun initBaiduOcr() {
+
+        OCR.getInstance(this).initAccessTokenWithAkSk(object : OnResultListener<AccessToken> {
+            override fun onResult(result: AccessToken?) {
+
+                val token: String? = result?.accessToken
+                LogUtils.d("ocr 初始化 onResult ", "token = " + token)
+                CommonUtils.getShareDefault().put(Constants.SP_OCR_ACCESS_TOKEN, token)
+            }
+
+            override fun onError(error: OCRError?) {
+
+                LogUtils.d("ocr 初始化 onError ", "message = " + error?.message)
+
+            }
+
+        }, this, BuildConfig.OCR_API_KEY, BuildConfig.OCR_SECRET_KEY)
+
+    }
+
+
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> = DaggerAppComponent.builder().application(this).build()
 
 
     override fun attachBaseContext(base: Context?) {

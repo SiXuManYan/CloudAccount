@@ -66,7 +66,7 @@
     <string name="expiration_date_format">订单有效期:%1$s</string>
     <string name="go_payment">去付款</string>
     <string name="view">查看</string>
-    <string name="business_progress_title">订单详情(企业业务办理进度)</string>
+    <string name="business_progress_title">订单详情</string>
 
     <string name="taxpayer_id">纳税人识别号\n(社会统一代码)</string>
     <string name="legal_person_name">法人姓名</string>
@@ -172,5 +172,13 @@
     <string name="disagree">不同意</string>
     <string name="tips_0">温馨提示</string>
 
+
+    <string name="ask_image_save_to_device">是否保存该图片到设备？</string>
+    <string name="ask_permission_to_open_camera">由于权限限制，无法启用系统摄像，是否打开权限设置？</string>
+    <string name="ask_permission_to_read_album">由于权限限制，无法访问系统相册，是否打开权限设置？</string>
+    <string name="ask_permission_to_save_image">由于权限限制，无法保存至设备，是否打开权限设置？</string>
+    <string name="ask_permission_to_read_storage">由于权限限制，无法访问系统存储，是否打开权限设置？</string>
+    <string name="image_save_success">图片保存成功</string>
+    <string name="image_position_format" formatted="false">%d&#160;/&#160;%d</string>
 
 </resources>
