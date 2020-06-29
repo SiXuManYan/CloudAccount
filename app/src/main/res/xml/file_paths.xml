@@ -2,13 +2,13 @@
 <paths>
     <external-path
         name="files_root"
-        path="Android/data/com.jz.yihua.activity/" />
+        path="Android/data/com.fatcloud.account/" />
     <external-path
         name="external_storage_root"
         path="." />
     <external-path
         name="images"
-        path="Android/data/com.jz.yihua/files/Pictures" />
+        path="Android/data/com.fatcloud.account/files/Pictures" />
     <external-path
         name="external_files"
         path="." />

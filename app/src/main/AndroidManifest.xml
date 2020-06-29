@@ -16,6 +16,8 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <!-- 应用安装 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <!-- 根据wifi信息网络定位 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />

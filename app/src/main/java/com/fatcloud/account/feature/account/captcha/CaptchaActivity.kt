@@ -2,8 +2,10 @@ package com.fatcloud.account.feature.account.captcha
 
 import android.content.Intent
 import android.view.View
+import butterknife.OnClick
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
+import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.wechat.WechatAuthInfo
 import com.fatcloud.account.feature.account.password.PasswordSetActivity
@@ -157,5 +159,21 @@ class CaptchaActivity : BaseMVPActivity<CaptchaPresenter>(), CaptchaView {
         finish()
     }
 
+
+    @OnClick(
+        R.id.action_tv
+    )
+    fun onClick(view: View) {
+        if (CommonUtils.isDoubleClick(view)) {
+            return
+        }
+        when (view.id) {
+            R.id.action_tv -> {
+                presenter.sendCaptcha(this, currentAccount, action_tv)
+            }
+            else -> {
+            }
+        }
+    }
 
 }

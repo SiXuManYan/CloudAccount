@@ -32,7 +32,8 @@ class NewsHolderPlural(parent: ViewGroup?) : BaseItemViewHolder<News>(parent, R.
 
         title_tv.text = data.title
         date_tv.text = TimeUtil.getFormatTimeYMD(data.createDt)
-        page_views_tv.text = data.readCount.toString()
+        val readCount = data.readCount
+        page_views_tv.text = readCount.toString()
 
 
 

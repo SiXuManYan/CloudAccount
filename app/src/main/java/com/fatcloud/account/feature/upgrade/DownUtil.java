@@ -46,8 +46,8 @@ public class DownUtil {
         this.downloadUrl = downloadUrl;
         this.app_name = app_name;
         this.resIcon = resIcon;
-        String SDCard = Environment.getExternalStorageDirectory().getAbsolutePath() + "/yihua/download/";
-        path = SDCard + "/yihua_application" + System.currentTimeMillis() + ".apk";
+        String SDCard = Environment.getExternalStorageDirectory().getAbsolutePath() + "/cloud/download/";
+        path = SDCard + "/cloud_application" + System.currentTimeMillis() + ".apk";
         File folder = new File(SDCard);
         if (!folder.exists()) {
             folder.mkdirs();

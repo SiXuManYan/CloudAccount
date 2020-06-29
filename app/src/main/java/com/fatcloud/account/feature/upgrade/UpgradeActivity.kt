@@ -81,10 +81,10 @@ class UpgradeActivity : BaseMVPActivity<UpgradePresenter>(), UpgradeView {
         }
 
 
-        intent.getIntExtra(Constants.PARAM_APP_FORCE, 0)
-        intent.getStringExtra(Constants.PARAM_APP_VERSION)
-        intent.getStringExtra(Constants.PARAM_APP_EXPLAIN)
-        intent.getStringExtra(Constants.PARAM_APP_URL)
+        appForce = intent.getIntExtra(Constants.PARAM_APP_FORCE, 0)
+        appVersion = intent.getStringExtra(Constants.PARAM_APP_VERSION)
+        appExplain = intent.getStringExtra(Constants.PARAM_APP_EXPLAIN)
+        appUrl = intent.getStringExtra(Constants.PARAM_APP_URL)
 
         downUtil = DownUtil(this)
     }
