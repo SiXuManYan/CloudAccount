@@ -35,7 +35,7 @@ allprojects {
         mavenCentral()
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }// 替代jcenter()
 
-        // photoView
+
         maven { url 'https://jitpack.io' }
 
         // ViewPagerBottomSheet

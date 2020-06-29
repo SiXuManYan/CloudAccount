@@ -15,6 +15,11 @@ import com.fatcloud.account.entity.news.News
 import com.fatcloud.account.extend.RoundTransFormation
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_news_pural.*
+import kotlinx.android.synthetic.main.item_news_pural.date_tv
+import kotlinx.android.synthetic.main.item_news_pural.page_views_tv
+import kotlinx.android.synthetic.main.item_news_pural.title_tv
+import kotlinx.android.synthetic.main.item_news_pural.top_tv
+import kotlinx.android.synthetic.main.item_news_single.*
 import java.util.*
 
 /**
@@ -36,7 +41,6 @@ class NewsHolderPlural(parent: ViewGroup?) : BaseItemViewHolder<News>(parent, R.
         page_views_tv.text = readCount.toString()
 
 
-
         val imgUrls = data.imgUrls
         if (!imgUrls.isNullOrEmpty()) {
             image_container_ll.visibility = View.VISIBLE
@@ -45,11 +49,14 @@ class NewsHolderPlural(parent: ViewGroup?) : BaseItemViewHolder<News>(parent, R.
             image_container_ll.visibility = View.GONE
         }
 
-        if (data.recommandFlag == 1) {
+        val recommandFlag = data.recommandFlag
+        if (recommandFlag != 3) {
             top_tv.visibility = View.VISIBLE
+            top_tv.text = data.recommandFlagText
         } else {
             top_tv.visibility = View.GONE
         }
+
 
     }
 

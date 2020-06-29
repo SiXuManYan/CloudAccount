@@ -38,8 +38,10 @@ class NewsHolderSingle(parent: ViewGroup?) : BaseItemViewHolder<News>(parent, R.
         val readCount = data.readCount
         page_views_tv.text = readCount.toString()
 
-        if (data.recommandFlag == 1) {
+        val recommandFlag = data.recommandFlag
+        if (recommandFlag != 3) {
             top_tv.visibility = View.VISIBLE
+            top_tv.text = data.recommandFlagText
         } else {
             top_tv.visibility = View.GONE
         }
