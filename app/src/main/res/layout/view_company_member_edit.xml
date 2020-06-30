@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,33 +9,290 @@
 
     <include layout="@layout/layout_highlight_title" />
 
-    <com.fatcloud.account.view.EditView
-        android:id="@+id/ev_00_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp" />
 
-    <com.fatcloud.account.view.EditView
-        android:id="@+id/ev_01_id_number"
+    <ViewSwitcher
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp" />
+        android:layout_height="wrap_content">
 
-    <com.fatcloud.account.view.EditView
-        android:id="@+id/ev_02_id_addr"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp" />
+        <ImageView
+            android:id="@+id/scan_id_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/ic_ocr_scan_id_card" />
 
-    <com.fatcloud.account.view.EditView
-        android:id="@+id/ev_03_phone"
+        <RelativeLayout
+            android:id="@+id/image_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp">
+
+            <RelativeLayout
+                android:layout_width="176dp"
+                android:layout_height="99dp"
+                android:background="@drawable/shape_dash_gray"
+                android:padding="4dp">
+
+                <ImageView
+                    android:id="@+id/id_card_front_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    tools:src="@tools:sample/backgrounds/scenic" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/ic_ocr_re_scan" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="176dp"
+                android:layout_height="99dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/shape_dash_gray"
+                android:padding="4dp">
+
+                <ImageView
+                    android:id="@+id/id_card_back_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    tools:src="@tools:sample/backgrounds/scenic" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/ic_ocr_re_scan" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </ViewSwitcher>
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
+        android:background="?android:attr/selectableItemBackground"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp" />
+        android:paddingRight="15dp"
+        tools:background="@color/font_white">
+
+        <TextView
+            android:id="@+id/ev_00_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.1"
+            android:maxWidth="150dp"
+            android:maxLines="2"
+            android:text="姓名"
+            android:textColor="@color/color_first_level" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/ev_00_name_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_toRightOf="@+id/title_iv"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="扫描后自动填写"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:paddingRight="0dp"
+            android:singleLine="true"
+            android:textColor="@color/color_first_level"
+            android:textColorHint="@color/color_cccccc"
+            android:textSize="14sp" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/split_line_color" />
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        tools:background="@color/font_white">
+
+        <TextView
+            android:id="@+id/ev_01_id_number_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.1"
+            android:maxWidth="150dp"
+            android:maxLines="2"
+            android:text="身份证号"
+            android:textColor="@color/color_first_level" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/ev_01_id_number_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_toRightOf="@+id/title_iv"
+            android:background="@null"
+            android:digits="0123456789xX"
+            android:gravity="center_vertical|right"
+            android:hint="扫描后自动填写"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:paddingRight="0dp"
+            android:singleLine="true"
+            android:textColor="@color/color_first_level"
+            android:textColorHint="@color/color_cccccc"
+            android:textSize="14sp" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/split_line_color" />
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        tools:background="@color/font_white">
+
+        <TextView
+            android:id="@+id/ev_02_id_addr_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.1"
+            android:maxWidth="150dp"
+            android:maxLines="2"
+            android:text="身份证地址"
+            android:textColor="@color/color_first_level" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/ev_02_id_addr_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_toRightOf="@+id/title_iv"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="请输入身份证地址"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:paddingRight="0dp"
+            android:singleLine="true"
+            android:textColor="@color/color_first_level"
+            android:textColorHint="@color/color_cccccc"
+            android:textSize="14sp" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/split_line_color" />
+
+
+    </RelativeLayout>
+
+
+    <!--    <com.fatcloud.account.view.EditView
+            android:id="@+id/ev_03_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />-->
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        tools:background="@color/font_white">
+
+        <TextView
+            android:id="@+id/ev_03_phone_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.1"
+            android:maxWidth="150dp"
+            android:maxLines="2"
+            android:text="请输入联系电话"
+            android:textColor="@color/color_first_level" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/ev_03_phone_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_toRightOf="@+id/title_iv"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="扫描后自动填写"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLength="11"
+            android:paddingLeft="10dp"
+            android:paddingRight="0dp"
+            android:singleLine="true"
+            android:textColor="@color/color_first_level"
+            android:textColorHint="@color/color_cccccc"
+            android:textSize="14sp" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/split_line_color" />
+
+
+    </RelativeLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -96,15 +352,6 @@
 
 
     </RelativeLayout>
-    <!--
-        <com.fatcloud.account.view.EditView
-            android:id="@+id/ev_04_share_ratio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp" />-->
-
-    <include layout="@layout/layout_image_upload" />
 
 
     <TextView

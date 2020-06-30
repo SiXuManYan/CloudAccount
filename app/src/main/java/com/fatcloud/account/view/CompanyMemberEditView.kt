@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -20,7 +21,6 @@ import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.enterprise.Shareholder
 import com.fatcloud.account.extend.RoundTransFormation
 import kotlinx.android.synthetic.main.layout_highlight_title.view.*
-import kotlinx.android.synthetic.main.layout_image_upload.view.*
 import kotlinx.android.synthetic.main.view_company_member_edit.view.*
 
 /**
@@ -113,76 +113,84 @@ class CompanyMemberEditView : LinearLayout {
     }
 
 
-    // 姓名
-    fun initNameTitleHint(title: CharSequence, hint: String) = ev_00_name.setTitleAndHint(title, hint)
-    fun initNameTitle(title: CharSequence) = ev_00_name.setTitle(title)
-    fun setNameValue(value: CharSequence) = ev_00_name.setValue(value)
-    fun initNameTitleValue(title: CharSequence, value: CharSequence): EditView {
+    fun initNameTitle(title: CharSequence) {
+        ev_00_name_tv.text = title
+    }
+
+    fun setNameValue(value: CharSequence) {
+        ev_00_name_et.setText(value)
+    }
+
+    fun initNameTitleValue(title: CharSequence, value: CharSequence) {
         initNameTitle(title)
         setNameValue(value)
-        ev_00_name.setEditAble(false)
-        return ev_00_name
+        setEditAble(false, ev_00_name_et)
     }
 
-    // 身份证号
-    fun initIdNumberTitleHint(title: CharSequence, hint: CharSequence): EditView {
-        ev_01_id_number.setTitleAndHint(title, hint)
-        return ev_01_id_number
+
+    fun setEditAble(editAble: Boolean, editText: EditText) {
+        editText.apply {
+            isFocusable = editAble;
+            isFocusableInTouchMode = editAble;
+            isEnabled = editAble;
+        }
     }
 
-    /**
-     * 设置身份证号 值，设置不可编辑
-     */
-    fun initIdNumberTitleValue(title: CharSequence, value: CharSequence): EditView {
-        initIdNumberTitle(title)
-        setIdNumberValue(value)
-        ev_01_id_number.setEditAble(false)
-        return ev_01_id_number
-    }
 
-    fun initIdNumberTitle(title: CharSequence): EditView {
-        ev_01_id_number.setTitle(title)
-        return ev_01_id_number
-    }
-
-    fun setIdNumberValue(title: CharSequence): EditView {
-        ev_01_id_number.setValue(title)
-        return ev_01_id_number
+    fun setIdNumberValue(title: CharSequence) {
+        ev_01_id_number_et.setText(title)
+        setEditAble(false, ev_01_id_number_et)
     }
 
 
     // 身份证地址
-    fun initIdAddressTitleHint(title: CharSequence, hint: CharSequence) = ev_02_id_addr.setTitleAndHint(title, hint)
-    fun initIdAddressTitle(title: CharSequence) = ev_02_id_addr.setTitle(title)
-    fun setIdAddressValue(title: CharSequence) = ev_02_id_addr.setValue(title)
-    fun initIdAddressTitleValue(title: CharSequence, value: CharSequence): EditView {
+    fun initIdAddressTitleHint(title: CharSequence, hint: CharSequence) {
+        ev_02_id_addr_tv.text = title
+        ev_02_id_addr_et.hint = hint
+    }
+
+    fun initIdAddressHint(hint: CharSequence) {
+        ev_02_id_addr_et.hint = hint
+    }
+
+
+    fun initIdAddressTitle(title: CharSequence) {
+        ev_02_id_addr_tv.text = title
+    }
+
+    fun setIdAddressValue(title: CharSequence) {
+        ev_02_id_addr_et.setText(title)
+        setEditAble(false, ev_02_id_addr_et)
+    }
+
+    fun initIdAddressTitleValue(title: CharSequence, value: CharSequence) {
         initIdAddressTitle(title)
         setIdAddressValue(value)
-        ev_02_id_addr.setEditAble(false)
-        return ev_02_id_addr
+
     }
 
     // 手机号
-    fun initPhoneTitleHint(title: CharSequence, hint: CharSequence): EditView {
-        ev_03_phone.setTitleAndHint(title, hint)
-        return ev_03_phone
+    fun initPhoneTitleHint(title: CharSequence, hint: CharSequence) {
+        ev_03_phone_tv.text = title
+        ev_03_phone_et.hint = hint
     }
 
-    fun initPhoneTitleValue(title: CharSequence, value: CharSequence): EditView {
+    fun initPhoneHint(hint: CharSequence) {
+        ev_03_phone_et.hint = hint
+    }
+
+    fun initPhoneTitleValue(title: CharSequence, value: CharSequence) {
         initPhoneTitle(title)
         setPhoneValue(value)
-        ev_03_phone.setEditAble(false)
-        return ev_03_phone
+        setEditAble(false, ev_03_phone_et)
     }
 
-    fun initPhoneTitle(title: CharSequence): EditView {
-        ev_03_phone.setTitle(title)
-        return ev_03_phone
+    fun initPhoneTitle(title: CharSequence) {
+        ev_03_phone_tv.text = title
     }
 
-    fun setPhoneValue(title: CharSequence): EditView {
-        ev_03_phone.setValue(title)
-        return ev_03_phone
+    fun setPhoneValue(hint: CharSequence) {
+        ev_03_phone_et.hint = hint
     }
 
 
@@ -206,10 +214,10 @@ class CompanyMemberEditView : LinearLayout {
     }
 
 
-    fun getNameValue() = ev_00_name.value()
-    fun getIdNumberValue() = ev_01_id_number.value()
-    fun getIdAddressValue() = ev_02_id_addr.value()
-    fun getPhoneValue() = ev_03_phone.value()
+    fun getNameValue() = ev_00_name_et.text.toString().trim()
+    fun getIdNumberValue() = ev_01_id_number_et.text.toString().trim()
+    fun getIdAddressValue() = ev_02_id_addr_et.text.toString().trim()
+    fun getPhoneValue() = ev_03_phone_et.text.toString().trim()
 
     /**
      * 股份占比

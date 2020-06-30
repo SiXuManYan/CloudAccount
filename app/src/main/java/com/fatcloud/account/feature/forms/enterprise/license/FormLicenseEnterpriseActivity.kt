@@ -3,11 +3,8 @@ package com.fatcloud.account.feature.forms.enterprise.license
 import android.content.Intent
 import android.text.InputType
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import butterknife.OnClick
 import com.blankj.utilcode.util.ScreenUtils
-import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.VibrateUtils
 import com.fatcloud.account.R
@@ -21,20 +18,11 @@ import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
-import com.fatcloud.account.feature.extra.BusinessScopeActivity
 import com.fatcloud.account.feature.matisse.Matisse
 import com.fatcloud.account.view.CompanyMemberEditView
-import com.lljjcoder.Interface.OnCityItemClickListener
-import com.lljjcoder.bean.CityBean
-import com.lljjcoder.bean.DistrictBean
-import com.lljjcoder.bean.ProvinceBean
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_license_enterprise.*
-import kotlinx.android.synthetic.main.activity_form_license_enterprise.scroll_nsv
-import kotlinx.android.synthetic.main.inc_title_bar.*
 import kotlinx.android.synthetic.main.view_company_member_edit.view.*
-import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * Created by Wangsw on 2020/6/10 0010 18:30.
@@ -47,23 +35,23 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
     /**
      * 用户选中的一级经营范围pid
      */
-    private var selectPid = ArrayList<String>()
+    private var mSelectPid = ArrayList<String>()
 
     /**
      * 用户选中的一级经营范围pid名称
      */
-    private var selectPidNames = ArrayList<String>()
+    private var mSelectPidNames = ArrayList<String>()
 
     /**
      * 年收入
      */
-    private var incomeMoney: String = ""
+    private var mIncomeMoney: String = ""
 
 
     /**
      * 最终收入
      */
-    private var finalMoney: String = ""
+    private var mFinalMoney: String = ""
 
 
     /**
@@ -78,31 +66,19 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
 
 
     /**
-     * 产品类型
-     * P1 P2 ....
+     * 用户选中的位置信息
      */
-    private var mProductType: String = Constants.P2
-
-    /**
-     * 位置信息id
-     */
-    private var areaId: String = ""
-
-    private var areaName: String = ""
+    private var mAreaName: String = ""
+    private var mZeroName: String = ""
+    private var mFirstName: String = ""
+    private var mSecondName: String = ""
+    private var mInvestmentYear: String = ""
+    private var mInvestMoney: String = ""
+    private var mBankNumber: String = ""
+    private var mBankPhone: String = ""
+    private var mDetailAddress: String = ""
 
     var isFaceUp = false
-
-
-    /**
-     * 是否为PAGE B
-     *
-     */
-    private var isBMode = false
-
-
-
-//    var faceUpUrl = ""
-//    var faceDownUrl = ""
 
     override fun getLayoutId() = R.layout.activity_form_license_enterprise
 
@@ -125,7 +101,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
         }
 
         intent.extras!!.getString(Constants.PARAM_INCOME_MONEY, "0")?.let {
-            incomeMoney = it
+            mIncomeMoney = it
         }
 
         intent.extras!!.getString(Constants.PARAM_PRODUCT_ID)?.let {
@@ -133,16 +109,50 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
         }
 
         intent.extras!!.getString(Constants.PARAM_FINAL_MONEY)?.let {
-            finalMoney = it
+            mFinalMoney = it
         }
-
 
         intent.extras!!.getString(Constants.PARAM_PRODUCT_PRICE_ID)?.let {
             mProductPriceId = it
         }
 
-        intent.extras!!.getString(Constants.PARAM_PRODUCT_TYPE)?.let {
-            mProductType = it
+        intent.extras!!.getStringArrayList(Constants.PARAM_SELECT_BUSINESS_SCOPE_PID)?.let {
+            mSelectPid.clear()
+            mSelectPid = it
+        }
+
+        intent.extras!!.getStringArrayList(Constants.PARAM_SELECT_BUSINESS_SCOPE_NAME)?.let {
+            mSelectPidNames.clear()
+            mSelectPidNames = it
+        }
+
+        intent.extras!!.getString(Constants.PARAM_SELECT_AREA_NAME)?.let {
+            mAreaName = it
+        }
+
+        intent.extras!!.getString(Constants.PARAM_ZERO_NAME)?.let {
+            mZeroName = it
+        }
+        intent.extras!!.getString(Constants.PARAM_FIRST_NAME)?.let {
+            mFirstName = it
+        }
+        intent.extras!!.getString(Constants.PARAM_SECOND_NAME)?.let {
+            mSecondName = it
+        }
+        intent.extras!!.getString(Constants.PARAM_INVEST_YEAR)?.let {
+            mInvestmentYear = it
+        }
+        intent.extras!!.getString(Constants.PARAM_INVEST_MONEY)?.let {
+            mInvestMoney = it
+        }
+        intent.extras!!.getString(Constants.PARAM_BANK_NUMBER)?.let {
+            mBankNumber = it
+        }
+        intent.extras!!.getString(Constants.PARAM_BANK_PHONE)?.let {
+            mBankPhone = it
+        }
+        intent.extras!!.getString(Constants.PARAM_DETAIL_ADDRESS)?.let {
+            mDetailAddress = it
         }
 
 
@@ -173,31 +183,14 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
         setMainTitle("注册信息")
 
 
-//        zero_choice_name.setTitleAndHint(getString(R.string.zero_company_name), getString(R.string.no_less_than_3_word))
-//        first_choice_name.setTitleAndHint(getString(R.string.first_company_name), getString(R.string.no_less_than_3_word))
-//        second_choice_name.setTitleAndHint(getString(R.string.second_company_name), getString(R.string.no_less_than_3_word))
-//        investment_period.setTitleAndHint(getString(R.string.invest_year_num), getString(R.string.invest_year_num_hint))
-//            .setInputType(InputType.TYPE_CLASS_NUMBER)
-
-
-//        amount_of_funds.setTitleAndHint(getString(R.string.amount_of_fund), getString(R.string.amount_of_fund_hint))
-//            .setInputType(InputType.TYPE_CLASS_NUMBER)
-//        bank_number.setTitleAndHint(getString(R.string.bank_card_number), getString(R.string.for_tax_registration))
-//            .setInputType(InputType.TYPE_CLASS_NUMBER)
-//        bank_phone.setTitleAndHint(getString(R.string.bank_phone), getString(R.string.for_tax_registration)).setInputType(InputType.TYPE_CLASS_NUMBER)
-//        detail_addr.setTitleAndHint(getString(R.string.detailed_address), getString(R.string.detailed_address_hint))
-
         // 法人信息
         legal_person_ev.apply {
             currentMold = Constants.SH1
             initHighlightTitle(getString(R.string.legal_person_info))
-            initNameTitleHint(getString(R.string.legal_person_name), getString(R.string.legal_person_name_hint))
-            initIdNumberTitleHint(
-                getString(R.string.identity_number),
-                getString(R.string.identity_number_hint)
-            )
-            initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
-            initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
+            initNameTitle(getString(R.string.legal_person_name))
+
+            initIdAddressHint("请输入法人身份证地址")
+            initPhoneHint("请输入法人联系电话")
             initShareRatioHint(getString(R.string.share_ratio_hint))
 
         }
@@ -206,13 +199,10 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
         supervisor_ev.apply {
             currentMold = Constants.SH2
             initHighlightTitle(getString(R.string.supervisor_info))
-            initNameTitleHint(getString(R.string.supervisor_name), getString(R.string.supervisor_name_hint))
-            initIdNumberTitleHint(
-                getString(R.string.identity_number),
-                getString(R.string.identity_number_hint)
-            )
-            initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
-            initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
+            initNameTitle(getString(R.string.supervisor_name))
+
+            initIdAddressHint("请输入监事身份证地址")
+            initPhoneHint("请输入监事联系电话")
             initShareRatioHint(getString(R.string.share_ratio_hint_2))
         }
 
@@ -220,13 +210,10 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
         shareholder_ev.apply {
             currentMold = Constants.SH3
             initHighlightTitle(getString(R.string.shareholder_info2))
-            initNameTitleHint(getString(R.string.shareholder_name), getString(R.string.shareholder_name_hint))
-            initIdNumberTitleHint(
-                getString(R.string.identity_number),
-                getString(R.string.identity_number_hint)
-            )
-            initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
-            initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
+            initNameTitle(getString(R.string.shareholder_name))
+
+            initIdAddressHint("请输入股东身份证地址")
+            initPhoneHint("请输入股东联系电话")
             initShareRatioHint(getString(R.string.share_ratio_hint))
             showAddActionView().setOnClickListener {
                 VibrateUtils.vibrate(10)
@@ -247,13 +234,10 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             // 坐标
             tag = index
             initHighlightTitle(getString(R.string.shareholder_info2))
-            initNameTitleHint(getString(R.string.shareholder_name), getString(R.string.shareholder_name_hint))
-            initIdNumberTitleHint(
-                getString(R.string.identity_number),
-                getString(R.string.identity_number_hint)
-            )
-            initIdAddressTitleHint(getString(R.string.id_address), getString(R.string.id_address_hint))
-            initPhoneTitleHint(getString(R.string.contact_number), getString(R.string.contact_number_hint)).setInputType(InputType.TYPE_CLASS_NUMBER)
+            initNameTitle(getString(R.string.shareholder_name))
+
+            initIdAddressHint("请输入股东身份证地址")
+            initPhoneHint("请输入股东联系电话")
             initShareRatioHint(getString(R.string.share_ratio_hint))
 
             //  添加股东
@@ -281,12 +265,6 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
         }
 
         when (requestCode) {
-            1 -> {
-                selectPid = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID)
-                selectPidNames = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID_NAME)
-                business_scope_value.text = Arrays.toString(selectPidNames.toArray()).replace("[", "").replace("]", "")
-            }
-
             Constants.REQUEST_MEDIA -> {
                 // 相册选择图片
                 val elements = Matisse.obtainPathResult(data)
@@ -311,39 +289,40 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
     }
 
     @OnClick(
-        R.id.business_scope_rl,
         R.id.bottom_left_tv,
-        R.id.bottom_right_tv,
-        R.id.addr_rl
+        R.id.bottom_right_tv
     )
     fun onClick(view: View) {
         if (CommonUtils.isDoubleClick(view)) {
             return
         }
         when (view.id) {
-            R.id.business_scope_rl -> {
-                // 参照 EnterpriseInfo
-                startActivityForResult(Intent(this, BusinessScopeActivity::class.java).putExtra(Constants.PARAM_PRODUCT_TYPE, mProductType), 1)
-            }
+
             R.id.bottom_left_tv -> {
                 // 保存
             }
 
             R.id.bottom_right_tv -> {
-//                handlePost()
-                changUi()
-
-            }
-            R.id.addr_rl -> {
-                ProductUtils.showLocationPicker(this, object : OnCityItemClickListener() {
-                    override fun onSelected(province: ProvinceBean, city: CityBean, district: DistrictBean) {
-                        areaName = StringUtils.getString(R.string.location_information_format, province.name, city.name, district.name)
-                        addr_value_iv.text = areaName
-                        areaId = district.id
-                    }
-
-                    override fun onCancel() = Unit
-                })
+                presenter.handlePost(
+                    this,
+                    legalPersonView = legal_person_ev,
+                    supervisorView = supervisor_ev,
+                    shareholderView = shareholder_ev,
+                    detailAddress = mDetailAddress,
+                    areaName = mAreaName,
+                    bankNumber = mBankNumber,
+                    bankPhone = mBankPhone,
+                    selectPid = mSelectPid,
+                    zeroName = mZeroName,
+                    firstName = mFirstName,
+                    secondName = mSecondName,
+                    incomeMoney = mIncomeMoney,
+                    investMoney = mInvestMoney,
+                    investmentYear = mInvestmentYear,
+                    finalMoney = mFinalMoney,
+                    productId = mProductId,
+                    productPriceId = mProductPriceId,
+                    shareholderMoreContainer = shareholder_more_container)
             }
 
             else -> {
@@ -351,142 +330,6 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
         }
     }
 
-    private fun changUi() {
-        val animation = if (isBMode) {
-            AnimationUtils.loadAnimation(context, R.anim.form_out_to_left)
-        } else {
-            AnimationUtils.loadAnimation(context, R.anim.form_in_from_left)
-        }
-        animation.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationRepeat(p0: Animation?) = Unit
-
-            override fun onAnimationEnd(p0: Animation?) {
-                if (isBMode) {
-                    view_switcher.displayedChild = 1
-                }else{
-                    view_switcher.displayedChild = 0
-                }
-            }
-
-            override fun onAnimationStart(p0: Animation?) = Unit
-        })
-        isBMode = !isBMode
-        scroll_nsv.startAnimation(animation)
-        title_container_rl.startAnimation(animation)
-        bottom_ll.startAnimation(animation)
-
-
-    }
-
-    private fun handlePost() {
-
-        // 非空校验
-        if (!ProductUtils.checkEditEmptyWithVibrate(
-
-                // 默认信息
-//                first_choice_name,
-//                second_choice_name,
-//                investment_period,
-//                amount_of_funds,
-//                bank_number,
-//                bank_phone,
-//                detail_addr,
-                // 法人
-                legal_person_ev.ev_00_name,
-                legal_person_ev.ev_01_id_number,
-                legal_person_ev.ev_02_id_addr,
-                legal_person_ev.ev_03_phone,
-
-                // 监事
-                supervisor_ev.ev_00_name,
-                supervisor_ev.ev_01_id_number,
-                supervisor_ev.ev_02_id_addr,
-                supervisor_ev.ev_03_phone,
-
-                // 默认股东 shareholder_ev
-                shareholder_ev.ev_00_name,
-                shareholder_ev.ev_01_id_number,
-                shareholder_ev.ev_02_id_addr,
-                shareholder_ev.ev_03_phone
-            )
-        ) {
-            return
-        }
-        val zeroName = zero_choice_name_et.text.toString()
-        if (zeroName.isBlank()) {
-            ToastUtils.showShort("请输入首选公司名称")
-            return
-        }
-
-        val firstName = first_choice_name_et.text.toString()
-        if (firstName.isBlank()) {
-            ToastUtils.showShort("请输入备选公司名称1")
-            return
-        }
-        val secondName = second_choice_name_et.text.toString()
-        if (secondName.isBlank()) {
-            ToastUtils.showShort("请输入备选公司名称2")
-            return
-        }
-
-        if (investment_period_et.text.toString().isBlank()) {
-            ToastUtils.showShort("请输入出资年限")
-            return
-        }
-        if (amount_of_funds_et.text.toString().isBlank()) {
-            ToastUtils.showShort("请输入资金数额 ")
-            return
-        }
-        if (bank_number_et.text.toString().isBlank()) {
-            ToastUtils.showShort("请输入银行卡号 ")
-            return
-        }
-        if (bank_phone_et.text.toString().isBlank()) {
-            ToastUtils.showShort("请输入银行预留手机号 ")
-            return
-        }
-
-        if (detail_addr_et.text.toString().isBlank()) {
-            ToastUtils.showShort("请输入详细地址 ")
-            return
-        }
-
-
-        if (legal_person_ev.getShareRatioValue().isBlank()) {
-            ToastUtils.showShort("请输入法人股份占比")
-            return
-        }
-        if (shareholder_ev.getShareRatioValue().isBlank()) {
-            ToastUtils.showShort("请输入股东股份占比")
-            return
-        }
-
-
-        val enterpriseInfo = EnterpriseInfo().apply {
-            addr = detail_addr_et.text.toString().trim()
-            area = areaName
-            bankNo = bank_number_et.text.toString().trim()
-            bankPhone = bank_phone_et.text.toString().trim()
-            businessScope?.addAll(ProductUtils.stringList2IntList(selectPid))
-            enterpriseName0 = zero_choice_name_et.text.toString().trim()
-            enterpriseName1 = first_choice_name_et.text.toString().trim()
-            enterpriseName2 = second_choice_name_et.text.toString().trim()
-            income = ProductUtils.getEditValueToBigDecimal(incomeMoney)
-            investMoney = ProductUtils.getEditValueToBigDecimal(amount_of_funds_et.text.toString().trim())
-            investYearNum = investment_period_et.text.toString().trim()
-            money = ProductUtils.getEditValueToBigDecimal(finalMoney)
-            productId = mProductId
-            productPriceId = mProductPriceId.toInt()
-            shareholders = presenter.getShareHolders(
-                legal_person_ev.getShareHolder(),
-                supervisor_ev.getShareHolder(),
-                shareholder_ev.getShareHolder(),
-                shareholder_more_container
-            )
-        }
-        presenter.addEnterprise(this, enterpriseInfo)
-
-    }
 
     override fun addEnterpriseSuccess(preparePay: PreparePay) {
         ToastUtils.showShort("套餐添加成功")
@@ -494,14 +337,12 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             Intent(this, PayPrepareActivity::class.java)
                 .putExtra(Constants.PARAM_ORDER_ID, preparePay.orderId)
                 .putExtra(Constants.PARAM_ORDER_NUMBER, preparePay.orderNo)
-                .putExtra(Constants.PARAM_MONEY, preparePay.money.stripTrailingZeros().toPlainString())
-//                .putExtra(Constants.PARAM_MONEY, finalMoney)
+                .putExtra(Constants.PARAM_MONEY, preparePay.money.stripTrailingZeros().toPlainString()) // 使用接口返回的最终支付金额
                 .putExtra(Constants.PARAM_IMAGE_URL, preparePay.productLogoImgUrl)
                 .putExtra(Constants.PARAM_PRODUCT_NAME, preparePay.productName)
                 .putExtra(Constants.PARAM_DATE, preparePay.createDt)
         )
         finish()
-
     }
 
 

@@ -3,16 +3,16 @@ package com.fatcloud.account.feature.forms.enterprise.license
 import android.widget.LinearLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import com.blankj.utilcode.util.ToastUtils
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
-import com.fatcloud.account.common.BigDecimalUtil
+import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.enterprise.Shareholder
 import com.fatcloud.account.view.CompanyMemberEditView
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import java.math.BigDecimal
 import javax.inject.Inject
 
 /**
@@ -23,6 +23,124 @@ import javax.inject.Inject
 class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormLicenseEnterpriseView) : BasePresenter(view) {
 
     private val gson = Gson()
+
+
+    /**
+     * 添加企业套餐
+     */
+     fun handlePost(
+        lifecycle: LifecycleOwner,
+        legalPersonView: CompanyMemberEditView,
+        supervisorView: CompanyMemberEditView,
+        shareholderView: CompanyMemberEditView,
+        detailAddress:String,
+        areaName:String,
+        bankNumber:String,
+        bankPhone:String,
+        selectPid : ArrayList<String>,
+        zeroName : String,
+        firstName : String,
+        secondName : String,
+        incomeMoney: String,
+        investMoney: String,
+
+        investmentYear: String,
+        finalMoney: String,
+        productId: String,
+        productPriceId: String,
+        shareholderMoreContainer:LinearLayout
+    ) {
+
+        // 法人
+        if (legalPersonView.getNameValue().isBlank()) {
+            ToastUtils.showShort("请输入法人姓名")
+            return
+        }
+        if (legalPersonView.getIdNumberValue().isBlank()) {
+            ToastUtils.showShort("请输入法人身份证号")
+            return
+        }
+
+        if (legalPersonView.getIdAddressValue().isBlank()) {
+            ToastUtils.showShort("请输入法人身份证地址")
+            return
+        }
+
+        if (legalPersonView.getPhoneValue().isBlank()) {
+            ToastUtils.showShort("请输入法人联系电话")
+            return
+        }
+
+        if (legalPersonView.getShareRatioValue().isBlank()) {
+            ToastUtils.showShort("请输入法人股份占比")
+            return
+        }
+
+        // 监事
+        if (supervisorView.getNameValue().isBlank()) {
+            ToastUtils.showShort("请输入监事姓名")
+            return
+        }
+        if (supervisorView.getIdNumberValue().isBlank()) {
+            ToastUtils.showShort("请输入监事身份证号")
+            return
+        }
+        if (supervisorView.getIdAddressValue().isBlank()) {
+            ToastUtils.showShort("请输入监事身份证地址")
+            return
+        }
+        if (supervisorView.getPhoneValue().isBlank()) {
+            ToastUtils.showShort("请输入监事联系方式")
+            return
+        }
+
+        if (shareholderView.getNameValue().isBlank()) {
+            ToastUtils.showShort("请输入股东姓名")
+            return
+        }
+        if (shareholderView.getIdNumberValue().isBlank()) {
+            ToastUtils.showShort("请输入股东身份证号")
+            return
+        }
+        if (shareholderView.getIdAddressValue().isBlank()) {
+            ToastUtils.showShort("请输入股东身份证地址")
+            return
+        }
+        if (shareholderView.getPhoneValue().isBlank()) {
+            ToastUtils.showShort("请输入股东联系方式")
+            return
+        }
+        if (shareholderView.getShareRatioValue().isBlank()) {
+            ToastUtils.showShort("请输入股东股份占比")
+            return
+        }
+
+
+        val enterpriseInfo = EnterpriseInfo().apply {
+            addr = detailAddress
+            area = areaName
+            bankNo = bankNumber
+            this.bankPhone = bankPhone
+            businessScope?.addAll(ProductUtils.stringList2IntList(selectPid))
+            enterpriseName0 = zeroName
+            enterpriseName1 = firstName
+            enterpriseName2 = secondName
+            income = ProductUtils.getEditValueToBigDecimal(incomeMoney)
+            this.investMoney = ProductUtils.getEditValueToBigDecimal(investMoney)
+            investYearNum = investmentYear
+            money = ProductUtils.getEditValueToBigDecimal(finalMoney)
+            this.productId = productId
+            this.productPriceId = productPriceId.toInt()
+            shareholders = getShareHolders(
+                legalPersonView.getShareHolder(),
+                supervisorView.getShareHolder(),
+                shareholderView.getShareHolder(),
+                shareholderMoreContainer
+            )
+        }
+        addEnterprise(lifecycle, enterpriseInfo)
+
+    }
 
     /**
      * 添加企业套餐

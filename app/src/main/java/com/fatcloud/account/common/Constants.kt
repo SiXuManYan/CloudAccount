@@ -3,7 +3,6 @@ package com.fatcloud.account.common
 object Constants {
 
 
-
     const val PR_DEFAULT = "cloud"
     const val PR_LOCATION = "location"
 
@@ -35,6 +34,12 @@ object Constants {
 
     /** 选取附件 */
     const val REQUEST_MEDIA = 1003
+
+    /** 选取经营范围 */
+    const val REQUEST_BUSINESS_SCOPE = 1004
+
+    /** 第二页操作成功后关闭 */
+    const val REQUEST_SUCCESS_FINISH = 1005
 
     /** 验证码等待时间 */
     const val WAIT_DELAYS = 59
@@ -109,6 +114,18 @@ object Constants {
     const val PARAM_APP_VERSION = "param_app_version"
     const val PARAM_APP_EXPLAIN = "param_app_explain"
     const val PARAM_APP_URL = "param_app_url"
+
+    const val PARAM_SELECT_BUSINESS_SCOPE_PID = "param_select_business_scope_pid" // 用户选中的经营范围
+    const val PARAM_SELECT_BUSINESS_SCOPE_NAME = "param_select_business_scope_name" // 用户选中的经营范围name
+    const val PARAM_SELECT_AREA_NAME = "param_select_area_name" // 用户选中的位置区域
+    const val PARAM_ZERO_NAME = "param_zero_name" // 首选名称
+    const val PARAM_FIRST_NAME = "param_first_name" // 备选1
+    const val PARAM_SECOND_NAME = "param_second_name" // 备选2
+    const val PARAM_INVEST_YEAR = "param_invest_year" // 出资年限
+    const val PARAM_INVEST_MONEY = "param_invest_money" // 出资数额
+    const val PARAM_BANK_NUMBER = "param_bank_number"
+    const val PARAM_BANK_PHONE = "param_bank_phone"
+    const val PARAM_DETAIL_ADDRESS = "param_detail_address"
 
 
     /** RxBus Event */

@@ -51,7 +51,7 @@ class FormBankPresenter @Inject constructor(private var view: FormBankView) : Ba
             }
             initHighlightTitle(highlightTitle)
             initNameTitleValue(nameTitle, shareholder.name)
-            initIdNumberTitleValue(context.getString(R.string.identity_number), shareholder.idno)
+            setIdNumberValue( shareholder.idno)
             initIdAddressTitleValue(context.getString(R.string.id_address), shareholder.idnoAddr)
             initPhoneTitleValue(context.getString(R.string.contact_number), shareholder.phone)
             initShareRatioValue(

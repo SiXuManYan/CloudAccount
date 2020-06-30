@@ -22,7 +22,7 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.product.Price
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.extend.RoundTransFormation
-import com.fatcloud.account.feature.forms.enterprise.license.FormLicenseEnterpriseActivity
+import com.fatcloud.account.feature.forms.enterprise.license.basic.FormEnterpriseBasicActivity
 import com.fatcloud.account.feature.forms.personal.bookkeeping.FormAgentBookkeepingPersonalActivity
 import kotlinx.android.synthetic.main.fragment_product_spinner.*
 import java.math.BigDecimal
@@ -512,7 +512,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
             Constants.P2 -> {
                 // 企业套餐
                 startActivity(
-                    Intent(activity, FormLicenseEnterpriseActivity::class.java)
+                    Intent(activity, FormEnterpriseBasicActivity::class.java)
                         .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
                         .putExtra(Constants.PARAM_INCOME_MONEY, serverFinalMoney.toPlainString())
                         .putExtra(Constants.PARAM_FINAL_MONEY, serverFinalMoney.toPlainString())
