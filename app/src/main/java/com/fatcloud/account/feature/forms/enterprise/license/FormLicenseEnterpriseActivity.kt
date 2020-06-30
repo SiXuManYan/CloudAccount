@@ -1,7 +1,6 @@
 package com.fatcloud.account.feature.forms.enterprise.license
 
 import android.content.Intent
-import android.text.InputType
 import android.view.View
 import butterknife.OnClick
 import com.blankj.utilcode.util.ScreenUtils
@@ -12,9 +11,7 @@ import com.fatcloud.account.app.CloudAccountApplication
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
-import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.defray.prepare.PreparePay
-import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
@@ -22,7 +19,6 @@ import com.fatcloud.account.feature.matisse.Matisse
 import com.fatcloud.account.view.CompanyMemberEditView
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_license_enterprise.*
-import kotlinx.android.synthetic.main.view_company_member_edit.view.*
 
 /**
  * Created by Wangsw on 2020/6/10 0010 18:30.
@@ -218,7 +214,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             showAddActionView().setOnClickListener {
                 VibrateUtils.vibrate(10)
                 // it.visibility = View.GONE
-                shareholder_more_container.addView(getShareholderView(0), 0)
+                shareholder_more_container.addView(presenter.getShareholderView(0, this@FormLicenseEnterpriseActivity, shareholder_more_container), 0)
                 scroll_nsv.smoothScrollTo(0, ScreenUtils.getScreenHeight())
 
             }
@@ -227,34 +223,6 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
 
     }
 
-    private fun getShareholderView(index: Int): CompanyMemberEditView {
-        return CompanyMemberEditView(this).apply {
-            id = index + 1 // 保证id 不从0开始
-            currentMold = Constants.SH3
-            // 坐标
-            tag = index
-            initHighlightTitle(getString(R.string.shareholder_info2))
-            initNameTitle(getString(R.string.shareholder_name))
-
-            initIdAddressHint("请输入股东身份证地址")
-            initPhoneHint("请输入股东联系电话")
-            initShareRatioHint(getString(R.string.share_ratio_hint))
-
-            //  添加股东
-            showAddActionView().setOnClickListener {
-                VibrateUtils.vibrate(10)
-                it.visibility = View.GONE
-                shareholder_more_container.addView(getShareholderView(index + 1), index + 1)
-                scroll_nsv.smoothScrollTo(0, ScreenUtils.getScreenHeight())
-            }
-
-            // 移除当前股东
-            showHighlightDeleteView().setOnClickListener {
-                shareholder_more_container.removeViewAt(index)
-            }
-
-        }
-    }
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -322,7 +290,8 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
                     finalMoney = mFinalMoney,
                     productId = mProductId,
                     productPriceId = mProductPriceId,
-                    shareholderMoreContainer = shareholder_more_container)
+                    shareholderMoreContainer = shareholder_more_container
+                )
             }
 
             else -> {

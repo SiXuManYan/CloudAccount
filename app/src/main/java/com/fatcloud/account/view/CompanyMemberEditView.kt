@@ -317,7 +317,6 @@ class CompanyMemberEditView : LinearLayout {
                                 else -> getBackImage()
                             }
                         )
-
                 }
 
 

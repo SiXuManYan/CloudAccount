@@ -1,11 +1,17 @@
 package com.fatcloud.account.feature.forms.enterprise.license
 
+import android.content.Context
+import android.view.View
 import android.widget.LinearLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.VibrateUtils
+import com.fatcloud.account.R
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
+import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
@@ -24,23 +30,52 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
 
     private val gson = Gson()
 
+     fun getShareholderView(index: Int, context: Context, shareholderMoreContainer: LinearLayout): CompanyMemberEditView {
+        return CompanyMemberEditView(context).apply {
+            id = index + 1 // 保证id 不从0开始
+            currentMold = Constants.SH3
+            // 坐标
+            tag = index
+            initHighlightTitle(context.getString(R.string.shareholder_info2))
+            initNameTitle(context.getString(R.string.shareholder_name))
+
+            initIdAddressHint("请输入股东身份证地址")
+            initPhoneHint("请输入股东联系电话")
+            initShareRatioHint(context.getString(R.string.share_ratio_hint))
+
+            //  添加股东
+            showAddActionView().setOnClickListener {
+                VibrateUtils.vibrate(10)
+                it.visibility = View.GONE
+                shareholderMoreContainer.addView(getShareholderView(index + 1,context,shareholderMoreContainer), index + 1)
+
+            }
+
+            // 移除当前股东
+            showHighlightDeleteView().setOnClickListener {
+                shareholderMoreContainer.removeViewAt(index)
+            }
+
+        }
+    }
+
 
     /**
      * 添加企业套餐
      */
-     fun handlePost(
+    fun handlePost(
         lifecycle: LifecycleOwner,
         legalPersonView: CompanyMemberEditView,
         supervisorView: CompanyMemberEditView,
         shareholderView: CompanyMemberEditView,
-        detailAddress:String,
-        areaName:String,
-        bankNumber:String,
-        bankPhone:String,
-        selectPid : ArrayList<String>,
-        zeroName : String,
-        firstName : String,
-        secondName : String,
+        detailAddress: String,
+        areaName: String,
+        bankNumber: String,
+        bankPhone: String,
+        selectPid: ArrayList<String>,
+        zeroName: String,
+        firstName: String,
+        secondName: String,
         incomeMoney: String,
         investMoney: String,
 
@@ -48,7 +83,7 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
         finalMoney: String,
         productId: String,
         productPriceId: String,
-        shareholderMoreContainer:LinearLayout
+        shareholderMoreContainer: LinearLayout
     ) {
 
         // 法人
