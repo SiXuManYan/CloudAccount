@@ -3,6 +3,14 @@ package com.fatcloud.account.feature.forms.enterprise.license
 import android.content.Intent
 import android.view.View
 import butterknife.OnClick
+import com.baidu.ocr.sdk.OCR
+import com.baidu.ocr.sdk.OnResultListener
+import com.baidu.ocr.sdk.exception.OCRError
+import com.baidu.ocr.sdk.model.IDCardParams
+import com.baidu.ocr.sdk.model.IDCardResult
+import com.baidu.ocr.ui.camera.CameraActivity
+import com.baidu.ocr.ui.util.FileUtil
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.VibrateUtils
@@ -19,13 +27,15 @@ import com.fatcloud.account.feature.matisse.Matisse
 import com.fatcloud.account.view.CompanyMemberEditView
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_license_enterprise.*
+import java.io.File
 
 /**
  * Created by Wangsw on 2020/6/10 0010 18:30.
  * </br>
  *  企业套餐表单
  */
-class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePresenter>(), FormLicenseEnterpriseView {
+class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePresenter>(),
+    FormLicenseEnterpriseView {
 
 
     /**
@@ -75,6 +85,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
     private var mDetailAddress: String = ""
 
     var isFaceUp = false
+
 
     override fun getLayoutId() = R.layout.activity_form_license_enterprise
 
@@ -214,7 +225,13 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             showAddActionView().setOnClickListener {
                 VibrateUtils.vibrate(10)
                 // it.visibility = View.GONE
-                shareholder_more_container.addView(presenter.getShareholderView(0, this@FormLicenseEnterpriseActivity, shareholder_more_container), 0)
+                shareholder_more_container.addView(
+                    presenter.getShareholderView(
+                        0,
+                        this@FormLicenseEnterpriseActivity,
+                        shareholder_more_container
+                    ), 0
+                )
                 scroll_nsv.smoothScrollTo(0, ScreenUtils.getScreenHeight())
 
             }
@@ -223,38 +240,6 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
 
     }
 
-
-    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (data == null) {
-            return
-        }
-
-        when (requestCode) {
-            Constants.REQUEST_MEDIA -> {
-                // 相册选择图片
-                val elements = Matisse.obtainPathResult(data)
-                if (elements.isNotEmpty()) {
-                    val fileDirPath = elements[0]
-                    val fromViewId = data.getIntExtra(Matisse.MEDIA_FROM_VIEW_ID, 0)
-                    if (fromViewId != 0) {
-                        val fromView = findViewById<CompanyMemberEditView>(fromViewId)
-                        if (fromView != null) {
-                            fromView.loadResultImage(fileDirPath)
-                        }
-                    }
-                    val application = application as CloudAccountApplication
-                    application.getOssSecurityToken(true, isFaceUp, fileDirPath, fromViewId, this@FormLicenseEnterpriseActivity.javaClass)
-                }
-            }
-            else -> {
-            }
-        }
-
-
-    }
 
     @OnClick(
         R.id.bottom_left_tv,
@@ -306,12 +291,115 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             Intent(this, PayPrepareActivity::class.java)
                 .putExtra(Constants.PARAM_ORDER_ID, preparePay.orderId)
                 .putExtra(Constants.PARAM_ORDER_NUMBER, preparePay.orderNo)
-                .putExtra(Constants.PARAM_MONEY, preparePay.money.stripTrailingZeros().toPlainString()) // 使用接口返回的最终支付金额
+                .putExtra(
+                    Constants.PARAM_MONEY,
+                    preparePay.money.stripTrailingZeros().toPlainString()
+                ) // 使用接口返回的最终支付金额
                 .putExtra(Constants.PARAM_IMAGE_URL, preparePay.productLogoImgUrl)
                 .putExtra(Constants.PARAM_PRODUCT_NAME, preparePay.productName)
                 .putExtra(Constants.PARAM_DATE, preparePay.createDt)
         )
         finish()
+    }
+
+
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data == null) {
+            return
+        }
+        when (requestCode) {
+            Constants.REQUEST_MEDIA -> {
+
+                // 相册选择图片
+                val elements = Matisse.obtainPathResult(data)
+                if (elements.isNotEmpty()) {
+                    val fileDirPath = elements[0]
+                    val fromViewId = data.getIntExtra(Matisse.MEDIA_FROM_VIEW_ID, 0)
+                    if (fromViewId != 0) {
+                        val fromView = findViewById<CompanyMemberEditView>(fromViewId)
+                        if (fromView != null) {
+                            fromView.loadResultImage(fileDirPath)
+                        }
+                    }
+                    val application = application as CloudAccountApplication
+                    application.getOssSecurityToken(
+                        true,
+                        isFaceUp,
+                        fileDirPath,
+                        fromViewId,
+                        this@FormLicenseEnterpriseActivity.javaClass
+                    )
+                }
+            }
+
+            Constants.REQUEST_CODE_CAMERA -> {
+
+                // ocr 识别 相机返回
+
+                val contentType = data.getStringExtra(CameraActivity.KEY_CONTENT_TYPE)
+                val fromViewId = data.getIntExtra(CameraActivity.KEY_FROM_VIEW_ID, 0)
+                val filePath: String = FileUtil.getSaveFile(applicationContext).absolutePath
+
+                if (filePath.isNotEmpty()) {
+
+                    if (fromViewId != 0) {
+                        val fromView = findViewById<CompanyMemberEditView>(fromViewId)
+                        if (fromView != null) {
+                            fromView.loadResultImage(filePath)
+                        }
+                    }
+
+                    val application = application as CloudAccountApplication
+                    application.getOssSecurityToken(
+                        true,
+                        isFaceUp,
+                        filePath,
+                        fromViewId,
+                        this@FormLicenseEnterpriseActivity.javaClass
+                    )
+                }
+
+ /*               if (contentType.isNotEmpty()) {
+                    if (CameraActivity.CONTENT_TYPE_ID_CARD_FRONT == contentType) {
+                        recIDCard(IDCardParams.ID_CARD_SIDE_FRONT, filePath)
+                    } else if (CameraActivity.CONTENT_TYPE_ID_CARD_BACK == contentType) {
+                        recIDCard(IDCardParams.ID_CARD_SIDE_BACK, filePath)
+                    }
+
+                }*/
+            }
+            else -> {
+            }
+        }
+    }
+
+    /**
+     * @param idCardSide 身份证正反面
+     * @param filePath 存储路径
+     */
+    private fun recIDCard(idCardSide: String, filePath: String) {
+        val param = IDCardParams()
+        param.imageFile = File(filePath)
+        // 设置身份证正反面
+        param.idCardSide = idCardSide
+        // 设置方向检测
+        param.isDetectDirection = true
+        // 设置图像参数压缩质量0-100, 越大图像质量越好但是请求时间越长。 不设置则默认值为20
+        param.imageQuality = 20
+        OCR.getInstance(this).recognizeIDCard(param, object :
+            OnResultListener<IDCardResult?> {
+            override fun onResult(result: IDCardResult?) {
+                if (result != null) {
+                    LogUtils.d("ocr 识别 ", "onResult$result")
+                }
+            }
+
+            override fun onError(error: OCRError) {
+                LogUtils.d("ocr 识别 ", "onError" + error.message)
+            }
+        })
     }
 
 

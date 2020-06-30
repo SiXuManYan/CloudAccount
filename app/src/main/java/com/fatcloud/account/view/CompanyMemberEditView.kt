@@ -2,6 +2,7 @@ package com.fatcloud.account.view
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,12 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.app.ActivityCompat.startActivityForResult
+import com.baidu.ocr.ui.camera.CameraActivity
+import com.baidu.ocr.ui.camera.CameraActivity.*
+import com.baidu.ocr.ui.util.FileUtil
 import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
 import com.fatcloud.account.R
@@ -65,16 +71,20 @@ class CompanyMemberEditView : LinearLayout {
         init()
     }
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         init()
     }
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(
-        context,
-        attrs,
-        defStyleAttr,
-        defStyleRes
-    ) {
+    constructor(
+        context: Context?,
+        attrs: AttributeSet?,
+        defStyleAttr: Int,
+        defStyleRes: Int
+    ) : super(context, attrs, defStyleAttr, defStyleRes) {
         init()
     }
 
@@ -85,18 +95,54 @@ class CompanyMemberEditView : LinearLayout {
      */
     private fun init() {
 
-        val view = LayoutInflater.from(context).inflate(R.layout.view_company_member_edit, this, true)
+        val view =
+            LayoutInflater.from(context).inflate(R.layout.view_company_member_edit, this, true)
 
         id_card_front_iv.setOnClickListener {
             isFaceUp = true
-            ProductUtils.handleMediaSelect(context as Activity, 1, this@CompanyMemberEditView.id)
-        }
-        id_card_back_iv.setOnClickListener {
-            isFaceUp = false
-            ProductUtils.handleMediaSelect(context as Activity, 1, this@CompanyMemberEditView.id)
+//            ProductUtils.handleMediaSelect(context as Activity, 1, this@CompanyMemberEditView.id)
+            scanIdCardFront()
         }
 
+        id_card_back_iv.setOnClickListener {
+            isFaceUp = false
+//            ProductUtils.handleMediaSelect(context as Activity, 1, this@CompanyMemberEditView.id)
+            scanIdCardBack()
+        }
+
+        scan_id_card.setOnClickListener {
+            isFaceUp = true
+            switcher.displayedChild = 1
+            scanIdCardFront()
+        }
+
+
     }
+
+    /**
+     *  身份证正面拍照 识别
+     */
+    private fun scanIdCardFront() {
+        val intent = Intent(context as Activity, CameraActivity::class.java)
+            .putExtra(KEY_OUTPUT_FILE_PATH, FileUtil.getSaveFile(context).absolutePath)
+            .putExtra(KEY_CONTENT_TYPE, CONTENT_TYPE_ID_CARD_FRONT)
+            .putExtra(KEY_FROM_VIEW_ID, this@CompanyMemberEditView.id)
+
+        startActivityForResult(context as Activity, intent, Constants.REQUEST_CODE_CAMERA, null)
+    }
+
+
+    /**
+     * 身份证背面拍照识别
+     */
+    private fun scanIdCardBack() {
+        val intent = Intent(context as Activity, CameraActivity::class.java)
+            .putExtra(KEY_OUTPUT_FILE_PATH, FileUtil.getSaveFile(context).absolutePath)
+            .putExtra(KEY_CONTENT_TYPE, CONTENT_TYPE_ID_CARD_BACK)
+            .putExtra(KEY_FROM_VIEW_ID, this@CompanyMemberEditView.id)
+        startActivityForResult(context as Activity, intent, Constants.REQUEST_CODE_CAMERA, null)
+    }
+
 
     fun initHighlightTitle(highlightTitle: CharSequence) {
         highlight_title_tv.text = highlightTitle
@@ -258,9 +304,17 @@ class CompanyMemberEditView : LinearLayout {
      */
     fun loadResultImage(fileDirPath: String) {
         if (isFaceUp) {
-            Glide.with(this).load(fileDirPath).into(getFrontImage())
+
+
+            Glide.with(this).load(fileDirPath)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(getFrontImage())
         } else {
-            Glide.with(this).load(fileDirPath).into(getBackImage())
+            Glide.with(this).load(fileDirPath)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(getBackImage())
         }
     }
 
@@ -286,30 +340,47 @@ class CompanyMemberEditView : LinearLayout {
             val sourceImageUrl = it.imgUrl
             if (!sourceImageUrl.isNullOrBlank()) {
                 if (ProductUtils.isOssSignUrl(sourceImageUrl)) {
-                    ProductUtils.getRealOssUrl(context, sourceImageUrl, object : CloudAccountApplication.OssSignCallBack {
-                        override fun ossUrlSignEnd(url: String) {
+                    ProductUtils.getRealOssUrl(
+                        context,
+                        sourceImageUrl,
+                        object : CloudAccountApplication.OssSignCallBack {
+                            override fun ossUrlSignEnd(url: String) {
 
-                            Glide.with(this@CompanyMemberEditView)
-                                .load(url)
-                                .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
-                                .error(R.drawable.ic_error_image_load)
-                                .into(
-                                    when (it.mold) {
-                                        Constants.I1 -> getFrontImage()
-                                        else -> getBackImage()
-                                    }
-                                )
+                                Glide.with(this@CompanyMemberEditView)
+                                    .load(url)
+                                    .apply(
+                                        RequestOptions().transform(
+                                            MultiTransformation(
+                                                CenterCrop(),
+                                                RoundTransFormation(context, 4)
+                                            )
+                                        )
+                                    )
+                                    .error(R.drawable.ic_error_image_load)
+                                    .into(
+                                        when (it.mold) {
+                                            Constants.I1 -> getFrontImage()
+                                            else -> getBackImage()
+                                        }
+                                    )
 
 
-                        }
+                            }
 
-                    })
+                        })
 
 
                 } else {
                     Glide.with(this)
                         .load(sourceImageUrl)
-                        .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
+                        .apply(
+                            RequestOptions().transform(
+                                MultiTransformation(
+                                    CenterCrop(),
+                                    RoundTransFormation(context, 4)
+                                )
+                            )
+                        )
                         .error(R.drawable.ic_error_image_load)
                         .into(
                             when (it.mold) {

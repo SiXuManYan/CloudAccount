@@ -96,6 +96,7 @@ class CloudAccountPresenter(val view: CloudAccountView) {
         clx: Class<*>
     ) {
 
+
         addSubscribe(
             apiService.getOssSecurityToken().compose(flowableUICompose())
                 .subscribeWith(object : BaseHttpSubscriber<SecurityTokenModel>(view) {

@@ -265,7 +265,9 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
      *
      */
     fun getOssSecurityToken(isEncryptFile: Boolean, isFaceUp: Boolean, localFilePatch: String, @IdRes fromViewId: Int, clx: Class<*>) {
+        showLoadingDialog()
         presenter.getOssSecurityToken(this, isEncryptFile, isFaceUp, localFilePatch, fromViewId, clx)
+        dismissLoadingDialog()
     }
 
     var ossCallBack: OssSignCallBack? = null

@@ -342,4 +342,7 @@ object Constants {
     /** 老用户，微信直接登陆 */
     const val L1 = "L1"
 
+    const val REQUEST_CODE_CAMERA = 102
+
+
 }

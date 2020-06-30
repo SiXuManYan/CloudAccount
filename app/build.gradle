@@ -63,7 +63,7 @@ android {
             signingConfig signingConfigs.release
         }
         release {
-            debuggable false
+            debuggable true
             minifyEnabled false // 是否运行混淆
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
@@ -166,7 +166,9 @@ dependencies {
 
     // 第三方库
     implementation project(':SwipeToLoadLayout')
-//    implementation project(':ocr_ui')
+    implementation project(':ocr_ui')
+
+    //    implementation project(':ocr_ui')
 
     // Dagger 2 支持
     implementation "com.google.dagger:dagger:$rootProject.dagger2"
@@ -264,19 +266,18 @@ dependencies {
     // 支付宝支付
     implementation(name: 'alipaySdk-15.7.6-20200521195109', ext: 'aar')
 
-
     // 城市选择 https://github.com/crazyandcoder/citypicker
     implementation 'liji.library.dev:citypickerview:5.2.2'
 
     // 百度ocr 文字识别
     implementation files('libs/ocr-sdk.jar')
 
-//    // ocr 原有UI
-//    implementation 'com.github.wenchaosong:OCR_identify:3.0.9'
+    //    // ocr 原有UI
+
+    //    implementation 'com.github.wenchaosong:OCR_identify:3.0.9'
 
     // 百度统计
     implementation 'com.baidu.mobstat:mtj-sdk-circle:latest.integration'
-
 }
 noArg {
     annotation("com.jz.cloud.activity.entity.kotlin.NoArg")

@@ -968,6 +968,8 @@ public class AndroidUtil {
             throw new Exception("sdcard disable");
         }
         FileOutputStream b = null;
+
+
         // 创建文件路径
         File file = new File(path);
         if (!file.exists()) {
