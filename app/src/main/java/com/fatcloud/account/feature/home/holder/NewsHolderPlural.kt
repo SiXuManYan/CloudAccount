@@ -50,7 +50,7 @@ class NewsHolderPlural(parent: ViewGroup?) : BaseItemViewHolder<News>(parent, R.
         }
 
         val recommandFlag = data.recommandFlag
-        if (recommandFlag != 3) {
+        if (recommandFlag == 1 || recommandFlag == 2) {
             top_tv.visibility = View.VISIBLE
             top_tv.text = data.recommandFlagText
         } else {
