@@ -28,8 +28,7 @@ import kotlin.collections.ArrayList
  * </br>
  * 企业套餐，前缀页
  */
-class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter>(),
-    FormEnterpriseBasicView {
+class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter>(), FormEnterpriseBasicView {
 
 
     /**

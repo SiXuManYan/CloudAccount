@@ -65,7 +65,7 @@
     <uses-feature android:name="android.hardware.camera.external" />
 
     <!-- OCR UI -->
-    <uses-feature android:name="android.hardware.camera2.full"/>
+    <uses-feature android:name="android.hardware.camera2.full" />
 
 
     <application
@@ -312,14 +312,19 @@
             android:screenOrientation="portrait" />
 
         <!-- OCR UI  -->
-<!--        <activity android:name="com.baidu.ocr.ui.camera.CameraActivity" />-->
+        <!--        <activity android:name="com.baidu.ocr.ui.camera.CameraActivity" />-->
 
         <activity
             android:name=".feature.gallery.GalleryActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".feature.forms.enterprise.license.basic.FormEnterpriseBasicActivity" />
+        <activity
+            android:name=".feature.forms.enterprise.license.basic.FormEnterpriseBasicActivity"
+            android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".feature.forms.enterprise.bank.basic.FormBankBasicActivity"
+            android:screenOrientation="portrait" />
 
 
     </application>
