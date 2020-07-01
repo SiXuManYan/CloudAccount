@@ -61,57 +61,6 @@
 
             <!-- 民族 -->
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:minHeight="45dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                tools:background="@color/font_white">
-
-                <TextView
-                    android:id="@+id/nation_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:ellipsize="end"
-                    android:lineSpacingMultiplier="1.1"
-                    android:maxWidth="150dp"
-                    android:maxLines="2"
-                    android:text="民族"
-                    android:textColor="@color/color_first_level" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/nation_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="1dp"
-                    android:layout_marginLeft="1dp"
-                    android:layout_toRightOf="@+id/nation_tv"
-                    android:background="@null"
-                    android:gravity="center_vertical|right"
-                    android:hint="请输入民族"
-                    android:imeOptions="actionNext"
-                    android:lineSpacingMultiplier="1.2"
-                    android:maxLength="10"
-                    android:minHeight="45dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="0dp"
-                    android:textColor="@color/color_first_level"
-                    android:textColorHint="@color/color_cccccc"
-                    android:textSize="14sp" />
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/split_line_color" />
-
-
-            </RelativeLayout>
 
             <!-- 地址 -->
             <RelativeLayout

@@ -251,11 +251,6 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
 
     private fun handlePost() {
 
-        val nationStr = nation_et.text.toString().trim()
-        if (nationStr.isBlank()) {
-            ToastUtils.showShort("请输入民族")
-            return
-        }
 
         val detailAddrStr = detail_addr_et.text.toString().trim()
         if (detailAddrStr.isBlank()) {
@@ -279,6 +274,17 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             return
         }
 
+        try {
+            val amountInt = amountOfFundsStr.toInt()
+            if (amountInt < 10000 || amountInt > 1000000) {
+                ToastUtils.showShort("请输入大于一万元小于一百万元的资金数额")
+                return
+            }
+
+        } catch (e: Exception) {
+
+        }
+
 
         // 法人
         if (!ProductUtils.hasIdCardUrl(legal_person_ev.frontImageUrl, true)) {
@@ -288,11 +294,18 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             return
         }
 
+
         val nameValue = legal_person_ev.getNameValue()
         if (nameValue.isBlank()) {
             ToastUtils.showShort("姓名")
             return
         }
+
+        if (nameValue.length < 3) {
+            ToastUtils.showShort("请输入中文不少于三个字的姓名")
+            return
+        }
+
         val idNumberValue = legal_person_ev.getIdNumberValue()
         if (idNumberValue.isBlank()) {
             ToastUtils.showShort("身份证号")
@@ -356,12 +369,11 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             name0 = zero_choice_name.value()
             name1 = first_choice_name.value()
             name2 = second_choice_name.value()
-            nation = nationStr
+            nation = nationValue
             productId = mProductId
             productPriceId = mProductPriceId
             realName = nameValue
             tel = phoneStr
-            nation = nationValue
         }
         presenter.addLicensePersonal(this, enterpriseInfo)
     }
@@ -429,6 +441,9 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
                             }
                             result.address?.let {
                                 fromView.setIdAddressValue(it.words, true)
+                            }
+                            result.ethnic?.let {
+                                fromView.setEthnicValue(it.words, true)
                             }
 
                         }

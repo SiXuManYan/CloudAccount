@@ -236,6 +236,13 @@ class CompanyMemberEditView : LinearLayout {
         }
     }
 
+    fun setEthnicValue(title: CharSequence?, editAble: Boolean) {
+        title?.let {
+            nation_et.setText(it)
+            setEditAble(editAble, nation_et)
+        }
+    }
+
     fun initIdAddressTitleValue(title: CharSequence, value: CharSequence) {
         initIdAddressTitle(title)
         setIdAddressValue(value)
