@@ -19,11 +19,13 @@ import com.fatcloud.account.app.CloudAccountApplication
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.matisse.Matisse
+import com.fatcloud.account.feature.ocr.RecognizeIDCardResultCallBack
 import com.fatcloud.account.view.CompanyMemberEditView
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_license_enterprise.*
@@ -361,22 +363,29 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
 
         fromView.loadResultImage(filePath)
 
-            // 上传oss
-            val application = application as CloudAccountApplication
-            application.getOssSecurityToken(
-                true,
-                isFaceUp,
-                filePath,
-                fromViewId,
-                this@FormLicenseEnterpriseActivity.javaClass
-            )
+        // 上传oss
+        val application = application as CloudAccountApplication
+        application.getOssSecurityToken(
+            true,
+            isFaceUp,
+            filePath,
+            fromViewId,
+            this@FormLicenseEnterpriseActivity.javaClass
+        )
 
         if (contentType.isNotEmpty()) {
 
             when (contentType) {
                 CameraActivity.CONTENT_TYPE_ID_CARD_FRONT -> {
                     // 身份证正面
-                    recIDCard(IDCardParams.ID_CARD_SIDE_FRONT, filePath, fromView)
+                    ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_FRONT, filePath,
+                        object : RecognizeIDCardResultCallBack {
+                            override fun onResult(result: IDCardResult) {
+                                fromView.setNameValue(result.name.words, true)
+                                fromView.setIdNumberValue(result.idNumber.words, true)
+                                fromView.setIdAddressValue(result.address.words, true)
+                            }
+                        })
                 }
                 CameraActivity.CONTENT_TYPE_ID_CARD_BACK -> {
                     // 身份证背面
@@ -387,38 +396,6 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
 
 
         }
-    }
-
-    /**
-     * @param idCardSide 身份证正反面
-     * @param filePath 存储路径
-     *
-     * @see <a href="https://cloud.baidu.com/doc/OCR/s/rk3h7xzck">OCR 身份证识别</a>
-     */
-    private fun recIDCard(idCardSide: String, filePath: String, fromView: CompanyMemberEditView) {
-
-        val param = IDCardParams().apply {
-
-            imageFile = File(filePath)
-            setIdCardSide(idCardSide)    // 设置身份证正反面
-            isDetectDirection = true // 设置方向检测
-            imageQuality = 9   // 设置图像参数压缩质量0-100, 越大图像质量越好但是请求时间越长。 不设置则默认值为20
-        }
-
-        OCR.getInstance(this).recognizeIDCard(param, object : OnResultListener<IDCardResult?> {
-
-            override fun onResult(result: IDCardResult?) {
-
-                result?.let {
-                    Log.d("ocr 识别 ", "onResult===   $it")
-                    fromView.setNameValue(it.name.words, true)
-                    fromView.setIdNumberValue(it.idNumber.words, true)
-                    fromView.setIdAddressValue(it.address.words, true)
-                }
-            }
-
-            override fun onError(error: OCRError) = Unit
-        })
     }
 
 

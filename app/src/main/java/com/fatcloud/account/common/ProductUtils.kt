@@ -5,15 +5,22 @@ import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
+import com.baidu.ocr.sdk.OCR
+import com.baidu.ocr.sdk.OnResultListener
+import com.baidu.ocr.sdk.exception.OCRError
+import com.baidu.ocr.sdk.model.IDCardParams
+import com.baidu.ocr.sdk.model.IDCardResult
 import com.blankj.utilcode.util.*
 import com.fatcloud.account.BuildConfig
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
 import com.fatcloud.account.feature.matisse.Glide4Engine
 import com.fatcloud.account.feature.matisse.Matisse
+import com.fatcloud.account.feature.ocr.RecognizeIDCardResultCallBack
 import com.fatcloud.account.view.EditView
 import com.fatcloud.account.view.dialog.AlertDialog
 import com.lljjcoder.Interface.OnCityItemClickListener
@@ -23,6 +30,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions
 import com.zhihu.matisse.MimeType
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import java.io.File
 import java.math.BigDecimal
 
 /**
@@ -346,6 +354,38 @@ object ProductUtils {
         return nullOrEmpty
 
     }
+    /**
+     * @param idCardSide 身份证正反面
+     * @param filePath 存储路径
+     *
+     * @see <a href="https://cloud.baidu.com/doc/OCR/s/rk3h7xzck">OCR 身份证识别</a>
+     */
+     fun recIDCard(context: Context ,idCardSide: String, filePath: String ,callBack: RecognizeIDCardResultCallBack) {
+
+        val param = IDCardParams().apply {
+
+            imageFile = File(filePath)
+            setIdCardSide(idCardSide)    // 设置身份证正反面
+            isDetectDirection = true // 设置方向检测
+            imageQuality = 9   // 设置图像参数压缩质量0-100, 越大图像质量越好但是请求时间越长。 不设置则默认值为20
+        }
+
+        OCR.getInstance(context).recognizeIDCard(param, object : OnResultListener<IDCardResult?> {
+            override fun onResult(result: IDCardResult?) {
+
+                result?.let {
+                    callBack.onResult(it)
+                }
+            }
+            override fun onError(error: OCRError) = Unit
+        })
+
+
+
+    }
+
+
+
 
 
 }

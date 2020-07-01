@@ -70,7 +70,7 @@
 
     <string name="taxpayer_id">纳税人识别号\n(社会统一代码)</string>
     <string name="legal_person_name">法人姓名</string>
-    <string name="legal_person_id_number">法人身份证</string>
+    <string name="legal_person_id_number">法人身份证号</string>
     <string name="legal_person_id_number_hint">请输入法人身份证号</string>
     <string name="legal_person_name_hint">请输入法人姓名</string>
     <string name="legal_person_phone_hint">请输入法人电话</string>

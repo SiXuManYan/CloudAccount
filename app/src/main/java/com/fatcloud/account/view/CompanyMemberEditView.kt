@@ -117,7 +117,7 @@ class CompanyMemberEditView : LinearLayout {
 
             scan_id_card.postDelayed({
                 switcher.displayedChild = 1
-            },200)
+            }, 200)
 
         }
 
@@ -205,6 +205,10 @@ class CompanyMemberEditView : LinearLayout {
         ev_02_id_addr_et.hint = hint
     }
 
+    fun hideAddress() {
+        address_rl.visibility = View.GONE
+    }
+
     fun initIdAddressHint(hint: CharSequence) {
         ev_02_id_addr_et.hint = hint
     }
@@ -236,6 +240,10 @@ class CompanyMemberEditView : LinearLayout {
         ev_03_phone_et.hint = hint
     }
 
+    fun hidePhone() {
+        phone_rl.visibility = View.GONE
+    }
+
     fun initPhoneHint(hint: CharSequence) {
         ev_03_phone_et.hint = hint
     }
@@ -256,6 +264,10 @@ class CompanyMemberEditView : LinearLayout {
 
 
     // 股份占比
+    fun hideShareRatio() {
+        share_ratio_rl.visibility = View.GONE
+    }
+
     fun initShareRatioHint(hint: CharSequence) {
         ev_04_share_ratio_et.hint = hint
     }

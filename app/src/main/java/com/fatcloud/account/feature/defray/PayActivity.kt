@@ -148,13 +148,7 @@ class PayActivity : BaseMVPActivity<PayPresenter>(), PayView {
             R.id.wechat_rl -> if (!wechat_rb.isChecked) wechat_rb.isChecked = true
             R.id.alipay_rl -> if (!alipay_rb.isChecked) alipay_rb.isChecked = true
             R.id.card_cv -> {
-                if (wechat_rb.isChecked) {
-                    wechat_rb.isChecked = false
-                    alipay_rb.isChecked = true
-                } else {
-                    wechat_rb.isChecked = true
-                    alipay_rb.isChecked = false
-                }
+
             }
             else -> {
             }
