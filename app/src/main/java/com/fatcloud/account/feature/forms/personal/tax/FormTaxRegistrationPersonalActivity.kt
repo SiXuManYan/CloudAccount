@@ -275,10 +275,6 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
             return
         }
 
-
-
-
-
         if (addr_value.text.toString().trim().isBlank()) {
             ToastUtils.showShort("请选择地址")
             return

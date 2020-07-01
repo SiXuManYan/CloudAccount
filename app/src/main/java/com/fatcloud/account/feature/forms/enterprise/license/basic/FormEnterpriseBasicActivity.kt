@@ -28,7 +28,8 @@ import kotlin.collections.ArrayList
  * </br>
  * 企业套餐，前缀页
  */
-class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter>(), FormEnterpriseBasicView {
+class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter>(),
+    FormEnterpriseBasicView {
 
 
     /**
@@ -210,6 +211,7 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
                     return
                 }
 
+
                 val firstName = first_choice_name_et.text.toString()
                 if (firstName.isBlank()) {
                     ToastUtils.showShort("请输入备选公司名称1")
@@ -221,6 +223,12 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
                     return
                 }
 
+                if (zeroName.length < 3 || firstName.length < 3 || secondName.length < 3) {
+                    ToastUtils.showShort("请输入中文不少于三个字")
+                    return
+                }
+
+
                 val investmentYear = investment_period_et.text.toString()
                 if (investmentYear.isBlank()) {
                     ToastUtils.showShort("请输入出资年限")
@@ -231,6 +239,8 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
                     ToastUtils.showShort("请输入资金数额")
                     return
                 }
+
+
                 if (business_scope_value.text.toString().trim().isBlank()) {
                     ToastUtils.showShort("请选择经营范围")
                     return
@@ -251,7 +261,7 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
                     ToastUtils.showShort("请输入银行预留手机号 ")
                     return
                 }
-                if (!ProductUtils.isPhoneNumber(bankPhone,"银行预留")) {
+                if (!ProductUtils.isPhoneNumber(bankPhone, "银行预留")) {
                     return
                 }
 
