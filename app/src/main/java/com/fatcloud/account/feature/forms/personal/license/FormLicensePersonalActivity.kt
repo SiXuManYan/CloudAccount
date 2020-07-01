@@ -161,6 +161,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             currentMold = Constants.SH1
             initHighlightTitle(getString(R.string.legal_person_info))
             initNameTitle(getString(R.string.legal_person_name))
+
             hideAddress()
             hidePhone()
             hideShareRatio()

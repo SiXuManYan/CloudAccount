@@ -59,6 +59,8 @@ class FormBankPresenter @Inject constructor(private var view: FormBankView) : Ba
             )
             setServerImage(shareholder.imgs)
             disableImageViewClick()
+            displayImageSwitcher()
+
         }
     }
 
@@ -132,7 +134,7 @@ class FormBankPresenter @Inject constructor(private var view: FormBankView) : Ba
         reconciliatAddr: String?,
         reconciliatArea: String?,
         reconciliatContact: String?,
-        reconciliatPhone: String
+        reconciliatPhone: String?
     ) {
 
         requestApi(lifecycleOwner, Lifecycle.Event.ON_DESTROY,

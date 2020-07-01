@@ -2,11 +2,13 @@ package com.fatcloud.account.feature.forms.enterprise.bank
 
 import android.app.Activity
 import android.content.Intent
-import android.text.InputType
 import android.view.View
 import android.widget.ImageView
 import butterknife.OnClick
-import com.blankj.utilcode.util.StringUtils
+import com.baidu.ocr.sdk.model.IDCardParams
+import com.baidu.ocr.sdk.model.IDCardResult
+import com.baidu.ocr.ui.camera.CameraActivity
+import com.baidu.ocr.ui.util.FileUtil
 import com.blankj.utilcode.util.ToastUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
@@ -15,18 +17,13 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
-import com.fatcloud.account.entity.commons.AccountNature
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.event.entity.BankFormCommitSuccessEvent
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.feature.matisse.Matisse
-import com.fatcloud.account.feature.sheet.nature.AccountNatureSheetFragment
+import com.fatcloud.account.feature.ocr.RecognizeIDCardResultCallBack
 import com.fatcloud.account.view.CompanyMemberEditView
-import com.lljjcoder.Interface.OnCityItemClickListener
-import com.lljjcoder.bean.CityBean
-import com.lljjcoder.bean.DistrictBean
-import com.lljjcoder.bean.ProvinceBean
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_bank.*
 
@@ -43,6 +40,15 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
      */
     var orderWorkId: String? = ""
 
+    var companyName: String? = ""
+    var companyAddress: String? = ""
+    var registeredCapital: String? = ""
+    var accountNatureValue: String? = ""
+    var reconciliationName: String? = ""
+    var reconciliationPhone: String? = ""
+    var areaName: String? = ""
+    var detailAddr: String? = ""
+
     /**
      * 营业执照url
      */
@@ -58,26 +64,6 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
      */
     var signed_authorization_url = ""
 
-    /**
-     * 财务负责人身份证正面
-     */
-    var finance_card_front_url = ""
-
-    /**
-     * 财务负责任呢身份证背面
-     */
-    var finance_card_back_url = ""
-
-    /**
-     * 企业的账户性质
-     */
-    var account_nature = ""
-
-    /**
-     * 队长收货单地址区域
-     */
-    var areaCodeId = ""
-    var areaName = ""
 
     override fun getLayoutId() = R.layout.activity_form_bank
 
@@ -96,8 +82,21 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
             finish()
             return
         }
+
+
         orderWorkId = intent.extras!!.getString(Constants.PARAM_ORDER_WORK_ID)
+        companyName = intent.extras!!.getString(Constants.PARAM_COMPANY_NAME)
+        companyAddress = intent.extras!!.getString(Constants.PARAM_COMPANY_ADDRESS)
+        registeredCapital = intent.extras!!.getString(Constants.PARAM_REGISTERED_CAPITAL)
+        accountNatureValue = intent.extras!!.getString(Constants.PARAM_ACCOUNT_NATURE)
+        reconciliationName = intent.extras!!.getString(Constants.PARAM_RECONCILIATION_NAME)
+        reconciliationPhone = intent.extras!!.getString(Constants.PARAM_RECONCILIATION_PHONE)
+        areaName = intent.extras!!.getString(Constants.PARAM_AREA_NAME)
+        detailAddr = intent.extras!!.getString(Constants.PARAM_DETAIL_ADDRESS)
+
         presenter.getBankInfo(this, orderWorkId)
+
+
     }
 
 
@@ -126,9 +125,9 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
                     R.id.business_license_iv -> business_license_url = finalUrl
                     R.id.electronic_seal_iv -> electronic_seal_url = finalUrl
                     R.id.signed_authorization_iv -> signed_authorization_url = finalUrl
-                    R.id.finance_card_front_iv -> finance_card_front_url = finalUrl
-                    R.id.finance_card_back_iv -> finance_card_back_url = finalUrl
+                    else -> {
 
+                    }
                 }
             }
 
@@ -141,24 +140,15 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
     private fun initView() {
         setMainTitle("开立银行对公账户")
 
-        // 公司名称
-        company_name.setTitleAndHint("公司名称", "请输入公司名称")
-        company_address.setTitleAndHint("公司地址", "请输入公司地址")
-//        postcode.setTitleAndHint("邮编", "请输入邮编").setInputType(InputType.TYPE_CLASS_NUMBER)
-        registered_capital.setTitleAndHint("注册资金(万元)", "请输入注册资金(万元)").setInputType(InputType.TYPE_CLASS_NUMBER)
-
-        // 对账服务
-        reconciliation_name.setTitleAndHint("对账联系人", "请输入对账联系人姓名")
-        reconciliation_phone.setTitleAndHint("对账联系方式", "请输入对账联系电话").setInputType(InputType.TYPE_CLASS_NUMBER)
-
-        // 对账单收货地址
-        detail_addr.setTitleAndHint("详细地址", "请输入详细地址")
-
         // 财务负责人
-        finance_name.setTitleAndHint("财务负责人姓名", "请输入财务负责人姓名")
-        finance_id_number.setTitleAndHint("身份证号", "请输入身份证号").setInputType(InputType.TYPE_CLASS_NUMBER)
-        finance_phone.setTitleAndHint("联系电话", "请输入联系电话").setInputType(InputType.TYPE_CLASS_NUMBER)
-        finance_share_ratio.setTitleAndHint("股份占比", "请输入股份占比 %").setInputType(InputType.TYPE_CLASS_NUMBER)
+        finance_ev.apply {
+            currentMold = Constants.SH4_N
+            initHighlightTitle("财务负责人信息")
+            initNameTitle("财务负责人姓名")
+            hideAddress()
+            initPhoneHint("请输入联系电话")
+            initShareRatioHint(getString(R.string.share_ratio_hint))
+        }
     }
 
     override fun bindDetailInfo(data: EnterpriseInfo) {
@@ -166,7 +156,14 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
         // 法人、股东相关信息
         shareholder_more_container.removeAllViews()
         data.shareholders?.forEachIndexed { index, shareholder ->
-            shareholder_more_container.addView(presenter.getShareholderView(this, shareholder_more_container, index, shareholder))
+            shareholder_more_container.addView(
+                presenter.getShareholderView(
+                    this,
+                    shareholder_more_container,
+                    index,
+                    shareholder
+                )
+            )
         }
 
 
@@ -181,6 +178,8 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
         }
         when (requestCode) {
             Constants.REQUEST_MEDIA -> handleAlbumSelect(data)
+            Constants.REQUEST_CODE_CAMERA -> receiveOcrCamera(data)
+
             else -> {
             }
         }
@@ -222,15 +221,75 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
     }
 
 
+    /**
+     *  ocr 识别 相机返回
+     */
+    private fun receiveOcrCamera(data: Intent) {
+
+        val contentType = data.getStringExtra(CameraActivity.KEY_CONTENT_TYPE)
+        val fromViewId = data.getIntExtra(CameraActivity.KEY_FROM_VIEW_ID, 0)
+        val filePath: String = FileUtil.getSaveFile(applicationContext).absolutePath
+
+        if (filePath.isEmpty() || fromViewId == 0) {
+            return
+        }
+
+        // OCR 操作来源
+        val fromView = findViewById<CompanyMemberEditView>(fromViewId)
+        if (fromView == null) {
+            return
+        }
+
+        fromView.loadResultImage(filePath)
+
+        // 上传oss
+        val application = application as CloudAccountApplication
+        application.getOssSecurityToken(
+            true,
+            true,
+            filePath,
+            fromViewId,
+            this@FormBankActivity.javaClass
+        )
+
+
+        if (contentType.isNotEmpty()) {
+
+            when (contentType) {
+                CameraActivity.CONTENT_TYPE_ID_CARD_FRONT -> {
+                    // 身份证正面
+                    ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_FRONT, filePath,
+                        object : RecognizeIDCardResultCallBack {
+                            override fun onResult(result: IDCardResult) {
+
+                                result.name?.let {
+                                    fromView.setNameValue(it.words, true)
+                                }
+                                result.idNumber?.let {
+                                    fromView.setIdNumberValue(it.words, true)
+                                }
+
+                            }
+                        })
+                }
+                CameraActivity.CONTENT_TYPE_ID_CARD_BACK -> {
+                    // 身份证背面
+                }
+                else -> {
+                }
+            }
+
+
+        }
+    }
+
+
     @OnClick(
         R.id.business_license_iv,
         R.id.electronic_seal_iv,
         R.id.signed_authorization_iv,
-        R.id.finance_card_front_iv,
-        R.id.finance_card_back_iv,
-        R.id.bottom_right_tv,
-        R.id.account_nature_rl,
-        R.id.recipient_address_rl
+
+        R.id.bottom_right_tv
     )
     fun onClick(view: View) {
         if (CommonUtils.isDoubleClick(view)) {
@@ -240,86 +299,90 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
 
             R.id.business_license_iv,
             R.id.electronic_seal_iv,
-            R.id.signed_authorization_iv,
-            R.id.finance_card_front_iv,
-            R.id.finance_card_back_iv
+            R.id.signed_authorization_iv
+
             -> ProductUtils.handleMediaSelect(context as Activity, 1, view.id)
             R.id.bottom_right_tv -> handleCommit()
-            R.id.account_nature_rl -> {
-                AccountNatureSheetFragment.newInstance().apply {
-                    setOnItemSelectListener(object : AccountNatureSheetFragment.OnItemSelectedListener {
-                        override fun onItemSelected(currentSelected: AccountNature) {
-                            this@FormBankActivity.account_nature = currentSelected.name
-                            this@FormBankActivity.business_scope_value.text = currentSelected.name
-                        }
-                    })
 
-                    show(supportFragmentManager, this.tag)
-                }
-            }
-            R.id.recipient_address_rl -> {
-                ProductUtils.showLocationPicker(this, object : OnCityItemClickListener() {
-                    override fun onSelected(province: ProvinceBean, city: CityBean, district: DistrictBean) {
-                        areaName = StringUtils.getString(R.string.location_information_format, province.name, city.name, district.name)
-                        province_title_tv.text = areaName
-                        areaCodeId = district.id
-                    }
-
-                    override fun onCancel() = Unit
-                })
-            }
             else -> {
             }
         }
     }
 
     private fun handleCommit() {
-        if (!ProductUtils.checkEditEmptyWithVibrate(
-                company_name,
-                company_address,
-//                postcode,
-                registered_capital,
-                reconciliation_name,
-                reconciliation_phone,
-                detail_addr,
-                finance_name,
-                finance_id_number,
-                finance_phone,
-                finance_share_ratio
-            )
-        ) {
+
+
+        // 财务负责人
+        if (!ProductUtils.hasIdCardUrl(finance_ev.frontImageUrl, true, "财务负责人")) {
+            return
+        }
+        if (!ProductUtils.hasIdCardUrl(finance_ev.backImageUrl, false, "财务负责人")) {
             return
         }
 
-        if (
-            !ProductUtils.checkViewValueEmpty(business_scope_value.text.toString(), business_scope_value) ||
-            !ProductUtils.checkViewValueEmpty(province_title_tv.text.toString(), province_title_tv) ||
-            !ProductUtils.checkViewValueEmpty(business_license_url, business_license_iv) ||
-            !ProductUtils.checkViewValueEmpty(electronic_seal_url, electronic_seal_iv) ||
-            !ProductUtils.checkViewValueEmpty(signed_authorization_url, signed_authorization_iv)
-        ) {
+        val nameValue = finance_ev.getNameValue()
+        if (nameValue.isBlank()) {
+            ToastUtils.showShort("请输入财务负责人姓名")
             return
         }
+        val idNumberValue = finance_ev.getIdNumberValue()
+        if (idNumberValue.isBlank()) {
+            ToastUtils.showShort("请输入财务负责人身份证号")
+            return
+        }
+        if (!ProductUtils.isIdCardNumber(idNumberValue, "财务负责人")) {
+            return
+        }
+
+        val phoneValue = finance_ev.getPhoneValue()
+        if (phoneValue.isBlank()) {
+            ToastUtils.showShort("请输入财务负责人联系电话")
+            return
+        }
+        if (!ProductUtils.isPhoneNumber(phoneValue, "法人")) {
+            return
+        }
+        val shareRatioValue = finance_ev.getShareRatioValue()
+        if (shareRatioValue.isBlank()) {
+            ToastUtils.showShort("请输入财务负责人股份占比")
+            return
+        }
+
+        if (business_license_url.isBlank()) {
+            ToastUtils.showShort("请上传营业执照")
+            return
+        }
+        if (electronic_seal_url.isBlank()) {
+            ToastUtils.showShort("请上传电子公章")
+            return
+        }
+        if (signed_authorization_url.isBlank()) {
+            ToastUtils.showShort("请上传法人签字授权书")
+            return
+        }
+
+
+
         presenter.addSpecificProcessContent(
             lifecycleOwner = this,
             orderWorkId = orderWorkId,
             businessLicenseImgUrl = business_license_url,
-            capital = registered_capital.value(),
+            capital = registeredCapital,
             electronicSealImgUrl = electronic_seal_url,
-            enterpriseAddr = company_address.value(),
-            enterpriseMold = account_nature,
-            enterpriseName = company_name.value(),
-            financeIdno = finance_id_number.value(),
-            financeIdnoImgUrlA = finance_card_front_url,
-            financeIdnoImgUrlB = finance_card_back_url,
-            financeName = finance_name.value(),
-            financePhone = finance_phone.value(),
-            financeShares = finance_share_ratio.value(),
+            enterpriseAddr = companyAddress,
+            enterpriseMold = accountNatureValue,
+            enterpriseName = companyName,
+            financeIdno = idNumberValue,
+            financeIdnoImgUrlA = finance_ev.frontImageUrl,
+            financeIdnoImgUrlB = finance_ev.backImageUrl,
+            financeName = nameValue,
+            financePhone = phoneValue,
+            financeShares = shareRatioValue,
             legalPersonWarrantImgUrl = signed_authorization_url,
-            reconciliatAddr = detail_addr.value(),
+            reconciliatAddr = detailAddr,
             reconciliatArea = areaName,
-            reconciliatContact = reconciliation_name.value(),
-            reconciliatPhone = reconciliation_phone.value()
+            reconciliatContact = reconciliationName,
+            reconciliatPhone = reconciliationPhone
         )
     }
 

@@ -125,8 +125,16 @@ object Constants {
     const val PARAM_INVEST_MONEY = "param_invest_money" // 出资数额
     const val PARAM_BANK_NUMBER = "param_bank_number"
     const val PARAM_BANK_PHONE = "param_bank_phone"
-    const val PARAM_DETAIL_ADDRESS = "param_detail_address"
+    const val PARAM_BUSINESS_SCOPE = "param_business_scope" // 账户性质
 
+    const val PARAM_COMPANY_NAME = "param_company_name"
+    const val PARAM_COMPANY_ADDRESS = "param_company_address"
+    const val PARAM_REGISTERED_CAPITAL = "param_registered_capital" // 注册资金
+    const val PARAM_ACCOUNT_NATURE = "param_account_nature" // 账户性质
+    const val PARAM_RECONCILIATION_NAME = "param_reconciliation_name" // 对账联系人
+    const val PARAM_RECONCILIATION_PHONE = "param_reconciliation_phone" // 对账联系方式
+    const val PARAM_AREA_NAME = "param_area_name"// 选择的区域
+    const val PARAM_DETAIL_ADDRESS = "param_detail_address"// 详细地址
 
     /** RxBus Event */
     const val EVENT_STARTUP_DONE = 0x59//新手接口

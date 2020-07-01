@@ -163,6 +163,7 @@ class CompanyMemberEditView : LinearLayout {
         ev_00_name_tv.text = title
     }
 
+
     /**
      * 设置姓名
      */
@@ -365,8 +366,14 @@ class CompanyMemberEditView : LinearLayout {
      */
     fun setServerImage(images: ArrayList<IdentityImg>) {
         if (images.isNullOrEmpty()) {
+
+
             return
         }
+
+        id_card_front_tag_iv.visibility = View.GONE
+        id_card_back_tag_iv.visibility = View.GONE
+
 
         images.forEach {
 
@@ -424,6 +431,15 @@ class CompanyMemberEditView : LinearLayout {
                 }
 
 
+            } else {
+                when (it.mold) {
+                    Constants.I1 -> {
+                        id_card_front_iv.setImageResource(R.drawable.ic_upload_default)
+                    }
+                    else -> {
+                        id_card_back_iv.setImageResource(R.drawable.ic_upload_default)
+                    }
+                }
             }
 
 
@@ -448,8 +464,13 @@ class CompanyMemberEditView : LinearLayout {
         id_card_back_iv.isClickable = false
     }
 
-    fun hideBottomSplit(){
-        bottom_split_view.visibility =View.GONE
+    fun displayImageSwitcher() {
+        switcher.displayedChild = 1
+    }
+
+
+    fun hideBottomSplit() {
+        bottom_split_view.visibility = View.GONE
     }
 
 }

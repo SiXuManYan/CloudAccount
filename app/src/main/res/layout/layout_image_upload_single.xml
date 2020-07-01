@@ -10,8 +10,8 @@
 
 
     <RelativeLayout
-        android:layout_width="176dp"
-        android:layout_height="99dp"
+        android:layout_width="150dp"
+        android:layout_height="90dp"
         android:background="@drawable/shape_dash_gray"
         android:padding="4dp">
 

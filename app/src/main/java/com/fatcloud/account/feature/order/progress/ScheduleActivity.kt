@@ -13,6 +13,7 @@ import com.fatcloud.account.entity.order.progress.BusinessProgress
 import com.fatcloud.account.event.entity.BankFormCommitSuccessEvent
 import com.fatcloud.account.event.entity.RefreshOrderEvent
 import com.fatcloud.account.feature.forms.enterprise.bank.FormBankActivity
+import com.fatcloud.account.feature.forms.enterprise.bank.basic.FormBankBasicActivity
 import com.fatcloud.account.feature.order.details.bookkeeping.BookkeepingInfoActivity
 import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterInfoActivity
 import com.fatcloud.account.feature.order.details.personal.RegistrantInfoActivity
@@ -156,7 +157,7 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
                     // 编辑页
 
                     startActivity(
-                        Intent(this@ScheduleActivity, FormBankActivity::class.java)
+                        Intent(this@ScheduleActivity, FormBankBasicActivity::class.java)
                             .putExtra(Constants.PARAM_ORDER_WORK_ID, it.id)
                             .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
                             .putExtra(Constants.PARAM_ORDER_ID, orderId)
