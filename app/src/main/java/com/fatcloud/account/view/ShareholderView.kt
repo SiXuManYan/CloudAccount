@@ -3,6 +3,7 @@ package com.fatcloud.account.view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -76,7 +77,16 @@ class ShareholderView : LinearLayout {
 //        id_address_tv.text = data.idnoAddr
 //        id_address_ll.visibility = View.GONE
         phone_tv.text = data.phone
-        share_ratio_tv.text = "${data.shareProportion}%"
+
+        val shareProportion = data.shareProportion
+        if (shareProportion.isNullOrBlank()) {
+            share_ratio_ll.visibility = View.GONE
+        }else{
+            share_ratio_tv.text = "$shareProportion%"
+            share_ratio_ll.visibility = View.VISIBLE
+        }
+
+
 
 
         data.imgs.forEachIndexed { index, identityImg ->

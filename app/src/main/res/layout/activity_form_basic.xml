@@ -82,9 +82,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:background="?android:attr/selectableItemBackground"
-                android:minHeight="45dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 tools:background="@color/font_white">
@@ -105,7 +104,7 @@
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/zero_choice_name_et"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_toRightOf="@+id/name_title_tv"
@@ -116,7 +115,6 @@
                     android:lineSpacingMultiplier="1.2"
                     android:maxLength="30"
                     android:maxLines="1"
-                    android:minHeight="45dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="0dp"
                     android:textColor="@color/color_first_level"
@@ -136,9 +134,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:background="?android:attr/selectableItemBackground"
-                android:minHeight="45dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 tools:background="@color/font_white">
@@ -159,7 +156,7 @@
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/first_choice_name_et"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_toRightOf="@+id/first_title_tv"
@@ -170,7 +167,6 @@
                     android:lineSpacingMultiplier="1.2"
                     android:maxLength="30"
                     android:maxLines="1"
-                    android:minHeight="45dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="0dp"
                     android:textColor="@color/color_first_level"
@@ -190,9 +186,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:background="?android:attr/selectableItemBackground"
-                android:minHeight="45dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 tools:background="@color/font_white">
@@ -213,7 +208,7 @@
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/second_choice_name_et"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_toRightOf="@+id/second_tv"
@@ -224,7 +219,6 @@
                     android:lineSpacingMultiplier="1.2"
                     android:maxLength="30"
                     android:maxLines="1"
-                    android:minHeight="45dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="0dp"
                     android:singleLine="true"

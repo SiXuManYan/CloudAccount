@@ -1,12 +1,8 @@
 package com.fatcloud.account.feature.forms.enterprise.license
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import butterknife.OnClick
-import com.baidu.ocr.sdk.OCR
-import com.baidu.ocr.sdk.OnResultListener
-import com.baidu.ocr.sdk.exception.OCRError
 import com.baidu.ocr.sdk.model.IDCardParams
 import com.baidu.ocr.sdk.model.IDCardResult
 import com.baidu.ocr.ui.camera.CameraActivity
@@ -29,7 +25,6 @@ import com.fatcloud.account.feature.ocr.RecognizeIDCardResultCallBack
 import com.fatcloud.account.view.CompanyMemberEditView
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_license_enterprise.*
-import java.io.File
 
 /**
  * Created by Wangsw on 2020/6/10 0010 18:30.

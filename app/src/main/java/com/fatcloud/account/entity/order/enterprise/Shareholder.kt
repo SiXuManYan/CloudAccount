@@ -31,7 +31,7 @@ class Shareholder(
     /**
      * 股份占比
      */
-    val shareProportion: String
+    val shareProportion: String = ""
 )
 
 /*

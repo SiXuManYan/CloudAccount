@@ -66,11 +66,11 @@ class NewsFragment : BaseFragment<NewsPresenter>(), NewsView {
 
         }
 
-        presenter.subsribeEventEntity<TabRefreshEvent>(Consumer {
+/*        presenter.subsribeEventEntity<TabRefreshEvent>(Consumer {
             if (isViewVisible) {
                 appBarLayout.setExpanded(true, true)
             }
-        })
+        })*/
 
 
     }
@@ -84,7 +84,7 @@ class NewsFragment : BaseFragment<NewsPresenter>(), NewsView {
         when (view.id) {
             R.id.title_tv -> {
                 if (CommonUtils.isDoubleClick(view)) {
-                    appBarLayout.setExpanded(true, true)
+//                    appBarLayout.setExpanded(true, true)
                     RxBus.post(NewsProductScrollToTopEvent())
                 }
             }

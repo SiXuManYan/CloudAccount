@@ -3,8 +3,8 @@
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:id="@+id/parent_cl"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -15,12 +15,13 @@
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+
+        <!-- app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed" -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:orientation="vertical"
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
+            android:orientation="vertical">
 
 
             <TextView
@@ -44,12 +45,12 @@
         <com.fatcloud.account.view.tabs.SlidingTabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            app:tl_indicator_color="@color/color_app_red"
             android:layout_height="40dp"
-            app:tl_indicator_width="20dp"
             android:layout_toLeftOf="@+id/tv_filter"
+            app:tl_indicator_color="@color/color_app_red"
             app:tl_indicator_corner_radius="2dp"
             app:tl_indicator_height="3dp"
+            app:tl_indicator_width="20dp"
             app:tl_tab_padding="15dp"
             app:tl_textBold="SELECT"
             app:tl_textSelectColor="@color/color_first_level"

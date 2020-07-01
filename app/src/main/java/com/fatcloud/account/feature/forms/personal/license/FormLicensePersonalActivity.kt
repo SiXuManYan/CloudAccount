@@ -156,12 +156,12 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
 
         setMainTitle("注册人信息")
 
-        // 法人信息
+        // 个人信息
         legal_person_ev.apply {
             currentMold = Constants.SH1
-            initHighlightTitle(getString(R.string.legal_person_info))
-            initNameTitle(getString(R.string.legal_person_name))
-
+            initHighlightTitle("个人信息（请扫描身份证正反面）")
+            initNameTitle("姓名")
+            showNation()
             hideAddress()
             hidePhone()
             hideShareRatio()
@@ -281,24 +281,30 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
 
 
         // 法人
-        if (!ProductUtils.hasIdCardUrl(legal_person_ev.frontImageUrl, true, "法人")) {
+        if (!ProductUtils.hasIdCardUrl(legal_person_ev.frontImageUrl, true)) {
             return
         }
-        if (!ProductUtils.hasIdCardUrl(legal_person_ev.backImageUrl, false, "法人")) {
+        if (!ProductUtils.hasIdCardUrl(legal_person_ev.backImageUrl, false)) {
             return
         }
 
         val nameValue = legal_person_ev.getNameValue()
         if (nameValue.isBlank()) {
-            ToastUtils.showShort("请输入法人姓名")
+            ToastUtils.showShort("姓名")
             return
         }
         val idNumberValue = legal_person_ev.getIdNumberValue()
         if (idNumberValue.isBlank()) {
-            ToastUtils.showShort("请输入法人身份证号")
+            ToastUtils.showShort("身份证号")
             return
         }
-        if (!ProductUtils.isIdCardNumber(idNumberValue, "法人")) {
+        if (!ProductUtils.isIdCardNumber(idNumberValue)) {
+            return
+        }
+
+        val nationValue = legal_person_ev.getNationValue()
+        if (nationValue.isBlank()) {
+            ToastUtils.showShort("请输入民族")
             return
         }
 
@@ -355,6 +361,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             productPriceId = mProductPriceId
             realName = nameValue
             tel = phoneStr
+            nation = nationValue
         }
         presenter.addLicensePersonal(this, enterpriseInfo)
     }

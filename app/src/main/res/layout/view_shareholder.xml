@@ -183,6 +183,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/share_ratio_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -221,46 +222,57 @@
         android:layout_height="wrap_content"
         android:padding="15dp">
 
-        <androidx.cardview.widget.CardView
 
-            android:layout_width="165dp"
-            android:layout_height="120dp"
-            android:foreground="?attr/selectableItemBackground"
-            app:cardBackgroundColor="@color/font_white"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="1dp"
-            app:cardPreventCornerOverlap="false"
-            app:cardUseCompatPadding="true">
+        <RelativeLayout
+            android:layout_width="150dp"
+            android:layout_height="90dp"
+            android:background="@drawable/shape_dash_gray"
+            android:padding="4dp">
 
             <ImageView
                 android:id="@+id/id_card_front_iv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:src="@tools:sample/backgrounds/scenic" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_upload_default" />
 
-        </androidx.cardview.widget.CardView>
+            <ImageView
+                android:id="@+id/id_card_front_tag_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/ic_ocr_re_scan"
+                android:visibility="gone" />
+
+        </RelativeLayout>
 
 
-        <androidx.cardview.widget.CardView
-
-            android:layout_width="165dp"
-            android:layout_height="120dp"
+        <RelativeLayout
+            android:layout_width="150dp"
+            android:layout_height="90dp"
             android:layout_alignParentRight="true"
-            android:layout_gravity="right"
-            android:foreground="?attr/selectableItemBackground"
-            app:cardBackgroundColor="@color/font_white"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="1dp"
-            app:cardPreventCornerOverlap="false"
-            app:cardUseCompatPadding="true">
+            android:background="@drawable/shape_dash_gray"
+            android:padding="4dp">
 
             <ImageView
                 android:id="@+id/id_card_obverse_iv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:src="@tools:sample/backgrounds/scenic" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_upload_default" />
 
-        </androidx.cardview.widget.CardView>
+            <ImageView
+                android:id="@+id/id_card_back_tag_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/ic_ocr_re_scan"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
 
     </RelativeLayout>
 

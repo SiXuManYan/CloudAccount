@@ -161,6 +161,7 @@ class CompanyMemberEditView : LinearLayout {
 
     fun initNameTitle(title: CharSequence) {
         ev_00_name_tv.text = title
+        ev_00_name_et.hint = "请输入$title"
     }
 
 
@@ -303,6 +304,12 @@ class CompanyMemberEditView : LinearLayout {
      * 股份占比
      */
     fun getShareRatioValue() = ev_04_share_ratio_et.text.toString().trim()
+
+    /**
+     * 获取民族
+     */
+    fun getNationValue() = nation_et.text.toString().trim()
+
 
     fun getFrontImage(): ImageView = id_card_front_iv
     fun getBackImage(): ImageView = id_card_back_iv
@@ -472,5 +479,10 @@ class CompanyMemberEditView : LinearLayout {
     fun hideBottomSplit() {
         bottom_split_view.visibility = View.GONE
     }
+
+    fun showNation() {
+        nation_rl.visibility = View.VISIBLE
+    }
+
 
 }

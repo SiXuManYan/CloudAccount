@@ -81,9 +81,6 @@
         </RelativeLayout>
 
 
-
-
-
     </ViewSwitcher>
 
 
@@ -117,7 +114,7 @@
             android:layout_toRightOf="@+id/ev_00_name_tv"
             android:background="@null"
             android:gravity="center_vertical|right"
-            android:hint="扫描后自动填写"
+            android:hint="请输入姓名"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:maxLength="15"
@@ -170,7 +167,7 @@
             android:background="@null"
             android:digits="0123456789xX"
             android:gravity="center_vertical|right"
-            android:hint="扫描后自动填写"
+            android:hint="请输入身份证号"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:maxLength="18"
@@ -284,7 +281,7 @@
             android:layout_toRightOf="@+id/title_iv"
             android:background="@null"
             android:gravity="center_vertical|right"
-            android:hint="扫描后自动填写"
+            android:hint="请输入联系电话"
             android:imeOptions="actionNext"
             android:inputType="number"
             android:maxLength="11"
@@ -366,6 +363,59 @@
 
 
     </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/nation_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:paddingLeft="15dp"
+        android:visibility="gone"
+        android:paddingRight="15dp"
+        tools:background="@color/font_white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.1"
+            android:maxWidth="150dp"
+            android:maxLines="2"
+            android:text="民族"
+            android:textColor="@color/color_first_level" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/nation_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="1dp"
+            android:layout_marginLeft="1dp"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="请输入民族"
+            android:imeOptions="actionNext"
+            android:maxLength="10"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:singleLine="true"
+            android:textColor="@color/color_first_level"
+            android:textColorHint="@color/color_cccccc"
+            android:textSize="14sp" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/split_line_color" />
+
+
+    </RelativeLayout>
+
 
 
     <TextView
