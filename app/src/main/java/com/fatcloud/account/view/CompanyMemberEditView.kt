@@ -166,9 +166,11 @@ class CompanyMemberEditView : LinearLayout {
     /**
      * 设置姓名
      */
-    fun setNameValue(value: CharSequence, editAble: Boolean) {
-        ev_00_name_et.setText(value)
-        setEditAble(editAble, ev_00_name_et)
+    fun setNameValue(value: CharSequence?, editAble: Boolean) {
+        value?.let {
+            ev_00_name_et.setText(value)
+            setEditAble(editAble, ev_00_name_et)
+        }
     }
 
     fun initNameTitleValue(title: CharSequence, value: CharSequence) {
@@ -192,10 +194,12 @@ class CompanyMemberEditView : LinearLayout {
         setEditAble(false, ev_01_id_number_et)
     }
 
-    fun setIdNumberValue(title: CharSequence, editAble: Boolean) {
+    fun setIdNumberValue(title: CharSequence?, editAble: Boolean) {
+        title?.let {
+            ev_01_id_number_et.setText(it)
+            setEditAble(editAble, ev_01_id_number_et)
+        }
 
-        ev_01_id_number_et.setText(title)
-        setEditAble(editAble, ev_01_id_number_et)
     }
 
 
@@ -223,9 +227,11 @@ class CompanyMemberEditView : LinearLayout {
         setEditAble(false, ev_02_id_addr_et)
     }
 
-    fun setIdAddressValue(title: CharSequence, editAble: Boolean) {
-        ev_02_id_addr_et.setText(title)
-        setEditAble(editAble, ev_02_id_addr_et)
+    fun setIdAddressValue(title: CharSequence?, editAble: Boolean) {
+        title?.let {
+            ev_02_id_addr_et.setText(it)
+            setEditAble(editAble, ev_02_id_addr_et)
+        }
     }
 
     fun initIdAddressTitleValue(title: CharSequence, value: CharSequence) {
@@ -440,7 +446,10 @@ class CompanyMemberEditView : LinearLayout {
     fun disableImageViewClick() {
         id_card_front_iv.isClickable = false
         id_card_back_iv.isClickable = false
+    }
 
+    fun hideBottomSplit(){
+        bottom_split_view.visibility =View.GONE
     }
 
 }

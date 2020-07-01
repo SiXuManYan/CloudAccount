@@ -381,9 +381,16 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
                     ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_FRONT, filePath,
                         object : RecognizeIDCardResultCallBack {
                             override fun onResult(result: IDCardResult) {
-                                fromView.setNameValue(result.name.words, true)
-                                fromView.setIdNumberValue(result.idNumber.words, true)
-                                fromView.setIdAddressValue(result.address.words, true)
+
+                                result.name?.let {
+                                    fromView.setNameValue(it.words, true)
+                                }
+                                result.idNumber?.let {
+                                    fromView.setIdNumberValue(it.words, true)
+                                }
+                                result.address?.let {
+                                    fromView.setIdAddressValue(it.words, true)
+                                }
                             }
                         })
                 }

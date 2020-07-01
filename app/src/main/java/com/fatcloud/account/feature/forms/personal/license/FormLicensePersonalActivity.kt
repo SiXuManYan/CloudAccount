@@ -1,8 +1,6 @@
 package com.fatcloud.account.feature.forms.personal.license
 
 import android.content.Intent
-import android.text.InputType
-import android.text.TextUtils
 import android.view.View
 import butterknife.OnClick
 import com.baidu.ocr.sdk.model.IDCardParams
@@ -11,10 +9,8 @@ import com.baidu.ocr.ui.camera.CameraActivity
 import com.baidu.ocr.ui.util.FileUtil
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.blankj.utilcode.util.VibrateUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
-import com.fatcloud.account.app.Glide
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
@@ -26,7 +22,6 @@ import com.fatcloud.account.entity.order.persional.PersonalInfo
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
-import com.fatcloud.account.feature.matisse.Matisse
 import com.fatcloud.account.feature.ocr.RecognizeIDCardResultCallBack
 import com.fatcloud.account.feature.sheet.form.FormSheetFragment
 import com.fatcloud.account.view.CompanyMemberEditView
@@ -37,7 +32,6 @@ import com.lljjcoder.bean.ProvinceBean
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_license_personal.*
 import kotlinx.android.synthetic.main.layout_bottom_action.*
-import kotlinx.android.synthetic.main.layout_image_upload.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -105,8 +99,6 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
      * 正面
      */
     var isFaceUp = false
-//    var faceUpUrl = ""
-//    var faceDownUrl = ""
 
 
     override fun getLayoutId() = R.layout.activity_form_license_personal
@@ -157,18 +149,11 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             if (fromView != null) {
                 fromView.setImageUrl(finalUrl)
             }
-
-            /*
-            if (it.isFaceUp) {
-                faceUpUrl = finalUrl
-            } else {
-                faceDownUrl = finalUrl
-            }
-            */
         })
     }
 
     private fun initView() {
+
         setMainTitle("注册人信息")
 
         // 法人信息
@@ -179,6 +164,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             hideAddress()
             hidePhone()
             hideShareRatio()
+            hideBottomSplit()
         }
 
         bottom_left_tv.apply {
@@ -187,26 +173,9 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         }
         bottom_right_tv.text = getString(R.string.commit)
 
-//        nation_ev.setTitleAndHint("民族", "请输入民族")
-//        detail_addr.setTitleAndHint(getString(R.string.detailed_address), getString(R.string.detailed_address_hint))
-//        phone.setTitleAndHint("联系方式", "请输入联系方式").setInputType(InputType.TYPE_CLASS_NUMBER)
-
-
-//        id_number.setTitleAndHint(getString(R.string.identity_number), getString(R.string.identity_number_hint))
-//        real_name.setTitleAndHint("真实姓名", "请输入真实姓名")
-
-
         zero_choice_name.setTitleAndHint("首选名称", getString(R.string.no_less_than_3_word))
         first_choice_name.setTitleAndHint("备选名称1", getString(R.string.no_less_than_3_word))
         second_choice_name.setTitleAndHint("备选名称2", getString(R.string.no_less_than_3_word))
-//        employees_number_tv.setTitleAndHint("从业人数", "请输入从业人数")
-//            .setInputType(InputType.TYPE_CLASS_NUMBER)
-//        amount_of_funds.setTitleAndHint(
-//            getString(R.string.amount_of_fund2),
-//            getString(R.string.amount_of_fund_hint2)
-//        )
-//            .setInputType(InputType.TYPE_CLASS_NUMBER)
-
     }
 
 
@@ -214,8 +183,6 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         R.id.business_scope_rl,
         R.id.bottom_left_tv,
         R.id.bottom_right_tv,
-//        R.id.id_card_front_iv,
-//        R.id.id_card_back_iv,
         R.id.formation_rl,
         R.id.city_rl
 
@@ -242,16 +209,6 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
                 handlePost()
             }
 
-/*            R.id.id_card_front_iv -> {
-                ProductUtils.handleMediaSelect(this, Matisse.IMG, view.id)
-                isFaceUp = true
-            }
-            R.id.id_card_back_iv -> {
-                ProductUtils.handleMediaSelect(this, Matisse.IMG, view.id)
-                isFaceUp = false
-            }
-
-            */
             R.id.formation_rl -> {
                 FormSheetFragment.newInstance().apply {
                     setOnFormSelectListener(object : FormSheetFragment.OnItemSelectedListener {
@@ -320,7 +277,6 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             ToastUtils.showShort("请输入资金数额")
             return
         }
-
 
 
         // 法人
@@ -417,32 +373,6 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
                 business_scope_value.text =
                     Arrays.toString(selectPidNames.toArray()).replace("[", "").replace("]", "")
             }
-            Constants.REQUEST_MEDIA -> {
-                // 相册选择图片
-                mediaType = data.getIntExtra(Matisse.MEDIA_TYPE, 0)
-                val fromViewId = data.getIntExtra(Matisse.MEDIA_FROM_VIEW_ID, 0)
-
-                val elements = Matisse.obtainPathResult(data)
-                if (elements.isNotEmpty()) {
-                    val fileDirPath = elements[0]
-                    if (isFaceUp) {
-                        Glide.with(this).load(fileDirPath).into(id_card_front_iv)
-                    } else {
-                        Glide.with(this).load(fileDirPath).into(id_card_back_iv)
-                    }
-
-                    // 图片上传
-                    val application = application as CloudAccountApplication
-                    application.getOssSecurityToken(
-                        true,
-                        isFaceUp,
-                        fileDirPath,
-                        fromViewId,
-                        this@FormLicensePersonalActivity.javaClass
-                    )
-                }
-            }
-
             Constants.REQUEST_CODE_CAMERA -> receiveOcrCamera(data)
 
             else -> {
@@ -482,17 +412,23 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
                 ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_FRONT, filePath,
                     object : RecognizeIDCardResultCallBack {
                         override fun onResult(result: IDCardResult) {
-                            fromView.setNameValue(result.name.words, true)
-                            fromView.setIdNumberValue(result.idNumber.words, true)
-                            fromView.setIdAddressValue(result.address.words, true)
+
+                            result.name?.let {
+                                fromView.setNameValue(it.words, true)
+                            }
+                            result.idNumber?.let {
+                                fromView.setIdNumberValue(it.words, true)
+                            }
+                            result.address?.let {
+                                fromView.setIdAddressValue(it.words, true)
+                            }
+
                         }
                     })
             }
             else -> {
             }
         }
-
-
 
 
     }
