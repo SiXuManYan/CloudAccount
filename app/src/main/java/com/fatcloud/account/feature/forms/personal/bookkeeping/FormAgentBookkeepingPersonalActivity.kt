@@ -2,12 +2,9 @@ package com.fatcloud.account.feature.forms.personal.bookkeeping
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
 import butterknife.OnClick
-import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
@@ -29,7 +26,8 @@ import kotlinx.android.synthetic.main.activity_form_agent_bookkeeping_personal.*
  * </br>
  * 个体户代理记账
  */
-class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepingPersonalPresenter>(), FormAgentBookkeepingPersonalView {
+class FormAgentBookkeepingPersonalActivity :
+    BaseMVPActivity<FormAgentBookkeepingPersonalPresenter>(), FormAgentBookkeepingPersonalView {
 
     /**
      * 最终需支付金额
@@ -119,10 +117,7 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
 
     private fun initView() {
         setMainTitle("法人信息")
-        legal_name.setTitleAndHint(R.string.legal_person_name, R.string.legal_person_name_hint)
-        legal_phone.setTitleAndHint(R.string.contact_number, R.string.legal_person_phone_hint).setInputType(InputType.TYPE_CLASS_NUMBER)
-        id_number.setTitleAndHint(R.string.legal_person_id_number, R.string.legal_person_id_number_hint)
-        store_name.setTitleAndHint(R.string.business_license_name, R.string.business_license_name_hint)
+
     }
 
 
@@ -150,7 +145,13 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
                         }
                     }
                     val application = application as CloudAccountApplication
-                    application.getOssSecurityToken(true, isFaceUp, fileDirPath, fromViewId, this@FormAgentBookkeepingPersonalActivity.javaClass)
+                    application.getOssSecurityToken(
+                        true,
+                        isFaceUp,
+                        fileDirPath,
+                        fromViewId,
+                        this@FormAgentBookkeepingPersonalActivity.javaClass
+                    )
                 }
             }
             else -> {
@@ -185,20 +186,41 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
 
     private fun handleCommit() {
 
-        if (!ProductUtils.checkEditEmptyWithVibrate(legal_name, legal_phone, id_number, store_name)) {
+        val nameValue = legal_name_et.text.toString().trim()
+        if (nameValue.isBlank()) {
+            ToastUtils.showShort("请输入法人姓名")
             return
         }
-        if (!RegexUtils.isIDCard18(id_number.value())) {
-            ToastUtils.showShort("请输入正确的法人身份证号")
+
+        val phoneValue = legal_phone_et.text.toString().trim()
+        if (phoneValue.isBlank()) {
+            ToastUtils.showShort("请输入法人联系电话")
             return
         }
+        if (!ProductUtils.isPhoneNumber(phoneValue, "法人")) {
+            return
+        }
+
+
+        val idNumberValue = id_number_et.text.toString().trim()
+        if (idNumberValue.isBlank()) {
+            ToastUtils.showShort("请输入法人身份证号")
+            return
+        }
+        if (!ProductUtils.isIdCardNumber(idNumberValue, "法人")) {
+            return
+        }
+
+        val storeNameValue = store_name_et.text.toString().trim()
+        if (storeNameValue.isBlank()) {
+            ToastUtils.showShort("请输入营业执照名称")
+            return
+        }
+
         if (mBusinessLicenseImgUrl.isNullOrBlank()) {
             ToastUtils.showShort("请上传营业执照副本")
             return
         }
-
-
-
 
         startActivity(SignatureActivity::class.java,
             Bundle().apply {
@@ -206,10 +228,10 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
                     finalMoney = mFinalMoney
                     productId = mProductId
                     productPriceId = mProductPriceId
-                    legalPersonName = legal_name.value()
-                    phone = legal_phone.value()
-                    idNumber = id_number.value()
-                    storeName = store_name.value()
+                    legalPersonName = nameValue
+                    phone = phoneValue
+                    idNumber = idNumberValue
+                    storeName = storeNameValue
                     businessLicenseImgUrl = mBusinessLicenseImgUrl
                 })
             })
