@@ -3,6 +3,7 @@ package com.fatcloud.account.feature.forms.enterprise.license.basic
 import android.content.Intent
 import android.view.View
 import butterknife.OnClick
+import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.fatcloud.account.R
@@ -27,7 +28,8 @@ import kotlin.collections.ArrayList
  * </br>
  * 企业套餐，前缀页
  */
-class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter>(), FormEnterpriseBasicView {
+class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter>(),
+    FormEnterpriseBasicView {
 
 
     /**
@@ -142,7 +144,8 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
                 data?.let {
                     selectPid = it.getStringArrayListExtra(Constants.PARAM_SELECT_PID)
                     selectPidNames = it.getStringArrayListExtra(Constants.PARAM_SELECT_PID_NAME)
-                    business_scope_value.text = Arrays.toString(selectPidNames.toArray()).replace("[", "").replace("]", "")
+                    business_scope_value.text =
+                        Arrays.toString(selectPidNames.toArray()).replace("[", "").replace("]", "")
 
                 }
 
@@ -170,14 +173,26 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
             R.id.business_scope_rl -> {
                 // 参照 EnterpriseInfo
                 startActivityForResult(
-                    Intent(this, BusinessScopeActivity::class.java).putExtra(Constants.PARAM_PRODUCT_TYPE, mProductType),
+                    Intent(
+                        this,
+                        BusinessScopeActivity::class.java
+                    ).putExtra(Constants.PARAM_PRODUCT_TYPE, mProductType),
                     Constants.REQUEST_BUSINESS_SCOPE
                 )
             }
             R.id.addr_rl -> {
                 ProductUtils.showLocationPicker(this, object : OnCityItemClickListener() {
-                    override fun onSelected(province: ProvinceBean, city: CityBean, district: DistrictBean) {
-                        areaName = StringUtils.getString(R.string.location_information_format, province.name, city.name, district.name)
+                    override fun onSelected(
+                        province: ProvinceBean,
+                        city: CityBean,
+                        district: DistrictBean
+                    ) {
+                        areaName = StringUtils.getString(
+                            R.string.location_information_format,
+                            province.name,
+                            city.name,
+                            district.name
+                        )
                         addr_value_iv.text = areaName
                         areaId = district.id
                     }
@@ -214,20 +229,37 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
                 }
                 val investMoney = amount_of_funds_et.text.toString()
                 if (investMoney.isBlank()) {
-                    ToastUtils.showShort("请输入资金数额 ")
+                    ToastUtils.showShort("请输入资金数额")
                     return
                 }
+                if (business_scope_value.text.toString().trim().isBlank()) {
+                    ToastUtils.showShort("请选择经营范围")
+                    return
+                }
+
+
                 val bankNumber = bank_number_et.text.toString()
                 if (bankNumber.isBlank()) {
-                    ToastUtils.showShort("请输入银行卡号 ")
+                    ToastUtils.showShort("请输入银行卡号")
                     return
                 }
+                if (!ProductUtils.isBankCardNumber(bankNumber)) {
+                    return
+                }
+
                 val bankPhone = bank_phone_et.text.toString()
                 if (bankPhone.isBlank()) {
                     ToastUtils.showShort("请输入银行预留手机号 ")
                     return
                 }
+                if (!ProductUtils.isPhoneNumber(bankPhone,"银行预留")) {
+                    return
+                }
 
+                if (addr_value_iv.text.toString().trim().isBlank()) {
+                    ToastUtils.showShort("请选择地址")
+                    return
+                }
                 val detailAddress = detail_addr_et.text.toString()
                 if (detailAddress.isBlank()) {
                     ToastUtils.showShort("请输入详细地址 ")
@@ -242,8 +274,14 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
                         .putExtra(Constants.PARAM_FINAL_MONEY, finalMoney)
                         .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, mProductPriceId)
 
-                        .putStringArrayListExtra(Constants.PARAM_SELECT_BUSINESS_SCOPE_PID, selectPid)
-                        .putStringArrayListExtra(Constants.PARAM_SELECT_BUSINESS_SCOPE_NAME, selectPidNames)
+                        .putStringArrayListExtra(
+                            Constants.PARAM_SELECT_BUSINESS_SCOPE_PID,
+                            selectPid
+                        )
+                        .putStringArrayListExtra(
+                            Constants.PARAM_SELECT_BUSINESS_SCOPE_NAME,
+                            selectPidNames
+                        )
                         .putExtra(Constants.PARAM_SELECT_AREA_NAME, areaName)
                         .putExtra(Constants.PARAM_ZERO_NAME, zeroName)
                         .putExtra(Constants.PARAM_FIRST_NAME, firstName)

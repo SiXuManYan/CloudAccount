@@ -42,14 +42,23 @@ import javax.inject.Inject
  * </br>
  *
  */
-class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Application.ActivityLifecycleCallbacks,
+class CloudAccountApplication : DaggerApplication(), HasActivityInjector,
+    Application.ActivityLifecycleCallbacks,
     CloudAccountView {
 
 
 
     init {
-        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout -> CommonSmartAnimRefreshHeaderView(context) }
-        SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout -> CommonSmartRefreshFooter(context) }
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
+            CommonSmartAnimRefreshHeaderView(
+                context
+            )
+        }
+        SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout ->
+            CommonSmartRefreshFooter(
+                context
+            )
+        }
 
     }
 
@@ -160,7 +169,8 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
     }
 
 
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> = DaggerAppComponent.builder().application(this).build()
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
+        DaggerAppComponent.builder().application(this).build()
 
 
     override fun attachBaseContext(base: Context?) {
@@ -264,10 +274,21 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
      * @param clx 请求发起位置
      *
      */
-    fun getOssSecurityToken(isEncryptFile: Boolean, isFaceUp: Boolean, localFilePatch: String, @IdRes fromViewId: Int, clx: Class<*>) {
-        showLoadingDialog()
-        presenter.getOssSecurityToken(this, isEncryptFile, isFaceUp, localFilePatch, fromViewId, clx)
-        dismissLoadingDialog()
+    fun getOssSecurityToken(
+        isEncryptFile: Boolean,
+        isFaceUp: Boolean,
+        localFilePatch: String,
+        @IdRes fromViewId: Int,
+        clx: Class<*>
+    ) {
+        presenter.getOssSecurityToken(
+            this,
+            isEncryptFile,
+            isFaceUp,
+            localFilePatch,
+            fromViewId,
+            clx
+        )
     }
 
     var ossCallBack: OssSignCallBack? = null

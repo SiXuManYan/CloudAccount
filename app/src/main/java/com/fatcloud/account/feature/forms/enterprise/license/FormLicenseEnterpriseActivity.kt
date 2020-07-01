@@ -1,6 +1,7 @@
 package com.fatcloud.account.feature.forms.enterprise.license
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import butterknife.OnClick
 import com.baidu.ocr.sdk.OCR
@@ -10,7 +11,6 @@ import com.baidu.ocr.sdk.model.IDCardParams
 import com.baidu.ocr.sdk.model.IDCardResult
 import com.baidu.ocr.ui.camera.CameraActivity
 import com.baidu.ocr.ui.util.FileUtil
-import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.VibrateUtils
@@ -334,71 +334,90 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
                 }
             }
 
-            Constants.REQUEST_CODE_CAMERA -> {
-
-                // ocr 识别 相机返回
-
-                val contentType = data.getStringExtra(CameraActivity.KEY_CONTENT_TYPE)
-                val fromViewId = data.getIntExtra(CameraActivity.KEY_FROM_VIEW_ID, 0)
-                val filePath: String = FileUtil.getSaveFile(applicationContext).absolutePath
-
-                if (filePath.isNotEmpty()) {
-
-                    if (fromViewId != 0) {
-                        val fromView = findViewById<CompanyMemberEditView>(fromViewId)
-                        if (fromView != null) {
-                            fromView.loadResultImage(filePath)
-                        }
-                    }
-
-                    val application = application as CloudAccountApplication
-                    application.getOssSecurityToken(
-                        true,
-                        isFaceUp,
-                        filePath,
-                        fromViewId,
-                        this@FormLicenseEnterpriseActivity.javaClass
-                    )
-                }
-
- /*               if (contentType.isNotEmpty()) {
-                    if (CameraActivity.CONTENT_TYPE_ID_CARD_FRONT == contentType) {
-                        recIDCard(IDCardParams.ID_CARD_SIDE_FRONT, filePath)
-                    } else if (CameraActivity.CONTENT_TYPE_ID_CARD_BACK == contentType) {
-                        recIDCard(IDCardParams.ID_CARD_SIDE_BACK, filePath)
-                    }
-
-                }*/
-            }
+            Constants.REQUEST_CODE_CAMERA -> receiveOcrCamera(data)
             else -> {
             }
         }
     }
 
     /**
-     * @param idCardSide 身份证正反面
-     * @param filePath 存储路径
+     *  ocr 识别 相机返回
      */
-    private fun recIDCard(idCardSide: String, filePath: String) {
-        val param = IDCardParams()
-        param.imageFile = File(filePath)
-        // 设置身份证正反面
-        param.idCardSide = idCardSide
-        // 设置方向检测
-        param.isDetectDirection = true
-        // 设置图像参数压缩质量0-100, 越大图像质量越好但是请求时间越长。 不设置则默认值为20
-        param.imageQuality = 20
-        OCR.getInstance(this).recognizeIDCard(param, object :
-            OnResultListener<IDCardResult?> {
-            override fun onResult(result: IDCardResult?) {
-                if (result != null) {
-                    LogUtils.d("ocr 识别 ", "onResult$result")
+    private fun receiveOcrCamera(data: Intent) {
+
+        val contentType = data.getStringExtra(CameraActivity.KEY_CONTENT_TYPE)
+        val fromViewId = data.getIntExtra(CameraActivity.KEY_FROM_VIEW_ID, 0)
+        val filePath: String = FileUtil.getSaveFile(applicationContext).absolutePath
+
+        if (filePath.isEmpty() || fromViewId == 0) {
+            return
+        }
+
+        // OCR 操作来源
+        val fromView = findViewById<CompanyMemberEditView>(fromViewId)
+        if (fromView == null) {
+            return
+        }
+
+        fromView.loadResultImage(filePath)
+
+            // 上传oss
+            val application = application as CloudAccountApplication
+            application.getOssSecurityToken(
+                true,
+                isFaceUp,
+                filePath,
+                fromViewId,
+                this@FormLicenseEnterpriseActivity.javaClass
+            )
+
+        if (contentType.isNotEmpty()) {
+
+            when (contentType) {
+                CameraActivity.CONTENT_TYPE_ID_CARD_FRONT -> {
+                    // 身份证正面
+                    recIDCard(IDCardParams.ID_CARD_SIDE_FRONT, filePath, fromView)
+                }
+                CameraActivity.CONTENT_TYPE_ID_CARD_BACK -> {
+                    // 身份证背面
+                }
+                else -> {
                 }
             }
 
-            override fun onError(error: OCRError) {
-                LogUtils.d("ocr 识别 ", "onError" + error.message)
+
+        }
+    }
+
+    /**
+     * @param idCardSide 身份证正反面
+     * @param filePath 存储路径
+     *
+     * @see <a href="https://cloud.baidu.com/doc/OCR/s/rk3h7xzck">OCR 身份证识别</a>
+     */
+    private fun recIDCard(idCardSide: String, filePath: String, fromView: CompanyMemberEditView) {
+
+        val param = IDCardParams().apply {
+
+            imageFile = File(filePath)
+            setIdCardSide(idCardSide)    // 设置身份证正反面
+            isDetectDirection = true // 设置方向检测
+            imageQuality = 9   // 设置图像参数压缩质量0-100, 越大图像质量越好但是请求时间越长。 不设置则默认值为20
+        }
+
+        OCR.getInstance(this).recognizeIDCard(param, object : OnResultListener<IDCardResult?> {
+
+            override fun onResult(result: IDCardResult?) {
+
+                result?.let {
+                    Log.d("ocr 识别 ", "onResult===   $it")
+                    fromView.setNameValue(it.name.words, true)
+                    fromView.setIdNumberValue(it.idNumber.words, true)
+                    fromView.setIdAddressValue(it.address.words, true)
+                }
             }
+
+            override fun onError(error: OCRError) = Unit
         })
     }
 

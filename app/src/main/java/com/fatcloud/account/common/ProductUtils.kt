@@ -4,14 +4,11 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
-import android.os.Build
 import android.text.TextUtils
 import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
-import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.RegexUtils
-import com.blankj.utilcode.util.VibrateUtils
+import com.blankj.utilcode.util.*
 import com.fatcloud.account.BuildConfig
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
@@ -130,10 +127,11 @@ object ProductUtils {
         PermissionUtils.permissionAny(
             activity, PermissionUtils.OnPermissionCallBack { granted ->
                 if (granted) {
-                    Matisse.from(activity).choose(if (mediaType == 0) MimeType.ofAll() else with(MimeType.ofImage()) {
-                        remove(MimeType.GIF)
-                        this
-                    }, true)
+                    Matisse.from(activity)
+                        .choose(if (mediaType == 0) MimeType.ofAll() else with(MimeType.ofImage()) {
+                            remove(MimeType.GIF)
+                            this
+                        }, true)
                         .countable(true)
 //                .originalEnable(false)
                         .maxSelectable(1)
@@ -157,10 +155,11 @@ object ProductUtils {
         PermissionUtils.permissionAny(
             fragment.activity, PermissionUtils.OnPermissionCallBack { granted ->
                 if (granted) {
-                    Matisse.from(fragment).choose(if (mediaType == 0) MimeType.ofAll() else with(MimeType.ofImage()) {
-                        remove(MimeType.GIF)
-                        this
-                    }, true)
+                    Matisse.from(fragment)
+                        .choose(if (mediaType == 0) MimeType.ofAll() else with(MimeType.ofImage()) {
+                            remove(MimeType.GIF)
+                            this
+                        }, true)
                         .countable(true)
                         //                .originalEnable(false)
                         .maxSelectable(1)
@@ -183,11 +182,17 @@ object ProductUtils {
         AlertDialog.Builder(context).setTitle(R.string.hint)
             .setMessage(R.string.album_need_permission)
             .setCancelable(false)
-            .setPositiveButton(R.string.yes, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, _ ->
-                dialog.dismiss()
-                AppUtils.launchAppDetailsSettings()
-            })
-            .setNegativeButton(R.string.no, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
+            .setPositiveButton(
+                R.string.yes,
+                AlertDialog.STANDARD,
+                DialogInterface.OnClickListener { dialog, _ ->
+                    dialog.dismiss()
+                    AppUtils.launchAppDetailsSettings()
+                })
+            .setNegativeButton(
+                R.string.no,
+                AlertDialog.STANDARD,
+                DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
             .create()
             .show()
     }
@@ -197,7 +202,7 @@ object ProductUtils {
             BigDecimal.ZERO
         } else {
             try {
-                BigDecimal(editValue).stripTrailingZeros()
+                BigDecimal(BigDecimal(editValue).stripTrailingZeros().toPlainString())
             } catch (e: Exception) {
                 BigDecimal.ZERO
             }
@@ -252,12 +257,93 @@ object ProductUtils {
     /**
      * 获取OSS 签名
      */
-    fun getRealOssUrl(context: Context?, url: String, ossCallBack: CloudAccountApplication.OssSignCallBack) {
+    fun getRealOssUrl(
+        context: Context?,
+        url: String,
+        ossCallBack: CloudAccountApplication.OssSignCallBack
+    ) {
 
         val activity = context as Activity
         val application = activity.application as CloudAccountApplication
 
         application.getOssSecurityTokenForSignUrl(getOssSignUrlObjectKey(url), ossCallBack)
+
+    }
+
+    /**
+     * 验证 银行卡号
+     */
+    fun isBankCardNumber(cardString: String, typeString: String? = ""): Boolean {
+        val match = RegexUtils.isMatch("^[1-9]\\d{9,29}\$", cardString)
+        if (!match) {
+            ToastUtils.showShort(
+                StringUtils.getString(
+                    R.string.bank_number_wrong_format,
+                    typeString
+                )
+            )
+        }
+        return match
+    }
+
+    /**
+     * 验证 手机号
+     */
+    fun isPhoneNumber(string: String, typeString: String? = ""): Boolean {
+        val match = AndroidUtil.isMobileNumber(string)
+        if (!match) {
+            ToastUtils.showShort(
+                StringUtils.getString(
+                    R.string.phone_number_wrong_format,
+                    typeString
+                )
+            )
+        }
+        return match
+    }
+
+    /**
+     * 验证 身份证号
+     * 支持1/2代(15位/18位数字)
+     */
+    fun isIdCardNumber(string: String, typeString: String? = ""): Boolean {
+        val match = RegexUtils.isMatch(
+            "(^\\d{8}(0\\d|10|11|12)([0-2]\\d|30|31)\\d{3}\$)|(^\\d{6}(18|19|20)\\d{2}(0[1-9]|10|11|12)([0-2]\\d|30|31)\\d{3}(\\d|X|x)\$)",
+            string
+        )
+
+        if (!match) {
+
+            ToastUtils.showShort(
+                StringUtils.getString(
+                    R.string.id_card_number_wrong_format,
+                    typeString
+                )
+            )
+        }
+        return match
+    }
+
+    /**
+     * 校验身份证 url是否为空
+     */
+    fun hasIdCardUrl(idCardUrl: String, isFaceUp: Boolean, typeString: String? = ""): Boolean {
+        val nullOrEmpty = idCardUrl.isNotEmpty()
+        if (!nullOrEmpty) {
+
+            if (isFaceUp) {
+                ToastUtils.showShort(
+                    StringUtils.getString(R.string.id_card_front_empty_format, typeString)
+                )
+            } else {
+                ToastUtils.showShort(
+                    StringUtils.getString(R.string.id_card_back_empty_format, typeString)
+                )
+            }
+
+
+        }
+        return nullOrEmpty
 
     }
 

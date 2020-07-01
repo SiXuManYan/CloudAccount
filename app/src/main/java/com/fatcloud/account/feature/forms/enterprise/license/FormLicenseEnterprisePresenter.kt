@@ -26,11 +26,16 @@ import javax.inject.Inject
  * </br>
  *
  */
-class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormLicenseEnterpriseView) : BasePresenter(view) {
+class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormLicenseEnterpriseView) :
+    BasePresenter(view) {
 
     private val gson = Gson()
 
-     fun getShareholderView(index: Int, context: Context, shareholderMoreContainer: LinearLayout): CompanyMemberEditView {
+    fun getShareholderView(
+        index: Int,
+        context: Context,
+        shareholderMoreContainer: LinearLayout
+    ): CompanyMemberEditView {
         return CompanyMemberEditView(context).apply {
             id = index + 1 // 保证id 不从0开始
             currentMold = Constants.SH3
@@ -47,7 +52,13 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
             showAddActionView().setOnClickListener {
                 VibrateUtils.vibrate(10)
                 it.visibility = View.GONE
-                shareholderMoreContainer.addView(getShareholderView(index + 1,context,shareholderMoreContainer), index + 1)
+                shareholderMoreContainer.addView(
+                    getShareholderView(
+                        index + 1,
+                        context,
+                        shareholderMoreContainer
+                    ), index + 1
+                )
 
             }
 
@@ -87,12 +98,23 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
     ) {
 
         // 法人
+        if (!ProductUtils.hasIdCardUrl(legalPersonView.frontImageUrl, true, "法人")) {
+            return
+        }
+        if (!ProductUtils.hasIdCardUrl(legalPersonView.backImageUrl, false, "法人")) {
+            return
+        }
+
         if (legalPersonView.getNameValue().isBlank()) {
             ToastUtils.showShort("请输入法人姓名")
             return
         }
-        if (legalPersonView.getIdNumberValue().isBlank()) {
+        val idNumberValue = legalPersonView.getIdNumberValue()
+        if (idNumberValue.isBlank()) {
             ToastUtils.showShort("请输入法人身份证号")
+            return
+        }
+        if (!ProductUtils.isIdCardNumber(idNumberValue, "法人")) {
             return
         }
 
@@ -101,10 +123,15 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
             return
         }
 
-        if (legalPersonView.getPhoneValue().isBlank()) {
+        val phoneValue = legalPersonView.getPhoneValue()
+        if (phoneValue.isBlank()) {
             ToastUtils.showShort("请输入法人联系电话")
             return
         }
+        if (!ProductUtils.isPhoneNumber(phoneValue, "法人")) {
+            return
+        }
+
 
         if (legalPersonView.getShareRatioValue().isBlank()) {
             ToastUtils.showShort("请输入法人股份占比")
@@ -112,39 +139,76 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
         }
 
         // 监事
+        if (!ProductUtils.hasIdCardUrl(legalPersonView.frontImageUrl, true, "监事")) {
+            return
+        }
+        if (!ProductUtils.hasIdCardUrl(legalPersonView.backImageUrl, false, "监事")) {
+            return
+        }
+
         if (supervisorView.getNameValue().isBlank()) {
             ToastUtils.showShort("请输入监事姓名")
             return
         }
-        if (supervisorView.getIdNumberValue().isBlank()) {
+        val idNumberValue1 = supervisorView.getIdNumberValue()
+        if (idNumberValue1.isBlank()) {
             ToastUtils.showShort("请输入监事身份证号")
             return
         }
+
+        if (!ProductUtils.isIdCardNumber(idNumberValue1, "监事")) {
+            return
+        }
+
         if (supervisorView.getIdAddressValue().isBlank()) {
             ToastUtils.showShort("请输入监事身份证地址")
             return
         }
-        if (supervisorView.getPhoneValue().isBlank()) {
-            ToastUtils.showShort("请输入监事联系方式")
+        val phoneValue1 = supervisorView.getPhoneValue()
+        if (phoneValue1.isBlank()) {
+            ToastUtils.showShort("请输入监事联系电话")
             return
         }
 
+        if (!ProductUtils.isPhoneNumber(phoneValue1, "监事")) {
+            return
+        }
+
+        // 股东
+        if (!ProductUtils.hasIdCardUrl(legalPersonView.frontImageUrl, true, "股东")) {
+            return
+        }
+        if (!ProductUtils.hasIdCardUrl(legalPersonView.backImageUrl, false, "股东")) {
+            return
+        }
         if (shareholderView.getNameValue().isBlank()) {
             ToastUtils.showShort("请输入股东姓名")
             return
         }
-        if (shareholderView.getIdNumberValue().isBlank()) {
+        val holderIdNumber = shareholderView.getIdNumberValue()
+        if (holderIdNumber.isBlank()) {
             ToastUtils.showShort("请输入股东身份证号")
             return
         }
+        if (!ProductUtils.isIdCardNumber(holderIdNumber, "股东")) {
+            return
+        }
+
+
         if (shareholderView.getIdAddressValue().isBlank()) {
             ToastUtils.showShort("请输入股东身份证地址")
             return
         }
-        if (shareholderView.getPhoneValue().isBlank()) {
-            ToastUtils.showShort("请输入股东联系方式")
+        val holderPhone = shareholderView.getPhoneValue()
+        if (holderPhone.isBlank()) {
+            ToastUtils.showShort("请输入股东联系电话")
             return
         }
+
+        if (!ProductUtils.isPhoneNumber(holderPhone, "股东")) {
+            return
+        }
+
         if (shareholderView.getShareRatioValue().isBlank()) {
             ToastUtils.showShort("请输入股东股份占比")
             return
@@ -216,7 +280,8 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
         val max = shareholderMoreContainer.childCount - 1
         if (max > 0) {
             for (i in 0 until max) {
-                val companyMemberEditView = shareholderMoreContainer.getChildAt(i) as CompanyMemberEditView
+                val companyMemberEditView =
+                    shareholderMoreContainer.getChildAt(i) as CompanyMemberEditView
                 holders.add(companyMemberEditView.getShareHolder())
             }
         }

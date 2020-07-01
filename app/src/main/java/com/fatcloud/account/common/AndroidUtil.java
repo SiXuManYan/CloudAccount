@@ -429,7 +429,7 @@ public class AndroidUtil {
      * 验证手机格式
      * 2018-01-17 增加 166 号段
      */
-    public static boolean isMobileNO(String mobiles) {
+    public static boolean isMobileNumber(String mobiles) {
         /*
          * 移动：134、135、136、137、138、139、150、151、157(TD)、158、159、187、188
          * 联通：130、131、132、152、155、156、185、186

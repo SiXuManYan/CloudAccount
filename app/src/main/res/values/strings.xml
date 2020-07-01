@@ -181,4 +181,13 @@
     <string name="image_save_success">图片保存成功</string>
     <string name="image_position_format" formatted="false">%d&#160;/&#160;%d</string>
 
+    <!-- 校验 -->
+    <string name="bank_number_wrong_format">%1$s银行卡号格式错误，请重新输入</string>
+    <string name="phone_number_wrong_format">%1$s手机号格式错误，请重新输入</string>
+    <string name="id_card_number_wrong_format">%1$s身份证号格式错误，请重新输入</string>
+    <string name="id_card_front_empty_format">请上传%1$s身份证正面照片</string>
+    <string name="id_card_back_empty_format">请上传%1$s身份证背面照片</string>
+
+
+
 </resources>

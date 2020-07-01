@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.view.postDelayed
 import com.baidu.ocr.ui.camera.CameraActivity
 import com.baidu.ocr.ui.camera.CameraActivity.*
 import com.baidu.ocr.ui.util.FileUtil
@@ -101,19 +102,23 @@ class CompanyMemberEditView : LinearLayout {
         id_card_front_iv.setOnClickListener {
             isFaceUp = true
 //            ProductUtils.handleMediaSelect(context as Activity, 1, this@CompanyMemberEditView.id)
-            scanIdCardFront()
+            scanIdCard(isFaceUp)
         }
 
         id_card_back_iv.setOnClickListener {
             isFaceUp = false
 //            ProductUtils.handleMediaSelect(context as Activity, 1, this@CompanyMemberEditView.id)
-            scanIdCardBack()
+            scanIdCard(isFaceUp)
         }
 
         scan_id_card.setOnClickListener {
             isFaceUp = true
-            switcher.displayedChild = 1
-            scanIdCardFront()
+            scanIdCard(isFaceUp)
+
+            scan_id_card.postDelayed({
+                switcher.displayedChild = 1
+            },200)
+
         }
 
 
@@ -122,24 +127,19 @@ class CompanyMemberEditView : LinearLayout {
     /**
      *  身份证正面拍照 识别
      */
-    private fun scanIdCardFront() {
+    private fun scanIdCard(faceUp: Boolean) {
+
         val intent = Intent(context as Activity, CameraActivity::class.java)
             .putExtra(KEY_OUTPUT_FILE_PATH, FileUtil.getSaveFile(context).absolutePath)
-            .putExtra(KEY_CONTENT_TYPE, CONTENT_TYPE_ID_CARD_FRONT)
+            .putExtra(
+                KEY_CONTENT_TYPE, if (isFaceUp) {
+                    CONTENT_TYPE_ID_CARD_FRONT
+                } else {
+                    CONTENT_TYPE_ID_CARD_BACK
+                }
+            )
             .putExtra(KEY_FROM_VIEW_ID, this@CompanyMemberEditView.id)
 
-        startActivityForResult(context as Activity, intent, Constants.REQUEST_CODE_CAMERA, null)
-    }
-
-
-    /**
-     * 身份证背面拍照识别
-     */
-    private fun scanIdCardBack() {
-        val intent = Intent(context as Activity, CameraActivity::class.java)
-            .putExtra(KEY_OUTPUT_FILE_PATH, FileUtil.getSaveFile(context).absolutePath)
-            .putExtra(KEY_CONTENT_TYPE, CONTENT_TYPE_ID_CARD_BACK)
-            .putExtra(KEY_FROM_VIEW_ID, this@CompanyMemberEditView.id)
         startActivityForResult(context as Activity, intent, Constants.REQUEST_CODE_CAMERA, null)
     }
 
@@ -163,13 +163,17 @@ class CompanyMemberEditView : LinearLayout {
         ev_00_name_tv.text = title
     }
 
-    fun setNameValue(value: CharSequence) {
+    /**
+     * 设置姓名
+     */
+    fun setNameValue(value: CharSequence, editAble: Boolean) {
         ev_00_name_et.setText(value)
+        setEditAble(editAble, ev_00_name_et)
     }
 
     fun initNameTitleValue(title: CharSequence, value: CharSequence) {
         initNameTitle(title)
-        setNameValue(value)
+        ev_00_name_et.setText(value)
         setEditAble(false, ev_00_name_et)
     }
 
@@ -186,6 +190,12 @@ class CompanyMemberEditView : LinearLayout {
     fun setIdNumberValue(title: CharSequence) {
         ev_01_id_number_et.setText(title)
         setEditAble(false, ev_01_id_number_et)
+    }
+
+    fun setIdNumberValue(title: CharSequence, editAble: Boolean) {
+
+        ev_01_id_number_et.setText(title)
+        setEditAble(editAble, ev_01_id_number_et)
     }
 
 
@@ -207,6 +217,11 @@ class CompanyMemberEditView : LinearLayout {
     fun setIdAddressValue(title: CharSequence) {
         ev_02_id_addr_et.setText(title)
         setEditAble(false, ev_02_id_addr_et)
+    }
+
+    fun setIdAddressValue(title: CharSequence, editAble: Boolean) {
+        ev_02_id_addr_et.setText(title)
+        setEditAble(editAble, ev_02_id_addr_et)
     }
 
     fun initIdAddressTitleValue(title: CharSequence, value: CharSequence) {

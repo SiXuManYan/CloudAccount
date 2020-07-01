@@ -80,16 +80,17 @@
                 android:background="@color/split_line_color" />
 
 
-
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
+                android:minHeight="45dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 tools:background="@color/font_white">
 
                 <TextView
+                    android:id="@+id/name_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -104,18 +105,19 @@
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/zero_choice_name_et"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="1dp"
                     android:layout_marginLeft="1dp"
-                    android:layout_toRightOf="@+id/title_iv"
+                    android:layout_toRightOf="@+id/name_title_tv"
                     android:background="@null"
                     android:gravity="center_vertical|right"
                     android:hint="请输入不少于三个字"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
+                    android:lineSpacingMultiplier="1.2"
+                    android:maxLength="30"
+                    android:minHeight="45dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="0dp"
-                    android:singleLine="true"
                     android:textColor="@color/color_first_level"
                     android:textColorHint="@color/color_cccccc"
                     android:textSize="14sp" />
@@ -133,13 +135,15 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
+                android:minHeight="45dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 tools:background="@color/font_white">
 
                 <TextView
+                    android:id="@+id/first_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -154,18 +158,19 @@
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/first_choice_name_et"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="1dp"
                     android:layout_marginLeft="1dp"
-                    android:layout_toRightOf="@+id/title_iv"
+                    android:layout_toRightOf="@+id/first_title_tv"
                     android:background="@null"
                     android:gravity="center_vertical|right"
                     android:hint="请输入不少于三个字"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
+                    android:lineSpacingMultiplier="1.2"
+                    android:maxLength="30"
+                    android:minHeight="45dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="0dp"
-                    android:singleLine="true"
                     android:textColor="@color/color_first_level"
                     android:textColorHint="@color/color_cccccc"
                     android:textSize="14sp" />
@@ -183,13 +188,15 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
+                android:minHeight="45dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 tools:background="@color/font_white">
 
                 <TextView
+                    android:id="@+id/second_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -204,15 +211,17 @@
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/second_choice_name_et"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="1dp"
                     android:layout_marginLeft="1dp"
-                    android:layout_toRightOf="@+id/title_iv"
+                    android:layout_toRightOf="@+id/second_tv"
                     android:background="@null"
                     android:gravity="center_vertical|right"
                     android:hint="请输入不少于三个字"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
+                    android:lineSpacingMultiplier="1.2"
+                    android:maxLength="30"
+                    android:minHeight="45dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="0dp"
                     android:singleLine="true"
@@ -257,12 +266,12 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="1dp"
                     android:layout_marginLeft="1dp"
-                    android:layout_toRightOf="@+id/title_iv"
                     android:background="@null"
                     android:gravity="center_vertical|right"
                     android:hint="请输入出资年限"
                     android:imeOptions="actionNext"
                     android:inputType="number"
+                    android:maxLength="3"
                     android:paddingLeft="10dp"
                     android:paddingRight="0dp"
                     android:singleLine="true"
@@ -307,12 +316,12 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="1dp"
                     android:layout_marginLeft="1dp"
-                    android:layout_toRightOf="@+id/title_iv"
                     android:background="@null"
                     android:gravity="center_vertical|right"
                     android:hint="请输入资金数额(万元)"
                     android:imeOptions="actionNext"
                     android:inputType="number"
+                    android:maxLength="7"
                     android:paddingLeft="10dp"
                     android:paddingRight="0dp"
                     android:singleLine="true"
@@ -412,13 +421,12 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="1dp"
                     android:layout_marginLeft="1dp"
-                    android:layout_toRightOf="@+id/title_iv"
                     android:background="@null"
                     android:gravity="center_vertical|right"
                     android:hint="用于税务登记办理"
                     android:imeOptions="actionNext"
                     android:inputType="number"
-                    android:maxLength="16"
+                    android:maxLength="19"
                     android:paddingLeft="10dp"
                     android:paddingRight="0dp"
                     android:singleLine="true"
@@ -463,7 +471,6 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="1dp"
                     android:layout_marginLeft="1dp"
-                    android:layout_toRightOf="@+id/title_iv"
                     android:background="@null"
                     android:gravity="center_vertical|right"
                     android:hint="用于税务登记办理"
@@ -491,8 +498,9 @@
             <RelativeLayout
                 android:id="@+id/addr_rl"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
+                android:minHeight="45dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp">
 
@@ -541,40 +549,37 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
+                android:minHeight="45dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 tools:background="@color/font_white">
 
                 <TextView
+                    android:id="@+id/addr_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
-                    android:ellipsize="end"
-                    android:lineSpacingMultiplier="1.1"
                     android:maxWidth="150dp"
-                    android:maxLines="2"
                     android:text="详细地址"
                     android:textColor="@color/color_first_level" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/detail_addr_et"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="1dp"
-                    android:layout_marginLeft="1dp"
-                    android:layout_toRightOf="@+id/title_iv"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/addr_tv"
                     android:background="@null"
                     android:gravity="center_vertical|right"
                     android:hint="请输入详细地址"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:maxLength="11"
+                    android:lineSpacingMultiplier="1.2"
+                    android:maxLength="100"
+                    android:minHeight="45dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="0dp"
-                    android:singleLine="true"
                     android:textColor="@color/color_first_level"
                     android:textColorHint="@color/color_cccccc"
                     android:textSize="14sp" />
