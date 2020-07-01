@@ -192,7 +192,7 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
                             city.name,
                             district.name
                         )
-                        addr_value_iv.text = areaName
+                        addr_value_tv.text = areaName
                         areaId = district.id
                     }
 
@@ -255,7 +255,7 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
                     return
                 }
 
-                if (addr_value_iv.text.toString().trim().isBlank()) {
+                if (addr_value_tv.text.toString().trim().isBlank()) {
                     ToastUtils.showShort("请选择地址")
                     return
                 }

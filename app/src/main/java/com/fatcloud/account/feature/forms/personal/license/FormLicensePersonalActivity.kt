@@ -301,8 +301,8 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             return
         }
 
-        if (nameValue.length < 3) {
-            ToastUtils.showShort("请输入中文不少于三个字的姓名")
+        if (nameValue.length < 2) {
+            ToastUtils.showShort("请输入不少于两个字的姓名")
             return
         }
 

@@ -120,9 +120,8 @@
             <!-- 详细地址 -->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:background="?android:attr/selectableItemBackground"
-                android:minHeight="45dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 tools:background="@color/font_white">
@@ -143,7 +142,7 @@
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/detail_addr_et"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_toRightOf="@+id/detail_addr_tv"
@@ -175,9 +174,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:background="?android:attr/selectableItemBackground"
-                android:minHeight="45dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 tools:background="@color/font_white">
@@ -198,7 +196,7 @@
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/phone_tv_et"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_toRightOf="@+id/phone_tv"
@@ -309,9 +307,8 @@
             <!-- 从业人数 -->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:background="?android:attr/selectableItemBackground"
-                android:minHeight="45dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 tools:background="@color/font_white">
@@ -332,7 +329,7 @@
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/employees_number_et"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_toRightOf="@+id/employees_number_tv"
@@ -372,9 +369,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:background="?android:attr/selectableItemBackground"
-                android:minHeight="45dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 tools:background="@color/font_white">
@@ -395,7 +391,7 @@
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/amount_of_funds_et"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="1dp"
                     android:layout_marginLeft="1dp"
                     android:layout_toRightOf="@+id/amount_of_funds_tv"

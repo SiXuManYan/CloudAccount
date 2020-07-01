@@ -1,7 +1,6 @@
 package com.fatcloud.account.feature.forms.personal.tax
 
 import android.content.Intent
-import android.text.InputType
 import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
@@ -31,7 +30,8 @@ import kotlinx.android.synthetic.main.activity_form_tax_registration_personal.*
  * </br>
  * 个体户税务登记
  */
-class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationPersonalPresenter>(), FormTaxRegistrationPersonalView {
+class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationPersonalPresenter>(),
+    FormTaxRegistrationPersonalView {
 
 
     /**
@@ -126,15 +126,24 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
 
     private fun initView() {
         setMainTitle("办理信息")
-        trn_ev.setTitleAndHint(R.string.taxpayer_registration_number, R.string.taxpayer_registration_number_hint)
-            .setInputType(InputType.TYPE_CLASS_NUMBER)
-        legal_name.setTitleAndHint(R.string.legal_person_name, R.string.legal_person_name)
-        id_number.setTitleAndHint(R.string.identity_number, R.string.identity_number_hint)
-        bank_number.setTitleAndHint(R.string.bank_card_number, R.string.bank_card_number_hint).setInputType(InputType.TYPE_CLASS_NUMBER)
-        bank_phone.setTitleAndHint(R.string.bank_phone, R.string.bank_phone_hint).setInputType(InputType.TYPE_CLASS_NUMBER)
+//        trn_ev.setTitleAndHint(R.string.taxpayer_registration_number, R.string.taxpayer_registration_number_hint).setInputType(InputType.TYPE_CLASS_NUMBER)
 
-        addr_rl.visibility = View.VISIBLE
-        detail_addr.setTitleAndHint(R.string.detailed_address, R.string.detailed_address).visibility = View.VISIBLE
+//        legal_name.setTitleAndHint(R.string.legal_person_name, R.string.legal_person_name)
+
+
+//        id_number.setTitleAndHint(R.string.identity_number, R.string.identity_number_hint)
+
+
+//        bank_number.setTitleAndHint(R.string.bank_card_number, R.string.bank_card_number_hint)
+//            .setInputType(InputType.TYPE_CLASS_NUMBER)
+//        bank_phone.setTitleAndHint(R.string.bank_phone, R.string.bank_phone_hint)
+//            .setInputType(InputType.TYPE_CLASS_NUMBER)
+
+
+//        detail_addr.setTitleAndHint(
+//            R.string.detailed_address,
+//            R.string.detailed_address
+//        ).visibility = View.VISIBLE
 
 
     }
@@ -163,7 +172,13 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
                         }
                     }
                     val application = application as CloudAccountApplication
-                    application.getOssSecurityToken(true, true, fileDirPath, fromViewId, this@FormTaxRegistrationPersonalActivity.javaClass)
+                    application.getOssSecurityToken(
+                        true,
+                        true,
+                        fileDirPath,
+                        fromViewId,
+                        this@FormTaxRegistrationPersonalActivity.javaClass
+                    )
                 }
             }
             else -> {
@@ -191,8 +206,17 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
             }
             R.id.addr_rl -> {
                 ProductUtils.showLocationPicker(this, object : OnCityItemClickListener() {
-                    override fun onSelected(province: ProvinceBean, city: CityBean, district: DistrictBean) {
-                        address = StringUtils.getString(R.string.location_information_format, province.name, city.name, district.name)
+                    override fun onSelected(
+                        province: ProvinceBean,
+                        city: CityBean,
+                        district: DistrictBean
+                    ) {
+                        address = StringUtils.getString(
+                            R.string.location_information_format,
+                            province.name,
+                            city.name,
+                            district.name
+                        )
                         addr_value.text = address
                         areaId = district.id
                     }
@@ -206,10 +230,67 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
     }
 
     private fun handleCommit() {
-
-        if (!ProductUtils.checkEditEmptyWithVibrate(trn_ev, legal_name, id_number, bank_number, bank_phone)) {
+        val trnValue = trn_et.text.toString().trim()
+        if (trnValue.isBlank()) {
+            ToastUtils.showShort("请输入纳税人识别号")
             return
         }
+
+        val legalNameValue = legal_name_et.text.toString().trim()
+        if (legalNameValue.isBlank()) {
+            ToastUtils.showShort("请输入法人姓名")
+            return
+        }
+
+        if (legalNameValue.length < 2) {
+            ToastUtils.showShort("请输入不少于两个字的姓名")
+            return
+        }
+
+
+        val idNumberValue = id_number_tv_et.text.toString().trim()
+        if (idNumberValue.isBlank()) {
+            ToastUtils.showShort("请输入身份证号")
+            return
+        }
+        if (!ProductUtils.isIdCardNumber(idNumberValue)) {
+            return
+        }
+
+        val bankNumber = bank_number_et.text.toString()
+        if (bankNumber.isBlank()) {
+            ToastUtils.showShort("请输入银行卡号")
+            return
+        }
+        if (!ProductUtils.isBankCardNumber(bankNumber)) {
+            return
+        }
+
+        val bankPhoneValue = bank_phone_et.text.toString()
+        if (bankPhoneValue.isBlank()) {
+            ToastUtils.showShort("请输入银行预留手机号 ")
+            return
+        }
+        if (!ProductUtils.isPhoneNumber(bankPhoneValue, "银行预留")) {
+            return
+        }
+
+
+
+
+
+        if (addr_value.text.toString().trim().isBlank()) {
+            ToastUtils.showShort("请选择地址")
+            return
+        }
+        val detailAddress = detail_addr_et.text.toString()
+        if (detailAddress.isBlank()) {
+            ToastUtils.showShort("请输入详细地址 ")
+            return
+        }
+
+
+
         if (TextUtils.isEmpty(businessLicenseImgUrl)) {
             ToastUtils.showShort("请上传营业执照副本")
             return
@@ -221,13 +302,13 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
             money = finalMoney,
             productId = mProductId,
             productPriceId = mProductPriceId,
-            taxpayerNo = trn_ev.value(),
-            legalPersonName = legal_name.value(),
-            idno = id_number.value(),
-            bankNo = bank_number.value(),
-            phoneOfBank = bank_phone.value(),
+            taxpayerNo = trnValue,
+            legalPersonName = legalNameValue,
+            idno = idNumberValue,
+            bankNo = bankNumber,
+            phoneOfBank = bankPhoneValue,
             businessLicenseImgUrl = businessLicenseImgUrl,
-            addr = detail_addr.value(),
+            addr = detailAddress,
             area = address
         )
     }
@@ -238,7 +319,10 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
             Intent(this, PayPrepareActivity::class.java)
                 .putExtra(Constants.PARAM_ORDER_ID, preparePay.orderId)
                 .putExtra(Constants.PARAM_ORDER_NUMBER, preparePay.orderNo)
-                .putExtra(Constants.PARAM_MONEY, preparePay.money.stripTrailingZeros().toPlainString())
+                .putExtra(
+                    Constants.PARAM_MONEY,
+                    preparePay.money.stripTrailingZeros().toPlainString()
+                )
 //                .putExtra(Constants.PARAM_MONEY, finalMoney)
                 .putExtra(Constants.PARAM_IMAGE_URL, preparePay.productLogoImgUrl)
                 .putExtra(Constants.PARAM_PRODUCT_NAME, preparePay.productName)
