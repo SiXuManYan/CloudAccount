@@ -239,6 +239,16 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
                     ToastUtils.showShort("请输入资金数额")
                     return
                 }
+                try {
+                    val investMoneyInt = investMoney.toInt()
+                    if (investMoneyInt<50){
+                        ToastUtils.showShort("资金数额不能少于50万")
+                        return
+                    }
+
+                } catch (e: Exception) {
+                }
+
 
 
                 if (business_scope_value.text.toString().trim().isBlank()) {

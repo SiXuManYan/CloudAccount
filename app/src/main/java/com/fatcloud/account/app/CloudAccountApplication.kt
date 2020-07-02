@@ -33,6 +33,7 @@ import com.tencent.smtt.sdk.QbSdk
 import dagger.android.AndroidInjector
 import dagger.android.HasActivityInjector
 import dagger.android.support.DaggerApplication
+import io.reactivex.functions.Consumer
 import io.reactivex.plugins.RxJavaPlugins
 import java.lang.ref.WeakReference
 import javax.inject.Inject
@@ -75,8 +76,33 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector,
     override fun onCreate() {
         super.onCreate()
         initHandle()
+        initEvent()
         DataServiceFaker.startService(this, Constants.ACTION_SYNC)
         registerActivityLifecycleCallbacks(this)
+        loadCommonData()
+    }
+
+    private fun initEvent() {
+        presenter.subsribeEvent(Consumer {
+            when (it.code) {
+                Constants.EVENT_CHECK_APPLICATION_DEFAULT_DATA -> {
+                    // 检查默认数据
+                    val businessScope = commonData?.businessScope
+                    val accountNatues = commonData?.accountNatues
+                    val forms = commonData?.forms
+
+                    if (businessScope.isNullOrEmpty() || accountNatues.isNullOrEmpty() || forms.isNullOrEmpty()) {
+                        loadCommonData()
+                    }
+
+                }
+                else -> {
+                }
+            }
+        })
+    }
+
+    fun loadCommonData() {
         presenter.getCommonList()
     }
 

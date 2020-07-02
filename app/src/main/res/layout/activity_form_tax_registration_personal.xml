@@ -99,7 +99,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:lineSpacingMultiplier="1.2"
-                    android:maxLength="20"
+                    android:maxLength="18"
                     android:minHeight="45dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="0dp"

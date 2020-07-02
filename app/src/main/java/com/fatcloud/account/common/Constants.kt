@@ -165,6 +165,7 @@ object Constants {
     const val EVENT_REFRESH_ORDER_LIST_FROM_END_COUNT_DOWN = 0x103// 订单倒计时结束，刷新订单列表
 
     const val EVENT_ADD_NEWS_PAGE_VIEWS = 0x104// 增加页面浏览量
+    const val EVENT_CHECK_APPLICATION_DEFAULT_DATA = 0x105// 检查application 初始化数据
 
     // 列表数据 key
     const val KEY_DATA = "data"

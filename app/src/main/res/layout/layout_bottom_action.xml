@@ -19,7 +19,7 @@
         android:background="@color/color_first_level"
         android:gravity="center"
         android:textColor="@color/font_white"
-        android:textSize="@dimen/font_size_16"
+        android:textSize="@dimen/font_size_14"
         tools:text="文案自行设置" />
 
     <TextView
@@ -30,7 +30,7 @@
         android:background="@color/color_app_red"
         android:gravity="center"
         android:textColor="@color/font_white"
-        android:textSize="@dimen/font_size_16"
+        android:textSize="@dimen/font_size_14"
         tools:text="文案自行设置" />
 
 </LinearLayout>

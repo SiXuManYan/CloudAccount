@@ -10,6 +10,7 @@ import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider
 import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider
 import com.alibaba.sdk.android.oss.model.PutObjectRequest
 import com.alibaba.sdk.android.oss.model.PutObjectResult
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ThreadUtils
 import com.blankj.utilcode.util.Utils
@@ -18,6 +19,7 @@ import com.fatcloud.account.R
 import com.fatcloud.account.base.net.BaseHttpSubscriber
 import com.fatcloud.account.entity.commons.Commons
 import com.fatcloud.account.entity.oss.SecurityTokenModel
+import com.fatcloud.account.event.Event
 import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.network.ApiService
@@ -25,6 +27,7 @@ import io.reactivex.FlowableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 
 
@@ -61,6 +64,32 @@ class CloudAccountPresenter(val view: CloudAccountView) {
             it.subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
         }
+    }
+
+
+    /**
+     * 订阅事件
+     * @param consumer 处理
+     */
+    fun subsribeEvent(consumer: Consumer<Event>) {
+        addRxBusSubscribe(Event::class.java, consumer)
+    }
+
+
+    /**
+     * 添加Rxbus的订阅
+     * @param eventType 传递类型
+     * @param consumer  消费
+     */
+    fun <T> addRxBusSubscribe(eventType: Class<T>, consumer: Consumer<T>) {
+        if (compositeDisposable == null) {
+            compositeDisposable = CompositeDisposable()
+        }
+        compositeDisposable?.add(
+            RxBus.toFlowable(eventType).observeOn(AndroidSchedulers.mainThread()).subscribe(consumer, Consumer {
+                LogUtils.d(it)
+            })
+        )
     }
 
 

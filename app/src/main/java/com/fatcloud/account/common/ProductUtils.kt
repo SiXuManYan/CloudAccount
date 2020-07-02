@@ -282,8 +282,12 @@ object ProductUtils {
      * 验证 银行卡号
      */
     fun isBankCardNumber(cardString: String, typeString: String? = ""): Boolean {
-        val match = RegexUtils.isMatch("^[1-9]\\d{9,29}\$", cardString)
-        if (!match) {
+        // 银行卡号（10到30位, 覆盖对公/私账户, 参考微信支付）9  29
+        // 16 17 19
+        val match = RegexUtils.isMatch("^[1-9]\\d{15,18}\$", cardString)
+        val lengthEighteen = (cardString.length == 18)
+
+        if (!match || lengthEighteen) {
             ToastUtils.showShort(
                 StringUtils.getString(
                     R.string.bank_number_wrong_format,
@@ -291,7 +295,8 @@ object ProductUtils {
                 )
             )
         }
-        return match
+
+        return match && !lengthEighteen
     }
 
     /**
@@ -354,13 +359,19 @@ object ProductUtils {
         return nullOrEmpty
 
     }
+
     /**
      * @param idCardSide 身份证正反面
      * @param filePath 存储路径
      *
      * @see <a href="https://cloud.baidu.com/doc/OCR/s/rk3h7xzck">OCR 身份证识别</a>
      */
-     fun recIDCard(context: Context ,idCardSide: String, filePath: String ,callBack: RecognizeIDCardResultCallBack) {
+    fun recIDCard(
+        context: Context,
+        idCardSide: String,
+        filePath: String,
+        callBack: RecognizeIDCardResultCallBack
+    ) {
 
         val param = IDCardParams().apply {
 
@@ -377,15 +388,12 @@ object ProductUtils {
                     callBack.onResult(it)
                 }
             }
+
             override fun onError(error: OCRError) = Unit
         })
 
 
-
     }
-
-
-
 
 
 }

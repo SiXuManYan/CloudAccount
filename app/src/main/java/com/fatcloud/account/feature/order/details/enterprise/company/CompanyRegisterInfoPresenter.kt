@@ -40,7 +40,7 @@ class CompanyRegisterInfoPresenter @Inject constructor(private var companyRegist
                     data?.let {
                         companyRegisterInfoView.bindDetailInfo(it)
 
-                        // 为银行时回显时获取 财务负责人信息
+                        // 为银行时回显时获取 额外请求接口财务负责人信息
                         if (productWorkType == Constants.PW3) {
 
                             financeShareholder = Shareholder(

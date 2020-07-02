@@ -269,7 +269,7 @@
             android:lineSpacingMultiplier="1.1"
             android:maxWidth="150dp"
             android:maxLines="2"
-            android:text="请输入联系电话"
+            android:text="联系电话"
             android:textColor="@color/color_first_level" />
 
         <androidx.appcompat.widget.AppCompatEditText

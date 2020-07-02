@@ -321,8 +321,6 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             return
         }
 
-
-
         if (!ProductUtils.checkEditEmptyWithVibrate(
                 zero_choice_name,
                 first_choice_name,

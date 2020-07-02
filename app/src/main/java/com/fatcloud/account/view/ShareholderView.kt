@@ -33,11 +33,20 @@ class ShareholderView : LinearLayout {
         init()
     }
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         init()
     }
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(
+    constructor(
+        context: Context?,
+        attrs: AttributeSet?,
+        defStyleAttr: Int,
+        defStyleRes: Int
+    ) : super(
         context,
         attrs,
         defStyleAttr,
@@ -51,7 +60,7 @@ class ShareholderView : LinearLayout {
 
     }
 
-    public fun setShareHolderView(data: Shareholder) {
+    public fun setShareHolderView(data: Shareholder, productWorkType: String?) {
 
         when (data.mold) {
             Constants.SH1 -> {
@@ -74,19 +83,20 @@ class ShareholderView : LinearLayout {
         }
         name_tv.text = data.name
         id_number_tv.text = data.idno
-//        id_address_tv.text = data.idnoAddr
-//        id_address_ll.visibility = View.GONE
+        id_address_tv.text = data.idnoAddr
+        if (productWorkType == Constants.PW3) {
+            id_address_ll.visibility = View.GONE
+        } else {
+            id_address_ll.visibility = View.VISIBLE
+        }
         phone_tv.text = data.phone
 
         val shareProportion = data.shareProportion
-        if (shareProportion.isNullOrBlank()) {
-            share_ratio_ll.visibility = View.GONE
-        }else{
+        if (shareProportion.isBlank()) {
+            share_ratio_tv.text = "0%"
+        } else {
             share_ratio_tv.text = "$shareProportion%"
-            share_ratio_ll.visibility = View.VISIBLE
         }
-
-
 
 
         data.imgs.forEachIndexed { index, identityImg ->
@@ -95,32 +105,35 @@ class ShareholderView : LinearLayout {
             if (!imgUrl.isNullOrEmpty()) {
 
                 if (ProductUtils.isOssSignUrl(imgUrl)) {
-                    ProductUtils.getRealOssUrl(context, imgUrl, object : CloudAccountApplication.OssSignCallBack {
-                        override fun ossUrlSignEnd(url: String) {
+                    ProductUtils.getRealOssUrl(
+                        context,
+                        imgUrl,
+                        object : CloudAccountApplication.OssSignCallBack {
+                            override fun ossUrlSignEnd(url: String) {
 
-                            Glide.with(this@ShareholderView)
-                                .load(url)
-                                .apply(
-                                    RequestOptions().transform(
-                                        MultiTransformation(
-                                            CenterCrop(),
-                                            RoundTransFormation(context, 4)
+                                Glide.with(this@ShareholderView)
+                                    .load(url)
+                                    .apply(
+                                        RequestOptions().transform(
+                                            MultiTransformation(
+                                                CenterCrop(),
+                                                RoundTransFormation(context, 4)
+                                            )
                                         )
                                     )
-                                )
-                                .error(R.drawable.ic_error_image_load)
-                                .into(
-                                    if (index == 0) {
-                                        id_card_front_iv
-                                    } else {
-                                        id_card_obverse_iv
-                                    }
-                                )
+                                    .error(R.drawable.ic_error_image_load)
+                                    .into(
+                                        if (index == 0) {
+                                            id_card_front_iv
+                                        } else {
+                                            id_card_obverse_iv
+                                        }
+                                    )
 
 
-                        }
+                            }
 
-                    })
+                        })
 
                 } else {
                     Glide.with(this@ShareholderView)

@@ -59,11 +59,14 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
         initExtra()
         setMainTitle(
             title = when (productWorkType) {
-                "PW1" -> {
+                Constants.PW1 -> {
                     "公司信息"
                 }
-                else -> {
+                Constants.PW3 -> {
                     "开立银行对公账户"
+                }
+                else -> {
+                    ""
                 }
             }
         )
@@ -88,12 +91,12 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
 
 
         when (productWorkType) {
-            "PW1" -> {
+            Constants.PW1 -> {
                 company_info.visibility = View.VISIBLE
                 setCompanyInfo(data)
             }
 
-            "PW3" -> {
+            Constants.PW3 -> {
                 bank_info.visibility = View.VISIBLE
                 setBankInfo(data)
             }
@@ -126,7 +129,7 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
         addr_tv.text = data.addr
         shareholder_container_ll.removeAllViews()
         data.shareholders?.forEach {
-            shareholder_container_ll.addView(ShareholderView(this).apply { setShareHolderView(it) })
+            shareholder_container_ll.addView(ShareholderView(this).apply { setShareHolderView(it,productWorkType) })
         }
     }
 
@@ -152,25 +155,28 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
         } else {
             data.businessLicenseImgUrl?.let {
                 if (ProductUtils.isOssSignUrl(it)) {
-                    ProductUtils.getRealOssUrl(this, it, object : CloudAccountApplication.OssSignCallBack {
-                        override fun ossUrlSignEnd(url: String) {
+                    ProductUtils.getRealOssUrl(
+                        this,
+                        it,
+                        object : CloudAccountApplication.OssSignCallBack {
+                            override fun ossUrlSignEnd(url: String) {
 
-                            Glide.with(this@CompanyRegisterInfoActivity)
-                                .load(url)
-                                .apply(
-                                    RequestOptions().transform(
-                                        MultiTransformation(
-                                            CenterCrop(),
-                                            RoundTransFormation(context, 4)
+                                Glide.with(this@CompanyRegisterInfoActivity)
+                                    .load(url)
+                                    .apply(
+                                        RequestOptions().transform(
+                                            MultiTransformation(
+                                                CenterCrop(),
+                                                RoundTransFormation(context, 4)
+                                            )
                                         )
                                     )
-                                )
-                                .error(R.drawable.ic_error_image_load)
-                                .into(business_license_iv)
+                                    .error(R.drawable.ic_error_image_load)
+                                    .into(business_license_iv)
 
-                        }
+                            }
 
-                    })
+                        })
                 } else {
                     Glide.with(this)
                         .load(it)
@@ -195,23 +201,26 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
         val electronicSealImgUrl = data.electronicSealImgUrl
         if (!electronicSealImgUrl.isNullOrBlank()) {
             if (ProductUtils.isOssSignUrl(electronicSealImgUrl)) {
-                ProductUtils.getRealOssUrl(this, electronicSealImgUrl, object : CloudAccountApplication.OssSignCallBack {
-                    override fun ossUrlSignEnd(url: String) {
-                        Glide.with(this@CompanyRegisterInfoActivity)
-                            .load(url)
-                            .apply(
-                                RequestOptions().transform(
-                                    MultiTransformation(
-                                        CenterCrop(),
-                                        RoundTransFormation(context, 4)
+                ProductUtils.getRealOssUrl(
+                    this,
+                    electronicSealImgUrl,
+                    object : CloudAccountApplication.OssSignCallBack {
+                        override fun ossUrlSignEnd(url: String) {
+                            Glide.with(this@CompanyRegisterInfoActivity)
+                                .load(url)
+                                .apply(
+                                    RequestOptions().transform(
+                                        MultiTransformation(
+                                            CenterCrop(),
+                                            RoundTransFormation(context, 4)
+                                        )
                                     )
                                 )
-                            )
-                            .error(R.drawable.ic_error_image_load)
-                            .into(electronic_seal_iv)
-                    }
+                                .error(R.drawable.ic_error_image_load)
+                                .into(electronic_seal_iv)
+                        }
 
-                })
+                    })
             } else {
                 Glide.with(this)
                     .load(electronicSealImgUrl)
@@ -237,26 +246,29 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
         if (!legalPersonWarrantImgUrl.isNullOrBlank()) {
             if (ProductUtils.isOssSignUrl(legalPersonWarrantImgUrl)) {
 
-                ProductUtils.getRealOssUrl(this, legalPersonWarrantImgUrl, object : CloudAccountApplication.OssSignCallBack {
-                    override fun ossUrlSignEnd(url: String) {
+                ProductUtils.getRealOssUrl(
+                    this,
+                    legalPersonWarrantImgUrl,
+                    object : CloudAccountApplication.OssSignCallBack {
+                        override fun ossUrlSignEnd(url: String) {
 
-                        Glide.with(this@CompanyRegisterInfoActivity)
-                            .load(url)
-                            .apply(
-                                RequestOptions().transform(
-                                    MultiTransformation(
-                                        CenterCrop(),
-                                        RoundTransFormation(context, 4)
+                            Glide.with(this@CompanyRegisterInfoActivity)
+                                .load(url)
+                                .apply(
+                                    RequestOptions().transform(
+                                        MultiTransformation(
+                                            CenterCrop(),
+                                            RoundTransFormation(context, 4)
+                                        )
                                     )
                                 )
-                            )
-                            .error(R.drawable.ic_error_image_load)
-                            .into(Legal_signature_authorization_iv)
+                                .error(R.drawable.ic_error_image_load)
+                                .into(Legal_signature_authorization_iv)
 
 
-                    }
+                        }
 
-                })
+                    })
 
 
             } else {
@@ -289,7 +301,9 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
         data.shareholders?.forEach {
 
 
-            shareholder_container_bank_ll.addView(ShareholderView(this).apply { setShareHolderView(it) })
+            shareholder_container_bank_ll.addView(ShareholderView(this).apply {
+                setShareHolderView(it,productWorkType)
+            })
         }
     }
 

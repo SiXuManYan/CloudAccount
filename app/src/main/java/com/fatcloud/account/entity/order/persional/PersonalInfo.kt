@@ -121,6 +121,10 @@ class PersonalInfo {
     var name0: String? = null
     var name1: String? = null
     var name2: String? = null
+
+    /**
+     * 民族
+     */
     var nation: String? = null
 
     var realName: String? = null

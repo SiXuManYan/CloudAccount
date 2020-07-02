@@ -23,6 +23,8 @@ import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.entity.users.User
+import com.fatcloud.account.event.Event
+import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.account.login.LoginActivity
 import com.fatcloud.account.feature.product.detail.sheet.ProductSheetFragment
@@ -71,35 +73,39 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
 
                     Glide.with(context!!)
                         .load(obj)
-                        .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE).dontAnimate())
+                        .apply(
+                            RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                                .dontAnimate()
+                        )
                         .error(R.drawable.ic_error_image_load)
                         .into(imageView!!)
                 }
 
-                override fun createImageView(context: Context?): ImageView = ImageView(context).apply {
-                    setBackgroundColor(ColorUtils.getColor(R.color.transparent))
-                }
+                override fun createImageView(context: Context?): ImageView =
+                    ImageView(context).apply {
+                        setBackgroundColor(ColorUtils.getColor(R.color.transparent))
+                    }
             })
 
         }
         bottom_left_tv.text = "联系客服"
         bottom_right_tv.text = "立即办理"
 
-        good_tab.setOnCheckedChangeListener{_, isChecked ->
+        good_tab.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 good_image_container_ll.visibility = View.VISIBLE
                 good_tab.setTextColor(ColorUtils.getColor(R.color.color_zero_level))
-            }else{
+            } else {
                 good_image_container_ll.visibility = View.GONE
                 good_tab.setTextColor(ColorUtils.getColor(R.color.color_third_level))
             }
         }
 
-        service_tab.setOnCheckedChangeListener{_, isChecked ->
+        service_tab.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 service_image_container_ll.visibility = View.VISIBLE
                 service_tab.setTextColor(ColorUtils.getColor(R.color.color_zero_level))
-            }else{
+            } else {
                 service_image_container_ll.visibility = View.GONE
                 service_tab.setTextColor(ColorUtils.getColor(R.color.color_third_level))
             }
@@ -138,6 +144,12 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
     }
 
     private fun getData() {
+
+        // 检测默认数据
+
+        RxBus.post(Event(Constants.EVENT_CHECK_APPLICATION_DEFAULT_DATA))
+
+
         presenter.getDetail(this, productId)
     }
 
@@ -292,7 +304,12 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
             }
 
             R.id.bottom_left_tv -> {
-                startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Constants.CONSUMER_HOT_LINE)))
+                startActivity(
+                    Intent(
+                        Intent.ACTION_DIAL,
+                        Uri.parse("tel:" + Constants.CONSUMER_HOT_LINE)
+                    )
+                )
             }
             R.id.bottom_right_tv -> {
                 if (!User.isLogon()) {
