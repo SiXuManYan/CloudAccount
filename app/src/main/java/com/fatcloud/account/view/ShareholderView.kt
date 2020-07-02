@@ -90,9 +90,12 @@ class ShareholderView : LinearLayout {
         id_address_tv.text = data.idnoAddr
         if (productWorkType == Constants.PW3) {
             id_address_ll.visibility = View.GONE
-            id_expiry_date_ll.visibility = View.VISIBLE
-            id_expiry_date_tv.text = data.idnoDate
 
+            val idnoDate = data.idnoDate
+            if (!idnoDate.isNullOrBlank()) {
+                id_expiry_date_ll.visibility = View.VISIBLE
+                id_expiry_date_tv.text = idnoDate
+            }
         } else {
             id_address_ll.visibility = View.VISIBLE
             id_expiry_date_ll.visibility = View.GONE

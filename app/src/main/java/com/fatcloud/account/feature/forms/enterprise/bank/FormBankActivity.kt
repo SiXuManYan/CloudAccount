@@ -158,7 +158,7 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
         data.shareholders?.forEachIndexed { index, shareholder ->
 
             // 暂时不显示监事信息 2020-07-02
-            if (shareholder.mold!= Constants.SH2){
+            if (shareholder.mold != Constants.SH2) {
 
                 shareholder_more_container.addView(
                     presenter.getShareholderView(
@@ -309,7 +309,7 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
             R.id.electronic_seal_iv,
             R.id.signed_authorization_iv
             -> ProductUtils.handleMediaSelect(context as Activity, 1, view.id)
-            R.id.bottom_right_tv ->{
+            R.id.bottom_right_tv -> {
                 ProductUtils.handleDoubleClick(view)
                 handleCommit()
             }

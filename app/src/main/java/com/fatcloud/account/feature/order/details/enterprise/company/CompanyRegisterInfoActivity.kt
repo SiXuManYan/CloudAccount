@@ -307,10 +307,16 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
 
         shareholder_container_bank_ll.removeAllViews()
         data.shareholders?.forEach {
-            shareholder_container_bank_ll.addView(
-                ShareholderView(this).apply {
-                    setShareHolderView(it, productWorkType)
-                })
+
+            // 暂时不显示监事信息 2020-07-02
+            if (it.mold != Constants.SH2) {
+                shareholder_container_bank_ll.addView(
+                    ShareholderView(this).apply {
+                        setShareHolderView(it, productWorkType)
+                    })
+            }
+
+
         }
     }
 

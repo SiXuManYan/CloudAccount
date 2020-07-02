@@ -126,6 +126,15 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
                 }
             }
         })
+        presenter.subsribeEvent(Consumer {
+            when (it.code) {
+                Constants.EVENT_CLOSE_PAY_UNKNOWN -> {
+                    finish()
+                }
+                else -> {
+                }
+            }
+        })
 
     }
 

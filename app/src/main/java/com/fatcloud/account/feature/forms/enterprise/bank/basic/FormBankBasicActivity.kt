@@ -49,6 +49,7 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
         presenter.subsribeEventEntity<BankFormCommitSuccessEvent>(Consumer {
             finish()
         })
+
     }
 
 

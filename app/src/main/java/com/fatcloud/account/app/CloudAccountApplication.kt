@@ -180,7 +180,7 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector,
             override fun onResult(result: AccessToken?) {
                 val token: String? = result?.accessToken
                 LogUtils.d("ocr 初始化 onResult ", "token = " + token)
-                CommonUtils.getShareDefault().put(Constants.SP_OCR_ACCESS_TOKEN, token)
+//                CommonUtils.getShareDefault().put(Constants.SP_OCR_ACCESS_TOKEN, token)
             }
 
             override fun onError(error: OCRError?) {
