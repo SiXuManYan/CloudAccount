@@ -83,6 +83,7 @@ class PersonalInfo {
      * 经营范围 id
      * @see BusinessScope.id
      */
+
     var businessScope: List<Int>? = null
 
 

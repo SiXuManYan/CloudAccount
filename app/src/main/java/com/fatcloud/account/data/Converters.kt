@@ -1,6 +1,7 @@
 package com.fatcloud.account.data
 
 import androidx.room.TypeConverter
+import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -8,7 +9,7 @@ import java.lang.reflect.Type
 import java.math.BigDecimal
 
 
-object Converters {
+ object Converters {
 
     @TypeConverter
     @JvmStatic
@@ -21,7 +22,7 @@ object Converters {
 
     @TypeConverter
     @JvmStatic
-    fun textToBigDecimal(value: String) : BigDecimal {
+    fun textToBigDecimal(value: String): BigDecimal {
         return if (value.isEmpty()) {
             BigDecimal.ZERO
         } else {
@@ -30,27 +31,52 @@ object Converters {
     }
 
     @TypeConverter
+    @JvmStatic
     fun fromString(value: String?): ArrayList<String?>? {
         val listType: Type = object : TypeToken<ArrayList<String?>?>() {}.type
         return Gson().fromJson(value, listType)
     }
 
     @TypeConverter
+    @JvmStatic
     fun fromArrayList(list: ArrayList<String?>?): String? {
         val gson = Gson()
         return gson.toJson(list)
     }
 
+
+
     @TypeConverter
+    @JvmStatic
     fun listToJson(value: List<EnterpriseInfo>?): String {
 
         return Gson().toJson(value)
     }
 
     @TypeConverter
+    @JvmStatic
     fun jsonToList(value: String): List<EnterpriseInfo>? {
 
-        val objects = Gson().fromJson(value, Array<EnterpriseInfo>::class.java) as Array<EnterpriseInfo>
+        val objects =
+            Gson().fromJson(value, Array<EnterpriseInfo>::class.java) as Array<EnterpriseInfo>
+        val list = objects.toList()
+        return list
+    }
+
+
+    @TypeConverter
+    @JvmStatic
+    fun listToJson2(value: List<IdentityImg>?): String {
+
+        return Gson().toJson(value)
+    }
+
+    @TypeConverter
+    @JvmStatic
+    fun jsonToList2(value: String): List<IdentityImg>? {
+
+        val objects =
+            Gson().fromJson(value, Array<IdentityImg>::class.java) as Array<IdentityImg>
         val list = objects.toList()
         return list
     }
