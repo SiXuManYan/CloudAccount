@@ -21,7 +21,7 @@ object Converters {
 
     @TypeConverter
     @JvmStatic
-    fun textToBigDecimal(value: String) : BigDecimal {
+    fun textToBigDecimal(value: String): BigDecimal {
         return if (value.isEmpty()) {
             BigDecimal.ZERO
         } else {
@@ -50,7 +50,8 @@ object Converters {
     @TypeConverter
     fun jsonToList(value: String): List<EnterpriseInfo>? {
 
-        val objects = Gson().fromJson(value, Array<EnterpriseInfo>::class.java) as Array<EnterpriseInfo>
+        val objects =
+            Gson().fromJson(value, Array<EnterpriseInfo>::class.java) as Array<EnterpriseInfo>
         val list = objects.toList()
         return list
     }

@@ -205,6 +205,7 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
                 // 保存
             }
             R.id.bottom_right_tv -> {
+                ProductUtils.handleDoubleClick(view)
                 val zeroName = zero_choice_name_et.text.toString()
                 if (zeroName.isBlank()) {
                     ToastUtils.showShort("请输入首选公司名称")

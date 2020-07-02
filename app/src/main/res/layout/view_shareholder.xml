@@ -114,6 +114,43 @@
 
     </LinearLayout>
 
+
+    <LinearLayout
+        android:id="@+id/id_expiry_date_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingTop="3dp"
+        android:paddingRight="15dp"
+        tools:visibility="visible"
+        android:paddingBottom="3dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="15dp"
+            android:lineSpacingMultiplier="1.2"
+            android:text="身份证有效期"
+            android:textColor="@color/color_third_level"
+            android:textSize="@dimen/font_size_14" />
+
+
+        <TextView
+            android:id="@+id/id_expiry_date_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/color_first_level"
+            android:textSize="@dimen/font_size_14"
+            tools:text="2020-02-02 - 2021-02-02" />
+
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/id_address_ll"
         android:layout_width="match_parent"

@@ -25,6 +25,7 @@ import com.fatcloud.account.feature.ocr.RecognizeIDCardResultCallBack
 import com.fatcloud.account.view.CompanyMemberEditView
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_license_enterprise.*
+import java.lang.StringBuilder
 
 /**
  * Created by Wangsw on 2020/6/10 0010 18:30.
@@ -192,11 +193,10 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             currentMold = Constants.SH1
             initHighlightTitle(getString(R.string.legal_person_info))
             initNameTitle(getString(R.string.legal_person_name))
-
             initIdAddressHint("请输入法人身份证地址")
             initPhoneHint("请输入法人联系电话")
             initShareRatioHint(getString(R.string.share_ratio_hint))
-
+            showIdExpirationDate()
         }
 
         // 监事信息
@@ -253,6 +253,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             }
 
             R.id.bottom_right_tv -> {
+                ProductUtils.handleDoubleClick(view)
                 presenter.handlePost(
                     this,
                     legalPersonView = legal_person_ev,
@@ -390,7 +391,27 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
                         })
                 }
                 CameraActivity.CONTENT_TYPE_ID_CARD_BACK -> {
-                    // 身份证背面
+
+                    if (fromView.scanIdCardBack) {
+                        // 身份证反面
+                        ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_BACK, filePath,
+                            object : RecognizeIDCardResultCallBack {
+                                override fun onResult(result: IDCardResult) {
+                                    val builder: StringBuilder = StringBuilder()
+
+                                    result.signDate?.let {
+                                        builder.append(it.words)
+                                    }
+                                    builder.append("-")
+                                    result.expiryDate?.let {
+                                        builder.append(it.words)
+                                    }
+                                    fromView.setExpiryDateValue(builder.toString(), true)
+
+                                }
+                            })
+                    }
+
                 }
                 else -> {
                 }

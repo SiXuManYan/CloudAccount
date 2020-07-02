@@ -126,26 +126,6 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
 
     private fun initView() {
         setMainTitle("办理信息")
-//        trn_ev.setTitleAndHint(R.string.taxpayer_registration_number, R.string.taxpayer_registration_number_hint).setInputType(InputType.TYPE_CLASS_NUMBER)
-
-//        legal_name.setTitleAndHint(R.string.legal_person_name, R.string.legal_person_name)
-
-
-//        id_number.setTitleAndHint(R.string.identity_number, R.string.identity_number_hint)
-
-
-//        bank_number.setTitleAndHint(R.string.bank_card_number, R.string.bank_card_number_hint)
-//            .setInputType(InputType.TYPE_CLASS_NUMBER)
-//        bank_phone.setTitleAndHint(R.string.bank_phone, R.string.bank_phone_hint)
-//            .setInputType(InputType.TYPE_CLASS_NUMBER)
-
-
-//        detail_addr.setTitleAndHint(
-//            R.string.detailed_address,
-//            R.string.detailed_address
-//        ).visibility = View.VISIBLE
-
-
     }
 
 
@@ -199,6 +179,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
         }
         when (view.id) {
             R.id.commit_tv -> {
+                ProductUtils.handleDoubleClick(view)
                 handleCommit()
             }
             R.id.id_card_front_iv -> {

@@ -117,6 +117,12 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
         if (!ProductUtils.isIdCardNumber(idNumberValue, "法人")) {
             return
         }
+        val expiryDateValue = legalPersonView.getExpiryDateValue()
+        if (expiryDateValue.isBlank()) {
+            ToastUtils.showShort("请输入法人身份证有效期")
+            return
+        }
+
 
         if (legalPersonView.getIdAddressValue().isBlank()) {
             ToastUtils.showShort("请输入法人身份证地址")
@@ -139,10 +145,10 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
         }
 
         // 监事
-        if (!ProductUtils.hasIdCardUrl(legalPersonView.frontImageUrl, true, "监事")) {
+        if (!ProductUtils.hasIdCardUrl(supervisorView.frontImageUrl, true, "监事")) {
             return
         }
-        if (!ProductUtils.hasIdCardUrl(legalPersonView.backImageUrl, false, "监事")) {
+        if (!ProductUtils.hasIdCardUrl(supervisorView.backImageUrl, false, "监事")) {
             return
         }
 
@@ -175,10 +181,10 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
         }
 
         // 股东
-        if (!ProductUtils.hasIdCardUrl(legalPersonView.frontImageUrl, true, "股东")) {
+        if (!ProductUtils.hasIdCardUrl(shareholderView.frontImageUrl, true, "股东")) {
             return
         }
-        if (!ProductUtils.hasIdCardUrl(legalPersonView.backImageUrl, false, "股东")) {
+        if (!ProductUtils.hasIdCardUrl(shareholderView.backImageUrl, false, "股东")) {
             return
         }
         if (shareholderView.getNameValue().isBlank()) {

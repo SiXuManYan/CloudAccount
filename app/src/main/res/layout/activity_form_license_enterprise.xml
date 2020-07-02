@@ -131,7 +131,8 @@
             android:gravity="center"
             android:text="保存"
             android:textColor="@color/font_white"
-            android:textSize="@dimen/font_size_14" />
+            android:textSize="@dimen/font_size_14"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/bottom_right_tv"

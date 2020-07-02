@@ -53,8 +53,10 @@ class CompanyRegisterInfoPresenter @Inject constructor(private var companyRegist
                                 mold = Constants.SH4_N,
                                 name = CommonUtils.convertString(it.financeName),
                                 phone = CommonUtils.convertString(it.financePhone),
+                                idnoDate = "",
                                 shareProportion = CommonUtils.convertString(it.financeShares)
                             )
+
                         }
 
                     }
@@ -74,6 +76,9 @@ class CompanyRegisterInfoPresenter @Inject constructor(private var companyRegist
     }
 
 
+    /**
+     * 银行对公账户时，获取额外信息
+     */
     fun getRegistrantInfo(
         lifecycle: LifecycleOwner,
         orderId: String?,

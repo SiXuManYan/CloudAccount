@@ -10,6 +10,7 @@ import com.fatcloud.account.entity.order.IdentityImg
 class Shareholder(
     val idno: String,
     val idnoAddr: String,
+    val idnoDate: String ,
     val imgs: ArrayList<IdentityImg> = ArrayList(),
 
     /**

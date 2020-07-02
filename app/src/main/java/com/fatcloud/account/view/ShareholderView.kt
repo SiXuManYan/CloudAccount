@@ -60,7 +60,11 @@ class ShareholderView : LinearLayout {
 
     }
 
-    public fun setShareHolderView(data: Shareholder, productWorkType: String?) {
+    public fun setShareHolderView(
+        data: Shareholder,
+        productWorkType: String?
+
+    ) {
 
         when (data.mold) {
             Constants.SH1 -> {
@@ -86,8 +90,12 @@ class ShareholderView : LinearLayout {
         id_address_tv.text = data.idnoAddr
         if (productWorkType == Constants.PW3) {
             id_address_ll.visibility = View.GONE
+            id_expiry_date_ll.visibility = View.VISIBLE
+            id_expiry_date_tv.text = data.idnoDate
+
         } else {
             id_address_ll.visibility = View.VISIBLE
+            id_expiry_date_ll.visibility = View.GONE
         }
         phone_tv.text = data.phone
 

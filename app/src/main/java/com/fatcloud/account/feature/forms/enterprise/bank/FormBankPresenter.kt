@@ -39,6 +39,8 @@ class FormBankPresenter @Inject constructor(private var view: FormBankView) : Ba
                 Constants.SH1 -> {
                     highlightTitle = "法人信息"
                     nameTitle = "法人姓名"
+                    showIdExpirationDate()
+                    setExpiryDateValue(shareholder.idnoDate,false)
                 }
                 Constants.SH2 -> {
                     highlightTitle = "监事信息"
@@ -49,6 +51,7 @@ class FormBankPresenter @Inject constructor(private var view: FormBankView) : Ba
                     nameTitle = "股东姓名"
                 }
             }
+
             initHighlightTitle(highlightTitle)
             initNameTitleValue(nameTitle, shareholder.name)
             setIdNumberValue( shareholder.idno)
