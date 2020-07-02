@@ -397,13 +397,15 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
                         ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_BACK, filePath,
                             object : RecognizeIDCardResultCallBack {
                                 override fun onResult(result: IDCardResult) {
-                                    val builder: StringBuilder = StringBuilder()
+                                    val builder = StringBuilder()
 
                                     result.signDate?.let {
                                         builder.append(it.words)
                                     }
-                                    builder.append("-")
                                     result.expiryDate?.let {
+                                        if (builder.isNotBlank()) {
+                                            builder.append("-")
+                                        }
                                         builder.append(it.words)
                                     }
                                     fromView.setExpiryDateValue(builder.toString(), true)

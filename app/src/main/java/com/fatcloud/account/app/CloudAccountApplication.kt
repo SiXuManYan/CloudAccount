@@ -179,12 +179,11 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector,
         OCR.getInstance(this).initAccessToken(object : OnResultListener<AccessToken> {
             override fun onResult(result: AccessToken?) {
                 val token: String? = result?.accessToken
-                LogUtils.d("ocr 初始化 onResult ", "token = " + token)
-//                CommonUtils.getShareDefault().put(Constants.SP_OCR_ACCESS_TOKEN, token)
+//                LogUtils.d("ocr 初始化 onResult ", "token = " + token)
             }
 
             override fun onError(error: OCRError?) {
-                LogUtils.d("ocr 初始化 onError ", "message = " + error?.message)
+//                LogUtils.d("ocr 初始化 onError ", "message = " + error?.message)
             }
 
         }, this)
