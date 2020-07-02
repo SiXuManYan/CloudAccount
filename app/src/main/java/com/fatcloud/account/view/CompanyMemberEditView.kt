@@ -100,14 +100,31 @@ class CompanyMemberEditView : LinearLayout {
             LayoutInflater.from(context).inflate(R.layout.view_company_member_edit, this, true)
 
         id_card_front_iv.setOnClickListener {
+
+            id_card_front_iv.isClickable = false
+            id_card_back_iv.isClickable = false
+
+            id_card_front_iv.postDelayed({
+
+                id_card_front_iv.isClickable = true
+                id_card_back_iv.isClickable = true
+
+            }, 500)
+
             isFaceUp = true
-//            ProductUtils.handleMediaSelect(context as Activity, 1, this@CompanyMemberEditView.id)
             scanIdCard(isFaceUp)
         }
 
         id_card_back_iv.setOnClickListener {
+
+            id_card_front_iv.isClickable = false
+            id_card_back_iv.isClickable = false
+            id_card_back_iv.postDelayed({
+                id_card_front_iv.isClickable = true
+                id_card_back_iv.isClickable = true
+
+            }, 500)
             isFaceUp = false
-//            ProductUtils.handleMediaSelect(context as Activity, 1, this@CompanyMemberEditView.id)
             scanIdCard(isFaceUp)
         }
 
