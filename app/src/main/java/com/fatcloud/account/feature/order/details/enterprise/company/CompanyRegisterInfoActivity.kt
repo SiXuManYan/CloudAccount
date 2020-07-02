@@ -130,10 +130,7 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
         shareholder_container_ll.removeAllViews()
         data.shareholders?.forEach {
             shareholder_container_ll.addView(ShareholderView(this).apply {
-                setShareHolderView(
-                    it,
-                    productWorkType
-                )
+                setShareHolderView(it, productWorkType)
             })
         }
     }
