@@ -100,7 +100,7 @@ class ShareholderView : LinearLayout {
         phone_tv.text = data.phone
 
         val shareProportion = data.shareProportion
-        if (shareProportion.isBlank()) {
+        if (shareProportion.isNullOrBlank()) {
             share_ratio_tv.text = "0%"
         } else {
             share_ratio_tv.text = "$shareProportion%"

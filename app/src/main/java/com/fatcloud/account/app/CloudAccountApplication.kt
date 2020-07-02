@@ -176,21 +176,19 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector,
 
     private fun initBaiduOcr() {
 
-        OCR.getInstance(this).initAccessTokenWithAkSk(object : OnResultListener<AccessToken> {
+        OCR.getInstance(this).initAccessToken(object : OnResultListener<AccessToken> {
             override fun onResult(result: AccessToken?) {
-
                 val token: String? = result?.accessToken
                 LogUtils.d("ocr 初始化 onResult ", "token = " + token)
                 CommonUtils.getShareDefault().put(Constants.SP_OCR_ACCESS_TOKEN, token)
             }
 
             override fun onError(error: OCRError?) {
-
                 LogUtils.d("ocr 初始化 onError ", "message = " + error?.message)
-
             }
 
-        }, this, BuildConfig.OCR_API_KEY, BuildConfig.OCR_SECRET_KEY)
+        }, this)
+
 
     }
 
