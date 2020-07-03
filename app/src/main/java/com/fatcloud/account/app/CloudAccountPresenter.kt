@@ -169,12 +169,14 @@ class CloudAccountPresenter(val view: CloudAccountView) {
 
         // 自定义文件的 objectKey 上传到仓库中哪个位置
         val imageObjectKey = if (isEncryptFile) {
+            // 加密图片
             if (BuildConfig.FLAVOR == "dev") {
                 StringUtils.getString(R.string.upload_image_encryption_path_dev_format, System.currentTimeMillis().toString())
             } else {
                 StringUtils.getString(R.string.upload_image_encryption_path_format, System.currentTimeMillis().toString())
             }
         } else {
+            // 普通图片
             if (BuildConfig.FLAVOR == "dev") {
                 StringUtils.getString(R.string.upload_image_path_dev_format, System.currentTimeMillis().toString())
             } else {

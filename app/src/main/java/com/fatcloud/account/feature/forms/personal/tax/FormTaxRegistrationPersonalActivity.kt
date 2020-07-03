@@ -56,7 +56,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
     private var mProductPriceId: String = "0"
 
     /**
-     * 地址
+     * 用户选中的省份地址
      */
     private var address: String = ""
 
@@ -67,7 +67,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
     private var areaName: String = ""
 
     /**
-     * 图片地址
+     * 营业执照图片地址
      */
     private var businessLicenseImgUrl: String = ""
 

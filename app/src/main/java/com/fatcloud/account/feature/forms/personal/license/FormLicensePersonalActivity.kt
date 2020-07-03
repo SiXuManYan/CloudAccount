@@ -93,6 +93,9 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
 
     var mediaType = 0
 
+    /**
+     * 身份证正反面地址集合
+     */
     var identityImg: ArrayList<IdentityImg> = ArrayList()
 
     /**

@@ -24,7 +24,7 @@ class PersonalLicenseDraft {
             get() {
                 if (field == null) {
                     field =
-                        (Utils.getApp() as CloudAccountApplication).database.formPersonalInfoDraftDao()
+                        (Utils.getApp() as CloudAccountApplication).database.personalLicenseDraftDao()
                             .find()
                     if (field == null) {
                         field = PersonalLicenseDraft()
@@ -41,7 +41,7 @@ class PersonalLicenseDraft {
         }
 
         fun clearAll() {
-            (Utils.getApp() as CloudAccountApplication).database.formPersonalInfoDraftDao().clear()
+            (Utils.getApp() as CloudAccountApplication).database.personalLicenseDraftDao().clear()
             instance = null
         }
     }
@@ -52,6 +52,10 @@ class PersonalLicenseDraft {
     var primaryId: Int = 0
 
 
+    @ColumnInfo(name = "login_phone")
+    var loginPhone: String? = ""
+
+
     /**
      * @see Order.mold
      */
@@ -59,15 +63,18 @@ class PersonalLicenseDraft {
     var mold: String? = ""
 
 
-    @ColumnInfo(name = "login_user_phone")
-    var loginUserPhone: String? = ""
+
+    /**
+     * 详细地址
+     */
+    @ColumnInfo(name =  "detail_address")
+    var detailAddress: String? = ""
 
 
-
-    @ColumnInfo(name = "address")
-    var addr: String? = ""
-
-    @ColumnInfo(name = "area")
+    /**
+     * 用户选中的区域地址
+     */
+    @ColumnInfo(name =  "area")
     var area: String? = ""
 
 
@@ -78,14 +85,19 @@ class PersonalLicenseDraft {
     var idno: String? = ""
 
 
-    @ColumnInfo(name = "money")
-    var money: BigDecimal? = BigDecimal.ZERO
+    /**
+     * 客户端计算出的最终金额
+     */
+    @ColumnInfo(name = "final_money")
+    var finalMoney: String? = ""
 
 
     @ColumnInfo(name = "product_id")
     var productId: String? = ""
 
-
+    /**
+     * 选中的产品价格id
+     */
     @ColumnInfo(name = "product_price_id")
     var productPriceId: String? = ""
 
@@ -126,8 +138,8 @@ class PersonalLicenseDraft {
     var gender: String? = "1"
 
 
-    @ColumnInfo(name = "imgs")
-    var imgs: List<IdentityImg>? = ArrayList()
+    @ColumnInfo(name = "identity_img")
+    var identityImg: List<IdentityImg>? = ArrayList()
 
 
     /**
@@ -136,14 +148,23 @@ class PersonalLicenseDraft {
     @ColumnInfo(name = "income")
     var income: BigDecimal? = BigDecimal.ZERO
 
-    @ColumnInfo(name = "name0")
-    var name0: String? = ""
+    /**
+     * 首选名称
+     */
+    @ColumnInfo(name = "zero_name")
+    var zeroName: String? = ""
 
-    @ColumnInfo(name = "name1")
-    var name1: String? = ""
+    /**
+     * 备选名称1
+     */
+    @ColumnInfo(name = "first_name")
+    var firstName: String? = ""
 
-    @ColumnInfo(name = "name2")
-    var name2: String? = ""
+    /**
+     * 备选名称2
+     */
+    @ColumnInfo(name = "second_name")
+    var secondName: String? = ""
 
     /**
      * 民族
@@ -156,6 +177,8 @@ class PersonalLicenseDraft {
 
     @ColumnInfo(name = "tel")
     var tel: String? = ""
+
+
 
 
 }

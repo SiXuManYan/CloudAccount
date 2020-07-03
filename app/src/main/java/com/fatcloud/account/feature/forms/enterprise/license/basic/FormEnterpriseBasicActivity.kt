@@ -43,7 +43,7 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
     private var selectPidNames = ArrayList<String>()
 
     /**
-     * 年收入
+     * 年收入（和 finalMoney 是同一个值，都是客户端计算好的金额，是一个来自接口的额外字段）
      */
     private var incomeMoney: String = ""
 
@@ -312,6 +312,7 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
                             selectPidNames
                         )
                         .putExtra(Constants.PARAM_SELECT_AREA_NAME, areaName)
+                        .putExtra(Constants.PARAM_DETAIL_ADDRESS, detailAddress)
                         .putExtra(Constants.PARAM_ZERO_NAME, zeroName)
                         .putExtra(Constants.PARAM_FIRST_NAME, firstName)
                         .putExtra(Constants.PARAM_SECOND_NAME, secondName)
@@ -319,7 +320,7 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
                         .putExtra(Constants.PARAM_INVEST_MONEY, investMoney)
                         .putExtra(Constants.PARAM_BANK_NUMBER, bankNumber)
                         .putExtra(Constants.PARAM_BANK_PHONE, bankPhone)
-                        .putExtra(Constants.PARAM_DETAIL_ADDRESS, detailAddress)
+
                 )
 
 

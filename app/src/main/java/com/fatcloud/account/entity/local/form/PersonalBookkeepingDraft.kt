@@ -7,23 +7,24 @@ import com.blankj.utilcode.util.Utils
 import com.fatcloud.account.app.CloudAccountApplication
 
 /**
- * Created by Wangsw on 2020/7/2 0002 14:17.
+ * Created by Wangsw on 2020/7/3 0003 10:10.
  * </br>
- * 个体户税务登记草稿
+ * 个体户代理记账草稿箱
  */
-@Entity(tableName = "tb_personal_tax_draft")
-class PersonalTaxDraft {
+@Entity(tableName = "tb_personal_bookkeeping_draft")
+class PersonalBookkeepingDraft {
+
 
 
     companion object {
-        private var instance: PersonalTaxDraft? = null
+        private var instance: PersonalBookkeepingDraft? = null
             get() {
                 if (field == null) {
                     field =
-                        (Utils.getApp() as CloudAccountApplication).database.personalTaxDraftDao()
+                        (Utils.getApp() as CloudAccountApplication).database.personalBookkeepingDraftDao()
                             .find()
                     if (field == null) {
-                        field = PersonalTaxDraft()
+                        field = PersonalBookkeepingDraft()
                     }
                 }
                 return field
@@ -37,18 +38,15 @@ class PersonalTaxDraft {
         }
 
         fun clearAll() {
-            (Utils.getApp() as CloudAccountApplication).database.personalTaxDraftDao().clear()
+            (Utils.getApp() as CloudAccountApplication).database.personalBookkeepingDraftDao().clear()
             instance = null
         }
     }
 
 
-
-
     @PrimaryKey
     @ColumnInfo(name = "id")
     var primaryId: Int = 0
-
 
     @ColumnInfo(name = "login_phone")
     var loginPhone: String? = ""
@@ -60,11 +58,13 @@ class PersonalTaxDraft {
     @ColumnInfo(name = "final_money")
     var finalMoney: String? = ""
 
+
     /**
      * 产品id
      */
     @ColumnInfo(name = "product_id")
     var productId: String? = ""
+
 
 
     /**
@@ -79,19 +79,20 @@ class PersonalTaxDraft {
     @ColumnInfo(name = "taxpayer_number")
     var taxpayerNo: String? = ""
 
+
     /**
      * 法人姓名
      */
     @ColumnInfo(name = "legal_person_name")
     var legalPersonName: String? = ""
 
+
+
     /**
      * 身份证号
      */
     @ColumnInfo(name = "id_number")
     var idNumber: String? = ""
-
-
 
     /**
      * 银行卡号
@@ -105,24 +106,23 @@ class PersonalTaxDraft {
     @ColumnInfo(name = "bank_phone")
     var bankPhone: String? = ""
 
-
-
     /**
      * 营业执照图片地址
      */
     @ColumnInfo(name =  "business_license_image_url")
     var businessLicenseImgUrl: String? = ""
 
+
     /**
      * 详细地址
      */
     @ColumnInfo(name =  "detail_address")
-    var addr: String? = ""
+    var detailAddress: String? = ""
+
 
     /**
      * 用户选中的区域地址
      */
     @ColumnInfo(name =  "area")
     var area: String? = ""
-
 }

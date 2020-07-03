@@ -3,13 +3,14 @@ package com.fatcloud.account.data
 import androidx.room.TypeConverter
 import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
+import com.fatcloud.account.entity.order.enterprise.Shareholder
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 import java.math.BigDecimal
 
 
- object Converters {
+object Converters {
 
     @TypeConverter
     @JvmStatic
@@ -45,7 +46,6 @@ import java.math.BigDecimal
     }
 
 
-
     @TypeConverter
     @JvmStatic
     fun listToJson(value: List<EnterpriseInfo>?): String {
@@ -77,6 +77,23 @@ import java.math.BigDecimal
 
         val objects =
             Gson().fromJson(value, Array<IdentityImg>::class.java) as Array<IdentityImg>
+        val list = objects.toList()
+        return list
+    }
+
+    @TypeConverter
+    @JvmStatic
+    fun listToJson3(value: List<Shareholder>?): String {
+
+        return Gson().toJson(value)
+    }
+
+    @TypeConverter
+    @JvmStatic
+    fun jsonToList3(value: String): List<Shareholder>? {
+
+        val objects =
+            Gson().fromJson(value, Array<Shareholder>::class.java) as Array<Shareholder>
         val list = objects.toList()
         return list
     }
