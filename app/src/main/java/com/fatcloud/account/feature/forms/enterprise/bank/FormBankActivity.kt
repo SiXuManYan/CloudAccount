@@ -156,14 +156,21 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
         // 法人、股东相关信息
         shareholder_more_container.removeAllViews()
         data.shareholders?.forEachIndexed { index, shareholder ->
-            shareholder_more_container.addView(
-                presenter.getShareholderView(
-                    this,
-                    shareholder_more_container,
-                    index,
-                    shareholder
+
+            // 暂时不显示监事信息 2020-07-02
+            if (shareholder.mold != Constants.SH2) {
+
+                shareholder_more_container.addView(
+                    presenter.getShareholderView(
+                        this,
+                        shareholder_more_container,
+                        index,
+                        shareholder
+                    )
                 )
-            )
+            }
+
+
         }
 
 
@@ -295,14 +302,17 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
         if (CommonUtils.isDoubleClick(view)) {
             return
         }
+
         when (view.id) {
 
             R.id.business_license_iv,
             R.id.electronic_seal_iv,
             R.id.signed_authorization_iv
-
             -> ProductUtils.handleMediaSelect(context as Activity, 1, view.id)
-            R.id.bottom_right_tv -> handleCommit()
+            R.id.bottom_right_tv -> {
+                ProductUtils.handleDoubleClick(view)
+                handleCommit()
+            }
 
             else -> {
             }

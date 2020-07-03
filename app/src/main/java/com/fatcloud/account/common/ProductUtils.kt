@@ -396,4 +396,12 @@ object ProductUtils {
     }
 
 
+    fun handleDoubleClick(view: View) {
+        view.isClickable = false
+        view.postDelayed({
+            view.isClickable = true
+        }, 300)
+    }
+
+
 }

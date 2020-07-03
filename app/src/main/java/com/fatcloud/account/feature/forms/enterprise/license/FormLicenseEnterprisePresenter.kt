@@ -5,12 +5,12 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.VibrateUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
+import com.fatcloud.account.common.BigDecimalUtil
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.defray.prepare.PreparePay
@@ -19,6 +19,8 @@ import com.fatcloud.account.entity.order.enterprise.Shareholder
 import com.fatcloud.account.view.CompanyMemberEditView
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import java.lang.Exception
+import java.math.BigDecimal
 import javax.inject.Inject
 
 /**
@@ -117,6 +119,12 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
         if (!ProductUtils.isIdCardNumber(idNumberValue, "法人")) {
             return
         }
+        val expiryDateValue = legalPersonView.getExpiryDateValue()
+        if (expiryDateValue.isBlank()) {
+            ToastUtils.showShort("请输入法人身份证有效期")
+            return
+        }
+
 
         if (legalPersonView.getIdAddressValue().isBlank()) {
             ToastUtils.showShort("请输入法人身份证地址")
@@ -133,16 +141,17 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
         }
 
 
-        if (legalPersonView.getShareRatioValue().isBlank()) {
+        val legalRatio = legalPersonView.getShareRatioValue()
+        if (legalRatio.isBlank()) {
             ToastUtils.showShort("请输入法人股份占比")
             return
         }
 
         // 监事
-        if (!ProductUtils.hasIdCardUrl(legalPersonView.frontImageUrl, true, "监事")) {
+        if (!ProductUtils.hasIdCardUrl(supervisorView.frontImageUrl, true, "监事")) {
             return
         }
-        if (!ProductUtils.hasIdCardUrl(legalPersonView.backImageUrl, false, "监事")) {
+        if (!ProductUtils.hasIdCardUrl(supervisorView.backImageUrl, false, "监事")) {
             return
         }
 
@@ -175,10 +184,10 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
         }
 
         // 股东
-        if (!ProductUtils.hasIdCardUrl(legalPersonView.frontImageUrl, true, "股东")) {
+        if (!ProductUtils.hasIdCardUrl(shareholderView.frontImageUrl, true, "股东")) {
             return
         }
-        if (!ProductUtils.hasIdCardUrl(legalPersonView.backImageUrl, false, "股东")) {
+        if (!ProductUtils.hasIdCardUrl(shareholderView.backImageUrl, false, "股东")) {
             return
         }
         if (shareholderView.getNameValue().isBlank()) {
@@ -209,8 +218,37 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
             return
         }
 
-        if (shareholderView.getShareRatioValue().isBlank()) {
+        val holderRatio = shareholderView.getShareRatioValue()
+        if (holderRatio.isBlank()) {
             ToastUtils.showShort("请输入股东股份占比")
+            return
+        }
+
+
+        var legal_ratio = BigDecimal.ZERO
+        var supervisor_ratio = BigDecimal.ZERO
+        var holder_ratio = BigDecimal.ZERO
+        try {
+            legal_ratio = BigDecimal(legalRatio)
+            supervisor_ratio = if (!supervisorView.getShareRatioValue().isNullOrBlank()) {
+                BigDecimal(supervisorView.getShareRatioValue())
+            } else {
+                BigDecimal.ZERO
+            }
+            holder_ratio = BigDecimal(holderRatio)
+
+        } catch (e: Exception) {
+
+        }
+
+        val ratioSum =
+            BigDecimalUtil.add(
+                BigDecimalUtil.add(legal_ratio, supervisor_ratio),
+                BigDecimalUtil.add(holder_ratio, getExtraHolderRatio(shareholderMoreContainer))
+            )
+
+        if (ratioSum.compareTo(BigDecimal(100)) == 1) {
+            ToastUtils.showShort("股份占比总和不能大于100%")
             return
         }
 
@@ -277,15 +315,43 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
         holders.add(shareHolder1)
         holders.add(shareHolder2)
 
-        val max = shareholderMoreContainer.childCount - 1
-        if (max > 0) {
+        if (shareholderMoreContainer.childCount > 0) {
+            val max = shareholderMoreContainer.childCount
             for (i in 0 until max) {
                 val companyMemberEditView =
                     shareholderMoreContainer.getChildAt(i) as CompanyMemberEditView
                 holders.add(companyMemberEditView.getShareHolder())
             }
         }
+
+
         return holders
+
+    }
+
+    fun getExtraHolderRatio(shareholderMoreContainer: LinearLayout): BigDecimal {
+
+        var ratioSum = BigDecimal.ZERO
+
+        if (shareholderMoreContainer.childCount > 0) {
+            try {
+                val max = shareholderMoreContainer.childCount
+                for (i in 0 until max) {
+                    val companyMemberEditView =
+                        shareholderMoreContainer.getChildAt(i) as CompanyMemberEditView
+
+                    val shareRatioValue = companyMemberEditView.getShareRatioValue()
+                    if (!shareRatioValue.isNullOrBlank()) {
+                        ratioSum = BigDecimalUtil.add(BigDecimal(shareRatioValue), ratioSum)
+                    }
+                }
+            } catch (e: Exception) {
+
+            }
+        }
+
+
+        return ratioSum
 
     }
 

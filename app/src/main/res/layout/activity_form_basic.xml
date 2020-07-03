@@ -615,6 +615,7 @@
             android:background="@color/color_first_level"
             android:gravity="center"
             android:text="保存"
+            android:visibility="gone"
             android:textColor="@color/font_white"
             android:textSize="@dimen/font_size_16" />
 

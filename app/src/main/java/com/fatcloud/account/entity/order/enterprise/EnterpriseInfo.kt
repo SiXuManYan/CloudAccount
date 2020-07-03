@@ -110,6 +110,7 @@ class EnterpriseInfo {
     /** 设置状态文本 */
     var settingStateText: String ? = null
 
+
 }
 
 /*

@@ -60,7 +60,11 @@ class ShareholderView : LinearLayout {
 
     }
 
-    public fun setShareHolderView(data: Shareholder, productWorkType: String?) {
+    public fun setShareHolderView(
+        data: Shareholder,
+        productWorkType: String?
+
+    ) {
 
         when (data.mold) {
             Constants.SH1 -> {
@@ -72,7 +76,7 @@ class ShareholderView : LinearLayout {
                 name_title_tv.text = context.getString(R.string.supervisor_name)
             }
             Constants.SH3 -> {
-                title_tv.text = context.getString(R.string.shareholder_info)
+                title_tv.text = context.getString(R.string.shareholder_info2)
                 name_title_tv.text = context.getString(R.string.shareholder_name)
             }
             Constants.SH4_N -> {
@@ -86,13 +90,20 @@ class ShareholderView : LinearLayout {
         id_address_tv.text = data.idnoAddr
         if (productWorkType == Constants.PW3) {
             id_address_ll.visibility = View.GONE
+
+            val idnoDate = data.idnoDate
+            if (!idnoDate.isNullOrBlank()) {
+                id_expiry_date_ll.visibility = View.VISIBLE
+                id_expiry_date_tv.text = idnoDate
+            }
         } else {
             id_address_ll.visibility = View.VISIBLE
+            id_expiry_date_ll.visibility = View.GONE
         }
         phone_tv.text = data.phone
 
         val shareProportion = data.shareProportion
-        if (shareProportion.isBlank()) {
+        if (shareProportion.isNullOrBlank()) {
             share_ratio_tv.text = "0%"
         } else {
             share_ratio_tv.text = "$shareProportion%"

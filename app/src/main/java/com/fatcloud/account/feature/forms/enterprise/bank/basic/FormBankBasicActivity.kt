@@ -49,6 +49,7 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
         presenter.subsribeEventEntity<BankFormCommitSuccessEvent>(Consumer {
             finish()
         })
+
     }
 
 
@@ -74,9 +75,16 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
         if (CommonUtils.isDoubleClick(view)) {
             return
         }
+        view.postDelayed({
+
+        }, 200)
+
         when (view.id) {
 
-            R.id.bottom_right_tv -> handleNext()
+            R.id.bottom_right_tv -> {
+                ProductUtils.handleDoubleClick(view)
+                handleNext()
+            }
             R.id.account_nature_rl -> {
                 AccountNatureSheetFragment.newInstance().apply {
                     setOnItemSelectListener(object :
@@ -112,6 +120,7 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
             }
         }
     }
+
 
     private fun handleNext() {
 

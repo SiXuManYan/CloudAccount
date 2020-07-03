@@ -11,6 +11,7 @@ import com.fatcloud.account.app.Glide
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.entity.product.NativeBookkeeping
 import com.fatcloud.account.event.Event
@@ -96,6 +97,7 @@ class SignatureActivity : BaseMVPActivity<SignaturePresenter>(), SignatureView {
                 handleWordpad()
             }
             R.id.bottom_right_tv -> {
+                ProductUtils.handleDoubleClick(view)
                 handleCommit()
             }
             else -> {

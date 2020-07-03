@@ -291,7 +291,9 @@ class CompanyMemberEditView : LinearLayout {
     }
 
     fun setPhoneValue(hint: CharSequence) {
-        ev_03_phone_et.hint = hint
+        ev_03_phone_et.setText(hint)
+
+
     }
 
 
@@ -352,7 +354,7 @@ class CompanyMemberEditView : LinearLayout {
     /**
      * 返回所有包含当前所有信息的实体
      */
-    fun getShareHolder(): Shareholder {
+    fun getShareHolder(needIdExpiryDate: Boolean? = false): Shareholder {
         return Shareholder(
             idno = getIdNumberValue(),
             idnoAddr = getIdAddressValue(),
@@ -360,7 +362,8 @@ class CompanyMemberEditView : LinearLayout {
             mold = currentMold,
             name = getNameValue(),
             phone = getPhoneValue(),
-            shareProportion = getShareRatioValue()
+            shareProportion = getShareRatioValue(),
+            idnoDate = getExpiryDateValue()
         )
     }
 
@@ -506,6 +509,34 @@ class CompanyMemberEditView : LinearLayout {
 
     fun showNation() {
         nation_rl.visibility = View.VISIBLE
+    }
+
+    /**
+     * 是否需要识别身份证背面
+     */
+    var scanIdCardBack = false
+
+    /**
+     * 显示身份证有效期
+     */
+    fun showIdExpirationDate() {
+        scanIdCardBack = true
+        id_expiration_date_rl.visibility = View.VISIBLE
+    }
+
+    /**
+     * 设置身份证有效期
+     */
+    fun setExpiryDateValue(expiryDate: String, editAble: Boolean ) {
+        id_expiration_date_et.setText(expiryDate)
+
+        if (!editAble) {
+            setEditAble(false, id_expiration_date_et)
+        }
+    }
+
+    fun getExpiryDateValue(): String {
+        return id_expiration_date_et.text.toString().trim()
     }
 
 

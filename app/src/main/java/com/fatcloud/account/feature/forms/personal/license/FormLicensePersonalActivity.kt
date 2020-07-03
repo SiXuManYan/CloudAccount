@@ -192,6 +192,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         if (CommonUtils.isDoubleClick(view)) {
             return
         }
+
         when (view.id) {
             R.id.business_scope_rl -> {
                 // 参照 EnterpriseInfo
@@ -207,6 +208,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             }
 
             R.id.bottom_right_tv -> {
+                ProductUtils.handleDoubleClick(view)
                 handlePost()
             }
 

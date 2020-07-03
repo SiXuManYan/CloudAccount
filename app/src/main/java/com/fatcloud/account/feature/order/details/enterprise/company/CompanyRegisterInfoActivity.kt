@@ -129,7 +129,9 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
         addr_tv.text = data.addr
         shareholder_container_ll.removeAllViews()
         data.shareholders?.forEach {
-            shareholder_container_ll.addView(ShareholderView(this).apply { setShareHolderView(it,productWorkType) })
+            shareholder_container_ll.addView(ShareholderView(this).apply {
+                setShareHolderView(it, productWorkType)
+            })
         }
     }
 
@@ -295,15 +297,23 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
     }
 
 
+    /**
+     * 银行对公账户额外信息
+     */
     override fun bindShareholdersInfo(data: PersonalInfo) {
 
         shareholder_container_bank_ll.removeAllViews()
         data.shareholders?.forEach {
 
+            // 暂时不显示监事信息 2020-07-02
+            if (it.mold != Constants.SH2) {
+                shareholder_container_bank_ll.addView(
+                    ShareholderView(this).apply {
+                        setShareHolderView(it, productWorkType)
+                    })
+            }
 
-            shareholder_container_bank_ll.addView(ShareholderView(this).apply {
-                setShareHolderView(it,productWorkType)
-            })
+
         }
     }
 
