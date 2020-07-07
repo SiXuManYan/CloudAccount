@@ -14,7 +14,10 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
+import com.fatcloud.account.data.CloudDataBase
 import com.fatcloud.account.entity.defray.prepare.PreparePay
+import com.fatcloud.account.entity.local.form.PersonalTaxDraft
+import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.matisse.Matisse
@@ -24,6 +27,8 @@ import com.lljjcoder.bean.DistrictBean
 import com.lljjcoder.bean.ProvinceBean
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_tax_registration_personal.*
+import kotlinx.android.synthetic.main.layout_image_upload_single.*
+import javax.inject.Inject
 
 /**
  * Created by Wangsw on 2020/6/13 0013 13:47.
@@ -34,15 +39,12 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
     FormTaxRegistrationPersonalView {
 
 
+    lateinit var database: CloudDataBase @Inject set
+
     /**
      * 最终需支付金额
      */
     private var finalMoney: String = ""
-
-    /**
-     * 是否额外选择了刻章业务
-     */
-    private var addSeal: Boolean = false
 
 
     /**
@@ -60,16 +62,16 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
      */
     private var address: String = ""
 
-    /**
-     * 城市编码
-     */
-    private var areaId: String = ""
-    private var areaName: String = ""
 
     /**
      * 营业执照图片地址
      */
-    private var businessLicenseImgUrl: String = ""
+    private var mBusinessLicenseImgUrl: String = ""
+    private var mBusinessLicensePath: String = ""
+
+
+
+
 
 
     override fun getLayoutId() = R.layout.activity_form_tax_registration_personal
@@ -95,14 +97,9 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
             finalMoney = it
         }
 
-        intent.extras!!.getBoolean(Constants.PARAM_ADD_SEAL, false).let {
-            addSeal = it
-        }
-
         intent.extras!!.getString(Constants.PARAM_PRODUCT_ID)?.let {
             mProductId = it
         }
-
 
 
         intent.extras!!.getString(Constants.PARAM_PRODUCT_PRICE_ID)?.let {
@@ -119,13 +116,44 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
             if (it.formWhichClass != this.javaClass) {
                 return@Consumer
             }
-            businessLicenseImgUrl = it.finalUrl
+            mBusinessLicenseImgUrl = it.finalUrl
 
         })
     }
 
     private fun initView() {
         setMainTitle("办理信息")
+        restoreDraft()
+    }
+
+    private fun restoreDraft() {
+        val draft = PersonalTaxDraft.get()
+        if (draft.loginPhone != User.get().username || draft.productId.isNullOrBlank() || draft.productId != mProductId) {
+            return
+        }
+
+        trn_et.setText(draft.taxpayerNo)
+        legal_name_et.setText(draft.legalPersonName)
+        id_number_tv_et.setText(draft.idNumber)
+        bank_number_et.setText(draft.bankNumber)
+        bank_phone_et.setText(draft.bankPhone)
+        bank_phone_et.setText(draft.area)
+        draft.area?.let {
+            address = it
+            addr_value.text = it
+        }
+        draft.detailAddress?.let {
+            detail_addr_et.setText(it)
+        }
+        draft.businessLicenseImgUrl?.let {
+            mBusinessLicenseImgUrl = it
+        }
+        draft.businessLicenseImgFilePath?.let {
+
+            Glide.with(this).load(it).into(id_card_front_iv)
+        }
+
+
     }
 
 
@@ -144,6 +172,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
                 val elements = Matisse.obtainPathResult(data)
                 if (elements.isNotEmpty()) {
                     val fileDirPath = elements[0]
+                    mBusinessLicensePath = fileDirPath
                     val fromViewId = data.getIntExtra(Matisse.MEDIA_FROM_VIEW_ID, 0)
                     if (fromViewId != 0) {
                         val fromView = findViewById<ImageView>(fromViewId)
@@ -171,7 +200,8 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
     @OnClick(
         R.id.commit_tv,
         R.id.id_card_front_iv,
-        R.id.addr_rl
+        R.id.addr_rl,
+        R.id.bottom_left_tv
     )
     fun onClick(view: View) {
         if (CommonUtils.isDoubleClick(view)) {
@@ -199,16 +229,19 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
                             district.name
                         )
                         addr_value.text = address
-                        areaId = district.id
                     }
 
                     override fun onCancel() = Unit
                 })
             }
+            R.id.bottom_left_tv -> {
+                saveDraft()
+            }
             else -> {
             }
         }
     }
+
 
     private fun handleCommit() {
         val trnValue = trn_et.text.toString().trim()
@@ -268,7 +301,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
 
 
 
-        if (TextUtils.isEmpty(businessLicenseImgUrl)) {
+        if (TextUtils.isEmpty(mBusinessLicenseImgUrl)) {
             ToastUtils.showShort("请上传营业执照副本")
             return
         }
@@ -284,10 +317,32 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
             idno = idNumberValue,
             bankNo = bankNumber,
             phoneOfBank = bankPhoneValue,
-            businessLicenseImgUrl = businessLicenseImgUrl,
+            businessLicenseImgUrl = mBusinessLicenseImgUrl,
             addr = detailAddress,
             area = address
         )
+    }
+
+
+    private fun saveDraft() {
+
+        val personalTaxDraft = PersonalTaxDraft().apply {
+            taxpayerNo = trn_et.text.toString().trim()
+            legalPersonName = legal_name_et.text.toString().trim()
+            idNumber = id_number_tv_et.text.toString().trim()
+            bankNumber = bank_number_et.text.toString().trim()
+            bankPhone = bank_phone_et.text.toString().trim()
+            area = address
+            detailAddress = detail_addr_et.text.toString()
+            loginPhone = User.get().username
+            productId = mProductId
+            productPriceId = mProductPriceId
+            businessLicenseImgUrl = mBusinessLicenseImgUrl
+            businessLicenseImgFilePath = mBusinessLicensePath
+        }
+        database.personalTaxDraftDao().add(personalTaxDraft)
+        PersonalTaxDraft.update()
+
     }
 
     override fun commitSuccess(preparePay: PreparePay) {

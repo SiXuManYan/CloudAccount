@@ -19,9 +19,7 @@ class PersonalTaxDraft {
         private var instance: PersonalTaxDraft? = null
             get() {
                 if (field == null) {
-                    field =
-                        (Utils.getApp() as CloudAccountApplication).database.personalTaxDraftDao()
-                            .find()
+                    field = (Utils.getApp() as CloudAccountApplication).database.personalTaxDraftDao().find()
                     if (field == null) {
                         field = PersonalTaxDraft()
                     }
@@ -108,21 +106,31 @@ class PersonalTaxDraft {
 
 
     /**
-     * 营业执照图片地址
-     */
-    @ColumnInfo(name =  "business_license_image_url")
-    var businessLicenseImgUrl: String? = ""
-
-    /**
      * 详细地址
      */
     @ColumnInfo(name =  "detail_address")
-    var addr: String? = ""
+    var detailAddress: String? = ""
 
     /**
      * 用户选中的区域地址
      */
     @ColumnInfo(name =  "area")
     var area: String? = ""
+
+
+    /**
+     * 营业执照图片地址
+     */
+    @ColumnInfo(name =  "business_license_image_url")
+    var businessLicenseImgUrl: String? = ""
+
+    /**
+     * 营业执照图片路径
+     */
+    @ColumnInfo(name =  "business_license_image_file_path")
+    var businessLicenseImgFilePath: String? = ""
+
+
+
 
 }

@@ -12,10 +12,10 @@ interface PersonalTaxDraftDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun add(user: PersonalTaxDraft)
 
-    @Query("SELECT * FROM tb_personal_license_draft")
+    @Query("SELECT * FROM tb_personal_tax_draft")
     fun find(): PersonalTaxDraft?
 
-    @Query("DELETE FROM tb_personal_license_draft")
+    @Query("DELETE FROM tb_personal_tax_draft")
     fun clear()
 
 

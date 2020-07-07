@@ -5,7 +5,6 @@ import androidx.lifecycle.LifecycleOwner
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
 import com.fatcloud.account.entity.defray.prepare.PreparePay
-import com.google.gson.JsonObject
 import javax.inject.Inject
 
 /**
@@ -13,7 +12,8 @@ import javax.inject.Inject
  * </br>
  *
  */
-class FormTaxRegistrationPersonalPresenter @Inject constructor(private var view: FormTaxRegistrationPersonalView) : BasePresenter(view) {
+class FormTaxRegistrationPersonalPresenter @Inject constructor(private var view: FormTaxRegistrationPersonalView) :
+    BasePresenter(view) {
 
 
     /**
@@ -57,5 +57,6 @@ class FormTaxRegistrationPersonalPresenter @Inject constructor(private var view:
             }
         )
     }
+
 
 }
