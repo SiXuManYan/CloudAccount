@@ -61,6 +61,22 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
         initView()
     }
 
+
+    private fun initExtra() {
+        intent.getStringExtra(Constants.PARAM_ACCOUNT)?.let {
+            account = it
+        }
+
+        intent.getStringExtra(Constants.PARAM_CAPTCHA)?.let {
+            captcha = it
+        }
+
+        intent.getBooleanExtra(Constants.PARAM_IS_PASSWORD_REGISTER_SET_MODE, false)?.let {
+            isRegisterMode = it
+        }
+
+    }
+
     private fun initView() {
         password_et.requestFocus()
         if (isRegisterMode) {
@@ -76,7 +92,8 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
 
         password_et.addTextChangedListener(object : TextWatcher {
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
+                Unit
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
 
@@ -89,15 +106,28 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
                     return
                 }
                 rule_length_cb.isChecked = passwordFirst.length in 6..18
-                rule_format_cb.isChecked = RegexUtils.isMatch(".*[a-zA-Z].*[0-9]|.*[0-9].*[a-zA-Z]", passwordFirst)
+                rule_format_cb.isChecked =
+                    RegexUtils.isMatch(".*[a-zA-Z].*[0-9]|.*[0-9].*[a-zA-Z]", passwordFirst)
 
-                changeActionButtonBackground(!isRegisterMode && rule_length_cb.isChecked && rule_format_cb.isChecked)
+                if (isRegisterMode) {
+                    val isSame =
+                        (confirm_et.text.toString().trim() == password_et.text.toString().trim())
+                    rule_same_cb.isChecked = isSame
+                }
+
+                if (isRegisterMode) {
+                    changeActionButtonBackground(rule_length_cb.isChecked && rule_format_cb.isChecked && rule_same_cb.isChecked)
+                } else {
+                    changeActionButtonBackground(rule_length_cb.isChecked && rule_format_cb.isChecked)
+                }
+
             }
         })
 
         confirm_et.addTextChangedListener(object : TextWatcher {
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
+                Unit
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
 
@@ -126,22 +156,6 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
     }
 
 
-    private fun initExtra() {
-        intent.getStringExtra(Constants.PARAM_ACCOUNT)?.let {
-            account = it
-        }
-
-        intent.getStringExtra(Constants.PARAM_CAPTCHA)?.let {
-            captcha = it
-        }
-
-        intent.getBooleanExtra(Constants.PARAM_IS_PASSWORD_REGISTER_SET_MODE, false)?.let {
-            isRegisterMode = it
-        }
-
-    }
-
-
     @OnClick(
         R.id.password_rule_iv,
         R.id.password_confirm_rule_iv,
@@ -152,7 +166,10 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
 
         when (view.id) {
             R.id.password_rule_iv -> changeDisplayMethod(password_et, password_rule_iv)
-            R.id.password_confirm_rule_iv -> changeDisplayMethod(confirm_et, password_confirm_rule_iv)
+            R.id.password_confirm_rule_iv -> changeDisplayMethod(
+                confirm_et,
+                password_confirm_rule_iv
+            )
             R.id.next_tv -> {
                 if (CommonUtils.isDoubleClick(view)) {
                     return
