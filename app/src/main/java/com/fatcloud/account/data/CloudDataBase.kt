@@ -1,16 +1,13 @@
 package com.fatcloud.account.data
 
-import androidx.sqlite.db.SupportSQLiteDatabase
+import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
-import android.content.Context
-import com.fatcloud.account.entity.local.form.EnterprisePackageDraft
-import com.fatcloud.account.entity.local.form.PersonalBookkeepingDraft
-import com.fatcloud.account.entity.local.form.PersonalLicenseDraft
-import com.fatcloud.account.entity.local.form.PersonalTaxDraft
+import androidx.sqlite.db.SupportSQLiteDatabase
+import com.fatcloud.account.entity.local.form.*
 import com.fatcloud.account.entity.news.NewsCategory
 import com.fatcloud.account.entity.users.User
 
@@ -26,7 +23,8 @@ import com.fatcloud.account.entity.users.User
         PersonalLicenseDraft::class,
         PersonalTaxDraft::class,
         PersonalBookkeepingDraft::class,
-        EnterprisePackageDraft::class
+        EnterprisePackageDraft::class,
+        BankPublicDraft::class
     ],
     version = 2
 //    exportSchema = false
@@ -45,7 +43,7 @@ abstract class CloudDataBase : RoomDatabase() {
                     Room.databaseBuilder(context, CloudDataBase::class.java, DatabaseFileName)
                         .allowMainThreadQueries()
                         .fallbackToDestructiveMigration()
-//                        .addMigrations(migration_1_2)
+                        .addMigrations(migration_1_2)
                         .build()
             }
             return instance!!
@@ -56,12 +54,19 @@ abstract class CloudDataBase : RoomDatabase() {
             override fun migrate(database: SupportSQLiteDatabase) {
 
                 // 个体户营业执照草稿箱
-                database.execSQL("CREATE TABLE IF NOT EXISTS `tb_personal_license_draft` (`id` INTEGER NOT NULL, `mold` TEXT, `login_user_phone` TEXT, `address` TEXT, `area` TEXT, `id_number` TEXT, `money` TEXT, `product_id` TEXT, `product_price_id` TEXT, `business_scope_id` TEXT, `capital` TEXT, `employed_num` TEXT, `form` INTEGER, `gender` TEXT, `imgs` TEXT, `income` TEXT, `name0` TEXT, `name1` TEXT, `name2` TEXT, `nation` TEXT, `real_name` TEXT, `tel` TEXT, PRIMARY KEY(`id`))")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `tb_personal_license_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `mold` TEXT, `detail_address` TEXT, `area` TEXT, `id_number` TEXT, `final_money` TEXT, `product_id` TEXT, `product_price_id` TEXT, `business_scope_id` TEXT, `capital` TEXT, `employed_num` TEXT, `form` INTEGER, `gender` TEXT, `identity_img` TEXT, `income` TEXT, `zero_name` TEXT, `first_name` TEXT, `second_name` TEXT, `nation` TEXT, `real_name` TEXT, `tel` TEXT, PRIMARY KEY(`id`))")
 
-                // todo 个体户税务登记草稿箱
+                // 个体户税务登记
+                database.execSQL("CREATE TABLE IF NOT EXISTS `tb_personal_tax_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `final_money` TEXT, `product_id` TEXT, `product_price_id` TEXT, `taxpayer_number` TEXT, `legal_person_name` TEXT, `id_number` TEXT, `bank_number` TEXT, `bank_phone` TEXT, `business_license_image_url` TEXT, `detail_address` TEXT, `area` TEXT, PRIMARY KEY(`id`))")
 
-                // todo 个体户代理记账草稿箱
+                // 个体户代理记账
+                database.execSQL("CREATE TABLE IF NOT EXISTS `tb_personal_bookkeeping_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `final_money` TEXT, `product_id` TEXT, `product_price_id` TEXT, `taxpayer_number` TEXT, `legal_person_name` TEXT, `id_number` TEXT, `bank_number` TEXT, `bank_phone` TEXT, `business_license_image_url` TEXT, `detail_address` TEXT, `area` TEXT, PRIMARY KEY(`id`))")
 
+                // 企业套餐
+                database.execSQL("CREATE TABLE IF NOT EXISTS `tb_enterprise_package_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `product_id` TEXT, `income_money` TEXT, `final_money` TEXT, `product_price_id` TEXT, `select_pid_list` TEXT NOT NULL, `select_pid_name_list` TEXT NOT NULL, `detail_address` TEXT, `area` TEXT, `zero_name` TEXT, `first_name` TEXT, `second_name` TEXT, `investment_year` TEXT, `invest_money` TEXT, `bank_number` TEXT, `bank_phone` TEXT, `share_holders` TEXT, PRIMARY KEY(`id`))")
+
+                // 银行对公账户草稿
+                database.execSQL("CREATE TABLE IF NOT EXISTS `tb_bank_public_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `order_work_id` TEXT, `company_name` TEXT, `company_address` TEXT, `registered_capital` TEXT, `account_nature` TEXT, `reconciliation_name` TEXT, `reconciliation_phone` TEXT, `detail_address` TEXT, `area` TEXT, `business_license_url` TEXT, `electronic_seal_url` TEXT, `id_number` TEXT, `id_number_image_front_url` TEXT, `id_number_image_back_url` TEXT, `finance_name` TEXT, `finance_phone` TEXT, `finance_shares` TEXT, `legalPersonWarrantImgUrl` TEXT, PRIMARY KEY(`id`))")
             }
         }
 
@@ -90,6 +95,11 @@ abstract class CloudDataBase : RoomDatabase() {
      * 企业套餐
      */
     abstract fun enterprisePackageDraftDao(): EnterprisePackageDraftDao
+
+    /**
+     * 银行对公账户
+     */
+    abstract fun bankPublicDraftDao(): BankPublicDraftDao
 
 
 }

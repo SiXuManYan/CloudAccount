@@ -3,6 +3,8 @@ package com.fatcloud.account.entity.local.form
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.blankj.utilcode.util.Utils
+import com.fatcloud.account.app.CloudAccountApplication
 
 /**
  * Created by Wangsw on 2020/7/3 0003 15:31.
@@ -12,6 +14,37 @@ import androidx.room.PrimaryKey
  */
 @Entity(tableName = "tb_bank_public_draft")
 class BankPublicDraft {
+
+
+
+    companion object {
+        private var instance: BankPublicDraft? = null
+            get() {
+                if (field == null) {
+                    field =
+                        (Utils.getApp() as CloudAccountApplication).database.bankPublicDraftDao()
+                            .find()
+                    if (field == null) {
+                        field = BankPublicDraft()
+                    }
+                }
+                return field
+            }
+
+        @Synchronized
+        fun get() = instance!!
+
+        fun update() {
+            instance = null
+        }
+
+        fun clearAll() {
+            (Utils.getApp() as CloudAccountApplication).database.bankPublicDraftDao().clear()
+            instance = null
+        }
+    }
+
+
 
 
     @PrimaryKey
@@ -53,7 +86,7 @@ class BankPublicDraft {
     /**
      * 账户性质
      */
-    @ColumnInfo(name = "registered_capital")
+    @ColumnInfo(name = "account_nature")
     var accountNatureValue: String? = ""
 
 
@@ -140,6 +173,8 @@ class BankPublicDraft {
      */
     @ColumnInfo(name = "legalPersonWarrantImgUrl")
     var legalPersonWarrantImgUrl: String? = ""
+
+
 
 
 }
