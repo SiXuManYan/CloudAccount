@@ -9,29 +9,22 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.ScreenUtils
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.fatcloud.account.R
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
-import com.fatcloud.account.common.Html5Url
 import com.fatcloud.account.entity.home.Banners
 import com.fatcloud.account.entity.product.Product
 import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.event.entity.SetMainSelectNewsTabEvent
-import com.fatcloud.account.extend.RoundTransFormation
+import com.fatcloud.account.feature.news.detail.NewsDetailActivity
 import com.fatcloud.account.feature.product.detail.ProductDetailActivity
 import com.fatcloud.account.feature.webs.WebCommonActivity
 import com.fatcloud.account.view.banner.BannerSupport
-import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.ScreenUtils
-import com.blankj.utilcode.util.StringUtils
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.MultiTransformation
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.request.RequestOptions
-import com.fatcloud.account.entity.users.User
-import com.fatcloud.account.feature.news.detail.NewsDetailActivity
-import com.google.android.flexbox.FlexboxLayout
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import com.youth.banner.BannerConfig
 import com.youth.banner.loader.ImageLoader
@@ -130,8 +123,8 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
         product_2_cv = view.findViewById<CardView>(R.id.product_2_cv)
         product_3_cv = view.findViewById<CardView>(R.id.product_3_cv)
 
-
-
+//        val product_0 = product_0_cv.layoutParams as LinearLayout.LayoutParams
+//        product_0.height = product_0.width / 1.4f .toInt()
 
         product_container = view.findViewById<LinearLayout>(R.id.product_container)
         view.findViewById<TextView>(R.id.more_product_tv).setOnClickListener {
@@ -154,7 +147,10 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
 
                     Glide.with(context!!)
                         .load(obj)
-                        .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE).dontAnimate())
+                        .apply(
+                            RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                                .dontAnimate()
+                        )
                         .error(R.drawable.ic_error_image_load)
                         .into(imageView!!)
                 }
@@ -183,7 +179,7 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
                         if (banners.link.contains("trxback.html")) {
                             url = "trxback.html"
                             loadLocalHtml = true
-                        }else{
+                        } else {
                             url = banners.link
                             loadLocalHtml = false
                         }
@@ -197,10 +193,20 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
                         )
                     }
                     Constants.B2, Constants.B4 -> {
-                        context.startActivity(Intent(context, ProductDetailActivity::class.java).putExtra(Constants.PARAM_PRODUCT_ID, banners.link))
+                        context.startActivity(
+                            Intent(
+                                context,
+                                ProductDetailActivity::class.java
+                            ).putExtra(Constants.PARAM_PRODUCT_ID, banners.link)
+                        )
                     }
                     Constants.B3 -> {
-                        context.startActivity(Intent(context, NewsDetailActivity::class.java).putExtra(Constants.PARAM_ID, banners.link))
+                        context.startActivity(
+                            Intent(
+                                context,
+                                NewsDetailActivity::class.java
+                            ).putExtra(Constants.PARAM_ID, banners.link)
+                        )
                     }
 
 
@@ -248,7 +254,12 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
             getIndexText(index).text = product.name
 
             getIndexCard(index).setOnClickListener {
-                context.startActivity(Intent(context, ProductDetailActivity::class.java).putExtra(Constants.PARAM_PRODUCT_ID, product.id))
+                context.startActivity(
+                    Intent(context, ProductDetailActivity::class.java).putExtra(
+                        Constants.PARAM_PRODUCT_ID,
+                        product.id
+                    )
+                )
             }
 
         }
