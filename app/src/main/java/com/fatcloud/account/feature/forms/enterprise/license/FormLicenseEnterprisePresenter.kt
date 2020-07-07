@@ -66,7 +66,7 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
 
             // 移除当前股东
             showHighlightDeleteView().setOnClickListener {
-                shareholderMoreContainer.removeViewAt(index)
+                shareholderMoreContainer.removeView(shareholderMoreContainer.findViewById(id))
             }
 
         }
