@@ -73,6 +73,10 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
      * 营业执照图片地址
      */
     private var mBusinessLicenseImgUrl: String = ""
+
+    /**
+     * 营业执照本地路径
+     */
     private var mBusinessLicensePath: String = ""
 
 
@@ -241,11 +245,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
             }
             R.id.addr_rl -> {
                 ProductUtils.showLocationPicker(this, object : OnCityItemClickListener() {
-                    override fun onSelected(
-                        province: ProvinceBean,
-                        city: CityBean,
-                        district: DistrictBean
-                    ) {
+                    override fun onSelected(province: ProvinceBean, city: CityBean, district: DistrictBean) {
                         address = StringUtils.getString(
                             R.string.location_information_format,
                             province.name,
@@ -258,9 +258,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
                     override fun onCancel() = Unit
                 })
             }
-            R.id.bottom_left_tv -> {
-                saveDraft()
-            }
+            R.id.bottom_left_tv -> saveDraft()
             else -> {
             }
         }

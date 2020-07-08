@@ -119,6 +119,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
     private var serverFinalMoney: BigDecimal = BigDecimal.ZERO
 
 
+
     companion object {
         fun newInstance(productDetail: ProductDetail): ProductSpinnerFragment {
             val fragment = ProductSpinnerFragment()
@@ -193,6 +194,8 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 override fun onNothingSelected(parent: AdapterView<*>?) = Unit
 
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+
                     //  填充报税类型
                     val price = firstAdapter.mList[position]
                     val childList = price.childs
@@ -221,6 +224,8 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 override fun onNothingSelected(parent: AdapterView<*>?) = Unit
 
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+
                     // 填充收入情况
                     val price = secondAdapter.mList[position]
                     val childList = price.childs
@@ -249,6 +254,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 override fun onNothingSelected(parent: AdapterView<*>?) = Unit
 
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
 
                     val price = thirdAdapter.mList[position]
                     isThirdSelect = !TextUtils.isEmpty(price.mold)

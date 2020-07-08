@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string-array name="genderArray">
+        <item>扫描身份证后自动填写</item>
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+
+
+</resources>

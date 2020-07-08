@@ -63,18 +63,17 @@ class PersonalLicenseDraft {
     var mold: String? = ""
 
 
-
     /**
      * 详细地址
      */
-    @ColumnInfo(name =  "detail_address")
+    @ColumnInfo(name = "detail_address")
     var detailAddress: String? = ""
 
 
     /**
      * 用户选中的区域地址
      */
-    @ColumnInfo(name =  "area")
+    @ColumnInfo(name = "area")
     var area: String? = ""
 
 
@@ -107,7 +106,15 @@ class PersonalLicenseDraft {
      * @see BusinessScope.id
      */
     @ColumnInfo(name = "business_scope_id")
-    var businessScope: ArrayList<String>? = ArrayList()
+    var businessScopeId: ArrayList<String>? = ArrayList()
+
+
+    /**
+     * 经营范围 name
+     * @see BusinessScope.name
+     */
+    @ColumnInfo(name = "business_scope_name")
+    var businessScopeName: ArrayList<String>? = ArrayList()
 
 
     /**
@@ -126,8 +133,15 @@ class PersonalLicenseDraft {
      * 组成形式的 Id
      * @see Form.id
      */
-    @ColumnInfo(name = "form")
-    var form: Int? = 0
+    @ColumnInfo(name = "form_id")
+    var formId: String? = "0"
+
+   /**
+     * 组成形式的 名称
+     * @see Form.name
+     */
+    @ColumnInfo(name = "formName")
+    var formName: String? = ""
 
 
     /**
@@ -135,7 +149,7 @@ class PersonalLicenseDraft {
      * 2 女
      */
     @ColumnInfo(name = "gender")
-    var gender: String? = "1"
+    var gender: Int? = 1
 
 
     @ColumnInfo(name = "identity_img")
@@ -175,9 +189,8 @@ class PersonalLicenseDraft {
     @ColumnInfo(name = "real_name")
     var realName: String? = ""
 
-    @ColumnInfo(name = "tel")
-    var tel: String? = ""
-
+    @ColumnInfo(name = "phone")
+    var phone: String? = ""
 
 
 }

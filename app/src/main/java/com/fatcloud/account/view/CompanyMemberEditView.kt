@@ -6,12 +6,8 @@ import android.content.Intent
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.core.view.postDelayed
 import com.baidu.ocr.ui.camera.CameraActivity
 import com.baidu.ocr.ui.camera.CameraActivity.*
 import com.baidu.ocr.ui.util.FileUtil
@@ -63,6 +59,12 @@ class CompanyMemberEditView : LinearLayout {
      * 证件正面
      */
     var isFaceUp = false
+
+    /**
+     * 1男
+     * 2女
+     */
+    var genderIndex = 0
 
     constructor(context: Context?) : super(context) {
         init()
@@ -138,6 +140,18 @@ class CompanyMemberEditView : LinearLayout {
 
         }
 
+        gender_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val languages = resources.getStringArray(R.array.genderArray)
+                if (position != 0) {
+                    genderIndex = position
+                }
+            }
+
+        }
 
     }
 
@@ -197,6 +211,14 @@ class CompanyMemberEditView : LinearLayout {
         ev_00_name_et.setText(value)
         setEditAble(false, ev_00_name_et)
     }
+
+
+//    fun setGenderValue(value: CharSequence?, editAble: Boolean) {
+//        value?.let {
+//            gender_et.setText(value)
+//            setEditAble(editAble, gender_et)
+//        }
+//    }
 
 
     fun setEditAble(editAble: Boolean, editText: EditText) {
@@ -276,6 +298,14 @@ class CompanyMemberEditView : LinearLayout {
         phone_rl.visibility = View.GONE
     }
 
+    fun showPhone(show: Boolean) {
+        phone_rl.visibility = if (show) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+    }
+
     fun initPhoneHint(hint: CharSequence) {
         ev_03_phone_et.hint = hint
     }
@@ -336,6 +366,18 @@ class CompanyMemberEditView : LinearLayout {
      */
     fun getNationValue() = nation_et.text.toString().trim()
 
+//    /**
+//     * 性别
+//     */
+//    fun getGenderValue() = gender_et.text.toString().trim()
+
+    fun showGenderView(show: Boolean) {
+        gender_rl.visibility = if (show) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+    }
 
     fun getFrontImage(): ImageView = id_card_front_iv
     fun getBackImage(): ImageView = id_card_back_iv
@@ -372,7 +414,6 @@ class CompanyMemberEditView : LinearLayout {
      */
     fun loadResultImage(fileDirPath: String) {
         if (isFaceUp) {
-
 
             Glide.with(this).load(fileDirPath)
                 .skipMemoryCache(true)
@@ -527,7 +568,7 @@ class CompanyMemberEditView : LinearLayout {
     /**
      * 设置身份证有效期
      */
-    fun setExpiryDateValue(expiryDate: String, editAble: Boolean ) {
+    fun setExpiryDateValue(expiryDate: String, editAble: Boolean) {
         id_expiration_date_et.setText(expiryDate)
 
         if (!editAble) {
@@ -537,6 +578,18 @@ class CompanyMemberEditView : LinearLayout {
 
     fun getExpiryDateValue(): String {
         return id_expiration_date_et.text.toString().trim()
+    }
+
+    fun setGenderValue(it: Int) {
+        if (it == 1) {
+            gender_spinner.setSelection(1, true)
+        } else {
+            gender_spinner.setSelection(2, true)
+        }
+    }
+
+    fun setNationValue(it: String) {
+        nation_et.setText(it)
     }
 
 

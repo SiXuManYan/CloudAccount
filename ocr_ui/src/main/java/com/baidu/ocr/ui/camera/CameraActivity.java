@@ -47,6 +47,11 @@ public class CameraActivity extends Activity {
      */
     public static final String KEY_FROM_VIEW_ID = "key_from_view_id";
 
+    /**
+     * 临时存储的图片路径
+     */
+    public static final String KEY_CROP_VIEW_IMAGE_REAL_PATH = "key_crop_view_image_real_path";
+
     public static final String CONTENT_TYPE_GENERAL = "general";
 
     /**
@@ -86,7 +91,7 @@ public class CameraActivity extends Activity {
         @Override
         public boolean onRequestPermission() {
             ActivityCompat.requestPermissions(CameraActivity.this,
-                    new String[] {Manifest.permission.CAMERA},
+                    new String[]{Manifest.permission.CAMERA},
                     PERMISSIONS_REQUEST_CAMERA);
             return false;
         }
@@ -222,11 +227,11 @@ public class CameraActivity extends Activity {
     private void initNative(final String token) {
         CameraNativeHelper.init(CameraActivity.this, token,
                 new CameraNativeHelper.CameraNativeInitCallback() {
-            @Override
-            public void onError(int errorCode, Throwable e) {
-                cameraView.setInitNativeStatus(errorCode);
-            }
-        });
+                    @Override
+                    public void onError(int errorCode, Throwable e) {
+                        cameraView.setInitNativeStatus(errorCode);
+                    }
+                });
     }
 
     private void showTakePicture() {
@@ -271,7 +276,7 @@ public class CameraActivity extends Activity {
                     != PackageManager.PERMISSION_GRANTED) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     ActivityCompat.requestPermissions(CameraActivity.this,
-                            new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                             PERMISSIONS_EXTERNAL_STORAGE);
                     return;
                 }
@@ -324,6 +329,9 @@ public class CameraActivity extends Activity {
         }
     };
 
+    /**
+     * 拍照回调
+     */
     private CameraView.OnTakePictureCallback takePictureCallback = new CameraView.OnTakePictureCallback() {
         @Override
         public void onPictureTaken(final Bitmap bitmap) {
@@ -398,8 +406,10 @@ public class CameraActivity extends Activity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Intent intent = new Intent();
-                intent.putExtra(CameraActivity.KEY_CONTENT_TYPE, contentType).putExtra(KEY_FROM_VIEW_ID,fromViewId);
+                Intent intent = new Intent()
+                        .putExtra(CameraActivity.KEY_CONTENT_TYPE, contentType)
+                        .putExtra(KEY_FROM_VIEW_ID, fromViewId)
+                        .putExtra(KEY_CROP_VIEW_IMAGE_REAL_PATH, cropView.filePath);
 
                 setResult(Activity.RESULT_OK, intent);
                 finish();
@@ -407,6 +417,9 @@ public class CameraActivity extends Activity {
         });
     }
 
+    /**
+     * 确定
+     */
     private View.OnClickListener confirmButtonOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -485,6 +498,8 @@ public class CameraActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        // 用户选择相册图片
         if (requestCode == REQUEST_CODE_PICK_IMAGE) {
             if (resultCode == Activity.RESULT_OK) {
                 Uri uri = data.getData();
@@ -518,7 +533,6 @@ public class CameraActivity extends Activity {
 
     /**
      * 做一些收尾工作
-     *
      */
     private void doClear() {
         CameraThreadPool.cancelAutoFocusTimer();

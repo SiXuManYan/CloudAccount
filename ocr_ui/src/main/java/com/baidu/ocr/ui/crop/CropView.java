@@ -24,6 +24,8 @@ import android.view.WindowManager;
 
 public class CropView extends View {
 
+    public String filePath =  "";
+
     public CropView(Context context) {
         super(context);
         init();
@@ -44,10 +46,13 @@ public class CropView extends View {
         if (this.bitmap != null && !this.bitmap.isRecycled()) {
             this.bitmap.recycle();
         }
-
+        filePath = path;
         if (path == null) {
+
             return;
         }
+
+
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;

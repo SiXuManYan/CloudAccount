@@ -15,10 +15,13 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
+import com.fatcloud.account.data.CloudDataBase
 import com.fatcloud.account.entity.commons.Form
 import com.fatcloud.account.entity.defray.prepare.PreparePay
+import com.fatcloud.account.entity.local.form.PersonalLicenseDraft
 import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.persional.PersonalInfo
+import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
@@ -31,8 +34,8 @@ import com.lljjcoder.bean.DistrictBean
 import com.lljjcoder.bean.ProvinceBean
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_license_personal.*
-import kotlinx.android.synthetic.main.layout_bottom_action.*
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 
@@ -45,6 +48,7 @@ import kotlin.collections.ArrayList
 class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter>(),
     FormLicensePersonalView {
 
+    lateinit var database: CloudDataBase @Inject set
 
     /**
      * 用户选中的一级经营范围pid
@@ -61,11 +65,16 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
      */
     private var selectFormId = ""
 
+    /**
+     * 用户选中的组成形式名字
+     */
+    private var selectFormName = ""
+
 
     /**
      * 最终需支付金额
      */
-    private var finalMoney: String = ""
+    private var mFinalMoney: String = ""
 
 
     /**
@@ -88,7 +97,11 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
      * 用户选中的城市信息id
      */
     private var areaId: String = ""
-    private var areaName: String = ""
+
+    /**
+     * 用户选中的城市名称
+     */
+    private var mAreaName: String = ""
 
 
     var mediaType = 0
@@ -96,7 +109,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
     /**
      * 身份证正反面地址集合
      */
-    var identityImg: ArrayList<IdentityImg> = ArrayList()
+    var mIdEntityImg: ArrayList<IdentityImg> = ArrayList()
 
     /**
      * 正面
@@ -128,7 +141,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         }
 
         intent.extras!!.getString(Constants.PARAM_FINAL_MONEY)?.let {
-            finalMoney = it
+            mFinalMoney = it
         }
 
         intent.extras!!.getString(Constants.PARAM_PRODUCT_PRICE_ID)?.let {
@@ -165,14 +178,86 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             initHighlightTitle("个人信息（请扫描身份证正反面）")
             initNameTitle("姓名")
             showNation()
+            showGenderView(true)
             hideAddress()
-            hidePhone()
+            showPhone(true)
             hideShareRatio()
             hideBottomSplit()
         }
         zero_choice_name.setTitleAndHint("首选名称", getString(R.string.no_less_than_3_word))
         first_choice_name.setTitleAndHint("备选名称1", getString(R.string.no_less_than_3_word))
         second_choice_name.setTitleAndHint("备选名称2", getString(R.string.no_less_than_3_word))
+        restoreDraft()
+    }
+
+    private fun restoreDraft() {
+        val draft = PersonalLicenseDraft.get()
+        if (draft.loginPhone != User.get().username || draft.productId.isNullOrBlank() || draft.productId != mProductId) {
+            return
+        }
+        draft.zeroName?.let {
+            zero_choice_name.setValue(it)
+        }
+        draft.firstName?.let {
+            first_choice_name.setValue(it)
+        }
+        draft.secondName?.let {
+            second_choice_name.setValue(it)
+        }
+
+        draft.businessScopeId?.let {
+            selectPid = it
+        }
+
+        draft.businessScopeName?.let {
+            selectPidNames = it
+            business_scope_value.text = Arrays.toString(it.toArray()).replace("[", "").replace("]", "")
+        }
+
+        draft.employedNum?.let {
+            employees_number_et.setText(it)
+        }
+        draft.capital?.let {
+            amount_of_funds_et.setText(it.stripTrailingZeros().toPlainString())
+        }
+
+        draft.formId?.let {
+            selectFormId = it
+        }
+
+        draft.formName?.let {
+            selectFormName = it
+            formation_value.text = it
+        }
+
+        draft.area?.let {
+            mAreaName = it
+            addr_value.text = it
+        }
+
+        draft.detailAddress?.let {
+            detail_addr_et.setText(it)
+        }
+
+        draft.realName?.let {
+            legal_person_ev.setNameValue(it,false)
+        }
+
+        draft.gender?.let {
+            legal_person_ev.genderIndex = it
+            legal_person_ev.setGenderValue(it)
+        }
+
+        draft.idno?.let {
+            legal_person_ev.setIdNumberValue(it)
+        }
+        draft.phone?.let{
+            legal_person_ev.setPhoneValue(it)
+        }
+
+        draft.nation?.let {
+            legal_person_ev.setNationValue(it)
+        }
     }
 
 
@@ -182,13 +267,11 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         R.id.bottom_right_tv,
         R.id.formation_rl,
         R.id.city_rl
-
     )
     fun onClick(view: View) {
         if (CommonUtils.isDoubleClick(view)) {
             return
         }
-
         when (view.id) {
             R.id.business_scope_rl -> {
                 // 参照 EnterpriseInfo
@@ -199,10 +282,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
                     ), 1
                 )
             }
-            R.id.bottom_left_tv -> {
-                // 保存
-            }
-
+            R.id.bottom_left_tv -> saveDraft()
             R.id.bottom_right_tv -> {
                 ProductUtils.handleDoubleClick(view)
                 handlePost()
@@ -213,6 +293,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
                     setOnFormSelectListener(object : FormSheetFragment.OnItemSelectedListener {
                         override fun onItemSelected(currentSelected: Form) {
                             this@FormLicensePersonalActivity.selectFormId = currentSelected.id
+                            this@FormLicensePersonalActivity.selectFormName = currentSelected.name
                             this@FormLicensePersonalActivity.formation_value.text = currentSelected.name
                         }
                     })
@@ -223,13 +304,13 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             R.id.city_rl -> {
                 ProductUtils.showLocationPicker(this, object : OnCityItemClickListener() {
                     override fun onSelected(province: ProvinceBean, city: CityBean, district: DistrictBean) {
-                        areaName = StringUtils.getString(
+                        mAreaName = StringUtils.getString(
                             R.string.location_information_format,
                             province.name,
                             city.name,
                             district.name
                         )
-                        addr_value.text = areaName
+                        addr_value.text = mAreaName
                         areaId = district.id
                     }
 
@@ -241,26 +322,43 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         }
     }
 
+    private fun saveDraft() {
+        val draft = PersonalLicenseDraft().apply {
+            loginPhone = User.get().username
+            finalMoney = mFinalMoney
+            productId = mProductId
+            productPriceId = mProductPriceId
+            mold = Constants.P1
+
+            zeroName = zero_choice_name.value()
+            firstName = first_choice_name.value()
+            secondName = second_choice_name.value()
+            businessScopeId = selectPid
+            businessScopeName = selectPidNames
+            employedNum = employees_number_et.text.toString().trim()
+            capital = ProductUtils.getEditValueToBigDecimal(amount_of_funds_et.text.toString().trim())
+            formId = selectFormId
+            formName = selectFormName
+
+            area = mAreaName
+            detailAddress = detail_addr_et.text.toString().trim()
+            // 法人信息
+            realName = legal_person_ev.getNameValue()
+            gender = legal_person_ev.genderIndex
+            nation = legal_person_ev.getNationValue()
+            idno = legal_person_ev.getIdNumberValue()
+            phone = legal_person_ev.getPhoneValue()
+            identityImg = mIdEntityImg
+        }
+        database.personalLicenseDraftDao().add(draft)
+        PersonalLicenseDraft.update()
+        ToastUtils.showShort(R.string.save_success)
+    }
+
 
     private fun handlePost() {
 
 
-        if (areaName.isBlank()) {
-            ToastUtils.showShort("请选择地址")
-            return
-        }
-
-        val detailAddrStr = detail_addr_et.text.toString().trim()
-        if (detailAddrStr.isBlank()) {
-            ToastUtils.showShort("请输入详细地址")
-            return
-        }
-
-        val phoneStr = phone_tv_et.text.toString().trim()
-        if (phoneStr.isBlank()) {
-            ToastUtils.showShort("请输入联系方式")
-            return
-        }
         if (zero_choice_name.value().isBlank()) {
             ToastUtils.showShort("请输入首选名称")
             return
@@ -299,8 +397,16 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             return
         }
 
+        if (mAreaName.isBlank()) {
+            ToastUtils.showShort("请选择地址")
+            return
+        }
 
-
+        val detailAddrStr = detail_addr_et.text.toString().trim()
+        if (detailAddrStr.isBlank()) {
+            ToastUtils.showShort("请输入详细地址")
+            return
+        }
 
         try {
             val amountInt = amountOfFundsStr.toInt()
@@ -313,7 +419,6 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
 
         }
 
-
         // 法人
         if (!ProductUtils.hasIdCardUrl(legal_person_ev.frontImageUrl, true)) {
             return
@@ -325,9 +430,14 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
 
         val nameValue = legal_person_ev.getNameValue()
         if (nameValue.isBlank()) {
-            ToastUtils.showShort("姓名")
+            ToastUtils.showShort("请输入姓名")
             return
         }
+        if (legal_person_ev.genderIndex == 0) {
+            ToastUtils.showShort("请选择性别")
+            return
+        }
+
 
         if (nameValue.length < 2) {
             ToastUtils.showShort("请输入不少于两个字的姓名")
@@ -350,27 +460,31 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         }
 
 
-        identityImg.apply {
+        val phoneStr = legal_person_ev.getPhoneValue()
+        if (phoneStr.isBlank()) {
+            ToastUtils.showShort("请输入联系方式")
+            return
+        }
+
+
+
+        mIdEntityImg.apply {
             clear()
             add(IdentityImg(imgUrl = legal_person_ev.frontImageUrl, mold = Constants.I1))
             add(IdentityImg(imgUrl = legal_person_ev.backImageUrl, mold = Constants.I2))
         }
         val enterpriseInfo = PersonalInfo().apply {
             addr = detailAddrStr
-            area = areaName
+            area = mAreaName
             businessScope = ProductUtils.stringList2IntList(selectPid)
             capital = ProductUtils.getEditValueToBigDecimal(amountOfFundsStr)
             income = capital
             employedNum = employeesNumberStr
             form = selectFormId.toInt()
-            gender = if (man_sex_rb.isChecked) {
-                "1"
-            } else {
-                "2"
-            }
+            gender = legal_person_ev.genderIndex.toString()
             idno = idNumberValue
-            imgs = identityImg
-            money = ProductUtils.getEditValueToBigDecimal(finalMoney)
+            imgs = mIdEntityImg
+            money = ProductUtils.getEditValueToBigDecimal(mFinalMoney)
             name0 = zero_choice_name.value()
             name1 = first_choice_name.value()
             name2 = second_choice_name.value()
@@ -407,6 +521,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
 
     private fun receiveOcrCamera(data: Intent) {
         val contentType = data.getStringExtra(CameraActivity.KEY_CONTENT_TYPE)
+        val realPath = data.getStringExtra(CameraActivity.KEY_CROP_VIEW_IMAGE_REAL_PATH)
         val fromViewId = data.getIntExtra(CameraActivity.KEY_FROM_VIEW_ID, 0)
         val filePath: String = FileUtil.getSaveFile(applicationContext).absolutePath
 
@@ -434,25 +549,24 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         when (contentType) {
             CameraActivity.CONTENT_TYPE_ID_CARD_FRONT -> {
                 // 身份证正面
-                ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_FRONT, filePath,
-                    object : RecognizeIDCardResultCallBack {
-                        override fun onResult(result: IDCardResult) {
+                ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_FRONT, filePath, object : RecognizeIDCardResultCallBack {
+                    override fun onResult(result: IDCardResult) {
 
-                            result.name?.let {
-                                fromView.setNameValue(it.words, true)
-                            }
-                            result.idNumber?.let {
-                                fromView.setIdNumberValue(it.words, true)
-                            }
-                            result.address?.let {
-                                fromView.setIdAddressValue(it.words, true)
-                            }
-                            result.ethnic?.let {
-                                fromView.setEthnicValue(it.words, true)
-                            }
-
+                        result.name?.let {
+                            fromView.setNameValue(it.words, true)
                         }
-                    })
+                        result.idNumber?.let {
+                            fromView.setIdNumberValue(it.words, true)
+                        }
+                        result.address?.let {
+                            fromView.setIdAddressValue(it.words, true)
+                        }
+                        result.ethnic?.let {
+                            fromView.setEthnicValue(it.words, true)
+                        }
+
+                    }
+                })
             }
             else -> {
             }
@@ -471,7 +585,6 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
                     Constants.PARAM_MONEY,
                     preparePay.money.stripTrailingZeros().toPlainString()
                 )
-//                .putExtra(Constants.PARAM_MONEY, finalMoney)
                 .putExtra(Constants.PARAM_IMAGE_URL, preparePay.productLogoImgUrl)
                 .putExtra(Constants.PARAM_PRODUCT_NAME, preparePay.productName)
                 .putExtra(Constants.PARAM_DATE, preparePay.createDt)

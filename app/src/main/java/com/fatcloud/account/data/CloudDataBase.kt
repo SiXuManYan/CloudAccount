@@ -54,7 +54,7 @@ abstract class CloudDataBase : RoomDatabase() {
             override fun migrate(database: SupportSQLiteDatabase) {
 
                 // 个体户营业执照草稿箱
-                database.execSQL("CREATE TABLE IF NOT EXISTS `tb_personal_license_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `mold` TEXT, `detail_address` TEXT, `area` TEXT, `id_number` TEXT, `final_money` TEXT, `product_id` TEXT, `product_price_id` TEXT, `business_scope_id` TEXT, `capital` TEXT, `employed_num` TEXT, `form` INTEGER, `gender` TEXT, `identity_img` TEXT, `income` TEXT, `zero_name` TEXT, `first_name` TEXT, `second_name` TEXT, `nation` TEXT, `real_name` TEXT, `tel` TEXT, PRIMARY KEY(`id`))")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `tb_personal_license_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `mold` TEXT, `detail_address` TEXT, `area` TEXT, `id_number` TEXT, `final_money` TEXT, `product_id` TEXT, `product_price_id` TEXT, `business_scope_id` TEXT, `business_scope_name` TEXT, `capital` TEXT, `employed_num` TEXT, `form_id` TEXT, `formName` TEXT, `gender` INTEGER, `identity_img` TEXT, `income` TEXT, `zero_name` TEXT, `first_name` TEXT, `second_name` TEXT, `nation` TEXT, `real_name` TEXT, `phone` TEXT, PRIMARY KEY(`id`))")
 
                 // 个体户税务登记
                 database.execSQL("CREATE TABLE IF NOT EXISTS `tb_personal_tax_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `final_money` TEXT, `product_id` TEXT, `product_price_id` TEXT, `taxpayer_number` TEXT, `legal_person_name` TEXT, `id_number` TEXT, `bank_number` TEXT, `bank_phone` TEXT, `business_license_image_url` TEXT, `detail_address` TEXT, `area` TEXT, PRIMARY KEY(`id`))")

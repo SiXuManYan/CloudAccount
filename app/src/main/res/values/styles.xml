@@ -122,6 +122,11 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
+    <style name="common_spinner2" parent="Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:textColor">@color/color_cccccc</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">right</item>
+    </style>
 
     <!-- spinner -->
     <style name="common_spinner">
