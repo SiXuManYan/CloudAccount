@@ -170,13 +170,6 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             hideShareRatio()
             hideBottomSplit()
         }
-
-        bottom_left_tv.apply {
-            text = getString(R.string.save)
-            visibility = View.GONE
-        }
-        bottom_right_tv.text = getString(R.string.commit)
-
         zero_choice_name.setTitleAndHint("首选名称", getString(R.string.no_less_than_3_word))
         first_choice_name.setTitleAndHint("备选名称1", getString(R.string.no_less_than_3_word))
         second_choice_name.setTitleAndHint("备选名称2", getString(R.string.no_less_than_3_word))
@@ -220,8 +213,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
                     setOnFormSelectListener(object : FormSheetFragment.OnItemSelectedListener {
                         override fun onItemSelected(currentSelected: Form) {
                             this@FormLicensePersonalActivity.selectFormId = currentSelected.id
-                            this@FormLicensePersonalActivity.formation_value.text =
-                                currentSelected.name
+                            this@FormLicensePersonalActivity.formation_value.text = currentSelected.name
                         }
                     })
                     show(supportFragmentManager, this.tag)
@@ -230,11 +222,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             }
             R.id.city_rl -> {
                 ProductUtils.showLocationPicker(this, object : OnCityItemClickListener() {
-                    override fun onSelected(
-                        province: ProvinceBean,
-                        city: CityBean,
-                        district: DistrictBean
-                    ) {
+                    override fun onSelected(province: ProvinceBean, city: CityBean, district: DistrictBean) {
                         areaName = StringUtils.getString(
                             R.string.location_information_format,
                             province.name,
