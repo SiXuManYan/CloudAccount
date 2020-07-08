@@ -245,6 +245,11 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
     private fun handlePost() {
 
 
+        if (areaName.isBlank()) {
+            ToastUtils.showShort("请选择地址")
+            return
+        }
+
         val detailAddrStr = detail_addr_et.text.toString().trim()
         if (detailAddrStr.isBlank()) {
             ToastUtils.showShort("请输入详细地址")
@@ -256,6 +261,28 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             ToastUtils.showShort("请输入联系方式")
             return
         }
+        if (zero_choice_name.value().isBlank()) {
+            ToastUtils.showShort("请输入首选名称")
+            return
+        }
+
+        if (first_choice_name.value().isBlank()) {
+            ToastUtils.showShort("请输入备选名称1")
+            return
+        }
+
+        if (second_choice_name.value().isBlank()) {
+            ToastUtils.showShort("请输入备选名称2")
+            return
+        }
+
+
+        if (selectPidNames.isEmpty()) {
+            ToastUtils.showShort("请选择经营范围")
+            return
+        }
+
+
         val employeesNumberStr = employees_number_et.text.toString().trim()
         if (employeesNumberStr.isBlank()) {
             ToastUtils.showShort("请输入从业人数")
@@ -266,6 +293,14 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             ToastUtils.showShort("请输入资金数额")
             return
         }
+
+        if (formation_value.text.toString().trim().isBlank()) {
+            ToastUtils.showShort("请输入组成形式")
+            return
+        }
+
+
+
 
         try {
             val amountInt = amountOfFundsStr.toInt()
@@ -313,27 +348,6 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             ToastUtils.showShort("请输入民族")
             return
         }
-
-        if (!ProductUtils.checkEditEmptyWithVibrate(
-                zero_choice_name,
-                first_choice_name,
-                second_choice_name
-            )
-        ) {
-            return
-        }
-
-
-        if (!ProductUtils.checkViewValueEmpty(addr_value.text.toString(), addr_value)
-            || !ProductUtils.checkViewValueEmpty(
-                business_scope_value.text.toString(),
-                business_scope_value
-            )
-            || !ProductUtils.checkViewValueEmpty(formation_value.text.toString(), formation_value)
-        ) {
-            return
-        }
-
 
 
         identityImg.apply {

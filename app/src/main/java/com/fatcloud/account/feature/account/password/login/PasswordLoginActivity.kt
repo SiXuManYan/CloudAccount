@@ -9,6 +9,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import butterknife.OnClick
+import com.blankj.utilcode.util.RegexUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
@@ -56,7 +57,8 @@ class PasswordLoginActivity : BaseMVPActivity<PasswordLoginPresenter>(), Passwor
 //        KeyboardUtils.showSoftInput(password_et)
         password_et.addTextChangedListener(object : TextWatcher {
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
+                Unit
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
 
@@ -64,10 +66,16 @@ class PasswordLoginActivity : BaseMVPActivity<PasswordLoginPresenter>(), Passwor
 
 
                 val passwordFirst = s.toString().trim()
-                if (passwordFirst.isNullOrBlank()|| passwordFirst.length !in 6..18) {
+                if (passwordFirst.isNullOrBlank() || passwordFirst.length !in 6..18 || !RegexUtils.isMatch(
+                        ".*[a-zA-Z].*[0-9]|.*[0-9].*[a-zA-Z]",
+                        passwordFirst
+                    )
+                ) {
                     next_tv.setBackgroundResource(R.drawable.shape_bg_4_gray)
+                    next_tv.isClickable = false
                 } else {
                     next_tv.setBackgroundResource(R.drawable.shape_bg_4_red)
+                    next_tv.isClickable = true
                 }
 
 
@@ -130,7 +138,10 @@ class PasswordLoginActivity : BaseMVPActivity<PasswordLoginPresenter>(), Passwor
                 startActivity(
                     Intent(this, CaptchaActivity::class.java)
                         .putExtra(Constants.PARAM_ACCOUNT, currentAccount)
-                        .putExtra(Constants.PARAM_CAPTCHA_MODE, CaptchaActivity.MODE_FORGET_PASSWORD)
+                        .putExtra(
+                            Constants.PARAM_CAPTCHA_MODE,
+                            CaptchaActivity.MODE_FORGET_PASSWORD
+                        )
                 )
             }
             else -> {

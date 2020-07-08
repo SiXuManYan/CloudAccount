@@ -221,7 +221,6 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             initShareRatioHint(getString(R.string.share_ratio_hint))
             showAddActionView().setOnClickListener {
                 VibrateUtils.vibrate(10)
-                // it.visibility = View.GONE
                 shareholder_more_container.addView(
                     presenter.getShareholderView(
                         0,
