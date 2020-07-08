@@ -4,9 +4,11 @@ import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.os.Environment
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -57,6 +59,11 @@ class GalleryActivity : BaseActivity() {
     private var hashCode: Int? = null
 
     override fun getLayoutId() = R.layout.activity_gallery
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        window.addFlags(WindowManager.LayoutParams.FLAG_SECURE);
+    }
 
     override fun onDestroy() {
         disposable?.dispose()

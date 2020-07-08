@@ -1,6 +1,8 @@
 package com.fatcloud.account.view
 
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +17,7 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.order.enterprise.Shareholder
 import com.fatcloud.account.extend.RoundTransFormation
+import com.fatcloud.account.feature.gallery.GalleryActivity
 import kotlinx.android.synthetic.main.view_shareholder.view.*
 
 /**
@@ -25,6 +28,9 @@ import kotlinx.android.synthetic.main.view_shareholder.view.*
 class ShareholderView : LinearLayout {
 
 
+    private var frontUrl = ""
+    private var backUrl = ""
+
     constructor(context: Context?) : super(context) {
         init()
     }
@@ -33,38 +39,28 @@ class ShareholderView : LinearLayout {
         init()
     }
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    ) {
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         init()
     }
 
-    constructor(
-        context: Context?,
-        attrs: AttributeSet?,
-        defStyleAttr: Int,
-        defStyleRes: Int
-    ) : super(
-        context,
-        attrs,
-        defStyleAttr,
-        defStyleRes
-    ) {
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
         init()
     }
 
     private fun init() {
         val view = LayoutInflater.from(context).inflate(R.layout.view_shareholder, this, true)
 
+        id_card_front_iv.setOnClickListener {
+            lookGallery(frontUrl)
+        }
+
+        id_card_obverse_iv.setOnClickListener {
+            lookGallery(backUrl)
+        }
+
     }
 
-    public fun setShareHolderView(
-        data: Shareholder,
-        productWorkType: String?
-
-    ) {
+    public fun setShareHolderView(data: Shareholder, productWorkType: String?) {
 
         when (data.mold) {
             Constants.SH1 -> {
@@ -116,47 +112,35 @@ class ShareholderView : LinearLayout {
             if (!imgUrl.isNullOrEmpty()) {
 
                 if (ProductUtils.isOssSignUrl(imgUrl)) {
-                    ProductUtils.getRealOssUrl(
-                        context,
-                        imgUrl,
-                        object : CloudAccountApplication.OssSignCallBack {
-                            override fun ossUrlSignEnd(url: String) {
+                    ProductUtils.getRealOssUrl(context, imgUrl, object : CloudAccountApplication.OssSignCallBack {
+                        override fun ossUrlSignEnd(url: String) {
 
-                                Glide.with(this@ShareholderView)
-                                    .load(url)
-                                    .apply(
-                                        RequestOptions().transform(
-                                            MultiTransformation(
-                                                CenterCrop(),
-                                                RoundTransFormation(context, 4)
-                                            )
-                                        )
-                                    )
-                                    .error(R.drawable.ic_error_image_load)
-                                    .into(
-                                        if (index == 0) {
-                                            id_card_front_iv
-                                        } else {
-                                            id_card_obverse_iv
-                                        }
-                                    )
+                            Glide.with(this@ShareholderView)
+                                .load(url)
+                                .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
+                                .error(R.drawable.ic_error_image_load)
+                                .into(
+                                    if (index == 0) {
+                                        id_card_front_iv
+                                    } else {
+                                        id_card_obverse_iv
+                                    }
+                                )
 
-
+                            if (index == 0) {
+                                frontUrl = url
+                            } else {
+                                backUrl = url
                             }
 
-                        })
+                        }
+
+                    })
 
                 } else {
                     Glide.with(this@ShareholderView)
                         .load(imgUrl)
-                        .apply(
-                            RequestOptions().transform(
-                                MultiTransformation(
-                                    CenterCrop(),
-                                    RoundTransFormation(context, 4)
-                                )
-                            )
-                        )
+                        .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                         .error(R.drawable.ic_error_image_load)
                         .into(
                             if (index == 0) {
@@ -165,13 +149,32 @@ class ShareholderView : LinearLayout {
                                 id_card_obverse_iv
                             }
                         )
+
+                    if (index == 0) {
+                        frontUrl = imgUrl
+                    } else {
+                        backUrl = imgUrl
+                    }
+
                 }
-
-
             }
-
-
         }
+    }
+
+
+    private fun lookGallery(url: String) {
+
+        if (url.isBlank()) {
+            return
+        }
+
+        val imageList = ArrayList<String>()
+        imageList.add(url)
+        val bundle = Bundle()
+        bundle.putStringArrayList(Constants.PARAM_LIST, imageList)
+        bundle.putInt(Constants.PARAM_INDEX, 0)
+        context.startActivity(Intent(context, GalleryActivity::class.java).putExtras(bundle))
+
     }
 
 }
