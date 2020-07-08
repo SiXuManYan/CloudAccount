@@ -1,11 +1,17 @@
 package com.fatcloud.account.feature.forms.personal.bookkeeping
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import butterknife.OnClick
 import com.blankj.utilcode.util.ToastUtils
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
 import com.fatcloud.account.app.Glide
@@ -13,21 +19,28 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
+import com.fatcloud.account.data.CloudDataBase
+import com.fatcloud.account.entity.local.form.PersonalBookkeepingDraft
 import com.fatcloud.account.entity.product.NativeBookkeeping
+import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.forms.personal.bookkeeping.signature.SignatureActivity
 import com.fatcloud.account.feature.matisse.Matisse
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_agent_bookkeeping_personal.*
+import kotlinx.android.synthetic.main.layout_image_upload_single.*
+import javax.inject.Inject
 
 /**
  * Created by Wangsw on 2020/6/13 0013 15:40.
  * </br>
  * 个体户代理记账
  */
-class FormAgentBookkeepingPersonalActivity :
-    BaseMVPActivity<FormAgentBookkeepingPersonalPresenter>(), FormAgentBookkeepingPersonalView {
+class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepingPersonalPresenter>(), FormAgentBookkeepingPersonalView {
+
+
+    lateinit var database: CloudDataBase @Inject set
 
     /**
      * 最终需支付金额
@@ -51,6 +64,11 @@ class FormAgentBookkeepingPersonalActivity :
     private var mBusinessLicenseImgUrl: String = ""
 
     /**
+     * 图片所在本地路径
+     */
+    private var mBusinessLicenseImgFilePath: String = ""
+
+    /**
      * 证件正面
      */
     var isFaceUp = false
@@ -70,7 +88,7 @@ class FormAgentBookkeepingPersonalActivity :
 
     private fun initExtra() {
 
-        if (intent.extras == null || !intent.extras!!.containsKey(Constants.PARAM_FINAL_MONEY)) {
+        if (intent.extras == null || !intent.extras!!.containsKey(Constants.PARAM_PRODUCT_ID) || !intent.extras!!.containsKey(Constants.PARAM_PRODUCT_PRICE_ID)) {
             finish()
             return
         }
@@ -117,6 +135,56 @@ class FormAgentBookkeepingPersonalActivity :
 
     private fun initView() {
         setMainTitle("法人信息")
+        restoreDraft()
+    }
+
+    private fun restoreDraft() {
+        val draft = PersonalBookkeepingDraft.get()
+        if (draft.loginPhone != User.get().username || draft.productId.isNullOrBlank() || draft.productId != mProductId) {
+            return
+        }
+
+        if (mFinalMoney.isBlank()) {
+            draft.finalMoney?.let {
+                mFinalMoney = it
+            }
+        }
+
+
+        draft.legalPersonName?.let {
+            legal_name_et.setText(it)
+        }
+        draft.legalPersonPhone?.let {
+            legal_phone_et.setText(it)
+        }
+        draft.idNumber?.let {
+            id_number_et.setText(it)
+        }
+        draft.businessLicenseName?.let {
+            store_name_et.setText(it)
+        }
+        draft.businessLicenseImgUrl?.let {
+            mBusinessLicenseImgUrl = it
+        }
+        draft.businessLicenseImgFilePath?.let {
+            Glide.with(this).load(it)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        // 图片路径发生改变或不存在，导致加载本地文件路径失败，清空已上传连接，让用户重新上传
+                        mBusinessLicenseImgUrl = ""
+                        id_card_front_iv.setImageResource(R.drawable.ic_upload_default)
+                        return true
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean = false
+                })
+                .into(id_card_front_iv)
+        }
+
 
     }
 
@@ -136,6 +204,7 @@ class FormAgentBookkeepingPersonalActivity :
                 val elements = Matisse.obtainPathResult(data)
                 if (elements.isNotEmpty()) {
                     val fileDirPath = elements[0]
+                    mBusinessLicenseImgFilePath = fileDirPath
                     val fromViewId = data.getIntExtra(Matisse.MEDIA_FROM_VIEW_ID, 0)
                     if (fromViewId != 0) {
                         val fromView = findViewById<ImageView>(fromViewId)
@@ -164,7 +233,8 @@ class FormAgentBookkeepingPersonalActivity :
 
     @OnClick(
         R.id.commit_tv,
-        R.id.id_card_front_iv
+        R.id.id_card_front_iv,
+        R.id.bottom_left_tv
     )
     fun onClick(view: View) {
         if (CommonUtils.isDoubleClick(view)) {
@@ -172,15 +242,38 @@ class FormAgentBookkeepingPersonalActivity :
         }
         when (view.id) {
             R.id.commit_tv -> {
-                // 去签字页
                 handleCommit()
             }
             R.id.id_card_front_iv -> {
                 ProductUtils.handleMediaSelect(this, Matisse.IMG, view.id)
             }
+            R.id.bottom_left_tv -> {
+
+                saveDraft()
+            }
             else -> {
             }
         }
+    }
+
+    private fun saveDraft() {
+
+        val draft = PersonalBookkeepingDraft().apply {
+            loginPhone = User.get().username
+            finalMoney = mFinalMoney
+            productId = mProductId
+            productPriceId = mProductPriceId
+            legalPersonName = legal_name_et.text.toString().trim()
+            legalPersonPhone = legal_phone_et.text.toString().trim()
+            idNumber = id_number_et.text.toString().trim()
+            businessLicenseName = store_name_et.text.toString().trim()
+            businessLicenseImgUrl = mBusinessLicenseImgUrl
+            businessLicenseImgFilePath = mBusinessLicenseImgFilePath
+        }
+        database.personalBookkeepingDraftDao().add(draft)
+        PersonalBookkeepingDraft.update()
+        ToastUtils.showShort(R.string.save_success)
+
     }
 
 
@@ -200,7 +293,6 @@ class FormAgentBookkeepingPersonalActivity :
         if (!ProductUtils.isPhoneNumber(phoneValue, "法人")) {
             return
         }
-
 
         val idNumberValue = id_number_et.text.toString().trim()
         if (idNumberValue.isBlank()) {

@@ -50,7 +50,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
     /**
      * 最终需支付金额
      */
-    private var finalMoney: String = ""
+    private var mFinalMoney: String = ""
 
 
     /**
@@ -90,13 +90,13 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
 
     private fun initExtra() {
 
-        if (intent.extras == null || !intent.extras!!.containsKey(Constants.PARAM_FINAL_MONEY)) {
+        if (intent.extras == null) {
             finish()
             return
         }
 
         intent.extras!!.getString(Constants.PARAM_FINAL_MONEY)?.let {
-            finalMoney = it
+            mFinalMoney = it
         }
 
         intent.extras!!.getString(Constants.PARAM_PRODUCT_ID)?.let {
@@ -134,11 +134,20 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
             return
         }
 
+
         trn_et.setText(draft.taxpayerNo)
         legal_name_et.setText(draft.legalPersonName)
         id_number_tv_et.setText(draft.idNumber)
         bank_number_et.setText(draft.bankNumber)
         bank_phone_et.setText(draft.bankPhone)
+
+        if (mFinalMoney.isBlank()) {
+            draft.finalMoney?.let {
+                mFinalMoney = it
+            }
+        }
+
+
         draft.area?.let {
             address = it
             addr_value.text = it
@@ -322,7 +331,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
 
         presenter.addLicensePersonal(
             lifecycle = this,
-            money = finalMoney,
+            money = mFinalMoney,
             productId = mProductId,
             productPriceId = mProductPriceId,
             taxpayerNo = trnValue,
@@ -340,6 +349,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
     private fun saveDraft() {
 
         val personalTaxDraft = PersonalTaxDraft().apply {
+            loginPhone = User.get().username
             taxpayerNo = trn_et.text.toString().trim()
             legalPersonName = legal_name_et.text.toString().trim()
             idNumber = id_number_tv_et.text.toString().trim()
@@ -347,7 +357,6 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
             bankPhone = bank_phone_et.text.toString().trim()
             area = address
             detailAddress = detail_addr_et.text.toString()
-            loginPhone = User.get().username
             productId = mProductId
             productPriceId = mProductPriceId
             businessLicenseImgUrl = mBusinessLicenseImgUrl
@@ -355,7 +364,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
         }
         database.personalTaxDraftDao().add(personalTaxDraft)
         PersonalTaxDraft.update()
-        ToastUtils.showShort("保存成功")
+        ToastUtils.showShort(R.string.save_success)
 
     }
 

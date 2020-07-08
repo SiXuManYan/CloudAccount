@@ -15,7 +15,6 @@ import com.fatcloud.account.app.CloudAccountApplication
 class PersonalBookkeepingDraft {
 
 
-
     companion object {
         private var instance: PersonalBookkeepingDraft? = null
             get() {
@@ -66,7 +65,6 @@ class PersonalBookkeepingDraft {
     var productId: String? = ""
 
 
-
     /**
      * 选中的产品价格id
      */
@@ -87,6 +85,12 @@ class PersonalBookkeepingDraft {
     var legalPersonName: String? = ""
 
 
+    /**
+     * 法人联系电话
+     */
+    @ColumnInfo(name = "legal_person_phone")
+    var legalPersonPhone: String? = ""
+
 
     /**
      * 身份证号
@@ -94,35 +98,56 @@ class PersonalBookkeepingDraft {
     @ColumnInfo(name = "id_number")
     var idNumber: String? = ""
 
+
     /**
-     * 银行卡号
+     * 营业执照名称
+     */
+    @ColumnInfo(name = "business_license_name")
+    var businessLicenseName: String? = ""
+
+
+    /**
+     * 营业执照图片地址
+     */
+    @ColumnInfo(name = "business_license_image_url")
+    var businessLicenseImgUrl: String? = ""
+
+    /**
+     * 营业执照图片路径
+     */
+    @ColumnInfo(name =  "business_license_image_file_path")
+    var businessLicenseImgFilePath: String? = ""
+
+
+
+
+    /**
+     * 银行卡号(备用)
      */
     @ColumnInfo(name = "bank_number")
     var bankNumber: String? = ""
 
     /**
-     * 银行卡预留手机号
+     * 银行卡预留手机号(备用)
      */
     @ColumnInfo(name = "bank_phone")
     var bankPhone: String? = ""
 
-    /**
-     * 营业执照图片地址
-     */
-    @ColumnInfo(name =  "business_license_image_url")
-    var businessLicenseImgUrl: String? = ""
-
 
     /**
-     * 详细地址
+     * 详细地址(备用)
      */
-    @ColumnInfo(name =  "detail_address")
+    @ColumnInfo(name = "detail_address")
     var detailAddress: String? = ""
 
 
     /**
-     * 用户选中的区域地址
+     * 用户选中的区域地址(备用)
      */
-    @ColumnInfo(name =  "area")
+    @ColumnInfo(name = "area")
     var area: String? = ""
+
+
+
+
 }

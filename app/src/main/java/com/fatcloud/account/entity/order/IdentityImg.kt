@@ -2,7 +2,7 @@ package com.fatcloud.account.entity.order
 
 import com.fatcloud.account.common.Constants
 
-data class IdentityImg (
+data class IdentityImg(
 
     val imgUrl: String,
 
@@ -11,8 +11,12 @@ data class IdentityImg (
      * @see Constants.I1
      * @see Constants.I2
      */
-    val mold: String
+    val mold: String,
 
+    /**
+     * 图片的本地路径
+     */
+    val nativeImagePath: String = ""
 
 
 )
