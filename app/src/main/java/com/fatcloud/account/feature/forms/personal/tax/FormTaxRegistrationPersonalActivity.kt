@@ -1,12 +1,18 @@
 package com.fatcloud.account.feature.forms.personal.tax
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import butterknife.OnClick
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
 import com.fatcloud.account.app.Glide
@@ -68,10 +74,6 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
      */
     private var mBusinessLicenseImgUrl: String = ""
     private var mBusinessLicensePath: String = ""
-
-
-
-
 
 
     override fun getLayoutId() = R.layout.activity_form_tax_registration_personal
@@ -137,7 +139,6 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
         id_number_tv_et.setText(draft.idNumber)
         bank_number_et.setText(draft.bankNumber)
         bank_phone_et.setText(draft.bankPhone)
-        bank_phone_et.setText(draft.area)
         draft.area?.let {
             address = it
             addr_value.text = it
@@ -150,7 +151,21 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
         }
         draft.businessLicenseImgFilePath?.let {
 
-            Glide.with(this).load(it).into(id_card_front_iv)
+            Glide.with(this).load(it)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        mBusinessLicenseImgUrl = ""
+                        id_card_front_iv.setImageResource(R.drawable.ic_upload_default)
+                        return true
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean = false
+                })
+                .into(id_card_front_iv)
         }
 
 
@@ -177,7 +192,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
                     if (fromViewId != 0) {
                         val fromView = findViewById<ImageView>(fromViewId)
                         if (fromView != null) {
-                            Glide.with(this).load(fileDirPath).into(fromView)
+                            Glide.with(this).load(fileDirPath).diskCacheStrategy(DiskCacheStrategy.NONE).into(fromView)
                         }
                     }
                     val application = application as CloudAccountApplication
@@ -300,12 +315,10 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
         }
 
 
-
         if (TextUtils.isEmpty(mBusinessLicenseImgUrl)) {
             ToastUtils.showShort("请上传营业执照副本")
             return
         }
-
 
         presenter.addLicensePersonal(
             lifecycle = this,
@@ -342,6 +355,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
         }
         database.personalTaxDraftDao().add(personalTaxDraft)
         PersonalTaxDraft.update()
+        ToastUtils.showShort("保存成功")
 
     }
 
@@ -351,11 +365,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
             Intent(this, PayPrepareActivity::class.java)
                 .putExtra(Constants.PARAM_ORDER_ID, preparePay.orderId)
                 .putExtra(Constants.PARAM_ORDER_NUMBER, preparePay.orderNo)
-                .putExtra(
-                    Constants.PARAM_MONEY,
-                    preparePay.money.stripTrailingZeros().toPlainString()
-                )
-//                .putExtra(Constants.PARAM_MONEY, finalMoney)
+                .putExtra(Constants.PARAM_MONEY, preparePay.money.stripTrailingZeros().toPlainString())
                 .putExtra(Constants.PARAM_IMAGE_URL, preparePay.productLogoImgUrl)
                 .putExtra(Constants.PARAM_PRODUCT_NAME, preparePay.productName)
                 .putExtra(Constants.PARAM_DATE, preparePay.createDt)
