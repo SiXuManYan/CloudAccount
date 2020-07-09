@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.blankj.utilcode.util.Utils
 import com.fatcloud.account.app.CloudAccountApplication
+import com.fatcloud.account.entity.order.enterprise.Shareholder
 
 /**
  * Created by Wangsw on 2020/7/3 0003 15:31.
@@ -14,7 +15,6 @@ import com.fatcloud.account.app.CloudAccountApplication
  */
 @Entity(tableName = "tb_bank_public_draft")
 class BankPublicDraft {
-
 
 
     companion object {
@@ -43,8 +43,6 @@ class BankPublicDraft {
             instance = null
         }
     }
-
-
 
 
     @PrimaryKey
@@ -118,10 +116,72 @@ class BankPublicDraft {
     var area: String? = ""
 
     /**
+     * 用户选中的区域地址 id
+     */
+    @ColumnInfo(name = "area_id")
+    var areaId: String? = ""
+
+
+
+
+//    /**
+//     * 身份证号
+//     */
+//    @ColumnInfo(name = "id_number")
+//    var idNumber: String? = ""
+//
+//    /**
+//     * 身份证号 正面
+//     */
+//    @ColumnInfo(name = "id_number_image_front_url")
+//    var idNumberImageFrontUrl: String? = ""
+//
+//    /**
+//     * 身份证号 反面
+//     */
+//    @ColumnInfo(name = "id_number_image_back_url")
+//    var idNumberImageBackUrl: String? = ""
+//
+//
+//    /**
+//     * 财务负责人姓名
+//     */
+//    @ColumnInfo(name = "finance_name")
+//    var financeName: String? = ""
+//
+//
+//    /**
+//     * 财务负责人手机号
+//     */
+//    @ColumnInfo(name = "finance_phone")
+//    var financePhone: String? = ""
+//
+//    /**
+//     * 财务负责人股份占比
+//     */
+//    @ColumnInfo(name = "finance_shares")
+//    var financeShares: String? = ""
+
+
+    /**
+     * 财务负责人
+     */
+    @ColumnInfo(name = "share_holders")
+    var shareholders: List<Shareholder> ? = ArrayList()
+
+
+    /**
      * 营业执照url
      */
     @ColumnInfo(name = "business_license_url")
     var businessLicenseUrl: String? = ""
+
+    /**
+     * 营业执照 path
+     */
+    @ColumnInfo(name = "business_license_path")
+    var businessLicensePath: String? = ""
+
 
     /**
      * 电子图章url
@@ -129,52 +189,23 @@ class BankPublicDraft {
     @ColumnInfo(name = "electronic_seal_url")
     var electronicSealUrl: String? = ""
 
-
     /**
-     * 身份证号
+     * 电子图章path
      */
-    @ColumnInfo(name = "id_number")
-    var idNumber: String? = ""
-
-    /**
-     * 身份证号 正面
-     */
-    @ColumnInfo(name = "id_number_image_front_url")
-    var idNumberImageFrontUrl: String? = ""
-
-    /**
-     * 身份证号 反面
-     */
-    @ColumnInfo(name = "id_number_image_back_url")
-    var idNumberImageBackUrl: String? = ""
-
-
-    /**
-     * 财务负责人姓名
-     */
-    @ColumnInfo(name = "finance_name")
-    var financeName: String? = ""
-
-
-    /**
-     * 财务负责人手机号
-     */
-    @ColumnInfo(name = "finance_phone")
-    var financePhone: String? = ""
-
-    /**
-     * 财务负责人股份占比
-     */
-    @ColumnInfo(name = "finance_shares")
-    var financeShares: String? = ""
+    @ColumnInfo(name = "electronic_seal_path")
+    var electronicSealPath: String? = ""
 
     /**
      * 法人签字授权书url
      */
-    @ColumnInfo(name = "legalPersonWarrantImgUrl")
+    @ColumnInfo(name = "legal_person_warrant_image_url")
     var legalPersonWarrantImgUrl: String? = ""
 
-
+    /**
+     * 法人签字授权书url
+     */
+    @ColumnInfo(name = "legal_person_warrant_image_path")
+    var legalPersonWarrantImgPath: String? = ""
 
 
 }

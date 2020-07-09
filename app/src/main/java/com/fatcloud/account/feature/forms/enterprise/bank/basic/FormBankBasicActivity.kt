@@ -11,7 +11,10 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
+import com.fatcloud.account.data.CloudDataBase
 import com.fatcloud.account.entity.commons.AccountNature
+import com.fatcloud.account.entity.local.form.BankPublicDraft
+import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.event.entity.BankFormCommitSuccessEvent
 import com.fatcloud.account.feature.forms.enterprise.bank.FormBankActivity
 import com.fatcloud.account.feature.sheet.nature.AccountNatureSheetFragment
@@ -21,6 +24,7 @@ import com.lljjcoder.bean.DistrictBean
 import com.lljjcoder.bean.ProvinceBean
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_bank_basic.*
+import javax.inject.Inject
 
 /**
  * Created by Wangsw on 2020/7/1 0001 15:42.
@@ -29,11 +33,16 @@ import kotlinx.android.synthetic.main.activity_form_bank_basic.*
  */
 class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBankBasicView {
 
+    lateinit var database: CloudDataBase @Inject set
 
     /**
      * 订单流程id
      */
-    var orderWorkId: String? = ""
+    var mOrderWorkId: String? = ""
+
+
+    var mAreaName: String? = ""
+    var mAreaId: String? = ""
 
 
     override fun getLayoutId() = R.layout.activity_form_bank_basic
@@ -58,15 +67,49 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
             finish()
             return
         }
-        orderWorkId = intent.extras!!.getString(Constants.PARAM_ORDER_WORK_ID)
+        mOrderWorkId = intent.extras!!.getString(Constants.PARAM_ORDER_WORK_ID)
     }
 
     private fun initView() {
         setMainTitle("开立银行对公账户")
+        restoreDraft()
+    }
+
+    private fun restoreDraft() {
+        val draft = BankPublicDraft.get()
+        if (draft.loginPhone != User.get().username || draft.orderWorkId.isNullOrBlank() || draft.orderWorkId != mOrderWorkId) {
+            return
+        }
+
+        draft.companyName?.let {
+            company_name_et.setText(it)
+        }
+
+        draft.companyAddress?.let {
+            company_address_et.setText(it)
+        }
+        draft.registeredCapital?.let {
+            registered_capital_et.setText(it)
+        }
+
+        draft.accountNatureValue?.let {
+            account_nature_value.setText(it)
+        }
+        draft.reconciliationName?.let {
+            reconciliation_name_et.setText(it)
+        }
+        draft.area?.let {
+            mAreaName = it
+        }
+        draft.areaId?.let {
+            mAreaId = it
+        }
+
     }
 
 
     @OnClick(
+        R.id.bottom_left_tv,
         R.id.bottom_right_tv,
         R.id.account_nature_rl,
         R.id.recipient_address_rl
@@ -75,42 +118,32 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
         if (CommonUtils.isDoubleClick(view)) {
             return
         }
-        view.postDelayed({
-
-        }, 200)
-
         when (view.id) {
 
+            R.id.bottom_left_tv -> {
+                saveDraft()
+            }
             R.id.bottom_right_tv -> {
                 ProductUtils.handleDoubleClick(view)
                 handleNext()
             }
             R.id.account_nature_rl -> {
                 AccountNatureSheetFragment.newInstance().apply {
-                    setOnItemSelectListener(object :
-                        AccountNatureSheetFragment.OnItemSelectedListener {
+                    setOnItemSelectListener(object : AccountNatureSheetFragment.OnItemSelectedListener {
                         override fun onItemSelected(currentSelected: AccountNature) {
-                            this@FormBankBasicActivity.account_nature_value.text =
-                                currentSelected.name
+                            this@FormBankBasicActivity.account_nature_value.text = currentSelected.name
                         }
                     })
-
                     show(supportFragmentManager, this.tag)
                 }
             }
             R.id.recipient_address_rl -> {
                 ProductUtils.showLocationPicker(this, object : OnCityItemClickListener() {
-                    override fun onSelected(
-                        province: ProvinceBean,
-                        city: CityBean,
-                        district: DistrictBean
-                    ) {
-                        province_title_tv.text = StringUtils.getString(
-                            R.string.location_information_format,
-                            province.name,
-                            city.name,
-                            district.name
-                        )
+                    override fun onSelected(province: ProvinceBean, city: CityBean, district: DistrictBean) {
+
+                        mAreaName = StringUtils.getString(R.string.location_information_format, province.name, city.name, district.name)
+                        mAreaId = district.id
+                        province_title_tv.text = mAreaName
                     }
 
                     override fun onCancel() = Unit
@@ -119,6 +152,25 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
             else -> {
             }
         }
+    }
+
+    private fun saveDraft() {
+        val draft = BankPublicDraft().apply {
+            loginPhone = User.get().username
+            orderWorkId = mOrderWorkId
+
+            companyName = company_name_et.text.toString().trim()
+            companyAddress = company_address_et.text.toString().trim()
+            registeredCapital = registered_capital_et.text.toString().trim()
+            accountNatureValue = account_nature_value.text.toString().trim()
+            reconciliationName = reconciliation_name_et.text.toString().trim()
+            area = mAreaName
+            areaId = mAreaId
+        }
+        database.bankPublicDraftDao().add(draft)
+        BankPublicDraft.update()
+        ToastUtils.showShort(R.string.save_success)
+
     }
 
 
@@ -177,7 +229,7 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
 
 
         val bundle = Bundle().apply {
-            putString(Constants.PARAM_ORDER_WORK_ID, orderWorkId)
+            putString(Constants.PARAM_ORDER_WORK_ID, mOrderWorkId)
             putString(Constants.PARAM_COMPANY_NAME, companyName)
             putString(Constants.PARAM_COMPANY_ADDRESS, companyAddress)
             putString(Constants.PARAM_REGISTERED_CAPITAL, registeredCapital)

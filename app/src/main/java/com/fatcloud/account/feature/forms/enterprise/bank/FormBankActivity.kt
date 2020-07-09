@@ -2,6 +2,7 @@ package com.fatcloud.account.feature.forms.enterprise.bank
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
 import butterknife.OnClick
@@ -10,6 +11,11 @@ import com.baidu.ocr.sdk.model.IDCardResult
 import com.baidu.ocr.ui.camera.CameraActivity
 import com.baidu.ocr.ui.util.FileUtil
 import com.blankj.utilcode.util.ToastUtils
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
 import com.fatcloud.account.app.Glide
@@ -17,7 +23,11 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
+import com.fatcloud.account.data.CloudDataBase
+import com.fatcloud.account.entity.local.form.BankPublicDraft
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
+import com.fatcloud.account.entity.order.enterprise.Shareholder
+import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.event.entity.BankFormCommitSuccessEvent
 import com.fatcloud.account.event.entity.ImageUploadEvent
@@ -26,6 +36,7 @@ import com.fatcloud.account.feature.ocr.RecognizeIDCardResultCallBack
 import com.fatcloud.account.view.CompanyMemberEditView
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_bank.*
+import javax.inject.Inject
 
 /**
  * Created by Wangsw on 2020/6/15 0015 15:09.
@@ -34,6 +45,8 @@ import kotlinx.android.synthetic.main.activity_form_bank.*
  */
 class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
 
+
+    lateinit var database: CloudDataBase @Inject set
 
     /**
      * 订单流程id
@@ -53,16 +66,19 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
      * 营业执照url
      */
     var business_license_url = ""
+    var business_license_path = ""
 
     /**
      * 电子图章url
      */
     var electronic_seal_url = ""
+    var electronic_seal_path = ""
 
     /**
      * 签字授权书url
      */
     var signed_authorization_url = ""
+    var signed_authorization_path = ""
 
 
     override fun getLayoutId() = R.layout.activity_form_bank
@@ -149,6 +165,95 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
             initPhoneHint("请输入联系电话")
             initShareRatioHint(getString(R.string.share_ratio_hint))
         }
+        restoreDraft()
+
+    }
+
+    private fun restoreDraft() {
+        val draft = BankPublicDraft.get()
+        if (draft.loginPhone != User.get().username || draft.orderWorkId.isNullOrBlank() || draft.orderWorkId != orderWorkId) {
+            return
+        }
+
+        draft.shareholders?.let {
+
+            it.forEachIndexed { index, shareholder ->
+
+                if (shareholder.mold == Constants.SH4_N) {
+                    finance_ev.apply {
+                        setNameValue(shareholder.name, true)
+                        setIdNumberValue(shareholder.idno, true)
+                        setPhoneValue(shareholder.phone, true)
+                        setShareRatioValue(shareholder.shareProportion, true)
+                    }
+                    return@forEachIndexed
+                }
+            }
+        }
+
+
+        draft.businessLicensePath?.let {
+            Glide.with(this).load(it)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        business_license_url = ""
+                        business_license_iv.setImageResource(R.drawable.ic_upload_default)
+                        return true
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean = false
+                })
+                .into(business_license_iv)
+
+
+        }
+
+
+
+        draft.electronicSealUrl?.let {
+            Glide.with(this).load(it)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        electronic_seal_url = ""
+                        electronic_seal_iv.setImageResource(R.drawable.ic_upload_default)
+                        return true
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean = false
+                })
+                .into(electronic_seal_iv)
+        }
+
+
+         draft.legalPersonWarrantImgUrl?.let {
+            Glide.with(this).load(it)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        signed_authorization_url = ""
+                        electronic_seal_iv.setImageResource(R.drawable.ic_upload_default)
+                        return true
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean = false
+                })
+                .into(signed_authorization_iv)
+        }
+
+
+
+
     }
 
     override fun bindDetailInfo(data: EnterpriseInfo) {
@@ -214,7 +319,21 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
         if (fromView is CompanyMemberEditView) {
             fromView.loadResultImage(fileDirPath)
         } else if (fromView is ImageView) {
+
             Glide.with(this).load(fileDirPath).into(fromView)
+            when (fromView.id) {
+                R.id.business_license_iv -> {
+                    business_license_path = fileDirPath
+                }
+                R.id.electronic_seal_iv -> {
+                    electronic_seal_path = fileDirPath
+                }
+                R.id.signed_authorization_iv -> {
+                    electronic_seal_path = fileDirPath
+                }
+                else -> {
+                }
+            }
         }
         val application = application as CloudAccountApplication
         // isFaceUp 朝向随意，CompanyMemberEditView 会自己记录朝向
@@ -295,8 +414,8 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
         R.id.business_license_iv,
         R.id.electronic_seal_iv,
         R.id.signed_authorization_iv,
-
-        R.id.bottom_right_tv
+        R.id.bottom_right_tv,
+        R.id.bottom_left_tv
     )
     fun onClick(view: View) {
         if (CommonUtils.isDoubleClick(view)) {
@@ -307,16 +426,32 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
 
             R.id.business_license_iv,
             R.id.electronic_seal_iv,
-            R.id.signed_authorization_iv
-            -> ProductUtils.handleMediaSelect(context as Activity, 1, view.id)
+            R.id.signed_authorization_iv -> ProductUtils.handleMediaSelect(context as Activity, 1, view.id)
             R.id.bottom_right_tv -> {
                 ProductUtils.handleDoubleClick(view)
                 handleCommit()
             }
-
+            R.id.bottom_left_tv -> {
+                saveDraft()
+            }
             else -> {
             }
         }
+    }
+
+    private fun saveDraft() {
+        val holders: ArrayList<Shareholder> = ArrayList()
+        holders.add(finance_ev.getShareHolder())
+
+        database.bankPublicDraftDao().apply {
+            updateShareHolder(holders, orderWorkId!!)
+            updateLicenseUrlAndPath(business_license_url, business_license_path, orderWorkId!!)
+            updateElectronicSealUrlAndPath(electronic_seal_url, electronic_seal_path, orderWorkId!!)
+            updateWarrantUrlAndPath(signed_authorization_url, signed_authorization_path, orderWorkId!!)
+        }
+        BankPublicDraft.update()
+        ToastUtils.showShort(R.string.save_success)
+
     }
 
     private fun handleCommit() {
