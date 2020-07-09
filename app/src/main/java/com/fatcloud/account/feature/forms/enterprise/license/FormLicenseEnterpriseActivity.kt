@@ -16,7 +16,10 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
+import com.fatcloud.account.data.CloudDataBase
 import com.fatcloud.account.entity.defray.prepare.PreparePay
+import com.fatcloud.account.entity.local.form.EnterprisePackageDraft
+import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
@@ -26,15 +29,16 @@ import com.fatcloud.account.view.CompanyMemberEditView
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_license_enterprise.*
 import java.lang.StringBuilder
+import javax.inject.Inject
 
 /**
  * Created by Wangsw on 2020/6/10 0010 18:30.
  * </br>
  *  企业套餐表单
  */
-class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePresenter>(),
-    FormLicenseEnterpriseView {
+class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePresenter>(), FormLicenseEnterpriseView {
 
+    lateinit var database: CloudDataBase @Inject set
 
     /**
      * 用户选中的一级经营范围pid
@@ -187,7 +191,6 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
     private fun initView() {
         setMainTitle("注册信息")
 
-
         // 法人信息
         legal_person_ev.apply {
             currentMold = Constants.SH1
@@ -204,7 +207,6 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             currentMold = Constants.SH2
             initHighlightTitle(getString(R.string.supervisor_info))
             initNameTitle(getString(R.string.supervisor_name))
-
             initIdAddressHint("请输入监事身份证地址")
             initPhoneHint("请输入监事联系电话")
             initShareRatioHint(getString(R.string.share_ratio_hint_2))
@@ -222,17 +224,78 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             showAddActionView().setOnClickListener {
                 VibrateUtils.vibrate(10)
                 shareholder_more_container.addView(
-                    presenter.getShareholderView(
-                        0,
-                        this@FormLicenseEnterpriseActivity,
-                        shareholder_more_container
-                    ), 0
+                    presenter.getShareholderView(0, this@FormLicenseEnterpriseActivity, shareholder_more_container), 0
                 )
                 scroll_nsv.smoothScrollTo(0, ScreenUtils.getScreenHeight())
-
             }
 
         }
+        restoreDraft()
+
+    }
+
+    private fun restoreDraft() {
+        val draft = EnterprisePackageDraft.get()
+        if (draft.loginPhone != User.get().username || draft.productId.isNullOrBlank() || draft.productId != mProductId) {
+            return
+        }
+
+        draft.shareholders?.let {
+            it.forEachIndexed { index, shareholder ->
+
+                when (shareholder.mold) {
+                    Constants.SH1 -> {
+                        legal_person_ev.apply {
+                            setNameValue(shareholder.name, true)
+                            setIdNumberValue(shareholder.idno, true)
+                            setIdAddressValue(shareholder.idnoAddr, true)
+                            setPhoneValue(shareholder.phone, true)
+                            setExpiryDateValue(shareholder.idnoDate, true)
+                            setShareRatioValue(shareholder.shareProportion, true)
+                        }
+                    }
+                    Constants.SH2 -> {
+                        supervisor_ev.apply {
+                            setNameValue(shareholder.name, true)
+                            setIdNumberValue(shareholder.idno, true)
+                            setIdAddressValue(shareholder.idnoAddr, true)
+                            setPhoneValue(shareholder.phone, true)
+                            setShareRatioValue(shareholder.shareProportion, true)
+                        }
+                    }
+                    Constants.SH3 -> {
+
+                        if (shareholder.isExtra != null && shareholder.isExtra) {
+                            // 附加股东
+                            val shareholderView = presenter.getShareholderView(
+                                0, this@FormLicenseEnterpriseActivity,
+                                shareholder_more_container
+                            ).apply {
+                                setNameValue(shareholder.name, true)
+                                setIdNumberValue(shareholder.idno, true)
+                                setIdAddressValue(shareholder.idnoAddr, true)
+                                setPhoneValue(shareholder.phone, true)
+                                setShareRatioValue(shareholder.shareProportion, true)
+                            }
+                            shareholder_more_container.addView(shareholderView)
+                        } else {
+                            shareholder_ev.apply {
+                                setNameValue(shareholder.name, true)
+                                setIdNumberValue(shareholder.idno, true)
+                                setIdAddressValue(shareholder.idnoAddr, true)
+                                setPhoneValue(shareholder.phone, true)
+                                setShareRatioValue(shareholder.shareProportion, true)
+                            }
+                        }
+                    }
+                    else -> {
+
+                    }
+                }
+
+            }
+        }
+
 
     }
 
@@ -248,9 +311,8 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
         when (view.id) {
 
             R.id.bottom_left_tv -> {
-                // 保存
+                saveDraft()
             }
-
             R.id.bottom_right_tv -> {
                 ProductUtils.handleDoubleClick(view)
                 presenter.handlePost(
@@ -281,6 +343,22 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
         }
     }
 
+    /**
+     * 保存草稿
+     */
+    private fun saveDraft() {
+        val shareHolders = presenter.getShareHolders(
+            legal_person_ev.getShareHolder(),
+            supervisor_ev.getShareHolder(),
+            shareholder_ev.getShareHolder(),
+            shareholder_more_container
+        )
+        database.enterprisePackageDraftDao().updateShareHolder(shareHolders, productId = mProductId)
+        EnterprisePackageDraft.update()
+        ToastUtils.showShort(R.string.save_success)
+
+    }
+
 
     override fun addEnterpriseSuccess(preparePay: PreparePay) {
         ToastUtils.showShort("套餐添加成功")
@@ -288,10 +366,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             Intent(this, PayPrepareActivity::class.java)
                 .putExtra(Constants.PARAM_ORDER_ID, preparePay.orderId)
                 .putExtra(Constants.PARAM_ORDER_NUMBER, preparePay.orderNo)
-                .putExtra(
-                    Constants.PARAM_MONEY,
-                    preparePay.money.stripTrailingZeros().toPlainString()
-                ) // 使用接口返回的最终支付金额
+                .putExtra(Constants.PARAM_MONEY, preparePay.money.stripTrailingZeros().toPlainString()) // 使用接口返回的最终支付金额
                 .putExtra(Constants.PARAM_IMAGE_URL, preparePay.productLogoImgUrl)
                 .putExtra(Constants.PARAM_PRODUCT_NAME, preparePay.productName)
                 .putExtra(Constants.PARAM_DATE, preparePay.createDt)

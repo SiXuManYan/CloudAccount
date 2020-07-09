@@ -33,16 +33,13 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
 
     private val gson = Gson()
 
-    fun getShareholderView(
-        index: Int,
-        context: Context,
-        shareholderMoreContainer: LinearLayout
-    ): CompanyMemberEditView {
+    fun getShareholderView(index: Int, context: Context, shareholderMoreContainer: LinearLayout): CompanyMemberEditView {
+
         return CompanyMemberEditView(context).apply {
             id = index + 1 // 保证id 不从0开始
             currentMold = Constants.SH3
-            // 坐标
-            tag = index
+            tag = index  // 坐标
+            mIsExtra = true
             initHighlightTitle(context.getString(R.string.shareholder_info2))
             initNameTitle(context.getString(R.string.shareholder_name))
 
@@ -54,14 +51,7 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
             showAddActionView().setOnClickListener {
                 VibrateUtils.vibrate(10)
                 it.visibility = View.GONE
-                shareholderMoreContainer.addView(
-                    getShareholderView(
-                        index + 1,
-                        context,
-                        shareholderMoreContainer
-                    ), index + 1
-                )
-
+                shareholderMoreContainer.addView(getShareholderView(index + 1, context, shareholderMoreContainer), index + 1)
             }
 
             // 移除当前股东

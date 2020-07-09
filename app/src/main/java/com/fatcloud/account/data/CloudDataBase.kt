@@ -24,8 +24,7 @@ import com.fatcloud.account.entity.users.User
         PersonalTaxDraft::class,
         PersonalBookkeepingDraft::class,
         EnterprisePackageDraft::class,
-        BankPublicDraft::class
-    ],
+        BankPublicDraft::class],
     version = 2
 //    exportSchema = false
 )
@@ -59,12 +58,12 @@ abstract class CloudDataBase : RoomDatabase() {
                 // 个体户税务登记
                 database.execSQL("CREATE TABLE IF NOT EXISTS `tb_personal_tax_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `final_money` TEXT, `product_id` TEXT, `product_price_id` TEXT, `taxpayer_number` TEXT, `legal_person_name` TEXT, `id_number` TEXT, `bank_number` TEXT, `bank_phone` TEXT, `business_license_image_url` TEXT, `detail_address` TEXT, `area` TEXT, PRIMARY KEY(`id`))")
 
-
                 // 个体户代理记账
                 database.execSQL("CREATE TABLE IF NOT EXISTS `tb_personal_bookkeeping_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `final_money` TEXT, `product_id` TEXT, `product_price_id` TEXT, `taxpayer_number` TEXT, `legal_person_name` TEXT, `legal_person_phone` TEXT, `id_number` TEXT, `business_license_name` TEXT, `business_license_image_url` TEXT, `business_license_image_file_path` TEXT, `bank_number` TEXT, `bank_phone` TEXT, `detail_address` TEXT, `area` TEXT, PRIMARY KEY(`id`))")
 
+
                 // 企业套餐
-                database.execSQL("CREATE TABLE IF NOT EXISTS `tb_enterprise_package_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `product_id` TEXT, `income_money` TEXT, `final_money` TEXT, `product_price_id` TEXT, `select_pid_list` TEXT NOT NULL, `select_pid_name_list` TEXT NOT NULL, `detail_address` TEXT, `area` TEXT, `zero_name` TEXT, `first_name` TEXT, `second_name` TEXT, `investment_year` TEXT, `invest_money` TEXT, `bank_number` TEXT, `bank_phone` TEXT, `share_holders` TEXT, PRIMARY KEY(`id`))")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `tb_enterprise_package_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `product_id` TEXT, `income_money` TEXT, `final_money` TEXT, `product_price_id` TEXT, `select_pid_list` TEXT NOT NULL, `select_pid_name_list` TEXT NOT NULL, `detail_address` TEXT, `area` TEXT, `area_id` TEXT, `zero_name` TEXT, `first_name` TEXT, `second_name` TEXT, `investment_year` TEXT, `invest_money` TEXT, `bank_number` TEXT, `bank_phone` TEXT, `share_holders` TEXT, PRIMARY KEY(`id`))")
 
                 // 银行对公账户草稿
                 database.execSQL("CREATE TABLE IF NOT EXISTS `tb_bank_public_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `order_work_id` TEXT, `company_name` TEXT, `company_address` TEXT, `registered_capital` TEXT, `account_nature` TEXT, `reconciliation_name` TEXT, `reconciliation_phone` TEXT, `detail_address` TEXT, `area` TEXT, `business_license_url` TEXT, `electronic_seal_url` TEXT, `id_number` TEXT, `id_number_image_front_url` TEXT, `id_number_image_back_url` TEXT, `finance_name` TEXT, `finance_phone` TEXT, `finance_shares` TEXT, `legalPersonWarrantImgUrl` TEXT, PRIMARY KEY(`id`))")

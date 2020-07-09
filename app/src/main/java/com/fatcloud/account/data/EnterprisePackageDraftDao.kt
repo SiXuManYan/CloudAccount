@@ -2,6 +2,7 @@ package com.fatcloud.account.data
 
 import androidx.room.*
 import com.fatcloud.account.entity.local.form.EnterprisePackageDraft
+import com.fatcloud.account.entity.order.enterprise.Shareholder
 
 /**
  * Created by Wangsw on 2020/7/3 0003 15:23.
@@ -20,8 +21,12 @@ interface EnterprisePackageDraftDao {
     @Query("DELETE FROM tb_enterprise_package_draft")
     fun clear()
 
-
     @Update
     fun update(user: EnterprisePackageDraft)
+
+
+    @Query("UPDATE tb_enterprise_package_draft SET share_holders = :shareholder WHERE product_id = :productId")
+    fun updateShareHolder(shareholder: List<Shareholder>, productId: String)
+
 
 }

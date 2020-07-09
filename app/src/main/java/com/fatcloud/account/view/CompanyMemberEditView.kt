@@ -46,6 +46,11 @@ class CompanyMemberEditView : LinearLayout {
     var currentMold = ""
 
     /**
+     * 是否是用户手动附加的股东
+     */
+    var mIsExtra: Boolean? = false
+
+    /**
      * 身份证正面url
      */
     var frontImageUrl = ""
@@ -74,11 +79,7 @@ class CompanyMemberEditView : LinearLayout {
         init()
     }
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    ) {
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         init()
     }
 
@@ -322,8 +323,14 @@ class CompanyMemberEditView : LinearLayout {
 
     fun setPhoneValue(hint: CharSequence) {
         ev_03_phone_et.setText(hint)
+    }
 
 
+    fun setPhoneValue(title: CharSequence, editAble: Boolean) {
+        title?.let {
+            ev_03_phone_et.setText(title)
+            setEditAble(editAble, ev_03_phone_et)
+        }
     }
 
 
@@ -360,6 +367,21 @@ class CompanyMemberEditView : LinearLayout {
      * 股份占比
      */
     fun getShareRatioValue() = ev_04_share_ratio_et.text.toString().trim()
+
+    /**
+     * 设置股份占比
+     */
+    fun setShareRatioValue(text: CharSequence?, editAble: Boolean) {
+
+        text?.let {
+
+            ev_04_share_ratio_et.setText(it)
+            setEditAble(editAble, ev_04_share_ratio_et)
+        }
+
+
+    }
+
 
     /**
      * 获取民族
@@ -405,7 +427,8 @@ class CompanyMemberEditView : LinearLayout {
             name = getNameValue(),
             phone = getPhoneValue(),
             shareProportion = getShareRatioValue(),
-            idnoDate = getExpiryDateValue()
+            idnoDate = getExpiryDateValue(),
+            isExtra = mIsExtra
         )
     }
 

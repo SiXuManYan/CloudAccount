@@ -10,7 +10,7 @@ import com.fatcloud.account.entity.order.IdentityImg
 class Shareholder(
     val idno: String,
     val idnoAddr: String,
-    val idnoDate: String ,
+    val idnoDate: String,
     val imgs: ArrayList<IdentityImg> = ArrayList(),
 
     /**
@@ -25,14 +25,17 @@ class Shareholder(
      * @see Constants.SH4_N
      */
     val mold: String,
-    val name: String ,
+
+    val name: String,
 
     val phone: String,
 
     /**
      * 股份占比
      */
-    val shareProportion: String = ""
+    val shareProportion: String = "",
+
+    val isExtra: Boolean? = false
 )
 
 /*

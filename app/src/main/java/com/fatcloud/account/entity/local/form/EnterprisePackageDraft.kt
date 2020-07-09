@@ -19,9 +19,7 @@ class EnterprisePackageDraft {
         private var instance: EnterprisePackageDraft? = null
             get() {
                 if (field == null) {
-                    field =
-                        (Utils.getApp() as CloudAccountApplication).database.enterprisePackageDraftDao()
-                            .find()
+                    field = (Utils.getApp() as CloudAccountApplication).database.enterprisePackageDraftDao().find()
                     if (field == null) {
                         field = EnterprisePackageDraft()
                     }
@@ -104,6 +102,17 @@ class EnterprisePackageDraft {
      */
     @ColumnInfo(name = "area")
     var area: String? = ""
+
+
+
+    /**
+     * 用户选中的区域地址 id
+     */
+    @ColumnInfo(name = "area_id")
+    var areaId: String? = ""
+
+
+
 
 
     /**
