@@ -14,6 +14,8 @@ import com.fatcloud.account.feature.news.child.NewsChildFragment
 import com.fatcloud.account.feature.news.child.NewsChildModule
 import com.fatcloud.account.feature.product.ProductFragment
 import com.fatcloud.account.feature.product.ProductModule
+import com.fatcloud.account.feature.product.detail.check.ProductCheckFragment
+import com.fatcloud.account.feature.product.detail.check.ProductCheckModule
 import com.fatcloud.account.feature.product.detail.sheet.ProductSheetFragment
 import com.fatcloud.account.feature.product.detail.sheet.ProductSheetModule
 import com.fatcloud.account.feature.product.detail.spinners.ProductSpinnerFragment
@@ -72,6 +74,13 @@ abstract class FragmentBindModule {
     @FragmentScope
     @ContributesAndroidInjector(modules = [AccountNatureSheetModule::class])
     abstract fun accountNatureSheetFragmentInjector(): AccountNatureSheetFragment
+
+
+    @FragmentScope
+    @ContributesAndroidInjector(modules = [ProductCheckModule::class])
+    abstract fun productCheckFragmentInjector(): ProductCheckFragment
+
+
 
 
 }

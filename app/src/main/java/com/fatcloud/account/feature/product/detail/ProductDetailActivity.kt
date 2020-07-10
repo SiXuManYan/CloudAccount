@@ -27,6 +27,7 @@ import com.fatcloud.account.event.Event
 import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.account.login.LoginActivity
+import com.fatcloud.account.feature.product.detail.check.ProductCheckFragment
 import com.fatcloud.account.feature.product.detail.sheet.ProductSheetFragment
 import com.fatcloud.account.feature.product.detail.spinners.ProductSpinnerFragment
 import com.fatcloud.account.feature.webs.WebCommonActivity
@@ -292,7 +293,6 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
         R.id.title_rl,
         R.id.bottom_left_tv,
         R.id.bottom_right_tv
-
     )
     fun click(view: View) {
         when (view.id) {
@@ -304,12 +304,7 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
             }
 
             R.id.bottom_left_tv -> {
-                startActivity(
-                    Intent(
-                        Intent.ACTION_DIAL,
-                        Uri.parse("tel:" + Constants.CONSUMER_HOT_LINE)
-                    )
-                )
+                startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Constants.CONSUMER_HOT_LINE)))
             }
             R.id.bottom_right_tv -> {
                 if (!User.isLogon()) {
@@ -320,7 +315,6 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
                     ToastUtils.showShort("请先同意服务协议")
                     VibrateUtils.vibrate(10)
                     protocol.startAnimation(CommonUtils.getShakeAnimation(2))
-
                 } else {
                     mData?.let {
                         when (it.mold) {
@@ -336,7 +330,12 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
                                 ProductSpinnerFragment.newInstance(it).apply {
                                     show(supportFragmentManager, this.tag)
                                 }
+                            }
 
+                            Constants.P5 -> {
+                                ProductCheckFragment.newInstance(it).apply {
+                                    show(supportFragmentManager, this.tag)
+                                }
                             }
 
                             else -> {

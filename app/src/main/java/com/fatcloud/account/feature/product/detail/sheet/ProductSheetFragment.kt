@@ -61,18 +61,11 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
 
         productDetail?.let {
 
-            amount_tv.text = getString(R.string.money_symbol_format,  it.money.stripTrailingZeros()?.toPlainString())
+            amount_tv.text = getString(R.string.money_symbol_format, it.money.stripTrailingZeros()?.toPlainString())
 
             Glide.with(this)
                 .load(it.logoImgUrl)
-                .apply(
-                    RequestOptions().transform(
-                        MultiTransformation(
-                            CenterCrop(),
-                            RoundTransFormation(context, 4)
-                        )
-                    )
-                )
+                .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                 .error(R.drawable.ic_error_image_load)
                 .into(image_iv)
 
@@ -81,8 +74,6 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
             adapter?.addAll(it.prices)
             content_rv.adapter = adapter
         }
-
-
 
     }
 

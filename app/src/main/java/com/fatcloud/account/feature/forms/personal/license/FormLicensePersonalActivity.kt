@@ -45,8 +45,7 @@ import kotlin.collections.ArrayList
  * 个体户营业执照表单
  * @see Constants.P1
  */
-class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter>(),
-    FormLicensePersonalView {
+class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter>(), FormLicensePersonalView {
 
     lateinit var database: CloudDataBase @Inject set
 
@@ -240,7 +239,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         }
 
         draft.realName?.let {
-            legal_person_ev.setNameValue(it,false)
+            legal_person_ev.setNameValue(it, false)
         }
 
         draft.gender?.let {
@@ -251,7 +250,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         draft.idno?.let {
             legal_person_ev.setIdNumberValue(it)
         }
-        draft.phone?.let{
+        draft.phone?.let {
             legal_person_ev.setPhoneValue(it)
         }
 
