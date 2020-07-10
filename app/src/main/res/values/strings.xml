@@ -194,7 +194,7 @@
     <string name="id_card_front_empty_format">请上传%1$s身份证正面照片</string>
     <string name="id_card_back_empty_format">请上传%1$s身份证背面照片</string>
     <string name="save_success">保存成功</string>
-
+    <string name="support_format_name">支持扩展名: .png .jpg</string>
 
 
 </resources>

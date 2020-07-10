@@ -41,8 +41,7 @@ import javax.inject.Inject
  * </br>
  * 个体户税务登记
  */
-class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationPersonalPresenter>(),
-    FormTaxRegistrationPersonalView {
+class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationPersonalPresenter>(), FormTaxRegistrationPersonalView {
 
 
     lateinit var database: CloudDataBase @Inject set
