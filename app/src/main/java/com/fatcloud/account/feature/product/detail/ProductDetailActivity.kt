@@ -318,7 +318,7 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
                 } else {
                     mData?.let {
                         when (it.mold) {
-                            Constants.P1, Constants.P4 -> {
+                            Constants.P1, Constants.P4, Constants.P6 -> {
                                 // P1个体户营业执照 ，P4 个体户税务登记
                                 ProductSheetFragment.newInstance(it).apply {
                                     show(supportFragmentManager, this.tag)

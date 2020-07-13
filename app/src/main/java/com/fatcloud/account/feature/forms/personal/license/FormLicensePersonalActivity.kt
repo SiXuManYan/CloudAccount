@@ -273,12 +273,9 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         }
         when (view.id) {
             R.id.business_scope_rl -> {
-                // 参照 EnterpriseInfo
                 startActivityForResult(
-                    Intent(this, BusinessScopeActivity::class.java).putExtra(
-                        Constants.PARAM_PRODUCT_TYPE,
-                        mProductType
-                    ), 1
+                    Intent(this, BusinessScopeActivity::class.java).putExtra(Constants.PARAM_PRODUCT_TYPE, mProductType),
+                    Constants.REQUEST_BUSINESS_SCOPE
                 )
             }
             R.id.bottom_left_tv -> saveDraft()
@@ -504,7 +501,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             return
         }
         when (requestCode) {
-            1 -> {
+            Constants.REQUEST_BUSINESS_SCOPE-> {
                 // 选中的经营范围
                 selectPid = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID)
                 selectPidNames = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID_NAME)

@@ -326,6 +326,7 @@
             android:name=".feature.forms.enterprise.bank.basic.FormBankBasicActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".feature.forms.personal.change.FormLicenseChangeActivity" />
+        <activity android:name=".feature.forms.personal.logout.FormLicenseLogoutActivity" />
 
 
     </application>

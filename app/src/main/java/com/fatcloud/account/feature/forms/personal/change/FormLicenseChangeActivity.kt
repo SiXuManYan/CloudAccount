@@ -19,10 +19,15 @@ import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.persional.PersonalLicenseChange
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
+import com.fatcloud.account.feature.extra.BusinessScopeActivity
 import com.fatcloud.account.feature.matisse.Matisse
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_license_change_personal.*
+import kotlinx.android.synthetic.main.activity_form_license_change_personal.business_scope_value
+import kotlinx.android.synthetic.main.activity_form_license_personal.*
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 /**
  * Created by Wangsw on 2020/7/10 0010 15:37.
@@ -191,10 +196,10 @@ class FormLicenseChangeActivity : BaseMVPActivity<FormLicenseChangePresenter>(),
     }
 
     @OnClick(
-        R.id.save_tv,
         R.id.commit_tv,
         R.id.id_card_front_iv,
         R.id.id_card_back_iv,
+        R.id.business_scope_change_rl,
         R.id.id_license_front_iv,
         R.id.id_license_back_iv
     )
@@ -203,9 +208,7 @@ class FormLicenseChangeActivity : BaseMVPActivity<FormLicenseChangePresenter>(),
             return
         }
         when (view.id) {
-            R.id.save_tv -> {
 
-            }
             R.id.commit_tv -> {
                 handleCommit()
             }
@@ -213,7 +216,11 @@ class FormLicenseChangeActivity : BaseMVPActivity<FormLicenseChangePresenter>(),
             R.id.id_card_back_iv,
             R.id.id_license_front_iv,
             R.id.id_license_back_iv -> ProductUtils.handleMediaSelect(this, Matisse.IMG, view.id)
+            R.id.business_scope_change_rl -> {
+                startActivityForResult(Intent(this, BusinessScopeActivity::class.java), Constants.REQUEST_BUSINESS_SCOPE)
+            }
             else -> {
+
             }
         }
     }
@@ -260,6 +267,13 @@ class FormLicenseChangeActivity : BaseMVPActivity<FormLicenseChangePresenter>(),
                     application.getOssSecurityToken(true, true, fileDirPath, fromViewId, this@FormLicenseChangeActivity.javaClass)
 
                 }
+            }
+            Constants.REQUEST_BUSINESS_SCOPE -> {
+                // 选中的经营范围
+                selectPid = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID)
+                selectPidNames = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID_NAME)
+                business_scope_value.text =
+                    Arrays.toString(selectPidNames.toArray()).replace("[", "").replace("]", "")
             }
             else -> {
             }

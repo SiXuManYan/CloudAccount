@@ -11,7 +11,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:paddingRight="15dp"
+        android:layout_height="83dp">
 
         <ImageView
             android:id="@+id/image_iv"
@@ -22,33 +23,83 @@
             android:scaleType="centerCrop"
             tools:background="@tools:sample/backgrounds/scenic[3]" />
 
-        <TextView
-            android:id="@+id/amount_tv"
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/image_iv"
-            android:ellipsize="end"
-            android:lineSpacingMultiplier="1.2"
-            android:maxLines="2"
-            android:textColor="@color/color_app_red"
-            android:textSize="@dimen/font_size_18"
-            android:textStyle="bold"
-            tools:text="￥10000" />
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
 
 
-        <TextView
-            android:id="@+id/content_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/amount_tv"
-            android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/image_iv"
-            android:ellipsize="end"
-            android:lineSpacingMultiplier="1.2"
-            android:maxLines="1"
-            android:textColor="@color/color_first_level"
-            android:textSize="@dimen/font_size_14"
-            tools:text="个体户营业执照" />
+                <TextView
+                    android:id="@+id/amount_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.2"
+                    android:maxLines="2"
+                    android:textColor="@color/color_app_red"
+                    android:textSize="@dimen/font_size_18"
+                    android:textStyle="bold"
+                    tools:text="￥10000" />
+
+                <TextView
+                    android:id="@+id/amount_hint_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.2"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_12"
+                    android:textStyle="bold"
+                    android:text="起" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/content_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:lineSpacingMultiplier="1.2"
+                android:maxLines="1"
+                android:textColor="@color/color_first_level"
+                android:textSize="@dimen/font_size_14"
+                tools:text="个体户营业执照" />
+
+
+
+
+
+            <TextView
+                android:id="@+id/hint_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:lineSpacingMultiplier="1.2"
+                tools:visibility="visible"
+                android:visibility="gone"
+                android:textColor="@color/color_app_red"
+                android:textSize="@dimen/font_size_12"
+                android:text="此价格为初始评估价格，具体价格以实际业务办理为准" />
+
+
+
+
+
+        </LinearLayout>
+
+
+
 
     </RelativeLayout>
 

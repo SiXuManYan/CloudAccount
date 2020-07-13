@@ -73,7 +73,21 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
             adapter = getRecyclerAdapter()
             adapter?.addAll(it.prices)
             content_rv.adapter = adapter
+
+            when (it.mold) {
+                Constants.P6 -> {
+                    hint_tv.visibility = View.VISIBLE
+                    amount_hint_tv.visibility = View.VISIBLE
+                }
+                else -> {
+                    hint_tv.visibility = View.GONE
+                    amount_hint_tv.visibility = View.GONE
+                }
+            }
+
+
         }
+
 
     }
 
@@ -162,9 +176,13 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
                         .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, price?.id)
                         .putExtra(Constants.PARAM_ADD_SEAL, extraAddSeal)
                 )
+            }
+            Constants.P6 -> {
+                // 个体户营业执照注销
 
 
             }
+
             else -> {
             }
         }

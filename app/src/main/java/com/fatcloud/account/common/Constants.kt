@@ -32,8 +32,10 @@ object Constants {
     const val PARAM_SAVE = "param_save"
     const val PARAM_HASH_CODE = "param_hash_code"
 
+
     /** 选取附件 */
     const val REQUEST_MEDIA = 1003
+
 
     /** 选取经营范围 */
     const val REQUEST_BUSINESS_SCOPE = 1004
