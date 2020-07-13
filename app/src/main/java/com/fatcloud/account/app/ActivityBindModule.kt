@@ -38,6 +38,8 @@ import com.fatcloud.account.feature.forms.personal.bookkeeping.FormAgentBookkeep
 import com.fatcloud.account.feature.forms.personal.bookkeeping.FormAgentBookkeepingPersonalModule
 import com.fatcloud.account.feature.forms.personal.bookkeeping.signature.SignatureActivity
 import com.fatcloud.account.feature.forms.personal.bookkeeping.signature.SignatureModule
+import com.fatcloud.account.feature.forms.personal.change.FormLicenseChangeActivity
+import com.fatcloud.account.feature.forms.personal.change.FormLicenseChangeModule
 import com.fatcloud.account.feature.forms.personal.license.FormLicensePersonalActivity
 import com.fatcloud.account.feature.forms.personal.license.FormLicensePersonalModule
 import com.fatcloud.account.feature.forms.personal.tax.FormTaxRegistrationPersonalActivity
@@ -209,6 +211,12 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [FragmentBindModule::class, FormBankBasicModule::class])
     abstract fun formBankBasicActivityInjector(): FormBankBasicActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [FragmentBindModule::class, FormLicenseChangeModule::class])
+    abstract fun formLicenseChangeActivityInjector(): FormLicenseChangeActivity
+
+
 
 
 }

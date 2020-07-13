@@ -135,6 +135,8 @@ object Constants {
     const val PARAM_RECONCILIATION_PHONE = "param_reconciliation_phone" // 对账联系方式
     const val PARAM_AREA_NAME = "param_area_name"// 选择的区域
     const val PARAM_DETAIL_ADDRESS = "param_detail_address"// 详细地址
+    const val PARAM_CHANGE_TYPE = "param_change_type"// 变更类型
+
 
     /** RxBus Event */
     const val EVENT_STARTUP_DONE = 0x59//新手接口

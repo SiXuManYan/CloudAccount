@@ -484,4 +484,16 @@ interface ApiService {
     ): Flowable<Response<JsonElement>>
 
 
+    /**
+     * 添加个体户营业执照变更
+     *
+     */
+    @POST("$ORDER_API/addSelfemployedMotify")
+    fun addLicensePersonalChange(
+        @Body `in`: JsonObject? = null
+    ): Flowable<Response<PreparePay>>
+
+
+
+
 }

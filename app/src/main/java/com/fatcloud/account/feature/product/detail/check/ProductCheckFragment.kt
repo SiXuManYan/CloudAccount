@@ -1,5 +1,6 @@
 package com.fatcloud.account.feature.product.detail.check
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.CompoundButton
@@ -15,6 +16,10 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.product.Price
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.extend.RoundTransFormation
+import com.fatcloud.account.feature.forms.personal.change.FormLicenseChangeActivity
+import com.fatcloud.account.feature.forms.personal.change.FormLicenseChangeActivity.Companion.TYPE_CHANGE_NAME
+import com.fatcloud.account.feature.forms.personal.change.FormLicenseChangeActivity.Companion.TYPE_CHANGE_NAME_AND_SCOPE
+import com.fatcloud.account.feature.forms.personal.change.FormLicenseChangeActivity.Companion.TYPE_CHANGE_SCOPE
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import kotlinx.android.synthetic.main.fragment_product_check.*
 import java.math.BigDecimal
@@ -68,6 +73,12 @@ class ProductCheckFragment : BaseBottomSheetDialogFragment<ProductCheckPresenter
                 .into(image_iv)
 
             content_tv.text = it.name
+
+
+            val price = prices[0].childs[0]
+            productPriceId = price.id
+            finalMoney = price.money
+
         }
 
 
@@ -96,13 +107,16 @@ class ProductCheckFragment : BaseBottomSheetDialogFragment<ProductCheckPresenter
                 if (type_change_store_name_rb.isChecked) {
                     type_change_store_name_rb.isChecked = false
                 }
-                type_change_business_scope_rb.isChecked = true
                 type_change_store_name_rb.isEnabled = false
+                type_change_business_scope_rb.isChecked = true
             }
 
             R.id.type_change_store_name_rb -> {
 
+
+                type_change_business_scope_rb.isChecked = false
                 type_change_name_and_scope.isChecked = false
+
                 if (work_change_tax_rb.isChecked) {
                     val price = prices[0].childs[0]
                     productPriceId = price.id
@@ -113,7 +127,9 @@ class ProductCheckFragment : BaseBottomSheetDialogFragment<ProductCheckPresenter
 
             }
             R.id.type_change_business_scope_rb -> {
+                type_change_store_name_rb.isChecked = false
                 type_change_name_and_scope.isChecked = false
+
 
                 if (work_change_tax_rb.isChecked) {
                     val price = prices[0].childs[1]
@@ -153,7 +169,26 @@ class ProductCheckFragment : BaseBottomSheetDialogFragment<ProductCheckPresenter
     fun click(view: View) {
         when (view.id) {
             R.id.next_tv -> {
-
+                startActivity(
+                    Intent(activity, FormLicenseChangeActivity::class.java)
+                        .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
+                        .putExtra(Constants.PARAM_FINAL_MONEY, finalMoney.stripTrailingZeros().toPlainString())
+                        .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, productPriceId)
+                        .putExtra(
+                            Constants.PARAM_CHANGE_TYPE,
+                            when {
+                                type_change_store_name_rb.isChecked -> {
+                                    TYPE_CHANGE_NAME
+                                }
+                                type_change_business_scope_rb.isChecked -> {
+                                    TYPE_CHANGE_SCOPE
+                                }
+                                else -> {
+                                    TYPE_CHANGE_NAME_AND_SCOPE
+                                }
+                            }
+                        )
+                )
 
             }
             else -> {

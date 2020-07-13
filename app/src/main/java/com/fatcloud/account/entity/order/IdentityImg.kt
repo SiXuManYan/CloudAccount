@@ -16,7 +16,7 @@ data class IdentityImg(
     /**
      * 图片的本地路径
      */
-    val nativeImagePath: String = ""
+    val nativeImagePath: String? = null
 
 
 )
