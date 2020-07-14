@@ -149,7 +149,7 @@ object ProductUtils {
                         .forResult(Constants.REQUEST_MEDIA, mediaType, fromViewId)
 
                 } else {
-                    showPermissionFailure(activity)
+                    showPermissionFailure(activity, StringUtils.getString(R.string.album_need_permission))
                 }
             }, Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -177,7 +177,7 @@ object ProductUtils {
                         .forResult(Constants.REQUEST_MEDIA, mediaType, fromViewId)
 
                 } else {
-                    showPermissionFailure(fragment.context)
+                    showPermissionFailure(fragment.context, StringUtils.getString(R.string.album_need_permission))
                 }
             }, Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -186,9 +186,9 @@ object ProductUtils {
     }
 
 
-    private fun showPermissionFailure(context: Context?) {
+     fun showPermissionFailure(context: Context?, message: String) {
         AlertDialog.Builder(context).setTitle(R.string.hint)
-            .setMessage(R.string.album_need_permission)
+            .setMessage(message)
             .setCancelable(false)
             .setPositiveButton(
                 R.string.yes,

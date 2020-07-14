@@ -902,7 +902,7 @@ object CommonUtils {
 
         try {
 
-            val pathFile = Environment.getExternalStorageDirectory().absolutePath + Common.YH_IMAGE_SAVE_PATH
+            val pathFile = Environment.getExternalStorageDirectory().absolutePath + Common.IMAGE_SAVE_PATH
             fileName = pathFile + System.currentTimeMillis() + ".png"
 
             val aveFile = AndroidUtil.saveFile4Bitmap(activityContext, pathFile, bitmap, fileName, Bitmap.CompressFormat.PNG)

@@ -15,8 +15,18 @@ data class Commons(
 
     val businessScopeInds: List<BusinessScopeInd> = ArrayList(),
 
+
     /**
      * 组成形式
      */
-    val forms: List<Form> = ArrayList()
+    val forms: List<Form> = ArrayList(),
+
+    val ocrCount: Int = 0,
+
+    val commitmentUrl: String = "",
+
+    val accountNatuesPerson: List<BusinessScopeInd> = ArrayList()
+
+
+
 )

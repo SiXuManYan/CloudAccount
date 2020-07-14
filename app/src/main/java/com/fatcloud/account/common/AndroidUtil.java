@@ -148,7 +148,7 @@ public class AndroidUtil {
                 height,
                 ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
         String name = AndroidUtil.md5(video_name) + ".png";
-        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + Common.YH_IMAGE_SAVE_PATH;
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + Common.IMAGE_SAVE_PATH;
         try {
             File saveFile = AndroidUtil.saveFile4Bitmap(context, path, bitmap, name, Bitmap.CompressFormat.PNG);
             if (saveFile != null) {
@@ -1007,7 +1007,7 @@ public class AndroidUtil {
     }
 
     public static File saveLogo(Context context) {
-        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + Common.YH_LOGIN_PATH;
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + Common.YH_LOGO_PATH;
         File f_cache_logo_path = new File(path);
         if (!f_cache_logo_path.exists()) {
             f_cache_logo_path.mkdirs();
@@ -1652,7 +1652,7 @@ public class AndroidUtil {
             Toast.makeText(activityContext, "图片保存失败", Toast.LENGTH_SHORT).show();
             return;
         }
-        String pathFile = Environment.getExternalStorageDirectory().getAbsolutePath() + Common.YH_IMAGE_SAVE_PATH;
+        String pathFile = Environment.getExternalStorageDirectory().getAbsolutePath() + Common.IMAGE_SAVE_PATH;
         String fileName = AndroidUtil.md5(pathFile) + System.currentTimeMillis() + ".png";
         try {
             File aveFile = AndroidUtil.saveFile4Bitmap(activityContext, pathFile, bitmap, fileName, Bitmap.CompressFormat.PNG);

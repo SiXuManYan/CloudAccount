@@ -18,7 +18,6 @@ import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
 import com.fatcloud.account.BuildConfig
 import com.fatcloud.account.backstage.DataServiceFaker
-import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.CrashHandler
 import com.fatcloud.account.data.CloudDataBase
@@ -43,9 +42,7 @@ import javax.inject.Inject
  * </br>
  *
  */
-class CloudAccountApplication : DaggerApplication(), HasActivityInjector,
-    Application.ActivityLifecycleCallbacks,
-    CloudAccountView {
+class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Application.ActivityLifecycleCallbacks, CloudAccountView {
 
 
 
@@ -85,13 +82,15 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector,
     private fun initEvent() {
         presenter.subsribeEvent(Consumer {
             when (it.code) {
+
+                // 检查默认数据
                 Constants.EVENT_CHECK_APPLICATION_DEFAULT_DATA -> {
-                    // 检查默认数据
                     val businessScope = commonData?.businessScope
                     val accountNatues = commonData?.accountNatues
                     val forms = commonData?.forms
+                    val commitmentUrl = commonData?.commitmentUrl
 
-                    if (businessScope.isNullOrEmpty() || accountNatues.isNullOrEmpty() || forms.isNullOrEmpty()) {
+                    if (businessScope.isNullOrEmpty() || accountNatues.isNullOrEmpty() || forms.isNullOrEmpty() || commitmentUrl.isNullOrBlank()) {
                         loadCommonData()
                     }
 
@@ -321,9 +320,26 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector,
 
     }
 
+    /**
+     * oss 图片下载
+     */
+    interface OssDownloadCallBack {
+
+        /**
+         * oss 图片下载成功
+         */
+        fun ossDownloadSuccess(path: String)
+    }
+
+
     fun getOssSecurityTokenForSignUrl(objectKey: String, ossCallBack: OssSignCallBack) {
 
         presenter.getOssSecurityTokenForSignUrl(this, objectKey, ossCallBack)
+    }
+
+    fun downLoadOssImage(objectKey: String?) {
+presenter.getOssSecurityTokenForDownload(this, objectKey)
+
     }
 
 

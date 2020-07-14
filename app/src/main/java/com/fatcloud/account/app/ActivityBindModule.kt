@@ -42,6 +42,8 @@ import com.fatcloud.account.feature.forms.personal.change.FormLicenseChangeActiv
 import com.fatcloud.account.feature.forms.personal.change.FormLicenseChangeModule
 import com.fatcloud.account.feature.forms.personal.license.FormLicensePersonalActivity
 import com.fatcloud.account.feature.forms.personal.license.FormLicensePersonalModule
+import com.fatcloud.account.feature.forms.personal.logout.FormLicenseLogoutActivity
+import com.fatcloud.account.feature.forms.personal.logout.FormLicenseLogoutModule
 import com.fatcloud.account.feature.forms.personal.tax.FormTaxRegistrationPersonalActivity
 import com.fatcloud.account.feature.forms.personal.tax.FormTaxRegistrationPersonalModule
 import com.fatcloud.account.feature.news.detail.NewsDetailActivity
@@ -215,6 +217,10 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [FragmentBindModule::class, FormLicenseChangeModule::class])
     abstract fun formLicenseChangeActivityInjector(): FormLicenseChangeActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [FragmentBindModule::class, FormLicenseLogoutModule::class])
+    abstract fun formLicenseLogoutActivityInjector(): FormLicenseLogoutActivity
 
 
 

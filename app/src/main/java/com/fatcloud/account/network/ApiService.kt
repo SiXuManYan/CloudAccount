@@ -58,7 +58,6 @@ interface ApiService {
         private const val PRODUCT_API_PREFIX = "$API_ACCOUNT_URI/tProduct/"
 
 
-
         /**
          * 账户相关接口前缀
          */
@@ -493,7 +492,14 @@ interface ApiService {
         @Body `in`: JsonObject? = null
     ): Flowable<Response<PreparePay>>
 
-
+    /**
+     * 添加个体户营业执照注销
+     *
+     */
+    @POST("$ORDER_API/addSelfemployedCancel")
+    fun addLicensePersonalLogout(
+        @Body `in`: JsonObject? = null
+    ): Flowable<Response<PreparePay>>
 
 
 }

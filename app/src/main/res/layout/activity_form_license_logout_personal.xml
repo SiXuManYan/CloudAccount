@@ -226,11 +226,6 @@
             </RelativeLayout>
 
 
-
-
-
-
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -278,10 +273,6 @@
 
 
             </RelativeLayout>
-
-
-
-
 
 
             <RelativeLayout
@@ -338,9 +329,6 @@
             </RelativeLayout>
 
 
-
-
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -374,7 +362,6 @@
                     android:gravity="center_vertical|right"
                     android:hint="请输入注销原因"
                     android:imeOptions="actionNext"
-                    android:inputType="number"
                     android:lineSpacingMultiplier="1.2"
                     android:minHeight="45dp"
                     android:paddingLeft="10dp"
@@ -394,9 +381,141 @@
             </RelativeLayout>
 
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/color_list_gray_background" />
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/tag0_iv"
+                    android:layout_width="3dp"
+                    android:layout_height="13dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/shape_vertical_line_red" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tag0_iv"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="注销承诺书(请下载承诺书签字后上传附件)"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_14"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="3dp"
+                android:background="@color/split_line_color" />
+
+
+            <RelativeLayout
+                android:id="@+id/commitment_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="下载承诺书："
+                        android:textColor="@color/color_first_level"
+                        android:textSize="@dimen/font_size_12" />
+
+                    <RelativeLayout
+                        android:id="@+id/commitment_download_rl"
+                        android:layout_width="150dp"
+                        android:layout_height="90dp"
+                        android:background="@drawable/shape_dash_gray"
+                        android:padding="4dp">
+
+                        <ImageView
+                            android:id="@+id/commitment_download_iv"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_download_commitment" />
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
 
 
 
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_alignParentRight="true"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="上传承诺书："
+                        android:textColor="@color/color_first_level"
+                        android:textSize="@dimen/font_size_12" />
+
+                    <RelativeLayout
+                        android:layout_width="150dp"
+                        android:layout_height="90dp"
+                        android:background="@drawable/shape_dash_gray"
+                        android:padding="4dp">
+
+                        <ImageView
+                            android:id="@+id/commitment_upload_iv"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_upload_default" />
+
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="70dp"
+                android:gravity="right"
+                android:layout_marginBottom="5dp"
+                android:text="@string/support_format_name"
+                android:textColor="@color/color_FFAF00"
+                android:textSize="@dimen/font_size_10" />
 
 
             <View
@@ -506,7 +625,6 @@
 
 
             <TextView
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="15dp"

@@ -19,6 +19,7 @@ import com.fatcloud.account.entity.product.Price
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.extend.RoundTransFormation
 import com.fatcloud.account.feature.forms.personal.license.FormLicensePersonalActivity
+import com.fatcloud.account.feature.forms.personal.logout.FormLicenseLogoutActivity
 import com.fatcloud.account.feature.forms.personal.tax.FormTaxRegistrationPersonalActivity
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
@@ -180,7 +181,13 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
             Constants.P6 -> {
                 // 个体户营业执照注销
 
-
+                startActivity(
+                    Intent(activity, FormLicenseLogoutActivity::class.java)
+                        .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
+                        .putExtra(Constants.PARAM_FINAL_MONEY, finalMoneyStr)
+                        .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, price?.id)
+                        .putExtra(Constants.PARAM_ADD_SEAL, extraAddSeal)
+                )
             }
 
             else -> {

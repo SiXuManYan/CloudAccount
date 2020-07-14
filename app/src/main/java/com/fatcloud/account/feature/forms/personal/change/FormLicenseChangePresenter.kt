@@ -20,7 +20,7 @@ class FormLicenseChangePresenter @Inject constructor(private var view: FormLicen
     private val gson = Gson()
 
     /**
-     * 添加个体营业执照
+     * 添加个体营业执照变更
      */
     fun addLicenseChangePersonal(lifecycle: LifecycleOwner, enterpriseInfo: PersonalLicenseChange) {
 

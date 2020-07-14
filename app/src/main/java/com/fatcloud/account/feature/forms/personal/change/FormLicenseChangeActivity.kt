@@ -13,7 +13,6 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
-import com.fatcloud.account.data.CloudDataBase
 import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.persional.PersonalLicenseChange
@@ -23,10 +22,7 @@ import com.fatcloud.account.feature.extra.BusinessScopeActivity
 import com.fatcloud.account.feature.matisse.Matisse
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_license_change_personal.*
-import kotlinx.android.synthetic.main.activity_form_license_change_personal.business_scope_value
-import kotlinx.android.synthetic.main.activity_form_license_personal.*
 import java.util.*
-import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 /**
@@ -36,8 +32,6 @@ import kotlin.collections.ArrayList
  *   @see  Constants.P5
  */
 class FormLicenseChangeActivity : BaseMVPActivity<FormLicenseChangePresenter>(), FormLicenseChangeView {
-
-    lateinit var database: CloudDataBase @Inject set
 
 
     companion object {
@@ -89,12 +83,12 @@ class FormLicenseChangeActivity : BaseMVPActivity<FormLicenseChangePresenter>(),
     /**
      * 身份证正反面路径集合
      */
-    var mIdImagePathList: ArrayList<IdentityImg> = ArrayList()
+    var mIdImageUrlList: ArrayList<IdentityImg> = ArrayList()
 
     /**
      * 营业执照正反面路径集合
      */
-    var mLicenseImagesPathList: ArrayList<IdentityImg> = ArrayList()
+    var mLicenseImagesUrlList: ArrayList<IdentityImg> = ArrayList()
 
 
     private var idImageFrontPath: String = ""
@@ -373,12 +367,12 @@ class FormLicenseChangeActivity : BaseMVPActivity<FormLicenseChangePresenter>(),
                 enterpriseName2 = secondName
             }
             idno = idNumberValue
-            imgsIdno = mIdImagePathList.apply {
+            imgsIdno = mIdImageUrlList.apply {
                 clear()
                 add(IdentityImg(imgUrl = idImageFrontUrl, mold = Constants.I1))
                 add(IdentityImg(imgUrl = idImageBackUrl, mold = Constants.I2))
             }
-            imgsLicense = mLicenseImagesPathList.apply {
+            imgsLicense = mLicenseImagesUrlList.apply {
                 clear()
                 add(IdentityImg(imgUrl = licenseImageFrontUrl, mold = Constants.I1))
                 add(IdentityImg(imgUrl = licenseImageBackUrl, mold = Constants.I2))
