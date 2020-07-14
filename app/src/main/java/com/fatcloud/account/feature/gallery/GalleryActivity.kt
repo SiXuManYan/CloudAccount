@@ -138,7 +138,7 @@ class GalleryActivity : BaseActivity() {
                     .setPositiveButton(R.string.yes, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, _ ->
                         dialog.dismiss()
                         if (isGranted) {
-                            val savePath = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath, "Yihua")
+                            val savePath = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath, "Cloud")
                             val destFile = File(savePath, "${System.currentTimeMillis()}.jpg")
                             FileUtils.createOrExistsFile(destFile)
                             Observable.just(destFile)

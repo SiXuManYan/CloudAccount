@@ -172,22 +172,7 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
             R.id.id_license_back_iv,
             R.id.commitment_upload_iv -> ProductUtils.handleMediaSelect(this, Matisse.IMG, view.id)
             R.id.commitment_download_iv -> {
-                // 下载授权书
-                val application = application as CloudAccountApplication
-
-                PermissionUtils.permissionAny(
-                    this, PermissionUtils.OnPermissionCallBack { granted ->
-                        if (granted) {
-                            application.downLoadOssImage(application.commonData?.commitmentUrl)
-
-                        } else {
-                            ProductUtils.showPermissionFailure(this,"下载需要授权存储权限，是否打开应用设置授权？")
-                        }
-                    }, Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                )
-
-
+                presenter.downLoadImage(this)
             }
 
             else -> {
@@ -195,6 +180,7 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
             }
         }
     }
+
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -347,7 +333,7 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
             enterpriseName = organizationFullName
             reason = logoutReason
         }
-        presenter.addLicenseChangePersonal(this,model)
+        presenter.addLicenseChangePersonal(this, model)
 
     }
 

@@ -379,7 +379,7 @@ class CloudAccountPresenter(val view: CloudAccountView) {
                                     //将下载后的文件存放在指定的本地路径。
 
                                     val path = Environment.getExternalStorageDirectory().absolutePath + Common.IMAGE_SAVE_PATH
-                                    val name = ""
+                                    val name = "commitment.png"
                                     // 创建文件路径
                                     val file = File(path)
                                     if (!file.exists()) {

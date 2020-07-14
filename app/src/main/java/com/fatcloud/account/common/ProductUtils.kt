@@ -186,7 +186,7 @@ object ProductUtils {
     }
 
 
-     fun showPermissionFailure(context: Context?, message: String) {
+    fun showPermissionFailure(context: Context?, message: String) {
         AlertDialog.Builder(context).setTitle(R.string.hint)
             .setMessage(message)
             .setCancelable(false)
@@ -265,16 +265,20 @@ object ProductUtils {
     /**
      * 获取OSS 签名
      */
-    fun getRealOssUrl(
-        context: Context?,
-        url: String,
-        ossCallBack: CloudAccountApplication.OssSignCallBack
-    ) {
+    fun getRealOssUrl(context: Context?, url: String, ossCallBack: CloudAccountApplication.OssSignCallBack) {
 
         val activity = context as Activity
         val application = activity.application as CloudAccountApplication
 
-        application.getOssSecurityTokenForSignUrl(getOssSignUrlObjectKey(url), ossCallBack)
+
+        var newUrl = ""
+        val isStart = url.startsWith("/", true)
+        newUrl = if (isStart) {
+            url.replaceFirst("/", "")
+        }else{
+            url
+        }
+        application.getOssSecurityTokenForSignUrl(getOssSignUrlObjectKey(newUrl), ossCallBack)
 
     }
 

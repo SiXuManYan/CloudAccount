@@ -338,7 +338,7 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
     }
 
     fun downLoadOssImage(objectKey: String?) {
-presenter.getOssSecurityTokenForDownload(this, objectKey)
+        presenter.getOssSecurityTokenForDownload(this, objectKey)
 
     }
 
