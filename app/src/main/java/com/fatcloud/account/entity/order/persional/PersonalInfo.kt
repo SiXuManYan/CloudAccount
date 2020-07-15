@@ -84,7 +84,7 @@ class PersonalInfo {
      * @see BusinessScope.id
      */
 
-    var businessScope: List<Int>? = null
+    var businessScope: List<String>? = null
 
 
     var businessScopeNames: String? = null

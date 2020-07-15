@@ -11,7 +11,7 @@ class EnterpriseInfo {
     var area: String ? = null
     var bankNo: String ? = null
     var bankPhone: String ? = null
-    var businessScope: ArrayList<Int> ?= ArrayList()
+    var businessScope: ArrayList<String> ?= ArrayList()
     var businessScopeNames: String ? = null
     var createDt: String ? = null
     var delFlag: Int ? = null
