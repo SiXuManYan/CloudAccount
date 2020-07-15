@@ -1,7 +1,6 @@
 package com.fatcloud.account.feature.forms.personal.logout
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -21,7 +20,6 @@ import com.fatcloud.account.base.net.BaseHttpSubscriber
 import com.fatcloud.account.common.PermissionUtils
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.defray.prepare.PreparePay
-import com.fatcloud.account.entity.order.persional.PersonalLicenseChange
 import com.fatcloud.account.entity.order.persional.PersonalLicenseLogout
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -71,54 +69,37 @@ class FormLicenseLogoutPresenter @Inject constructor(private var view: FormLicen
             return
         }
 
-
-
-        PermissionUtils.permissionAny(
-            activity, PermissionUtils.OnPermissionCallBack { granted ->
+        PermissionUtils.permissionAny(activity, PermissionUtils.OnPermissionCallBack { granted ->
 
                 if (!granted) {
                     ProductUtils.showPermissionFailure(activity, "下载需要授权存储权限，是否打开应用设置授权？")
                     return@OnPermissionCallBack
                 }
 
-//                https://ftacloud-bucket-private.oss-cn-qingdao.aliyuncs.com/android/dev/image/encryption/image_1592462141234.jpg
-// ftacloud-bucket-public
-
-//                "https://ftacloud-bucket-public.oss-cn-qingdao.aliyuncs.com/product/web-2020710975360388694-app-p7-01-banner.png"
-
-                ProductUtils.getRealOssUrl(activity, commitmentUrl, object : CloudAccountApplication.OssSignCallBack {
-
-                    @SuppressLint("CheckResult")
-                    override fun ossUrlSignEnd(url: String) {
-
-
-                        val savePath = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath, "Cloud")
-//                        val destFile = File(savePath, "${System.currentTimeMillis()}.jpg")
-                        val destFile = File(savePath, "commitment.jpg")
-                        FileUtils.createOrExistsFile(destFile)
-                        Observable.just(destFile)
-                            .map { dest ->
-                                val future = Glide.with(activity).asFile().load(url).submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                                future.get().copyTo(dest, true)
-                                return@map dest
-                            }
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribeOn(Schedulers.io())
-                            .subscribe({ dest ->
-                                activity.sendBroadcast(
-                                    Intent(
-                                        Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-                                        Uri.fromFile(dest)
-                                    )
-                                )
-                                ToastUtils.showShort(R.string.image_save_success)
-                            }, {
-                                LogUtils.e(it.message)
-                            })
-
-
+                // http://192.168.1.191:8881/product/p6/commitment.png
+                val savePath = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath, "Cloud")
+                val destFile = File(savePath, "commitment.jpg")
+                FileUtils.createOrExistsFile(destFile)
+                Observable.just(destFile)
+                    .map { dest ->
+                        val future =
+                            Glide.with(activity).asFile().load(BuildConfig.SERVER_HOST + commitmentUrl).submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                        future.get().copyTo(dest, true)
+                        return@map dest
                     }
-                })
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe({ dest ->
+                        activity.sendBroadcast(
+                            Intent(
+                                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                                Uri.fromFile(dest)
+                            )
+                        )
+                        ToastUtils.showShort(R.string.image_save_success)
+                    }, {
+                        LogUtils.e(it.message)
+                    })
 
 
             }, Manifest.permission.READ_EXTERNAL_STORAGE,
