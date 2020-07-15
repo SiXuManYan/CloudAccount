@@ -72,7 +72,7 @@ class FormLicenseLogoutPresenter @Inject constructor(private var view: FormLicen
         PermissionUtils.permissionAny(activity, PermissionUtils.OnPermissionCallBack { granted ->
 
                 if (!granted) {
-                    ProductUtils.showPermissionFailure(activity, "下载需要授权存储权限，是否打开应用设置授权？")
+                    ProductUtils.showPermissionFailure(activity, "下载文件需要授权存储权限，是否打开应用设置授权？")
                     return@OnPermissionCallBack
                 }
 

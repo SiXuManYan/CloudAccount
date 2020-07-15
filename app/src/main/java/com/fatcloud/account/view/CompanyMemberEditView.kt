@@ -46,9 +46,9 @@ class CompanyMemberEditView : LinearLayout {
     var currentMold = ""
 
     /**
-     * 是否是用户手动附加的股东
+     * 是否是用户手动添加的附加的股东
      */
-    var mIsExtra: Boolean? = false
+    var mIsExtra: Boolean? = null
 
     /**
      * 身份证正面url
@@ -418,7 +418,7 @@ class CompanyMemberEditView : LinearLayout {
     /**
      * 返回所有包含当前所有信息的实体
      */
-    fun getShareHolder(needIdExpiryDate: Boolean? = false): Shareholder {
+    fun getShareHolder(forSaveDraft: Boolean? = false): Shareholder {
         return Shareholder(
             idno = getIdNumberValue(),
             idnoAddr = getIdAddressValue(),
@@ -428,9 +428,19 @@ class CompanyMemberEditView : LinearLayout {
             phone = getPhoneValue(),
             shareProportion = getShareRatioValue(),
             idnoDate = getExpiryDateValue(),
-            isExtra = mIsExtra
+
+            isExtra = if (forSaveDraft != null && forSaveDraft) {
+                mIsExtra
+            } else {
+                null
+            }
         )
     }
+
+
+
+
+
 
     /**
      * 上传图片是加载本地路径图片

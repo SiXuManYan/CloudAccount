@@ -348,9 +348,9 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
      */
     private fun saveDraft() {
         val shareHolders = presenter.getShareHolders(
-            legal_person_ev.getShareHolder(),
-            supervisor_ev.getShareHolder(),
-            shareholder_ev.getShareHolder(),
+            legal_person_ev.getShareHolder(true),
+            supervisor_ev.getShareHolder(true),
+            shareholder_ev.getShareHolder(true),
             shareholder_more_container
         )
         database.enterprisePackageDraftDao().updateShareHolder(shareHolders, productId = mProductId)

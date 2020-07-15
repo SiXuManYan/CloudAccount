@@ -35,7 +35,10 @@ class Shareholder(
      */
     val shareProportion: String = "",
 
-    val isExtra: Boolean? = false
+    /**
+     * 是否是附加股东(用于保存草稿)
+     */
+    val isExtra: Boolean? = null
 )
 
 /*

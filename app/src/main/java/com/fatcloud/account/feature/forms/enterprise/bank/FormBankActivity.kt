@@ -441,7 +441,7 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
 
     private fun saveDraft() {
         val holders: ArrayList<Shareholder> = ArrayList()
-        holders.add(finance_ev.getShareHolder())
+        holders.add(finance_ev.getShareHolder(true))
 
         database.bankPublicDraftDao().apply {
             updateShareHolder(holders, orderWorkId!!)
