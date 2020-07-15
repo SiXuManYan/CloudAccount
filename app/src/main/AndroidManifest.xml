@@ -327,6 +327,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".feature.forms.personal.change.FormLicenseChangeActivity" />
         <activity android:name=".feature.forms.personal.logout.FormLicenseLogoutActivity" />
+        <activity android:name=".feature.forms.master.MasterNamingActivity" />
 
 
     </application>

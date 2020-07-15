@@ -472,7 +472,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         val enterpriseInfo = PersonalInfo().apply {
             addr = detailAddrStr
             area = mAreaName
-            businessScope = ProductUtils.stringList2IntList(selectPid)
+            businessScope = selectPid
             capital = ProductUtils.getEditValueToBigDecimal(amountOfFundsStr)
             income = capital
             employedNum = employeesNumberStr

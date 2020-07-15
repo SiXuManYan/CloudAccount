@@ -27,8 +27,13 @@ class BookkeepingInfoPresenter @Inject constructor(private var view: Bookkeeping
                     data?.let {
                         view.bindDetailInfo(data)
                     }
-
                 }
+
+                override fun onError(e: Throwable) {
+                    super.onError(e)
+                }
+
+
             }
         )
 

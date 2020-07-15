@@ -83,6 +83,7 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
     override fun hideLoading() = dismissLoadingDialog()
 
     override fun getLayoutId() = R.layout.activity_form_license_logout_personal
+
     override fun initViews() {
         initExtra()
         initEvent()

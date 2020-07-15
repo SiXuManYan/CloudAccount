@@ -35,6 +35,7 @@ import javax.inject.Inject
  *
  */
 class FormLicenseLogoutPresenter @Inject constructor(private var view: FormLicenseLogoutView) : BasePresenter(view) {
+
     private val gson = Gson()
 
     /**

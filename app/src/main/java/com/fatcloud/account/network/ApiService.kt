@@ -295,15 +295,15 @@ interface ApiService {
     @POST("$ORDER_API/addBookkeeping")
     @FormUrlEncoded
     fun addAgentBookkeeping(
-        @Field("money") money: String?,//
-        @Field("productId") productId: String?,//
-        @Field("productPriceId") productPriceId: String?,//
-        @Field("legalPersonName") legalPersonName: String?,//
-        @Field("phone") phone: String?,//
-        @Field("idno") idno: String?,//
-        @Field("shopName") shopName: String?,//
+        @Field("money") money: String?,
+        @Field("productId") productId: String?,
+        @Field("productPriceId") productPriceId: String?,
+        @Field("legalPersonName") legalPersonName: String?,
+        @Field("phone") phone: String?,
+        @Field("idno") idno: String?,
+        @Field("shopName") shopName: String?,
         @Field("businessLicenseImgUrl") businessLicenseImgUrl: String?,
-        @Field("signImgUrl") signImgUrl: String?//
+        @Field("signImgUrl") signImgUrl: String?
     ): Flowable<Response<PreparePay>>
 
 
@@ -498,6 +498,15 @@ interface ApiService {
      */
     @POST("$ORDER_API/addSelfemployedCancel")
     fun addLicensePersonalLogout(
+        @Body `in`: JsonObject? = null
+    ): Flowable<Response<PreparePay>>
+
+    /**
+     * 添加大师起名
+     *
+     */
+    @POST("$ORDER_API/addMasterNamed")
+    fun addMasterNamed(
         @Body `in`: JsonObject? = null
     ): Flowable<Response<PreparePay>>
 

@@ -64,7 +64,7 @@ class BookkeepingInfoActivity : BaseMVPActivity<BookkeepingInfoPresenter>(), Boo
 
             Constants.OS3 -> {
                 payment_status_iv.setImageResource(R.drawable.ic_status_dingdanshixiao)
-                content_tv.text = data.stateText
+                content_tv.text = "您的代理记账支付已超时"
             }
 
             Constants.OS4 -> {

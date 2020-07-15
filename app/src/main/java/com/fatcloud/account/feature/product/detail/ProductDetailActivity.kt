@@ -27,6 +27,7 @@ import com.fatcloud.account.event.Event
 import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.account.login.LoginActivity
+import com.fatcloud.account.feature.forms.master.MasterNamingActivity
 import com.fatcloud.account.feature.product.detail.check.ProductCheckFragment
 import com.fatcloud.account.feature.product.detail.sheet.ProductSheetFragment
 import com.fatcloud.account.feature.product.detail.spinners.ProductSpinnerFragment
@@ -45,7 +46,7 @@ import kotlinx.android.synthetic.main.layout_bottom_action.*
 class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), ProductDetailView {
 
     private var mData: ProductDetail? = null
-    private var productId = "0"
+    private var mProductId = "0"
 
 
     override fun getLayoutId() = R.layout.activity_product_detail
@@ -117,7 +118,7 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
 
     private fun initExtra() {
         intent.getStringExtra(Constants.PARAM_PRODUCT_ID)?.let {
-            productId = it
+            mProductId = it
             getData()
         }
     }
@@ -151,7 +152,7 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
         RxBus.post(Event(Constants.EVENT_CHECK_APPLICATION_DEFAULT_DATA))
 
 
-        presenter.getDetail(this, productId)
+        presenter.getDetail(this, mProductId)
     }
 
 
@@ -307,42 +308,60 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
                 startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Constants.CONSUMER_HOT_LINE)))
             }
             R.id.bottom_right_tv -> {
-                if (!User.isLogon()) {
-                    startActivity(LoginActivity::class.java)
-                    return
+
+                mData?.let {
+                    handleNext(it)
                 }
-                if (!protocol.isChecked) {
-                    ToastUtils.showShort("请先同意服务协议")
-                    VibrateUtils.vibrate(10)
-                    protocol.startAnimation(CommonUtils.getShakeAnimation(2))
-                } else {
-                    mData?.let {
-                        when (it.mold) {
-                            Constants.P1, Constants.P4, Constants.P6 -> {
-                                // P1个体户营业执照 ，P4 个体户税务登记
-                                ProductSheetFragment.newInstance(it).apply {
-                                    show(supportFragmentManager, this.tag)
-                                }
+            }
+            else -> {
+            }
+        }
 
-                            }
-                            Constants.P2, Constants.P3 -> {
-                                // P2 企业套餐 ,P3个体户代理记账
-                                ProductSpinnerFragment.newInstance(it).apply {
-                                    show(supportFragmentManager, this.tag)
-                                }
-                            }
+    }
 
-                            Constants.P5 -> {
-                                ProductCheckFragment.newInstance(it).apply {
-                                    show(supportFragmentManager, this.tag)
-                                }
-                            }
+    private fun handleNext(it: ProductDetail) {
+        if (!User.isLogon()) {
+            startActivity(LoginActivity::class.java)
+            return
+        }
+        if (!protocol.isChecked) {
+            ToastUtils.showShort("请先同意服务协议")
+            VibrateUtils.vibrate(10)
+            protocol.startAnimation(CommonUtils.getShakeAnimation(2))
+            return
+        }
+        when (it.mold) {
+            Constants.P1,
+            Constants.P4,
+            Constants.P6 -> {
+                // P1个体户营业执照 ，P4 个体户税务登记
+                ProductSheetFragment.newInstance(it).apply {
+                    show(supportFragmentManager, this.tag)
+                }
 
-                            else -> {
-                            }
-                        }
+            }
+            Constants.P2,
+            Constants.P3 -> {
+                // P2 企业套餐 ,P3个体户代理记账
+                ProductSpinnerFragment.newInstance(it).apply {
+                    show(supportFragmentManager, this.tag)
+                }
+            }
 
-                    }
+            Constants.P5 -> {
+                ProductCheckFragment.newInstance(it).apply {
+                    show(supportFragmentManager, this.tag)
+                }
+            }
+            Constants.P7 -> {
+                val prices = it.prices
+                if (prices.isNotEmpty()) {
+                    startActivity(
+                        Intent(this, MasterNamingActivity::class.java)
+                            .putExtra(Constants.PARAM_PRODUCT_ID, mProductId)
+                            .putExtra(Constants.PARAM_FINAL_MONEY, mData!!.money.stripTrailingZeros()?.toPlainString())
+                            .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, prices[0].id)
+                    )
                 }
 
             }

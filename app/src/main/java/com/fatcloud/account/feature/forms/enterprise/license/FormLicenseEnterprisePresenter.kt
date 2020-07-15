@@ -248,7 +248,7 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
             area = areaName
             bankNo = bankNumber
             this.bankPhone = bankPhone
-            businessScope?.addAll(ProductUtils.stringList2IntList(selectPid))
+            businessScope?.addAll(selectPid)
             enterpriseName0 = zeroName
             enterpriseName1 = firstName
             enterpriseName2 = secondName

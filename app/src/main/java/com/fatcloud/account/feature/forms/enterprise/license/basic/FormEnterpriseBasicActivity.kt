@@ -234,7 +234,6 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
         }
         when (view.id) {
             R.id.business_scope_rl -> {
-                // 参照 EnterpriseInfo
                 startActivityForResult(
                     Intent(
                         this,
