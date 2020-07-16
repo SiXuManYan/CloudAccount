@@ -95,12 +95,13 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
     /**
      * 用户选中的城市信息id
      */
-    private var areaId: String = ""
+    private var mAreaId: String = ""
 
     /**
      * 用户选中的城市名称
      */
     private var mAreaName: String = ""
+
 
 
     var mediaType = 0
@@ -307,7 +308,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
                             district.name
                         )
                         addr_value.text = mAreaName
-                        areaId = district.id
+                        mAreaId = district.id
                     }
 
                     override fun onCancel() = Unit
@@ -501,7 +502,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             return
         }
         when (requestCode) {
-            Constants.REQUEST_BUSINESS_SCOPE-> {
+            Constants.REQUEST_BUSINESS_SCOPE -> {
                 // 选中的经营范围
                 selectPid = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID)
                 selectPidNames = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID_NAME)

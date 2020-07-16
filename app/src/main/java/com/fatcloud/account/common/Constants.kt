@@ -138,6 +138,10 @@ object Constants {
     const val PARAM_AREA_NAME = "param_area_name"// 选择的区域
     const val PARAM_DETAIL_ADDRESS = "param_detail_address"// 详细地址
     const val PARAM_CHANGE_TYPE = "param_change_type"// 变更类型
+    const val PARAM_TAXPAYER_NUMBER = "param_taxpayer_number"
+    const val PARAM_REGISTERED_ADDRESS = "param_registered_address"
+    const val PARAM_MAILING_ADDRESS = "param_mailing_address" // 邮寄地址
+    const val PARAM_MAILING_DETAIL_ADDRESS = "param_mailing_detail_address" // 邮寄详细地址
 
 
     /** RxBus Event */
@@ -230,6 +234,9 @@ object Constants {
 
     /** 大师起名 */
     const val P7 = "P7"
+
+    /** 个体户对公账户 */
+    const val P8 = "P8"
 
 
     // 产品流程类型 product_word

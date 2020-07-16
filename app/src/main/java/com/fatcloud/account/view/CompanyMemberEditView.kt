@@ -438,10 +438,6 @@ class CompanyMemberEditView : LinearLayout {
     }
 
 
-
-
-
-
     /**
      * 上传图片是加载本地路径图片
      */
@@ -585,6 +581,25 @@ class CompanyMemberEditView : LinearLayout {
         nation_rl.visibility = View.VISIBLE
     }
 
+    fun showNation(boolean: Boolean) {
+
+        nation_rl.visibility = if (boolean) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+    }
+
+    fun showIdNumber(boolean: Boolean){
+
+        id_number_rl.visibility = if (boolean) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+    }
+
+
     /**
      * 是否需要识别身份证背面
      */
@@ -597,6 +612,20 @@ class CompanyMemberEditView : LinearLayout {
         scanIdCardBack = true
         id_expiration_date_rl.visibility = View.VISIBLE
     }
+
+       /**
+     * 显示身份证有效期
+     */
+    fun showIdExpirationDate(boolean: Boolean) {
+
+        id_expiration_date_rl.visibility = if (boolean) {
+            View.VISIBLE
+        }else{
+            View.GONE
+        }
+    }
+
+
 
     /**
      * 设置身份证有效期

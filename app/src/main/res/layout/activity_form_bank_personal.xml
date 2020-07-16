@@ -1,0 +1,805 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/font_white"
+    android:orientation="vertical">
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_nsv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="40dp"
+            android:paddingBottom="400dp">
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/tag0_iv"
+                    android:layout_width="3dp"
+                    android:layout_height="13dp"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/shape_vertical_line_red" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tag0_iv"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="开户信息（本业务仅服务于在本平台办理个体户营业 执照的用户）"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_14"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/split_line_color" />
+
+
+            <!-- 银行信息 -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingRight="0dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/tag_iv"
+                    android:layout_width="3dp"
+                    android:layout_height="13dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/shape_vertical_line_red" />
+
+                <TextView
+                    android:id="@+id/highlight_title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tag_iv"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.2"
+                    android:maxLines="2"
+                    android:text="银行信息"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_14"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="3dp"
+                android:background="@color/split_line_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="开户银行"
+                    android:textColor="@color/color_third_level"
+                    android:textSize="@dimen/font_size_14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="30dp"
+                    android:text="渤海银行"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_14" />
+
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_view_split_10" />
+
+            <com.fatcloud.account.view.CompanyMemberEditView
+                android:id="@+id/legal_person_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+            <!-- 财务负责人 -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingRight="0dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/tag1_iv"
+                    android:layout_width="3dp"
+                    android:layout_height="13dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/shape_vertical_line_red" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tag1_iv"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.2"
+                    android:maxLines="2"
+                    android:text="财务负责人信息"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_14"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="3dp"
+                android:background="@color/split_line_color" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                tools:background="@color/font_white">
+
+                <TextView
+                    android:id="@+id/finance_name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.1"
+                    android:maxWidth="150dp"
+                    android:maxLines="2"
+                    android:text="姓名"
+                    android:textColor="@color/color_first_level" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/finance_name_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_toRightOf="@+id/finance_name_tv"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入财务负责人姓名"
+                    android:imeOptions="actionNext"
+                    android:maxLength="30"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="0dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_first_level"
+                    android:textColorHint="@color/color_cccccc"
+                    android:textSize="14sp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/split_line_color" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                tools:background="@color/font_white">
+
+                <TextView
+                    android:id="@+id/finance_phone_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.1"
+                    android:maxWidth="150dp"
+                    android:text="联系方式"
+                    android:textColor="@color/color_first_level" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/finance_phone_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_toRightOf="@+id/finance_phone_tv"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入财务负责人联系方式"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="0dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_first_level"
+                    android:textColorHint="@color/color_cccccc"
+                    android:textSize="14sp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/split_line_color" />
+
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/split_line_color" />
+
+
+            <!-- 大额业务查证联系人1信息 -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingRight="0dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/tag2_iv"
+                    android:layout_width="3dp"
+                    android:layout_height="13dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/shape_vertical_line_red" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tag2_iv"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.2"
+                    android:maxLines="2"
+                    android:text="大额业务查证联系人1信息"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_14"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="3dp"
+                android:background="@color/split_line_color" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                tools:background="@color/font_white">
+
+                <TextView
+                    android:id="@+id/verification_first_name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.1"
+                    android:maxWidth="150dp"
+                    android:maxLines="2"
+                    android:text="姓名"
+                    android:textColor="@color/color_first_level" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/verification_first_name_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_toRightOf="@+id/verification_first_name_tv"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入大额业务查证联系人姓名"
+                    android:imeOptions="actionNext"
+                    android:maxLength="30"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="0dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_first_level"
+                    android:textColorHint="@color/color_cccccc"
+                    android:textSize="14sp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/split_line_color" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                tools:background="@color/font_white">
+
+                <TextView
+                    android:id="@+id/verification_first_phone_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.1"
+                    android:maxWidth="150dp"
+                    android:text="联系方式"
+                    android:textColor="@color/color_first_level" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/verification_first_phone_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_toRightOf="@+id/verification_first_phone_tv"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入大额业务查证联系人联系方式"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="0dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_first_level"
+                    android:textColorHint="@color/color_cccccc"
+                    android:textSize="14sp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/split_line_color" />
+
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/split_line_color" />
+
+
+            <!-- 大额业务查证联系人2信息 -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingRight="0dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/tag3_iv"
+                    android:layout_width="3dp"
+                    android:layout_height="13dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/shape_vertical_line_red" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tag3_iv"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.2"
+                    android:maxLines="2"
+                    android:text="大额业务查证联系人2信息"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_14"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="3dp"
+                android:background="@color/split_line_color" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                tools:background="@color/font_white">
+
+                <TextView
+                    android:id="@+id/verification_second_name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.1"
+                    android:maxWidth="150dp"
+                    android:maxLines="2"
+                    android:text="姓名"
+                    android:textColor="@color/color_first_level" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/verification_second_name_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_toRightOf="@+id/verification_second_name_tv"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入大额业务查证联系人姓名"
+                    android:imeOptions="actionNext"
+                    android:maxLength="30"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="0dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_first_level"
+                    android:textColorHint="@color/color_cccccc"
+                    android:textSize="14sp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/split_line_color" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                tools:background="@color/font_white">
+
+                <TextView
+                    android:id="@+id/verification_second_phone_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.1"
+                    android:maxWidth="150dp"
+                    android:text="联系方式"
+                    android:textColor="@color/color_first_level" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/verification_second_phone_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_toRightOf="@+id/verification_second_phone_tv"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入大额业务查证联系人联系方式"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="0dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_first_level"
+                    android:textColorHint="@color/color_cccccc"
+                    android:textSize="14sp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/split_line_color" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/split_line_color" />
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/tag4_iv"
+                    android:layout_width="3dp"
+                    android:layout_height="13dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/shape_vertical_line_red" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tag4_iv"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="营业执照（正本）"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_14"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="3dp"
+                android:background="@color/split_line_color" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp"
+                tools:background="@color/font_white">
+
+
+                <RelativeLayout
+                    android:layout_width="150dp"
+                    android:layout_height="90dp"
+                    android:background="@drawable/shape_dash_gray"
+                    android:padding="4dp">
+
+                    <ImageView
+                        android:id="@+id/license_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_upload_default" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:src="@drawable/ic_ocr_re_upload" />
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/support_format_name"
+                    android:textColor="@color/color_FFAF00"
+                    android:textSize="@dimen/font_size_10" />
+
+
+            </LinearLayout>
+
+
+            <!---->
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/tag5_iv"
+                    android:layout_width="3dp"
+                    android:layout_height="13dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/shape_vertical_line_red" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tag5_iv"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="基本存款账户信息"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_14"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="3dp"
+                android:background="@color/split_line_color" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp"
+                tools:background="@color/font_white">
+
+
+                <RelativeLayout
+                    android:layout_width="150dp"
+                    android:layout_height="90dp"
+                    android:background="@drawable/shape_dash_gray"
+                    android:padding="4dp">
+
+                    <ImageView
+                        android:id="@+id/account_info_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_upload_default" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:src="@drawable/ic_ocr_re_upload" />
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/support_format_name"
+                    android:textColor="@color/color_FFAF00"
+                    android:textSize="@dimen/font_size_10" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+    <include layout="@layout/inc_title_bar" />
+
+    <LinearLayout
+        android:id="@+id/bottom_ll"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:alpha="0.9"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/bottom_left_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/color_first_level"
+            android:gravity="center"
+            android:text="保存"
+            android:textColor="@color/font_white"
+            android:textSize="@dimen/font_size_16"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/bottom_right_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/color_app_red"
+            android:gravity="center"
+            android:text="下一步"
+            android:textColor="@color/font_white"
+            android:textSize="@dimen/font_size_16" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

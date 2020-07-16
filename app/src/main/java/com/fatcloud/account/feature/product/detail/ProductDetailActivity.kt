@@ -28,6 +28,7 @@ import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.account.login.LoginActivity
 import com.fatcloud.account.feature.forms.master.MasterNamingActivity
+import com.fatcloud.account.feature.forms.personal.bank.basic.FormPersonalBankBasicActivity
 import com.fatcloud.account.feature.product.detail.check.ProductCheckFragment
 import com.fatcloud.account.feature.product.detail.sheet.ProductSheetFragment
 import com.fatcloud.account.feature.product.detail.spinners.ProductSpinnerFragment
@@ -358,6 +359,18 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
                 if (prices.isNotEmpty()) {
                     startActivity(
                         Intent(this, MasterNamingActivity::class.java)
+                            .putExtra(Constants.PARAM_PRODUCT_ID, mProductId)
+                            .putExtra(Constants.PARAM_FINAL_MONEY, mData!!.money.stripTrailingZeros()?.toPlainString())
+                            .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, prices[0].id)
+                    )
+                }
+            }
+
+            Constants.P8 -> {
+                val prices = it.prices
+                if (prices.isNotEmpty()) {
+                    startActivity(
+                        Intent(this, FormPersonalBankBasicActivity::class.java)
                             .putExtra(Constants.PARAM_PRODUCT_ID, mProductId)
                             .putExtra(Constants.PARAM_FINAL_MONEY, mData!!.money.stripTrailingZeros()?.toPlainString())
                             .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, prices[0].id)

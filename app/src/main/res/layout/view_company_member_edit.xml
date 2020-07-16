@@ -237,6 +237,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/id_number_rl"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="?android:attr/selectableItemBackground"
