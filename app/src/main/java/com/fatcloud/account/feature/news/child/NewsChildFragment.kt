@@ -63,9 +63,7 @@ class NewsChildFragment : BaseRefreshListFragment<News, NewsChildPresenter>(), N
                 return@Consumer
             }
             recyclerView.smoothScrollToPosition(0)
-            swipeLayout.postDelayed({
-                swipeLayout.autoRefresh()
-            }, 200)
+            // swipeLayout.postDelayed({ swipeLayout.autoRefresh() }, 200)
         })
 
         // 双击title返回

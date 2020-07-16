@@ -8,18 +8,16 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
 import butterknife.OnClick
+import com.blankj.utilcode.util.BarUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseFragment
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.entity.news.NewsCategory
 import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.event.entity.NewsProductScrollToTopEvent
-import com.fatcloud.account.event.entity.TabRefreshEvent
 import com.fatcloud.account.feature.news.child.NewsChildFragment
 import com.fatcloud.account.view.tabs.SlidingTabLayout
-import com.blankj.utilcode.util.BarUtils
 import com.google.android.material.appbar.AppBarLayout
-import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_news.*
 
 /**

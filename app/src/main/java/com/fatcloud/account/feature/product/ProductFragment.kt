@@ -67,9 +67,7 @@ class ProductFragment : BaseRefreshListFragment<Product2, ProductPresenter>(), P
             if (it.clx == ProductFragment::class.java) {
                 if (isViewVisible) {
                     recyclerView.smoothScrollToPosition(0)
-                    swipeLayout.postDelayed({
-                        swipeLayout.autoRefresh()
-                    }, 200)
+                    // swipeLayout.postDelayed({ swipeLayout.autoRefresh() }, 200)
                 }
             }
 

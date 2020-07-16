@@ -173,17 +173,8 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
      * @param position 位置
      */
     fun onTabSelect(position: Int) {
-//        if ((position == 2 || position == 3) && !User.isLogon()) {
-//            tabs_navigator.currentTab = lastTab
-//
-//            // todo 跳转至注册页
-////            startActivity(SignUpActivity::class.java)
-//            return
-//        }
-
         lastTab = position
         adapter.onTabSelect(position)
-        // todo 增加页面切换请求
     }
 
 
@@ -192,7 +183,6 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
      * @param position 位置
      */
     fun onTabReselect(position: Int) {
-
         if (reSelect.first == position && System.currentTimeMillis() - reSelect.second < 500) {
             RxBus.post(TabRefreshEvent((tabs[position] as TabItem).clx))
             reSelect = Pair(-1, 0L)
@@ -205,8 +195,7 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
     /**
      * Tab数据适配器
      */
-    private inner class FragmentAdapter internal constructor(val fm: FragmentManager) :
-        FragmentPagerAdapter(fm) {
+    private inner class FragmentAdapter internal constructor(val fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
         init {
             if (fm.fragments.size > 0) {
