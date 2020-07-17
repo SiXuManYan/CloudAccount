@@ -62,7 +62,7 @@ class BankPersonal {
     var imgsLicense: List<IdentityImg>? = null
 
     /**
-     * 存款账户图片
+     * 基本存款账户图片
      */
     var imgsDepositAccount: List<IdentityImg>? = null
 

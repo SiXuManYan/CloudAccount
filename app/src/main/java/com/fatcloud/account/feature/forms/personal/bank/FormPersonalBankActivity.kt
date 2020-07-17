@@ -205,6 +205,16 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             hideAddress()
             hideShareRatio()
         }
+
+        when (mAccountNatureValue) {
+            Constants.AN1 -> {
+                // 显示基本信息
+                basic_ll.visibility = View.VISIBLE
+            }
+            else -> {
+                basic_ll.visibility = View.GONE
+            }
+        }
     }
 
 
@@ -400,6 +410,19 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
         if (!ProductUtils.isPhoneNumber(reconciliationPhoneValue)) {
             return
         }
+        if (mLicenseImgUrl.isBlank()) {
+            ToastUtils.showShort("请上传营业执照（正本）")
+            return
+        }
+
+        if (mAccountNatureValue == Constants.AN1) {
+            if (accountInfoUrl.isBlank()) {
+                ToastUtils.showShort("请上传基本存款账户信息")
+                return
+            }
+
+        }
+
 
         val model = BankPersonal().apply {
             productId = mProductId
@@ -422,9 +445,13 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
                 clear()
                 add(IdentityImg(imgUrl = mLicenseImgUrl, mold = Constants.I1))
             }
-            imgsDepositAccount = ArrayList<IdentityImg>().apply {
-                clear()
-                add(IdentityImg(imgUrl = accountInfoUrl, mold = Constants.I1))
+
+            if (mAccountNatureValue == Constants.AN1) {
+                // 基本户才上传存款账户图片
+                imgsDepositAccount = ArrayList<IdentityImg>().apply {
+                    clear()
+                    add(IdentityImg(imgUrl = accountInfoUrl, mold = Constants.I1))
+                }
             }
 
             personLegal = NamePhoneBean().apply {

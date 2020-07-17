@@ -851,88 +851,96 @@
             <!---->
 
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="15dp"
-                android:paddingTop="10dp"
-                android:paddingRight="15dp"
-                android:paddingBottom="10dp">
-
-                <ImageView
-                    android:id="@+id/tag5_iv"
-                    android:layout_width="3dp"
-                    android:layout_height="13dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/shape_vertical_line_red" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/tag5_iv"
-                    android:ellipsize="end"
-                    android:lineSpacingMultiplier="1.2"
-                    android:text="基本存款账户信息"
-                    android:textColor="@color/color_first_level"
-                    android:textSize="@dimen/font_size_14"
-                    android:textStyle="bold" />
-
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="3dp"
-                android:background="@color/split_line_color" />
-
-
             <LinearLayout
+                android:id="@+id/basic_ll"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="15dp"
-                tools:background="@color/font_white">
-
-
+                android:layout_height="wrap_content">
                 <RelativeLayout
-                    android:layout_width="150dp"
-                    android:layout_height="90dp"
-                    android:background="@drawable/shape_dash_gray"
-                    android:padding="4dp">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="10dp">
 
                     <ImageView
-                        android:id="@+id/account_info_iv"
+                        android:id="@+id/tag5_iv"
+                        android:layout_width="3dp"
+                        android:layout_height="13dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/shape_vertical_line_red" />
+
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_upload_default" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:src="@drawable/ic_ocr_re_upload" />
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/tag5_iv"
+                        android:ellipsize="end"
+                        android:lineSpacingMultiplier="1.2"
+                        android:text="基本存款账户信息"
+                        android:textColor="@color/color_first_level"
+                        android:textSize="@dimen/font_size_14"
+                        android:textStyle="bold" />
+
 
                 </RelativeLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="@color/split_line_color" />
 
-                <TextView
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:text="@string/support_format_name"
-                    android:textColor="@color/color_FFAF00"
-                    android:textSize="@dimen/font_size_10" />
+                    android:orientation="vertical"
+                    android:padding="15dp"
+                    tools:background="@color/font_white">
 
+
+                    <RelativeLayout
+                        android:layout_width="150dp"
+                        android:layout_height="90dp"
+                        android:background="@drawable/shape_dash_gray"
+                        android:padding="4dp">
+
+                        <ImageView
+                            android:id="@+id/account_info_iv"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_upload_default" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:src="@drawable/ic_ocr_re_upload" />
+
+                    </RelativeLayout>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/support_format_name"
+                        android:textColor="@color/color_FFAF00"
+                        android:textSize="@dimen/font_size_10" />
+
+
+                </LinearLayout>
 
             </LinearLayout>
+
 
 
         </LinearLayout>
