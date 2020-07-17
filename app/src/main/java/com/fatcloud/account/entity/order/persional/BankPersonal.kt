@@ -8,7 +8,7 @@ import com.fatcloud.account.entity.order.IdentityImg
  * </br>
  * 个体户营业执照变更
  */
-class PersonalBank {
+class BankPersonal {
 
     /** 产品id */
     var productId: String? = null

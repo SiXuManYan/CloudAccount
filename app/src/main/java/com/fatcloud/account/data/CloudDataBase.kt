@@ -24,7 +24,9 @@ import com.fatcloud.account.entity.users.User
         PersonalTaxDraft::class,
         PersonalBookkeepingDraft::class,
         EnterprisePackageDraft::class,
-        BankPublicDraft::class],
+        BankPublicDraft::class,
+        BankPersonalDraft::class
+    ],
     version = 2
 //    exportSchema = false
 )
@@ -96,9 +98,14 @@ abstract class CloudDataBase : RoomDatabase() {
     abstract fun enterprisePackageDraftDao(): EnterprisePackageDraftDao
 
     /**
-     * 银行对公账户
+     * 企业银行对公账户
      */
     abstract fun bankPublicDraftDao(): BankPublicDraftDao
+
+    /**
+     * 个体户银行对公账户
+     */
+    abstract fun bankPersonalDraftDao(): BankPersonalDraftDao
 
 
 }

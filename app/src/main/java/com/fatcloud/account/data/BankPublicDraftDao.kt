@@ -22,6 +22,10 @@ interface BankPublicDraftDao {
     fun clear()
 
 
+    @Update
+    fun update(user: BankPublicDraft)
+
+
     /**
      * 财务负责人
      */
@@ -49,8 +53,6 @@ interface BankPublicDraftDao {
     fun updateWarrantUrlAndPath(url: String, path: String, orderWorkId: String)
 
 
-    @Update
-    fun update(user: BankPublicDraft)
 
 
 }

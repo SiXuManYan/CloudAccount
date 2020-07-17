@@ -18,7 +18,7 @@ import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.persional.NamePhoneBean
-import com.fatcloud.account.entity.order.persional.PersonalBank
+import com.fatcloud.account.entity.order.persional.BankPersonal
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
@@ -401,7 +401,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             return
         }
 
-        val model = PersonalBank().apply {
+        val model = BankPersonal().apply {
             productId = mProductId
             productPriceId = mProductPriceId
             money = mFinalMoney

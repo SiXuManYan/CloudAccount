@@ -114,7 +114,8 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
      */
     private fun handlePersonalProduct(it: BusinessProgress) {
         when (it.code) {
-            Constants.PW1, Constants.PW2 -> {
+            Constants.PW1,
+            Constants.PW2 -> {
                 startActivity(
                     Intent(this@ScheduleActivity, RegistrantInfoActivity::class.java)
                         .putExtra(Constants.PARAM_ORDER_ID, orderId)
@@ -153,9 +154,8 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
                 // 企业税务登记无事件
             }
             Constants.PW3 -> {
-                if (it.state == "OW1") {
+                if (it.state == Constants.OW1) {
                     // 编辑页
-
                     startActivity(
                         Intent(this@ScheduleActivity, FormBankBasicActivity::class.java)
                             .putExtra(Constants.PARAM_ORDER_WORK_ID, it.id)

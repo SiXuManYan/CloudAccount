@@ -4,6 +4,7 @@ import androidx.room.TypeConverter
 import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.enterprise.Shareholder
+import com.fatcloud.account.entity.order.persional.NamePhoneBean
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
@@ -94,6 +95,24 @@ object Converters {
 
         val objects =
             Gson().fromJson(value, Array<Shareholder>::class.java) as Array<Shareholder>
+        val list = objects.toList()
+        return list
+    }
+
+
+    @TypeConverter
+    @JvmStatic
+    fun listToJson4(value: List<NamePhoneBean>?): String {
+
+        return Gson().toJson(value)
+    }
+
+    @TypeConverter
+    @JvmStatic
+    fun jsonToList4(value: String): List<NamePhoneBean>? {
+
+        val objects =
+            Gson().fromJson(value, Array<NamePhoneBean>::class.java) as Array<NamePhoneBean>
         val list = objects.toList()
         return list
     }

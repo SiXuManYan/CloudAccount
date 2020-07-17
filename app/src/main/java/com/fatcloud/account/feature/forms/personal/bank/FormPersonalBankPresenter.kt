@@ -5,7 +5,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
 import com.fatcloud.account.entity.defray.prepare.PreparePay
-import com.fatcloud.account.entity.order.persional.PersonalBank
+import com.fatcloud.account.entity.order.persional.BankPersonal
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import javax.inject.Inject
@@ -24,7 +24,7 @@ class FormPersonalBankPresenter @Inject constructor(private var view: FormPerson
     /**
      * 添加个体营业执照注销
      */
-    fun addLicenseChangePersonal(lifecycle: LifecycleOwner, model: PersonalBank) {
+    fun addLicenseChangePersonal(lifecycle: LifecycleOwner, model: BankPersonal) {
 
         val bodyJsonStr = gson.toJson(model)
 

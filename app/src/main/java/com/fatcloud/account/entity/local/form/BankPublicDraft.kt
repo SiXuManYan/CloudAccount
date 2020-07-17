@@ -122,43 +122,6 @@ class BankPublicDraft {
     var areaId: String? = ""
 
 
-//    /**
-//     * 身份证号
-//     */
-//    @ColumnInfo(name = "id_number")
-//    var idNumber: String? = ""
-//
-//    /**
-//     * 身份证号 正面
-//     */
-//    @ColumnInfo(name = "id_number_image_front_url")
-//    var idNumberImageFrontUrl: String? = ""
-//
-//    /**
-//     * 身份证号 反面
-//     */
-//    @ColumnInfo(name = "id_number_image_back_url")
-//    var idNumberImageBackUrl: String? = ""
-//
-//
-//    /**
-//     * 财务负责人姓名
-//     */
-//    @ColumnInfo(name = "finance_name")
-//    var financeName: String? = ""
-//
-//
-//    /**
-//     * 财务负责人手机号
-//     */
-//    @ColumnInfo(name = "finance_phone")
-//    var financePhone: String? = ""
-//
-//    /**
-//     * 财务负责人股份占比
-//     */
-//    @ColumnInfo(name = "finance_shares")
-//    var financeShares: String? = ""
 
 
     /**
