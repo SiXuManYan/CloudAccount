@@ -61,6 +61,7 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
     var reconciliationPhone: String? = ""
     var areaName: String? = ""
     var detailAddr: String? = ""
+    var mPostCode: String? = ""
 
     /**
      * 营业执照url
@@ -109,6 +110,7 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
         reconciliationPhone = intent.extras!!.getString(Constants.PARAM_RECONCILIATION_PHONE)
         areaName = intent.extras!!.getString(Constants.PARAM_AREA_NAME)
         detailAddr = intent.extras!!.getString(Constants.PARAM_DETAIL_ADDRESS)
+        mPostCode = intent.extras!!.getString(Constants.PARAM_POST_CODE)
 
         presenter.getBankInfo(this, orderWorkId)
 
@@ -527,7 +529,8 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
             reconciliatAddr = detailAddr,
             reconciliatArea = areaName,
             reconciliatContact = reconciliationName,
-            reconciliatPhone = reconciliationPhone
+            reconciliatPhone = reconciliationPhone,
+            postcodeValue = mPostCode
         )
     }
 

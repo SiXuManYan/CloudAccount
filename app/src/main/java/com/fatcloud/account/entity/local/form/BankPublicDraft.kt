@@ -122,8 +122,6 @@ class BankPublicDraft {
     var areaId: String? = ""
 
 
-
-
 //    /**
 //     * 身份证号
 //     */
@@ -167,7 +165,7 @@ class BankPublicDraft {
      * 财务负责人
      */
     @ColumnInfo(name = "share_holders")
-    var shareholders: List<Shareholder> ? = ArrayList()
+    var shareholders: List<Shareholder>? = ArrayList()
 
 
     /**
@@ -206,6 +204,13 @@ class BankPublicDraft {
      */
     @ColumnInfo(name = "legal_person_warrant_image_path")
     var legalPersonWarrantImgPath: String? = ""
+
+
+    /**
+     * 邮编
+     */
+    @ColumnInfo(name = "postcode")
+    var postcode: String? = ""
 
 
 }

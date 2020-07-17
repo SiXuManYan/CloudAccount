@@ -104,6 +104,9 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
         draft.areaId?.let {
             mAreaId = it
         }
+        draft.postcode?.let {
+            postcode_et.setText(it)
+        }
 
     }
 
@@ -166,6 +169,7 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
             reconciliationName = reconciliation_name_et.text.toString().trim()
             area = mAreaName
             areaId = mAreaId
+            postcode = postcode_et.text.toString().trim()
         }
         database.bankPublicDraftDao().add(draft)
         BankPublicDraft.update()
@@ -187,6 +191,14 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
             ToastUtils.showShort("请输入公司地址")
             return
         }
+
+
+        val postcodeValue = postcode_et.text.toString().trim()
+        if (postcodeValue.isBlank()) {
+            ToastUtils.showShort("请输入邮编")
+            return
+        }
+
 
         val registeredCapital = registered_capital_et.text.toString().trim()
         if (registeredCapital.isBlank()) {
@@ -238,6 +250,7 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
             putString(Constants.PARAM_RECONCILIATION_PHONE, reconciliationPhone)
             putString(Constants.PARAM_AREA_NAME, areaName)
             putString(Constants.PARAM_DETAIL_ADDRESS, detailAddr)
+            putString(Constants.PARAM_POST_CODE, postcodeValue)
         }
         startActivity(Intent(this, FormBankActivity::class.java).putExtras(bundle))
 

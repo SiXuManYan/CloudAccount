@@ -110,6 +110,8 @@ class EnterpriseInfo {
     /** 设置状态文本 */
     var settingStateText: String ? = null
 
+    /** 邮编 （银行对公账户回显时用）*/
+    var postcode: String ? = null
 
 }
 

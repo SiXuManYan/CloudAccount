@@ -137,6 +137,7 @@ object Constants {
     const val PARAM_RECONCILIATION_PHONE = "param_reconciliation_phone" // 对账联系方式
     const val PARAM_AREA_NAME = "param_area_name"// 选择的区域
     const val PARAM_DETAIL_ADDRESS = "param_detail_address"// 详细地址
+    const val PARAM_POST_CODE = "param_post_code"// 邮编
     const val PARAM_CHANGE_TYPE = "param_change_type"// 变更类型
     const val PARAM_TAXPAYER_NUMBER = "param_taxpayer_number"
     const val PARAM_REGISTERED_ADDRESS = "param_registered_address"

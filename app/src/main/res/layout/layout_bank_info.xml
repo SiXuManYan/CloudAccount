@@ -202,6 +202,7 @@
 
 
     <LinearLayout
+        android:id="@+id/postcode_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -209,7 +210,8 @@
         android:paddingTop="3dp"
         android:paddingRight="15dp"
         android:paddingBottom="3dp"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <TextView
             android:layout_width="100dp"

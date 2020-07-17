@@ -345,6 +345,7 @@ interface ApiService {
      * @param reconciliatArea           对账单收货地址区域
      * @param reconciliatContact        对账联系人
      * @param reconciliatPhone          对账联系人电话
+     * @param postcode                  邮编
      * @see Constants.OW1
      * @see Constants.OW2
      * @see Constants.OW3
@@ -370,7 +371,8 @@ interface ApiService {
         @Field("reconciliatAddr") reconciliatAddr: String?,
         @Field("reconciliatArea") reconciliatArea: String?,
         @Field("reconciliatContact") reconciliatContact: String?,
-        @Field("reconciliatPhone") reconciliatPhone: String?
+        @Field("reconciliatPhone") reconciliatPhone: String?,
+        @Field("postcode") postcode: String?
     ): Flowable<Response<JsonElement>>
 
 

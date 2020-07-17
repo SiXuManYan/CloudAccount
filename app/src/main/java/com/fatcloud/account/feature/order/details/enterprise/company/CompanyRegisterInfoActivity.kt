@@ -140,8 +140,15 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
 
         company_name_tv.text = data.enterpriseName
         company_address_tv.text = data.enterpriseAddr
-//        postcode_tv.text = data.capital // 邮编
 
+        // 邮编
+        val postcode = data.postcode
+        if (!postcode.isNullOrBlank()) {
+            postcode_ll.visibility = View.VISIBLE
+            postcode_tv.text = postcode
+        } else {
+            postcode_ll.visibility = View.GONE
+        }
 
         account_nature_tv.text = data.enterpriseMold
 
