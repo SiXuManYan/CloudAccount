@@ -15,7 +15,13 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
+import com.fatcloud.account.entity.defray.prepare.PreparePay
+import com.fatcloud.account.entity.order.IdentityImg
+import com.fatcloud.account.entity.order.persional.NamePhoneBean
+import com.fatcloud.account.entity.order.persional.PersonalBank
 import com.fatcloud.account.event.entity.ImageUploadEvent
+import com.fatcloud.account.event.entity.OrderPaySuccessEvent
+import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.matisse.Matisse
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_bank_personal.*
@@ -44,7 +50,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
     private var mProductPriceId: String = "0"
 
     /** 存款人姓名 */
-    private var mNameValue: String = ""
+    private var mDepositorNameValue: String = ""
 
     /** 纳税人识别号 */
     private var mTaxpayerNumberValue: String = ""
@@ -116,7 +122,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
         }
 
         intent.extras!!.getString(Constants.PARAM_NAME)?.let {
-            mNameValue = it
+            mDepositorNameValue = it
         }
 
         intent.extras!!.getString(Constants.PARAM_TAXPAYER_NUMBER)?.let {
@@ -165,9 +171,23 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
                 else -> {
                 }
             }
-
-
         })
+
+        presenter.subsribeEventEntity<OrderPaySuccessEvent>(Consumer {
+            finish()
+        })
+
+        presenter.subsribeEvent(Consumer {
+            when (it.code) {
+                Constants.EVENT_FORM_CLOSE,
+                Constants.EVENT_CLOSE_PAY_UNKNOWN -> {
+                    finish()
+                }
+                else -> {
+                }
+            }
+        })
+
     }
 
 
@@ -284,6 +304,11 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
                 ProductUtils.handleDoubleClick(view)
                 handleNext()
             }
+            R.id.license_iv,
+            R.id.account_info_iv -> {
+                ProductUtils.handleMediaSelect(this, Matisse.IMG, view.id)
+            }
+
             else -> {
             }
         }
@@ -291,25 +316,33 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
 
     private fun handleNext() {
 
-        if (!ProductUtils.hasIdCardUrl(legal_person_view.frontImageUrl, true, "法人")) {
+        val legalFrontImageUrl = legal_person_view.frontImageUrl
+        if (!ProductUtils.hasIdCardUrl(legalFrontImageUrl, true, "法人")) {
             return
         }
-        if (!ProductUtils.hasIdCardUrl(legal_person_view.backImageUrl, false, "法人")) {
+        val legalBackNameUrl = legal_person_view.backImageUrl
+        if (!ProductUtils.hasIdCardUrl(legalBackNameUrl, false, "法人")) {
             return
         }
 
-        if (legal_person_view.getNameValue().isBlank()) {
+        val legalNameValue = legal_person_view.getNameValue()
+        if (legalNameValue.isBlank()) {
             ToastUtils.showShort("请输入法人姓名")
             return
         }
 
-        if (legal_person_view.getPhoneValue().isBlank()) {
+        val legalPhoneValue = legal_person_view.getPhoneValue()
+        if (legalPhoneValue.isBlank()) {
             ToastUtils.showShort("请输入法人联系方式")
             return
         }
+        if (!ProductUtils.isPhoneNumber(legalPhoneValue, "法人")) {
+            return
+        }
 
-        val nameValue = finance_name_et.text.toString().trim()
-        if (nameValue.isBlank()) {
+
+        val financeNameValue = finance_name_et.text.toString().trim()
+        if (financeNameValue.isBlank()) {
             ToastUtils.showShort("请输入财务负责人姓名")
             return
         }
@@ -319,7 +352,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             ToastUtils.showShort("请输入财务负责人联系方式")
             return
         }
-        if (!ProductUtils.isPhoneNumber(financePhoneValue)) {
+        if (!ProductUtils.isPhoneNumber(financePhoneValue, "财务负责人")) {
             return
         }
 
@@ -334,7 +367,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             ToastUtils.showShort("请输入大额业务查证联系人联系方式1")
             return
         }
-        if (!ProductUtils.isPhoneNumber(verificationFirstPhoneValue)) {
+        if (!ProductUtils.isPhoneNumber(verificationFirstPhoneValue, "查证联系人联系方式1")) {
             return
         }
 
@@ -349,11 +382,93 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             ToastUtils.showShort("请输入大额业务查证联系人联系方式2")
             return
         }
-        if (!ProductUtils.isPhoneNumber(verificationSecondPhoneValue)) {
+        if (!ProductUtils.isPhoneNumber(verificationSecondPhoneValue, "查证联系人联系方式2")) {
             return
         }
 
+        val reconciliationNameValue = reconciliation_name_et.text.toString().trim()
+        if (reconciliationNameValue.isBlank()) {
+            ToastUtils.showShort("请输入对账联系人姓名")
+            return
+        }
+
+        val reconciliationPhoneValue = reconciliation_phone_et.text.toString().trim()
+        if (reconciliationPhoneValue.isBlank()) {
+            ToastUtils.showShort("请输入对账联系人联系方式")
+            return
+        }
+        if (!ProductUtils.isPhoneNumber(reconciliationPhoneValue)) {
+            return
+        }
+
+        val model = PersonalBank().apply {
+            productId = mProductId
+            productPriceId = mProductPriceId
+            money = mFinalMoney
+            depositorName = mDepositorNameValue
+
+            enterpriseCode = mTaxpayerNumberValue
+            addressRegistered = mRegisteredAddressValue
+            accountType = mAccountNatureValue
+            addressPost = mMailingAddressValue
+            addressDetailed = mailingDetailAddressValue
+
+            imgsIdno = ArrayList<IdentityImg>().apply {
+                clear()
+                add(IdentityImg(imgUrl = legalFrontImageUrl, mold = Constants.I1))
+                add(IdentityImg(imgUrl = legalBackNameUrl, mold = Constants.I2))
+            }
+            imgsLicense = ArrayList<IdentityImg>().apply {
+                clear()
+                add(IdentityImg(imgUrl = mLicenseImgUrl, mold = Constants.I1))
+            }
+            imgsDepositAccount = ArrayList<IdentityImg>().apply {
+                clear()
+                add(IdentityImg(imgUrl = accountInfoUrl, mold = Constants.I1))
+            }
+
+            personLegal = NamePhoneBean().apply {
+                name = legalNameValue
+                phone = legalPhoneValue
+            }
+
+            personFinance = NamePhoneBean().apply {
+                name = financeNameValue
+                phone = financePhoneValue
+            }
+
+            personVerification1 = NamePhoneBean().apply {
+                name = verificationFirstNameValue
+                phone = verificationFirstPhoneValue
+            }
+
+            personVerification2 = NamePhoneBean().apply {
+                name = verificationSecondNameValue
+                phone = verificationSecondPhoneValue
+            }
+            personReconciliation = NamePhoneBean().apply {
+                name = reconciliationNameValue
+                phone = reconciliationPhoneValue
+            }
+        }
+
+        presenter.addLicenseChangePersonal(this, model)
 
     }
+
+    override fun commitSuccess(preparePay: PreparePay) {
+
+        startActivity(
+            Intent(this, PayPrepareActivity::class.java)
+                .putExtra(Constants.PARAM_ORDER_ID, preparePay.orderId)
+                .putExtra(Constants.PARAM_ORDER_NUMBER, preparePay.orderNo)
+                .putExtra(Constants.PARAM_MONEY, preparePay.money.stripTrailingZeros().toPlainString())
+                .putExtra(Constants.PARAM_IMAGE_URL, preparePay.productLogoImgUrl)
+                .putExtra(Constants.PARAM_PRODUCT_NAME, preparePay.productName)
+                .putExtra(Constants.PARAM_DATE, preparePay.createDt)
+        )
+        finish()
+    }
+
 
 }

@@ -122,23 +122,15 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
 
         presenter.subsribeEvent(Consumer {
             when (it.code) {
-                Constants.EVENT_FORM_CLOSE -> {
-                    finish()
-                }
-                else -> {
-                }
-            }
-        })
-        presenter.subsribeEvent(Consumer {
-            when (it.code) {
+                Constants.EVENT_FORM_CLOSE,
                 Constants.EVENT_CLOSE_PAY_UNKNOWN -> {
                     finish()
                 }
+
                 else -> {
                 }
             }
         })
-
     }
 
     private fun initView() {

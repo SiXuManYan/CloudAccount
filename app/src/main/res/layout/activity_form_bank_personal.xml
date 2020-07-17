@@ -134,6 +134,7 @@
             <com.fatcloud.account.view.CompanyMemberEditView
                 android:id="@+id/legal_person_view"
                 android:layout_width="match_parent"
+                tools:visibility="gone"
                 android:layout_height="wrap_content" />
 
 
@@ -587,6 +588,180 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:background="@color/split_line_color" />
+
+
+
+
+
+
+
+
+
+
+            <!-- 对账联系人 -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingRight="0dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/tag7_iv"
+                    android:layout_width="3dp"
+                    android:layout_height="13dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/shape_vertical_line_red" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tag7_iv"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.2"
+                    android:maxLines="2"
+                    android:text="对账联系人信息"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_14"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="3dp"
+                android:background="@color/split_line_color" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                tools:background="@color/font_white">
+
+                <TextView
+                    android:id="@+id/reconciliation_name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.1"
+                    android:maxWidth="150dp"
+                    android:maxLines="2"
+                    android:text="姓名"
+                    android:textColor="@color/color_first_level" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/reconciliation_name_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_toRightOf="@+id/reconciliation_name_tv"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入对账联系人姓名"
+                    android:imeOptions="actionNext"
+                    android:maxLength="30"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="0dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_first_level"
+                    android:textColorHint="@color/color_cccccc"
+                    android:textSize="14sp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/split_line_color" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                tools:background="@color/font_white">
+
+                <TextView
+                    android:id="@+id/reconciliation_phone_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.1"
+                    android:maxWidth="150dp"
+                    android:text="联系方式"
+                    android:textColor="@color/color_first_level" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/reconciliation_phone_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_toRightOf="@+id/reconciliation_phone_tv"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入对账联系人联系方式"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="0dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_first_level"
+                    android:textColorHint="@color/color_cccccc"
+                    android:textSize="14sp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/split_line_color" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/split_line_color" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             <RelativeLayout

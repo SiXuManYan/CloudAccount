@@ -1,6 +1,6 @@
 package com.fatcloud.account.entity.order.persional
 
-import com.fatcloud.account.entity.commons.BusinessScope
+import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.order.IdentityImg
 
 /**
@@ -10,109 +10,89 @@ import com.fatcloud.account.entity.order.IdentityImg
  */
 class PersonalBank {
 
-    /**
-     * 产品id
-     */
+    /** 产品id */
     var productId: String? = null
 
-    /**
-     * 选中的产品价格id
-     */
+    /** 选中的产品价格id */
     var productPriceId: String? = null
 
+    /** 客户端计算出的最终金额 */
+    var money: String? = null
+
+    /** 银行信息 */
+    var bank: String? = "渤海银行"
+
+    /** 存款人姓名 */
+    var depositorName: String? = null
+
+    /** 社会统一信用代码 */
+    var enterpriseCode: String? = null
+
+    /** 注册地址 */
+    var addressRegistered: String? = null
+
+    /** 货币 */
+    var currency: String? = "人民币"
 
     /**
-     * 经营范围 id
-     * @see BusinessScope.id
+     * 账户类型
+     * @see Constants.AN1
+     * @see Constants.AN2
+     * @see Constants.AN3
      */
-    var businessScope: ArrayList<String>? = null
+    var accountType: String? = null
 
+    /** 邮寄地址 */
+    var addressPost: String? = null
 
     /**
-     * 身份证号
+     * 邮寄详细地址
      */
-    var idno: String? = null
+    var addressDetailed: String? = null
 
 
     /**
-     * 身份证正反面
+     * 法人身份证正反面
      */
     var imgsIdno: List<IdentityImg>? = null
 
     /**
-     * 营业执照正反面
+     * 营业执照正本
      */
     var imgsLicense: List<IdentityImg>? = null
 
+    /**
+     * 存款账户图片
+     */
+    var imgsDepositAccount: List<IdentityImg>? = null
+
 
     /**
-     * 法人姓名
+     * 法人姓名和联系方式
      */
-    var legalPersonName: String? = null
+    var personLegal: NamePhoneBean? = null
+
+    /**
+     * 财务负责人的姓名和联系方式
+     */
+    var personFinance: NamePhoneBean? = null
 
 
     /**
-     * 客户端计算出的最终金额
+     * 大额业务查证联系人1信息
      */
-    var money: String? = null
+    var personVerification1: NamePhoneBean? = null
 
     /**
-     * 联系电话
+     * 大额业务查证联系人2信息
      */
-    var phone: String? = null
+    var personVerification2: NamePhoneBean? = null
 
 
-/*
-    {
-        "accountType": "string",
-        "addressDetailed": "string",
-        "addressPost": "string",
-        "addressRegistered": "string",
-        "bank": "string",
-        "currency": "string",
-        "depositorName": "string",
-        "enterpriseCode": "string",
-        "imgsDepositAccount": [
-        {
-            "imgUrl": "string",
-            "mold": "string"
-        }
-        ],
-        "imgsIdno": [
-        {
-            "imgUrl": "string",
-            "mold": "string"
-        }
-        ],
-        "imgsLicense": [
-        {
-            "imgUrl": "string",
-            "mold": "string"
-        }
-        ],
-        "money": 0,
-        "personFinance": {
-        "name": "string",
-        "phone": "string"
-    },
-        "personLegal": {
-        "name": "string",
-        "phone": "string"
-    },
-        "personReconciliation": {
-        "name": "string",
-        "phone": "string"
-    },
-        "personVerification1": {
-        "name": "string",
-        "phone": "string"
-    },
-        "personVerification2": {
-        "name": "string",
-        "phone": "string"
-    },
-        "productId": 0,
-        "productPriceId": 0
-    }
-    */
+    /**
+     * 对账联系人
+     */
+    var personReconciliation: NamePhoneBean? = null
+
+
 }

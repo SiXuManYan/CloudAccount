@@ -182,7 +182,6 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
             putString(Constants.PARAM_PRODUCT_ID, mProductId)
             putString(Constants.PARAM_FINAL_MONEY, mFinalMoney)
             putString(Constants.PARAM_PRODUCT_PRICE_ID, mProductPriceId)
-
             putString(Constants.PARAM_NAME, nameValue)
             putString(Constants.PARAM_TAXPAYER_NUMBER, taxpayerNumberValue)
             putString(Constants.PARAM_REGISTERED_ADDRESS, registeredAddressValue)

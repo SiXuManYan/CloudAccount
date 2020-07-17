@@ -504,11 +504,20 @@ interface ApiService {
     ): Flowable<Response<PreparePay>>
 
     /**
-     * 添加大师起名
+     * P7添加大师起名
      *
      */
     @POST("$ORDER_API/addMasterNamed")
     fun addMasterNamed(
+        @Body `in`: JsonObject? = null
+    ): Flowable<Response<PreparePay>>
+
+    /**
+     * P8添加个体户银行对公账户
+     *
+     */
+    @POST("$ORDER_API/addSelfemployedBank")
+    fun addSelfemployedBank(
         @Body `in`: JsonObject? = null
     ): Flowable<Response<PreparePay>>
 
