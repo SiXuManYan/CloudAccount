@@ -194,6 +194,9 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
         }
 
 
+        draft.businessLicenseUrl?.let {
+            business_license_url = it
+        }
         draft.businessLicensePath?.let {
             Glide.with(this).load(it)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -205,18 +208,22 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
                     }
 
                     override fun onResourceReady(
-                        resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?,
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
                         isFirstResource: Boolean
                     ): Boolean = false
                 })
                 .into(business_license_iv)
-
-
         }
 
 
-
         draft.electronicSealUrl?.let {
+            electronic_seal_url = it
+        }
+
+        draft.electronicSealPath?.let {
             Glide.with(this).load(it)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .listener(object : RequestListener<Drawable> {
@@ -234,8 +241,11 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
                 .into(electronic_seal_iv)
         }
 
+        draft.legalPersonWarrantImgUrl?.let {
+            signed_authorization_url = it
+        }
 
-         draft.legalPersonWarrantImgUrl?.let {
+        draft.legalPersonWarrantImgPath?.let {
             Glide.with(this).load(it)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .listener(object : RequestListener<Drawable> {
@@ -252,9 +262,6 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
                 })
                 .into(signed_authorization_iv)
         }
-
-
-
 
     }
 
