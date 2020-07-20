@@ -396,6 +396,7 @@ class FormLicenseChangeActivity : BaseMVPActivity<FormLicenseChangePresenter>(),
                 .putExtra(Constants.PARAM_IMAGE_URL, preparePay.productLogoImgUrl)
                 .putExtra(Constants.PARAM_PRODUCT_NAME, preparePay.productName)
                 .putExtra(Constants.PARAM_DATE, preparePay.createDt)
+                .putExtra(Constants.PARAM_MOLD, Constants.P5)
         )
         finish()
     }

@@ -32,6 +32,7 @@ class PayPrepareActivity : BaseMVPActivity<PayPreparePresenter>(), PayPrepareVie
     private var productLogoImgUrl = ""
     private var productName = ""
     private var createDt = ""
+    private var mMold = ""
     private var closePayListenerRequest = 1
 
 
@@ -51,6 +52,7 @@ class PayPrepareActivity : BaseMVPActivity<PayPreparePresenter>(), PayPrepareVie
 
     private fun initEvent() {
         presenter.subsribeEventEntity<OrderPaySuccessEvent>(Consumer {
+            presenter.deleteDraft(mMold)
             finish()
         })
 
@@ -84,6 +86,8 @@ class PayPrepareActivity : BaseMVPActivity<PayPreparePresenter>(), PayPrepareVie
         productLogoImgUrl = intent.extras!!.getString(Constants.PARAM_IMAGE_URL, "")
         productName = intent.extras!!.getString(Constants.PARAM_PRODUCT_NAME, "")
         createDt = intent.extras!!.getString(Constants.PARAM_DATE, "")
+        mMold = intent.extras!!.getString(Constants.PARAM_MOLD, "")
+
         setData()
     }
 
