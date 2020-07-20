@@ -134,8 +134,8 @@
             <com.fatcloud.account.view.CompanyMemberEditView
                 android:id="@+id/legal_person_view"
                 android:layout_width="match_parent"
-                tools:visibility="gone"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                tools:visibility="gone" />
 
 
             <!-- 财务负责人 -->
@@ -590,14 +590,6 @@
                 android:background="@color/split_line_color" />
 
 
-
-
-
-
-
-
-
-
             <!-- 对账联系人 -->
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -748,22 +740,6 @@
                 android:background="@color/split_line_color" />
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -854,8 +830,9 @@
             <LinearLayout
                 android:id="@+id/basic_ll"
                 android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -942,7 +919,6 @@
             </LinearLayout>
 
 
-
         </LinearLayout>
 
 
@@ -968,8 +944,7 @@
             android:gravity="center"
             android:text="保存"
             android:textColor="@color/font_white"
-            android:textSize="@dimen/font_size_16"
-            android:visibility="gone" />
+            android:textSize="@dimen/font_size_16" />
 
         <TextView
             android:id="@+id/bottom_right_tv"

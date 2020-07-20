@@ -61,6 +61,7 @@ class FormBankPresenter @Inject constructor(private var view: FormBankView) : Ba
                 shareholder.shareProportion
             )
             setServerImage(shareholder.imgs)
+            hideUploadTagImage()
             disableImageViewClick()
             displayImageSwitcher()
 

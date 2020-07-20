@@ -11,7 +11,10 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
+import com.fatcloud.account.data.CloudDataBase
 import com.fatcloud.account.entity.commons.AccountNature
+import com.fatcloud.account.entity.local.form.BankPersonalDraft
+import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.feature.forms.personal.bank.FormPersonalBankActivity
 import com.fatcloud.account.feature.sheet.nature.AccountNatureSheetFragment
 import com.lljjcoder.Interface.OnCityItemClickListener
@@ -19,6 +22,7 @@ import com.lljjcoder.bean.CityBean
 import com.lljjcoder.bean.DistrictBean
 import com.lljjcoder.bean.ProvinceBean
 import kotlinx.android.synthetic.main.activity_form_bank_personal_basic.*
+import javax.inject.Inject
 
 /**
  * Created by Wangsw on 2020/7/16 0016 11:53.
@@ -26,6 +30,8 @@ import kotlinx.android.synthetic.main.activity_form_bank_personal_basic.*
  * 个体户对公账户
  */
 class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPresenter>(), FormPersonalBankBasicView {
+
+    lateinit var database: CloudDataBase @Inject set
 
     /**
      * 产品id
@@ -41,12 +47,6 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
      * 选中的产品价格id
      */
     private var mProductPriceId: String = "0"
-
-    /**
-     * 用户选中的城市信息id
-     */
-    private var mAreaId: String = ""
-
 
     /**
      * 用户选中的城市名称
@@ -90,12 +90,46 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
 
     private fun initView() {
         setMainTitle("个体户银行对公账户")
+        restoreDraft()
+    }
+
+    private fun restoreDraft() {
+
+        val draft = BankPersonalDraft.get()
+        if (draft.loginPhone != User.get().username || draft.productId.isNullOrBlank() || draft.productId != mProductId) {
+            return
+        }
+
+        draft.depositorName?.let {
+            name_et.setText(it)
+        }
+        draft.enterpriseCode?.let {
+            trn_et.setText(it)
+        }
+        draft.addressRegistered?.let {
+            registered_address_et.setText(it)
+        }
+        draft.accountType?.let {
+            account_nature_value.text = it
+        }
+
+        draft.addressPost?.let {
+            mAreaName = it
+            mailing_address_tv.text = mAreaName
+        }
+
+        draft.addressDetailed?.let {
+            mailing_detail_address_et.setText(it)
+        }
+
+
     }
 
     @OnClick(
         R.id.bottom_right_tv,
         R.id.account_nature_rl,
-        R.id.mailing_address_rl
+        R.id.mailing_address_rl,
+        R.id.bottom_left_tv
     )
     fun onClick(view: View) {
         if (CommonUtils.isDoubleClick(view)) {
@@ -126,15 +160,40 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
                             district.name
                         )
                         mailing_address_tv.text = mAreaName
-                        mAreaId = district.id
                     }
 
                     override fun onCancel() = Unit
                 })
             }
+            R.id.bottom_left_tv -> {
+                saveDraft()
+            }
             else -> {
             }
         }
+    }
+
+    private fun saveDraft() {
+        val draft = BankPersonalDraft().apply {
+            loginPhone = User.get().username
+
+            productId = mProductId
+            productPriceId = mProductPriceId
+            finalMoney = mFinalMoney
+            bank = "渤海银行"
+            depositorName = name_et.text.toString().trim()
+            enterpriseCode = trn_et.text.toString().trim()
+            addressRegistered = registered_address_et.text.toString().trim()
+            currency = "人民币"
+            accountType = account_nature_value.text.toString().trim()
+            addressPost = mAreaName
+            addressDetailed = mailing_detail_address_et.text.toString().trim()
+
+        }
+
+        database.bankPersonalDraftDao().add(draft)
+        BankPersonalDraft.update()
+        ToastUtils.showShort(R.string.save_success)
     }
 
     private fun handleCommit() {
@@ -166,8 +225,7 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
             return
         }
 
-        val mailingAddressValue = mailing_address_tv.text.toString().trim()
-        if (mailingAddressValue.isBlank()) {
+        if (mAreaName.isBlank()) {
             ToastUtils.showShort("请选择邮寄地址")
             return
         }
@@ -186,12 +244,10 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
             putString(Constants.PARAM_TAXPAYER_NUMBER, taxpayerNumberValue)
             putString(Constants.PARAM_REGISTERED_ADDRESS, registeredAddressValue)
             putString(Constants.PARAM_ACCOUNT_NATURE, accountNatureValue)
-            putString(Constants.PARAM_MAILING_ADDRESS, mailingAddressValue)
+            putString(Constants.PARAM_MAILING_ADDRESS, mAreaName)
             putString(Constants.PARAM_MAILING_DETAIL_ADDRESS, mailingDetailAddressValue)
         }
-
         startActivity(Intent(this, FormPersonalBankActivity::class.java).putExtras(bundle))
-
     }
 
 

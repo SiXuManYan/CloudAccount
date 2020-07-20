@@ -1,13 +1,18 @@
 package com.fatcloud.account.feature.forms.personal.bank
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
 import butterknife.OnClick
 import com.baidu.ocr.ui.camera.CameraActivity
 import com.baidu.ocr.ui.util.FileUtil
 import com.blankj.utilcode.util.ToastUtils
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
 import com.fatcloud.account.app.Glide
@@ -15,16 +20,20 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
+import com.fatcloud.account.data.CloudDataBase
 import com.fatcloud.account.entity.defray.prepare.PreparePay
+import com.fatcloud.account.entity.local.form.BankPersonalDraft
 import com.fatcloud.account.entity.order.IdentityImg
-import com.fatcloud.account.entity.order.persional.NamePhoneBean
 import com.fatcloud.account.entity.order.persional.BankPersonal
+import com.fatcloud.account.entity.order.persional.NamePhoneBean
+import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.matisse.Matisse
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_bank_personal.*
+import javax.inject.Inject
 
 /**
  * Created by Wangsw on 2020/7/16 0016 11:04.
@@ -33,6 +42,8 @@ import kotlinx.android.synthetic.main.activity_form_bank_personal.*
  */
 class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), FormPersonalBankView {
 
+
+    lateinit var database: CloudDataBase @Inject set
 
     /**
      * 产品id
@@ -100,7 +111,9 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
         initExtra()
         initEvent()
         initView()
+        restoreDraft()
     }
+
 
     private fun initExtra() {
 
@@ -218,6 +231,107 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
     }
 
 
+    private fun restoreDraft() {
+
+        val draft = BankPersonalDraft.get()
+        if (draft.loginPhone != User.get().username || draft.productId.isNullOrBlank() || draft.productId != mProductId) {
+            return
+        }
+
+        draft.imgsIdno?.let {
+
+            if (!it.isNullOrEmpty()) {
+                legal_person_view.setServerImage(it as ArrayList<IdentityImg>)
+            }
+
+        }
+
+        draft.imgsLicense?.let {
+            it.forEachIndexed { index, identityImg ->
+                if (index == 0) {
+
+                    mLicenseImgUrl = identityImg.imgUrl
+
+                    Glide.with(this).load(identityImg.nativeImagePath)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .listener(object : RequestListener<Drawable> {
+                            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                                mLicenseImgUrl = ""
+                                license_iv.setImageResource(R.drawable.ic_upload_default)
+                                return true
+                            }
+
+                            override fun onResourceReady(
+                                resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean
+                            ): Boolean = false
+                        })
+                        .into(license_iv)
+                    return@forEachIndexed
+                }
+            }
+        }
+
+        if (mAccountNatureValue == Constants.AN1) {
+            draft.imgsDepositAccount?.let {
+                it.forEachIndexed { index, identityImg ->
+                    if (index == 0) {
+
+                        accountInfoUrl = identityImg.imgUrl
+
+                        Glide.with(this).load(identityImg.nativeImagePath)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .listener(object : RequestListener<Drawable> {
+                                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                                    accountInfoUrl = ""
+                                    license_iv.setImageResource(R.drawable.ic_upload_default)
+                                    return true
+                                }
+
+                                override fun onResourceReady(
+                                    resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean
+                                ): Boolean = false
+                            })
+                            .into(account_info_iv)
+                        return@forEachIndexed
+                    }
+                }
+            }
+        }
+
+
+        draft.personLegal?.let {
+            legal_person_view.setNameValue(it.name, false)
+
+
+            it.phone?.let { phone ->
+                legal_person_view.setPhoneValue(phone, false)
+            }
+
+        }
+
+        draft.personFinance?.let {
+            finance_name_et.setText(it.name)
+            finance_phone_et.setText(it.phone)
+        }
+
+        draft.personVerification1?.let {
+            verification_first_name_et.setText(it.name)
+            verification_first_phone_et.setText(it.phone)
+        }
+
+        draft.personVerification2?.let {
+            verification_second_name_et.setText(it.name)
+            verification_second_phone_et.setText(it.phone)
+        }
+
+        draft.personReconciliation?.let {
+            reconciliation_name_et.setText(it.name)
+            reconciliation_phone_et.setText(it.phone)
+        }
+
+
+    }
+
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -303,7 +417,8 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
     @OnClick(
         R.id.bottom_right_tv,
         R.id.license_iv,
-        R.id.account_info_iv
+        R.id.account_info_iv,
+        R.id.bottom_left_tv
     )
     fun onClick(view: View) {
         if (CommonUtils.isDoubleClick(view)) {
@@ -318,10 +433,74 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             R.id.account_info_iv -> {
                 ProductUtils.handleMediaSelect(this, Matisse.IMG, view.id)
             }
-
+            R.id.bottom_left_tv -> {
+                saveDraft()
+            }
             else -> {
             }
         }
+    }
+
+    private fun saveDraft() {
+
+        database.bankPersonalDraftDao().apply {
+
+            updateLegalPersonIdImage(
+                image = ArrayList<IdentityImg>().apply {
+                    add(IdentityImg(imgUrl = legal_person_view.frontImageUrl, mold = Constants.I1))
+                    add(IdentityImg(imgUrl = legal_person_view.backImageUrl, mold = Constants.I2))
+                },
+                productId = mProductId
+            )
+            updateLicenseImage(
+                image = ArrayList<IdentityImg>().apply {
+                    add(IdentityImg(imgUrl = mLicenseImgUrl, nativeImagePath = mLicensePath, mold = Constants.I1))
+                },
+                productId = mProductId
+            )
+
+            if (mAccountNatureValue == Constants.AN1) {
+                // 基本户才有存款账户信息
+                updateDepositImage(
+                    image = ArrayList<IdentityImg>().apply {
+                        add(IdentityImg(imgUrl = accountInfoUrl, nativeImagePath = accountInfoPath, mold = Constants.I1))
+                    }, productId = mProductId
+                )
+            }
+
+            updatePersonLegal(model = NamePhoneBean().apply {
+                name = legal_person_view.getNameValue()
+                phone = legal_person_view.getPhoneValue()
+            }, productId = mProductId)
+
+            updatePersonFinance(model = NamePhoneBean().apply {
+                name = finance_name_et.text.toString().trim()
+                phone = finance_phone_et.text.toString().trim()
+            }, productId = mProductId)
+
+            updatePersonVerification1(model = NamePhoneBean().apply {
+                name = verification_first_name_et.text.toString().trim()
+                phone = verification_first_phone_et.text.toString().trim()
+            }, productId = mProductId)
+
+
+            updatePersonVerification2(
+                model = NamePhoneBean().apply {
+                    name = verification_second_name_et.text.toString().trim()
+                    phone = verification_second_phone_et.text.toString().trim()
+                }, productId = mProductId
+            )
+
+            updatePersonReconciliation(
+                model = NamePhoneBean().apply {
+                    name = reconciliation_name_et.text.toString().trim()
+                    phone = reconciliation_phone_et.text.toString().trim()
+                }, productId = mProductId
+            )
+
+        }
+        BankPersonalDraft.update()
+        ToastUtils.showShort(R.string.save_success)
     }
 
     private fun handleNext() {
@@ -436,11 +615,8 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             addressPost = mMailingAddressValue
             addressDetailed = mailingDetailAddressValue
 
-            imgsIdno = ArrayList<IdentityImg>().apply {
-                clear()
-                add(IdentityImg(imgUrl = legalFrontImageUrl, mold = Constants.I1))
-                add(IdentityImg(imgUrl = legalBackNameUrl, mold = Constants.I2))
-            }
+            imgsIdno = legal_person_view.getImageUrls()
+
             imgsLicense = ArrayList<IdentityImg>().apply {
                 clear()
                 add(IdentityImg(imgUrl = mLicenseImgUrl, mold = Constants.I1))
