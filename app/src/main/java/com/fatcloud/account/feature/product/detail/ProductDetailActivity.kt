@@ -327,8 +327,6 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
         }
         if (!protocol.isChecked) {
             ToastUtils.showShort("请先同意服务协议")
-            VibrateUtils.vibrate(10)
-            protocol.startAnimation(CommonUtils.getShakeAnimation(2))
             return
         }
         when (it.mold) {

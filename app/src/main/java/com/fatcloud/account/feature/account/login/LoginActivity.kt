@@ -210,10 +210,7 @@ class LoginActivity : BaseMVPActivity<LoginPresenter>(), LoginView {
                     return
                 }
                 if (isRegisterMode && !register_protocol.isChecked) {
-                    VibrateUtils.vibrate(10)
-                    register_protocol.startAnimation(CommonUtils.getShakeAnimation(3))
-
-
+                    ToastUtils.showShort("请同意服务协议")
                     return
                 }
                 presenter.checkAccountIsExisted(this, account)

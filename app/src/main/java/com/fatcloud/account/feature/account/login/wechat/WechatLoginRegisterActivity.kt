@@ -152,11 +152,9 @@ class WechatLoginRegisterActivity : BaseMVPActivity<WechatLoginRegisterPresenter
                     return
                 }
                 if (!register_protocol.isChecked) {
-                    VibrateUtils.vibrate(10)
-                    register_protocol.startAnimation(CommonUtils.getShakeAnimation(3))
+                    ToastUtils.showShort("请同意服务协议")
                     return
                 }
-
 
                 // 检查用户是否存在
 //                presenter.checkAccountIsExisted(this,account)
