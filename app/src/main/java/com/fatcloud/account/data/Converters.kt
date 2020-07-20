@@ -102,19 +102,15 @@ object Converters {
 
     @TypeConverter
     @JvmStatic
-    fun listToJson4(value: List<NamePhoneBean>?): String {
+    fun beanToText(value: NamePhoneBean): String {
 
         return Gson().toJson(value)
     }
 
     @TypeConverter
     @JvmStatic
-    fun jsonToList4(value: String): List<NamePhoneBean>? {
-
-        val objects =
-            Gson().fromJson(value, Array<NamePhoneBean>::class.java) as Array<NamePhoneBean>
-        val list = objects.toList()
-        return list
+    fun textToBean(value: String): NamePhoneBean {
+        return Gson().fromJson(value, NamePhoneBean::class.java) as NamePhoneBean
     }
 
 

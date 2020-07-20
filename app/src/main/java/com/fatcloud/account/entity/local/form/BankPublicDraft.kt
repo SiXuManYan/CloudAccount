@@ -163,7 +163,7 @@ class BankPublicDraft {
     var legalPersonWarrantImgUrl: String? = ""
 
     /**
-     * 法人签字授权书url
+     * 法人签字授权书 path
      */
     @ColumnInfo(name = "legal_person_warrant_image_path")
     var legalPersonWarrantImgPath: String? = ""

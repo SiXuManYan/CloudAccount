@@ -80,22 +80,22 @@ class AppModule {
         }
 
         if (BuildConfig.DEBUG) {
-
-            // 日志拦截器
-            val loggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
-                LogUtils.v(it)
-            }).apply {
-                this.level = HttpLoggingInterceptor.Level.BASIC
-            }
-
-            val bodyInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
-                Log.i("bodyInterceptor", it)
-            }).apply {
-                this.level = HttpLoggingInterceptor.Level.BODY
-            }
-
-            builder.addInterceptor(loggingInterceptor)
-            builder.addInterceptor(bodyInterceptor)
+//
+//            // 日志拦截器
+//            val loggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
+//                LogUtils.v(it)
+//            }).apply {
+//                this.level = HttpLoggingInterceptor.Level.BASIC
+//            }
+//
+//            val bodyInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
+//                Log.i("bodyInterceptor", it)
+//            }).apply {
+//                this.level = HttpLoggingInterceptor.Level.BODY
+//            }
+//
+//            builder.addInterceptor(loggingInterceptor)
+//            builder.addInterceptor(bodyInterceptor)
         }
 
 

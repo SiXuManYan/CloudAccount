@@ -405,13 +405,10 @@ class CompanyMemberEditView : LinearLayout {
     fun getBackImage(): ImageView = id_card_back_iv
 
     fun getImageUrls(): ArrayList<IdentityImg> {
-
-
         return ArrayList<IdentityImg>().apply {
             add(IdentityImg(imgUrl = frontImageUrl, mold = Constants.I1))
             add(IdentityImg(imgUrl = backImageUrl, mold = Constants.I2))
         }
-
     }
 
 
@@ -465,19 +462,43 @@ class CompanyMemberEditView : LinearLayout {
     }
 
 
+    fun setServerImageWithOutDisplay(images: List<IdentityImg>) {
+        if (images.isNullOrEmpty()) {
+            return
+        }
+        images.forEach {
+            when (it.mold) {
+                Constants.I1 -> {
+                    frontImageUrl = it.imgUrl
+                }
+                Constants.I2 -> {
+                    backImageUrl = it.imgUrl
+                }
+                else -> {
+                }
+            }
+
+        }
+
+
+    }
+
+
+    fun hideUploadTagImage(){
+        id_card_front_tag_iv.visibility = View.GONE
+        id_card_back_tag_iv.visibility = View.GONE
+    }
+
     /**
      * 加载服务器图片地址
      */
     fun setServerImage(images: ArrayList<IdentityImg>) {
         if (images.isNullOrEmpty()) {
-
-
             return
         }
 
-        id_card_front_tag_iv.visibility = View.GONE
-        id_card_back_tag_iv.visibility = View.GONE
 
+        displayImageSwitcher()
 
         images.forEach {
 
@@ -590,7 +611,7 @@ class CompanyMemberEditView : LinearLayout {
         }
     }
 
-    fun showIdNumber(boolean: Boolean){
+    fun showIdNumber(boolean: Boolean) {
 
         id_number_rl.visibility = if (boolean) {
             View.VISIBLE
@@ -613,18 +634,17 @@ class CompanyMemberEditView : LinearLayout {
         id_expiration_date_rl.visibility = View.VISIBLE
     }
 
-       /**
+    /**
      * 显示身份证有效期
      */
     fun showIdExpirationDate(boolean: Boolean) {
 
         id_expiration_date_rl.visibility = if (boolean) {
             View.VISIBLE
-        }else{
+        } else {
             View.GONE
         }
     }
-
 
 
     /**
