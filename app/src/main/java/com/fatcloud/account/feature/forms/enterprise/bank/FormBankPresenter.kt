@@ -8,6 +8,7 @@ import com.fatcloud.account.R
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.entity.order.enterprise.BankInfo
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.enterprise.Shareholder
 import com.fatcloud.account.view.CompanyMemberEditView
@@ -76,9 +77,9 @@ class FormBankPresenter @Inject constructor(private var view: FormBankView) : Ba
 
         requestApi(lifecycleOwner, Lifecycle.Event.ON_DESTROY, apiService.getEnterpriseOrderDetail2(orderWorkId),
 
-            object : BaseHttpSubscriber<EnterpriseInfo>(view) {
+            object : BaseHttpSubscriber<BankInfo>(view) {
 
-                override fun onSuccess(data: EnterpriseInfo?) {
+                override fun onSuccess(data: BankInfo?) {
                     data?.let {
                         view.bindDetailInfo(data)
                     }

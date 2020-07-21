@@ -331,6 +331,7 @@
         <activity android:name=".feature.forms.master.MasterNamingActivity" />
         <activity android:name=".feature.forms.personal.bank.FormPersonalBankActivity" />
         <activity android:name=".feature.forms.personal.bank.basic.FormPersonalBankBasicActivity" />
+        <activity android:name=".feature.order.details.personal.bank.PersonalBankInfoActivity" />
 
 
     </application>

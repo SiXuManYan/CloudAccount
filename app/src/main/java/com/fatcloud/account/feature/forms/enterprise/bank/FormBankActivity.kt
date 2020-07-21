@@ -25,7 +25,7 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.data.CloudDataBase
 import com.fatcloud.account.entity.local.form.BankPublicDraft
-import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
+import com.fatcloud.account.entity.order.enterprise.BankInfo
 import com.fatcloud.account.entity.order.enterprise.Shareholder
 import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.event.RxBus
@@ -265,7 +265,7 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
 
     }
 
-    override fun bindDetailInfo(data: EnterpriseInfo) {
+    override fun bindDetailInfo(data: BankInfo) {
 
         // 法人、股东相关信息
         shareholder_more_container.removeAllViews()

@@ -69,8 +69,11 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
     /** 注册地址 */
     private var mRegisteredAddressValue: String = ""
 
-    /** 账户类型 */
+    /** 账户类型 值 （汉字：基本户，一般户） */
     private var mAccountNatureValue: String = ""
+
+    /** 账户类型 AN1 AN2... */
+    private var mAccountNatureType: String = ""
 
     /** 邮寄地址 */
     private var mMailingAddressValue: String = ""
@@ -149,6 +152,11 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
         intent.extras!!.getString(Constants.PARAM_ACCOUNT_NATURE)?.let {
             mAccountNatureValue = it
         }
+           intent.extras!!.getString(Constants.PARAM_ACCOUNT_NATURE_TYPE)?.let {
+            mAccountNatureType = it
+        }
+
+
 
         intent.extras!!.getString(Constants.PARAM_MAILING_ADDRESS)?.let {
             mMailingAddressValue = it
@@ -219,7 +227,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             hideShareRatio()
         }
 
-        when (mAccountNatureValue) {
+        when (mAccountNatureType) {
             Constants.AN1 -> {
                 // 显示基本信息
                 basic_ll.visibility = View.VISIBLE
@@ -271,7 +279,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             }
         }
 
-        if (mAccountNatureValue == Constants.AN1) {
+        if (mAccountNatureType == Constants.AN1) {
             draft.imgsDepositAccount?.let {
                 it.forEachIndexed { index, identityImg ->
                     if (index == 0) {
@@ -459,7 +467,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
                 productId = mProductId
             )
 
-            if (mAccountNatureValue == Constants.AN1) {
+            if (mAccountNatureType == Constants.AN1) {
                 // 基本户才有存款账户信息
                 updateDepositImage(
                     image = ArrayList<IdentityImg>().apply {
@@ -594,7 +602,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             return
         }
 
-        if (mAccountNatureValue == Constants.AN1) {
+        if (mAccountNatureType == Constants.AN1) {
             if (accountInfoUrl.isBlank()) {
                 ToastUtils.showShort("请上传基本存款账户信息")
                 return
@@ -619,14 +627,14 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
 
             imgsLicense = ArrayList<IdentityImg>().apply {
                 clear()
-                add(IdentityImg(imgUrl = mLicenseImgUrl, mold = Constants.I1))
+                add(IdentityImg(imgUrl = mLicenseImgUrl, mold = Constants.I3))
             }
 
-            if (mAccountNatureValue == Constants.AN1) {
+            if (mAccountNatureType == Constants.AN1) {
                 // 基本户才上传存款账户图片
                 imgsDepositAccount = ArrayList<IdentityImg>().apply {
                     clear()
-                    add(IdentityImg(imgUrl = accountInfoUrl, mold = Constants.I1))
+                    add(IdentityImg(imgUrl = accountInfoUrl, mold = Constants.I7))
                 }
             }
 

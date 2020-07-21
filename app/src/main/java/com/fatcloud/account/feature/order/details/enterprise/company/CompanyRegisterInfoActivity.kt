@@ -164,39 +164,23 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
         } else {
             data.businessLicenseImgUrl?.let {
                 if (ProductUtils.isOssSignUrl(it)) {
-                    ProductUtils.getRealOssUrl(
-                        this,
-                        it,
-                        object : CloudAccountApplication.OssSignCallBack {
-                            override fun ossUrlSignEnd(url: String) {
+                    ProductUtils.getRealOssUrl(this, it, object : CloudAccountApplication.OssSignCallBack {
+                        override fun ossUrlSignEnd(url: String) {
+                            Glide.with(this@CompanyRegisterInfoActivity)
+                                .load(url)
+                                .apply(
+                                    RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4)))
+                                )
+                                .error(R.drawable.ic_error_image_load)
+                                .into(business_license_iv)
 
-                                Glide.with(this@CompanyRegisterInfoActivity)
-                                    .load(url)
-                                    .apply(
-                                        RequestOptions().transform(
-                                            MultiTransformation(
-                                                CenterCrop(),
-                                                RoundTransFormation(context, 4)
-                                            )
-                                        )
-                                    )
-                                    .error(R.drawable.ic_error_image_load)
-                                    .into(business_license_iv)
+                        }
 
-                            }
-
-                        })
+                    })
                 } else {
                     Glide.with(this)
                         .load(it)
-                        .apply(
-                            RequestOptions().transform(
-                                MultiTransformation(
-                                    CenterCrop(),
-                                    RoundTransFormation(context, 4)
-                                )
-                            )
-                        )
+                        .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                         .error(R.drawable.ic_error_image_load)
                         .into(business_license_iv)
                 }

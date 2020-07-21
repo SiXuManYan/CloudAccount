@@ -43,6 +43,7 @@ class ProductFragment : BaseRefreshListFragment<Product2, ProductPresenter>(), P
     override fun getLayoutId() = R.layout.fragment_product
 
     override fun initViews(parent: View) {
+        pageSize = 30
         disableLoadMoreView = true
         super.initViews(parent)
 

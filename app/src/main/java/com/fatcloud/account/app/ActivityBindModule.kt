@@ -60,6 +60,8 @@ import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegi
 import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterInfoActivity
 import com.fatcloud.account.feature.order.details.personal.RegistrantInfoActivity
 import com.fatcloud.account.feature.order.details.personal.RegistrantInfoModule
+import com.fatcloud.account.feature.order.details.personal.bank.PersonalBankInfoActivity
+import com.fatcloud.account.feature.order.details.personal.bank.PersonalBankInfoModule
 import com.fatcloud.account.feature.order.lists.OrderListActivity
 import com.fatcloud.account.feature.order.lists.OrderListModule
 import com.fatcloud.account.feature.order.progress.ScheduleActivity
@@ -242,6 +244,11 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [FragmentBindModule::class, FormPersonalBankBasicModule::class])
     abstract fun formPersonalBankBasicActivityInjector(): FormPersonalBankBasicActivity
+
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [FragmentBindModule::class, PersonalBankInfoModule::class])
+    abstract fun personalBankInfoActivityInjector(): PersonalBankInfoActivity
 
 
 }

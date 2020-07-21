@@ -17,24 +17,33 @@ class PayPreparePresenter @Inject constructor(private var view: PayPrepareView) 
     fun deleteDraft(mMold: String) {
         when (mMold) {
             Constants.P1 -> {
+                database.personalLicenseDraftDao().clear()
 
             }
             Constants.P2 -> {
+                database.enterprisePackageDraftDao().clear()
             }
             Constants.P3 -> {
+                database.personalBookkeepingDraftDao().clear()
             }
             Constants.P4 -> {
+                database.personalTaxDraftDao().clear()
             }
             Constants.P5 -> {
+                // 不需要保存功能
             }
             Constants.P6 -> {
+                // 不需要保存功能
             }
             Constants.P7 -> {
+                // 不需要保存功能
             }
             Constants.P8 -> {
+                database.bankPersonalDraftDao().clear()
             }
             else -> {
             }
         }
     }
+
 }

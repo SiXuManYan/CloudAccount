@@ -15,12 +15,14 @@ import com.fatcloud.account.data.CloudDataBase
 import com.fatcloud.account.entity.commons.AccountNature
 import com.fatcloud.account.entity.local.form.BankPersonalDraft
 import com.fatcloud.account.entity.users.User
+import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.forms.personal.bank.FormPersonalBankActivity
 import com.fatcloud.account.feature.sheet.nature.AccountNatureSheetFragment
 import com.lljjcoder.Interface.OnCityItemClickListener
 import com.lljjcoder.bean.CityBean
 import com.lljjcoder.bean.DistrictBean
 import com.lljjcoder.bean.ProvinceBean
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_bank_personal_basic.*
 import javax.inject.Inject
 
@@ -54,6 +56,10 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
     private var mAreaName: String = ""
 
 
+
+    private var mAccountNatureType: String = ""
+
+
     override fun showLoading() = showLoadingDialog()
 
     override fun hideLoading() = dismissLoadingDialog()
@@ -62,7 +68,26 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
 
     override fun initViews() {
         initExtra()
+        initEvent()
         initView()
+    }
+
+    private fun initEvent() {
+        presenter.subsribeEventEntity<OrderPaySuccessEvent>(Consumer {
+            finish()
+        })
+
+        presenter.subsribeEvent(Consumer {
+            when (it.code) {
+                Constants.EVENT_FORM_CLOSE,
+                Constants.EVENT_CLOSE_PAY_UNKNOWN -> {
+                    finish()
+                }
+
+                else -> {
+                }
+            }
+        })
     }
 
 
@@ -145,6 +170,7 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
                     setOnItemSelectListener(object : AccountNatureSheetFragment.OnItemSelectedListener {
                         override fun onItemSelected(currentSelected: AccountNature) {
                             this@FormPersonalBankBasicActivity.account_nature_value.text = currentSelected.name
+                            mAccountNatureType = currentSelected.value
                         }
                     })
                     show(supportFragmentManager, this.tag)
@@ -219,8 +245,8 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
         }
 
 
-        val accountNatureValue = account_nature_value.text.toString().trim()
-        if (accountNatureValue.isBlank()) {
+        val accountNatureTextValue = account_nature_value.text.toString().trim()
+        if (accountNatureTextValue.isBlank()) {
             ToastUtils.showShort("请选择账户性质")
             return
         }
@@ -243,7 +269,8 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
             putString(Constants.PARAM_NAME, nameValue)
             putString(Constants.PARAM_TAXPAYER_NUMBER, taxpayerNumberValue)
             putString(Constants.PARAM_REGISTERED_ADDRESS, registeredAddressValue)
-            putString(Constants.PARAM_ACCOUNT_NATURE, accountNatureValue)
+            putString(Constants.PARAM_ACCOUNT_NATURE, accountNatureTextValue)
+            putString(Constants.PARAM_ACCOUNT_NATURE_TYPE, mAccountNatureType)
             putString(Constants.PARAM_MAILING_ADDRESS, mAreaName)
             putString(Constants.PARAM_MAILING_DETAIL_ADDRESS, mailingDetailAddressValue)
         }

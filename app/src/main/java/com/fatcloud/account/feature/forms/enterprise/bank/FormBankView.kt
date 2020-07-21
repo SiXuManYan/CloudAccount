@@ -1,6 +1,7 @@
 package com.fatcloud.account.feature.forms.enterprise.bank
 
 import com.fatcloud.account.base.common.BaseTaskView
+import com.fatcloud.account.entity.order.enterprise.BankInfo
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 
 /**
@@ -9,6 +10,6 @@ import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
  *
  */
 interface FormBankView :BaseTaskView {
-    fun bindDetailInfo(data: EnterpriseInfo)
+    fun bindDetailInfo(data: BankInfo)
     fun addSuccess()
 }

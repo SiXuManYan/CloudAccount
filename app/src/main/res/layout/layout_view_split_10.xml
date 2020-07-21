@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <View xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="10dp"
-    android:background="@color/split_line_color"
+    android:background="@color/color_list_gray_background"
     tools:showIn="@layout/activity_form_bank" />

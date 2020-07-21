@@ -133,6 +133,7 @@ object Constants {
     const val PARAM_COMPANY_ADDRESS = "param_company_address"
     const val PARAM_REGISTERED_CAPITAL = "param_registered_capital" // 注册资金
     const val PARAM_ACCOUNT_NATURE = "param_account_nature" // 账户性质
+    const val PARAM_ACCOUNT_NATURE_TYPE = "param_account_nature_type" // 账户性质类型
     const val PARAM_RECONCILIATION_NAME = "param_reconciliation_name" // 对账联系人
     const val PARAM_RECONCILIATION_PHONE = "param_reconciliation_phone" // 对账联系方式
     const val PARAM_AREA_NAME = "param_area_name"// 选择的区域
@@ -282,6 +283,20 @@ object Constants {
      * 身份证反面
      */
     const val I2 = "I2"
+
+    /**
+     * 营业执照正本
+     */
+    const val I3 = "I3"
+
+    /**
+     * 营业执照副本
+     */
+    const val I4 = "I4"
+
+
+
+    const val I7 = "I7"
 
     /**
      * 银行账户性质 类型 AccountNature 	基本户

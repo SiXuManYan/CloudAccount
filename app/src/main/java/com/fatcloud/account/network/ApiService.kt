@@ -9,8 +9,10 @@ import com.fatcloud.account.entity.home.HomeMix
 import com.fatcloud.account.entity.news.NewDetail
 import com.fatcloud.account.entity.news.News
 import com.fatcloud.account.entity.news.NewsCategory
+import com.fatcloud.account.entity.order.enterprise.BankInfo
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.persional.PersonalInfo
+import com.fatcloud.account.entity.order.persional.bank.PersonalBankDetail
 import com.fatcloud.account.entity.oss.SecurityTokenModel
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.entity.upgrade.Upgrade
@@ -234,6 +236,19 @@ interface ApiService {
         @Query("id") id: String? = null
     ): Flowable<Response<PersonalInfo>>
 
+
+      /**
+     * 个人业务详情
+     * @param id 订单id
+     */
+    @GET("$ORDER_API/detail")
+    fun getPersonalBankInfo(
+        @Query("id") id: String? = null
+    ): Flowable<Response<PersonalBankDetail>>
+
+
+
+
     /**
      * 企业订单详情
      * @param orderWorkId 订单流程id
@@ -383,7 +398,7 @@ interface ApiService {
     @GET("$API_ACCOUNT_URI/tOrderWork/detail2")
     fun getEnterpriseOrderDetail2(
         @Query("orderWorkId") orderWorkId: String? = null
-    ): Flowable<Response<EnterpriseInfo>>
+    ): Flowable<Response<BankInfo>>
 
 
     /**
