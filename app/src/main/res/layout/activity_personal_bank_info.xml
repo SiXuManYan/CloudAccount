@@ -41,7 +41,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
                     android:textColor="@color/color_first_level"
-                    android:textSize="@dimen/font_size_18"
+                    android:textSize="@dimen/font_size_16"
                     tools:text="待支付" />
 
 
@@ -1052,8 +1052,8 @@
                 android:paddingRight="15dp">
 
                 <RelativeLayout
-                    android:layout_width="165dp"
-                    android:layout_height="115dp"
+                    android:layout_width="150dp"
+                    android:layout_height="90dp"
                     android:background="@drawable/shape_dash_gray"
                     android:padding="4dp">
 
@@ -1069,8 +1069,8 @@
 
 
                 <RelativeLayout
-                    android:layout_width="165dp"
-                    android:layout_height="115dp"
+                    android:layout_width="150dp"
+                    android:layout_height="90dp"
                     android:layout_alignParentRight="true"
                     android:background="@drawable/shape_dash_gray"
                     android:padding="4dp">
@@ -1098,52 +1098,48 @@
                 android:textColor="@color/color_first_level"
                 android:textSize="@dimen/font_size_16" />
 
+
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp">
+                android:layout_width="150dp"
+                android:layout_height="90dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/shape_dash_gray"
+                android:padding="4dp">
 
-                <RelativeLayout
-                    android:layout_width="165dp"
-                    android:layout_height="115dp"
-                    android:background="@drawable/shape_dash_gray"
-                    android:padding="4dp">
-
-                    <ImageView
-                        android:id="@+id/license_iv"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_upload_default" />
-
-
-                </RelativeLayout>
+                <ImageView
+                    android:id="@+id/license_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_upload_default" />
 
 
             </RelativeLayout>
 
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center_vertical"
-                android:padding="15dp"
-                android:text="基本存款账户信息"
-                android:textColor="@color/color_first_level"
-                android:textSize="@dimen/font_size_16" />
-
             <RelativeLayout
-
+                android:id="@+id/basic_rl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp">
+                android:layout_marginTop="20dp">
+
+
+                <TextView
+                    android:id="@+id/basic_title_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="15dp"
+                    android:text="基本存款账户信息"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_16" />
 
                 <RelativeLayout
-                    android:layout_width="165dp"
-                    android:layout_height="115dp"
+                    android:layout_width="150dp"
+                    android:layout_height="90dp"
+                    android:layout_below="@+id/basic_title_tv"
+                    android:layout_marginLeft="15dp"
                     android:background="@drawable/shape_dash_gray"
                     android:padding="4dp">
 

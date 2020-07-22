@@ -26,7 +26,7 @@ class ScheduleHolder(parent: ViewGroup?) : BaseItemViewHolder<BusinessProgress>(
         if (adapterPosition == 0) {
             image_iv.setImageResource(R.drawable.ic_order_detail_progress_top)
 
-        } else if (data.state == "OW3") {
+        } else if (data.state == Constants.OW3) {
             if (adapterPosition == ownerAdapter?.allData?.size!! - 1) {
                 image_iv.setImageResource(R.drawable.ic_order_detail_progress_end_red)
             } else {
@@ -65,12 +65,7 @@ class ScheduleHolder(parent: ViewGroup?) : BaseItemViewHolder<BusinessProgress>(
                 look_detail_tv.visibility = View.VISIBLE
             }
             Constants.PW3 -> {
-                if (data.state == "OS7" || data.state == "OS8") {
-                    look_detail_tv.visibility = View.VISIBLE
-                    look_detail_tv.text = "查看"
-                } else {
-                    look_detail_tv.visibility = View.GONE
-                }
+                look_detail_tv.visibility = View.VISIBLE
             }
             Constants.PW4 -> {
                 look_detail_tv.visibility = View.VISIBLE

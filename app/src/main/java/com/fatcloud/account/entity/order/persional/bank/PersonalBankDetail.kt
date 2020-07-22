@@ -2,6 +2,7 @@ package com.fatcloud.account.entity.order.persional.bank
 
 import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.persional.NamePhoneBean
+import java.math.BigDecimal
 
 data class PersonalBankDetail(
 
@@ -24,7 +25,7 @@ data class PersonalBankDetail(
     val imgsLicense: List<IdentityImg>,
     val mold: String,
     val moldText: String,
-    val money: Int,
+    val money: BigDecimal = BigDecimal.ZERO,
     val nickName: String,
     val no: String,
     val payState: String,

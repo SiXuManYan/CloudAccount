@@ -17,6 +17,7 @@ import com.fatcloud.account.feature.forms.enterprise.bank.basic.FormBankBasicAct
 import com.fatcloud.account.feature.order.details.bookkeeping.BookkeepingInfoActivity
 import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterInfoActivity
 import com.fatcloud.account.feature.order.details.personal.RegistrantInfoActivity
+import com.fatcloud.account.feature.order.details.personal.bank.PersonalBankInfoActivity
 import com.fatcloud.account.feature.order.progress.holders.ScheduleHolder
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
@@ -123,7 +124,7 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
                 )
             }
             Constants.PW3 -> {
-
+                startActivity(Intent(this@ScheduleActivity, PersonalBankInfoActivity::class.java).putExtra(Constants.PARAM_ORDER_ID, orderId))
 
             }
             Constants.PW4 -> {

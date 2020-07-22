@@ -1,5 +1,9 @@
 package com.fatcloud.account.feature.order.details.personal.bank
 
+import android.content.Intent
+import android.os.Bundle
+import android.view.View
+import butterknife.OnClick
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
@@ -12,6 +16,7 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.order.persional.bank.PersonalBankDetail
 import com.fatcloud.account.extend.RoundTransFormation
+import com.fatcloud.account.feature.gallery.GalleryActivity
 import kotlinx.android.synthetic.main.activity_personal_bank_info.*
 
 /**
@@ -39,7 +44,7 @@ class PersonalBankInfoActivity : BaseMVPActivity<PersonalBankInfoPresenter>(), P
     override fun getLayoutId(): Int = R.layout.activity_personal_bank_info
 
     private fun initExtra() {
-        if (intent.extras == null || !intent.extras!!.containsKey(Constants.PARAM_ORDER_WORK_ID)) {
+        if (intent.extras == null || !intent.extras!!.containsKey(Constants.PARAM_ORDER_ID)) {
             finish()
             return
         }
@@ -52,6 +57,11 @@ class PersonalBankInfoActivity : BaseMVPActivity<PersonalBankInfoPresenter>(), P
         setMainTitle("订单详情")
         presenter.getDetailInfo(this, orderId)
     }
+
+    var mIdFrontUrl: String = ""
+    var mIdBackUrl: String = ""
+    var mLicenseUrl: String = ""
+    var mBasicImageUrl: String = ""
 
     override fun bindDetail(data: PersonalBankDetail) {
 
@@ -84,6 +94,7 @@ class PersonalBankInfoActivity : BaseMVPActivity<PersonalBankInfoPresenter>(), P
 
             when (identityImg.mold) {
                 Constants.I1 -> {
+
                     if (!imgUrl.isNullOrBlank()) {
                         if (ProductUtils.isOssSignUrl(imgUrl)) {
                             ProductUtils.getRealOssUrl(this, imgUrl, object : CloudAccountApplication.OssSignCallBack {
@@ -94,6 +105,7 @@ class PersonalBankInfoActivity : BaseMVPActivity<PersonalBankInfoPresenter>(), P
                                         .error(R.drawable.ic_error_image_load)
                                         .into(id_card_front_iv)
 
+                                    this@PersonalBankInfoActivity.mIdFrontUrl = url
                                 }
 
                             })
@@ -103,6 +115,7 @@ class PersonalBankInfoActivity : BaseMVPActivity<PersonalBankInfoPresenter>(), P
                                 .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                                 .error(R.drawable.ic_error_image_load)
                                 .into(id_card_front_iv)
+                            this@PersonalBankInfoActivity.mIdFrontUrl = imgUrl
                         }
 
                     }
@@ -118,7 +131,7 @@ class PersonalBankInfoActivity : BaseMVPActivity<PersonalBankInfoPresenter>(), P
                                         .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                                         .error(R.drawable.ic_error_image_load)
                                         .into(id_card_back_iv)
-
+                                    this@PersonalBankInfoActivity.mIdBackUrl = url
                                 }
 
                             })
@@ -128,6 +141,7 @@ class PersonalBankInfoActivity : BaseMVPActivity<PersonalBankInfoPresenter>(), P
                                 .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                                 .error(R.drawable.ic_error_image_load)
                                 .into(id_card_back_iv)
+                            this@PersonalBankInfoActivity.mIdBackUrl = imgUrl
                         }
 
                     }
@@ -139,76 +153,118 @@ class PersonalBankInfoActivity : BaseMVPActivity<PersonalBankInfoPresenter>(), P
 
 
         data.imgsLicense.forEachIndexed { _, identityImg ->
-
+            // I3
             val imgUrl = identityImg.imgUrl
 
-            when (identityImg.mold) {
-                Constants.I3 -> {
-                    if (!imgUrl.isNullOrBlank()) {
-                        if (ProductUtils.isOssSignUrl(imgUrl)) {
-                            ProductUtils.getRealOssUrl(this, imgUrl, object : CloudAccountApplication.OssSignCallBack {
-                                override fun ossUrlSignEnd(url: String) {
-                                    Glide.with(this@PersonalBankInfoActivity)
-                                        .load(url)
-                                        .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
-                                        .error(R.drawable.ic_error_image_load)
-                                        .into(license_iv)
-                                }
-                            })
-                        } else {
-                            Glide.with(this)
-                                .load(imgUrl)
+            if (!imgUrl.isNullOrBlank()) {
+                if (ProductUtils.isOssSignUrl(imgUrl)) {
+                    ProductUtils.getRealOssUrl(this, imgUrl, object : CloudAccountApplication.OssSignCallBack {
+                        override fun ossUrlSignEnd(url: String) {
+                            Glide.with(this@PersonalBankInfoActivity)
+                                .load(url)
                                 .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                                 .error(R.drawable.ic_error_image_load)
                                 .into(license_iv)
+                            mLicenseUrl = url
                         }
+                    })
+                } else {
+                    Glide.with(this)
+                        .load(imgUrl)
+                        .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
+                        .error(R.drawable.ic_error_image_load)
+                        .into(license_iv)
 
-                    }
+                    mLicenseUrl = imgUrl
                 }
 
-
             }
+            return@forEachIndexed
 
 
         }
 
 
+        if (data.imgsDepositAccount.isNullOrEmpty()) {
+            basic_rl.visibility = View.GONE
+        } else {
 
-        data.imgsDepositAccount.forEachIndexed { _, identityImg ->
+            // I7
+            basic_rl.visibility = View.VISIBLE
+            data.imgsDepositAccount.forEachIndexed { _, identityImg ->
 
-            val imgUrl = identityImg.imgUrl
+                val imgUrl = identityImg.imgUrl
 
-            when (identityImg.mold) {
-                Constants.I7 -> {
-                    if (!imgUrl.isNullOrBlank()) {
-                        if (ProductUtils.isOssSignUrl(imgUrl)) {
-                            ProductUtils.getRealOssUrl(this, imgUrl, object : CloudAccountApplication.OssSignCallBack {
-                                override fun ossUrlSignEnd(url: String) {
-                                    Glide.with(this@PersonalBankInfoActivity)
-                                        .load(url)
-                                        .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
-                                        .error(R.drawable.ic_error_image_load)
-                                        .into(deposit_iv)
-                                }
-                            })
-                        } else {
-                            Glide.with(this)
-                                .load(imgUrl)
-                                .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
-                                .error(R.drawable.ic_error_image_load)
-                                .into(deposit_iv)
-                        }
-
+                if (!imgUrl.isNullOrBlank()) {
+                    if (ProductUtils.isOssSignUrl(imgUrl)) {
+                        ProductUtils.getRealOssUrl(this, imgUrl, object : CloudAccountApplication.OssSignCallBack {
+                            override fun ossUrlSignEnd(url: String) {
+                                Glide.with(this@PersonalBankInfoActivity)
+                                    .load(url)
+                                    .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
+                                    .error(R.drawable.ic_error_image_load)
+                                    .into(deposit_iv)
+                                mBasicImageUrl = url
+                            }
+                        })
+                    } else {
+                        Glide.with(this)
+                            .load(imgUrl)
+                            .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
+                            .error(R.drawable.ic_error_image_load)
+                            .into(deposit_iv)
+                        mBasicImageUrl = imgUrl
                     }
                 }
 
+                return@forEachIndexed
 
             }
-
-
         }
 
+    }
 
+
+    @OnClick(
+        R.id.id_card_front_iv,
+        R.id.id_card_back_iv,
+        R.id.license_iv,
+        R.id.deposit_iv
+    )
+    fun onClick(view: View) {
+        if (CommonUtils.isDoubleClick(view)) {
+            return
+        }
+        when (view.id) {
+            R.id.id_card_front_iv -> {
+                lookGallery(mIdFrontUrl)
+            }
+            R.id.id_card_back_iv -> {
+                lookGallery(mIdBackUrl)
+            }
+            R.id.license_iv -> {
+                lookGallery(mLicenseUrl)
+            }
+            R.id.deposit_iv -> {
+                lookGallery(mBasicImageUrl)
+            }
+            else -> {
+            }
+        }
+    }
+
+
+    private fun lookGallery(url: String) {
+        if (url.isBlank()) {
+            return
+        }
+        val imageList = ArrayList<String>()
+        imageList.add(url)
+        val bundle = Bundle().apply {
+            putStringArrayList(Constants.PARAM_LIST, imageList)
+            putInt(Constants.PARAM_INDEX, 0)
+        }
+        startActivity(Intent(context, GalleryActivity::class.java).putExtras(bundle))
     }
 
 
