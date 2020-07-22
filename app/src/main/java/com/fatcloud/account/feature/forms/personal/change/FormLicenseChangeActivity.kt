@@ -211,7 +211,10 @@ class FormLicenseChangeActivity : BaseMVPActivity<FormLicenseChangePresenter>(),
             R.id.id_license_front_iv,
             R.id.id_license_back_iv -> ProductUtils.handleMediaSelect(this, Matisse.IMG, view.id)
             R.id.business_scope_change_rl -> {
-                startActivityForResult(Intent(this, BusinessScopeActivity::class.java), Constants.REQUEST_BUSINESS_SCOPE)
+                startActivityForResult(
+                    Intent(this, BusinessScopeActivity::class.java).putExtra(Constants.PARAM_PRODUCT_TYPE, Constants.P5)
+                    , Constants.REQUEST_BUSINESS_SCOPE
+                )
             }
             else -> {
 

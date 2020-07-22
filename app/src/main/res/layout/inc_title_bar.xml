@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:lines="1"
-            tools:text="Yasuo"
+            tools:text="我木兰无敌，马超贼6"
             android:textColor="@color/color_zero_level"
             android:textSize="16sp" />
 

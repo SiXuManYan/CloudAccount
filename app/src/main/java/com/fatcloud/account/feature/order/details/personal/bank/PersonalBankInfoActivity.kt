@@ -1,7 +1,5 @@
 package com.fatcloud.account.feature.order.details.personal.bank
 
-import android.content.Intent
-import android.os.Bundle
 import android.view.View
 import butterknife.OnClick
 import com.bumptech.glide.load.MultiTransformation
@@ -16,7 +14,6 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.order.persional.bank.PersonalBankDetail
 import com.fatcloud.account.extend.RoundTransFormation
-import com.fatcloud.account.feature.gallery.GalleryActivity
 import kotlinx.android.synthetic.main.activity_personal_bank_info.*
 
 /**
@@ -237,34 +234,20 @@ class PersonalBankInfoActivity : BaseMVPActivity<PersonalBankInfoPresenter>(), P
         }
         when (view.id) {
             R.id.id_card_front_iv -> {
-                lookGallery(mIdFrontUrl)
+                ProductUtils.lookGallery(this, mIdFrontUrl)
             }
             R.id.id_card_back_iv -> {
-                lookGallery(mIdBackUrl)
+                ProductUtils.lookGallery(this, mIdBackUrl)
             }
             R.id.license_iv -> {
-                lookGallery(mLicenseUrl)
+                ProductUtils.lookGallery(this, mLicenseUrl)
             }
             R.id.deposit_iv -> {
-                lookGallery(mBasicImageUrl)
+                ProductUtils.lookGallery(this, mBasicImageUrl)
             }
             else -> {
             }
         }
-    }
-
-
-    private fun lookGallery(url: String) {
-        if (url.isBlank()) {
-            return
-        }
-        val imageList = ArrayList<String>()
-        imageList.add(url)
-        val bundle = Bundle().apply {
-            putStringArrayList(Constants.PARAM_LIST, imageList)
-            putInt(Constants.PARAM_INDEX, 0)
-        }
-        startActivity(Intent(context, GalleryActivity::class.java).putExtras(bundle))
     }
 
 

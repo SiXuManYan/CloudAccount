@@ -18,6 +18,7 @@ import com.fatcloud.account.feature.order.details.bookkeeping.BookkeepingInfoAct
 import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterInfoActivity
 import com.fatcloud.account.feature.order.details.personal.RegistrantInfoActivity
 import com.fatcloud.account.feature.order.details.personal.bank.PersonalBankInfoActivity
+import com.fatcloud.account.feature.order.details.personal.license.change.PersonalLicenseChangeInfoActivity
 import com.fatcloud.account.feature.order.progress.holders.ScheduleHolder
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
@@ -115,7 +116,32 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
      */
     private fun handlePersonalProduct(it: BusinessProgress) {
         when (it.code) {
-            Constants.PW1,
+            Constants.PW1 -> {
+
+                when (it.mold) {
+                    Constants.P1 -> {
+                        startActivity(
+                            Intent(this@ScheduleActivity, RegistrantInfoActivity::class.java)
+                                .putExtra(Constants.PARAM_ORDER_ID, orderId)
+                                .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code))
+
+
+                    }
+                    Constants.P5 -> {
+                        startActivity(
+                            Intent(this@ScheduleActivity, PersonalLicenseChangeInfoActivity::class.java)
+                                .putExtra(Constants.PARAM_ORDER_ID, orderId)
+                                .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code))
+                    }
+                    Constants.P6 -> {
+
+                    }
+                    else -> {
+                    }
+                }
+
+
+            }
             Constants.PW2 -> {
                 startActivity(
                     Intent(this@ScheduleActivity, RegistrantInfoActivity::class.java)

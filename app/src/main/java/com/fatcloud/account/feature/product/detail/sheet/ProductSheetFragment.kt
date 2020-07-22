@@ -142,7 +142,7 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
 
             if (price.nativeIsSelect) {
 
-                handleNext(price, index == 1)
+                handleNext(price, index == 1,index)
                 return@forEachIndexed
             } else {
                 // 遍历到最后一条发现，用户一条都没选
@@ -153,7 +153,7 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
         }
     }
 
-    private fun handleNext(price: Price?, extraAddSeal: Boolean) {
+    private fun handleNext(price: Price?, extraAddSeal: Boolean, index: Int) {
         val finalMoneyStr = finalMoney.stripTrailingZeros().toPlainString()
         when (productDetail?.mold) {
             Constants.P1 -> {
@@ -180,13 +180,13 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
             }
             Constants.P6 -> {
                 // 个体户营业执照注销
-
                 startActivity(
                     Intent(activity, FormLicenseLogoutActivity::class.java)
                         .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
                         .putExtra(Constants.PARAM_FINAL_MONEY, finalMoneyStr)
                         .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, price?.id)
                         .putExtra(Constants.PARAM_ADD_SEAL, extraAddSeal)
+                        .putExtra(Constants.PARAM_INDEX, index)
                 )
             }
 

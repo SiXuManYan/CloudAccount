@@ -302,7 +302,7 @@
                         android:lineSpacingMultiplier="1.1"
                         android:maxWidth="150dp"
                         android:maxLines="2"
-                        android:text="变更备选公司名称1："
+                        android:text="变更备选名称1："
                         android:textColor="@color/color_first_level" />
 
                     <androidx.appcompat.widget.AppCompatEditText

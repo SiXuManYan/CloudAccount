@@ -4,6 +4,8 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
+import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
@@ -18,6 +20,7 @@ import com.blankj.utilcode.util.*
 import com.fatcloud.account.BuildConfig
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
+import com.fatcloud.account.feature.gallery.GalleryActivity
 import com.fatcloud.account.feature.matisse.Glide4Engine
 import com.fatcloud.account.feature.matisse.Matisse
 import com.fatcloud.account.feature.ocr.RecognizeIDCardResultCallBack
@@ -405,6 +408,21 @@ object ProductUtils {
             view.isClickable = true
         }, 300)
     }
+
+
+     fun lookGallery(context: Context,url: String) {
+        if (url.isBlank()) {
+            return
+        }
+        val imageList = ArrayList<String>()
+        imageList.add(url)
+        val bundle = Bundle().apply {
+            putStringArrayList(Constants.PARAM_LIST, imageList)
+            putInt(Constants.PARAM_INDEX, 0)
+        }
+        context.startActivity(Intent(context, GalleryActivity::class.java).putExtras(bundle))
+    }
+
 
 
 }

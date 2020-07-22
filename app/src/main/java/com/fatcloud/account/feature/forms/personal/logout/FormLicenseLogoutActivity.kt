@@ -48,6 +48,11 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
      */
     private var mProductPriceId: String = "0"
 
+    /**
+     * 选中的产品价格id
+     */
+    private var mIndex: Int = 0
+
 
     /**
      * 身份证正反面路径集合
@@ -109,6 +114,9 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
         intent.extras!!.getString(Constants.PARAM_PRODUCT_PRICE_ID)?.let {
             mProductPriceId = it
         }
+        intent.extras!!.getInt(Constants.PARAM_INDEX, 0)?.let {
+            mIndex = it
+        }
 
     }
 
@@ -146,6 +154,13 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
 
     private fun initView() {
         setMainTitle("办理信息")
+
+        if (mIndex == 0) {
+            // 选择第一项 （营业执照注销时，才显示承诺书）
+            commitment_container_ll.visibility = View.VISIBLE
+        } else {
+            commitment_container_ll.visibility = View.GONE
+        }
     }
 
 
@@ -286,10 +301,13 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
         }
 
 
-        if (commitmentImagePath.isBlank()) {
+
+        if (mIndex == 0 && commitmentImagePath.isBlank()) {
             ToastUtils.showShort("请上传注销承诺书")
             return
         }
+
+
         if (idImageFrontPath.isBlank()) {
             ToastUtils.showShort("请上传身份证人像面")
             return
@@ -319,9 +337,12 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
                 add(IdentityImg(imgUrl = licenseImageFrontUrl, mold = Constants.I3))
                 add(IdentityImg(imgUrl = licenseImageBackUrl, mold = Constants.I4))
             }
-            imgsCommitment = mCommitmentImagesUrlList.apply {
-                clear()
-                add(IdentityImg(imgUrl = commitmentImageUrl, mold = Constants.I1))
+
+            if (mIndex == 0) {
+                imgsCommitment = mCommitmentImagesUrlList.apply {
+                    clear()
+                    add(IdentityImg(imgUrl = commitmentImageUrl, mold = Constants.I1))
+                }
             }
 
             legalPersonName = nameValue

@@ -44,7 +44,7 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
         initExtra()
         setMainTitle(
             when (productWorkType) {
-                "PW1" -> {
+                Constants.PW1 -> {
                     "注册人信息"
                 }
                 else -> {
@@ -71,7 +71,7 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
         CommonUtils.setPaymentStatus(data.state, payment_status_iv, payment_status_tv)
 
         when (productWorkType) {
-            "PW1" -> {
+            Constants.PW1 -> {
                 registrant_info.visibility = View.VISIBLE
                 setRegistrantInfo(data)
             }
