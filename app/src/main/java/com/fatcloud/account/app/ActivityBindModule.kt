@@ -64,6 +64,8 @@ import com.fatcloud.account.feature.order.details.personal.bank.PersonalBankInfo
 import com.fatcloud.account.feature.order.details.personal.bank.PersonalBankInfoModule
 import com.fatcloud.account.feature.order.details.personal.license.change.PersonalLicenseChangeInfoActivity
 import com.fatcloud.account.feature.order.details.personal.license.change.PersonalLicenseChangeInfoModule
+import com.fatcloud.account.feature.order.details.personal.license.logout.PersonalLicenseLogoutActivity
+import com.fatcloud.account.feature.order.details.personal.license.logout.PersonalLicenseLogoutModule
 import com.fatcloud.account.feature.order.lists.OrderListActivity
 import com.fatcloud.account.feature.order.lists.OrderListModule
 import com.fatcloud.account.feature.order.progress.ScheduleActivity
@@ -255,6 +257,12 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [PersonalLicenseChangeInfoModule::class])
     abstract fun personalLicenseChangeInfoActivityInjector(): PersonalLicenseChangeInfoActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [ PersonalLicenseLogoutModule::class])
+    abstract fun personalLicenseLogoutActivityInjector(): PersonalLicenseLogoutActivity
+
+
 
 
 }

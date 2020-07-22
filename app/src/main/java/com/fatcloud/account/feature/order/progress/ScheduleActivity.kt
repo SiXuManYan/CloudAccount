@@ -19,6 +19,7 @@ import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegi
 import com.fatcloud.account.feature.order.details.personal.RegistrantInfoActivity
 import com.fatcloud.account.feature.order.details.personal.bank.PersonalBankInfoActivity
 import com.fatcloud.account.feature.order.details.personal.license.change.PersonalLicenseChangeInfoActivity
+import com.fatcloud.account.feature.order.details.personal.license.logout.PersonalLicenseLogoutActivity
 import com.fatcloud.account.feature.order.progress.holders.ScheduleHolder
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
@@ -123,17 +124,22 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
                         startActivity(
                             Intent(this@ScheduleActivity, RegistrantInfoActivity::class.java)
                                 .putExtra(Constants.PARAM_ORDER_ID, orderId)
-                                .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code))
-
-
+                                .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
+                        )
                     }
                     Constants.P5 -> {
                         startActivity(
                             Intent(this@ScheduleActivity, PersonalLicenseChangeInfoActivity::class.java)
                                 .putExtra(Constants.PARAM_ORDER_ID, orderId)
-                                .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code))
+                                .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
+                        )
                     }
                     Constants.P6 -> {
+                        startActivity(
+                            Intent(this@ScheduleActivity, PersonalLicenseLogoutActivity::class.java)
+                                .putExtra(Constants.PARAM_ORDER_ID, orderId)
+                                .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
+                        )
 
                     }
                     else -> {
@@ -151,7 +157,6 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
             }
             Constants.PW3 -> {
                 startActivity(Intent(this@ScheduleActivity, PersonalBankInfoActivity::class.java).putExtra(Constants.PARAM_ORDER_ID, orderId))
-
             }
             Constants.PW4 -> {
                 startActivity(

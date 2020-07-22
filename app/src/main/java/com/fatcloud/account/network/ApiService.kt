@@ -10,6 +10,7 @@ import com.fatcloud.account.entity.news.NewDetail
 import com.fatcloud.account.entity.news.News
 import com.fatcloud.account.entity.news.NewsCategory
 import com.fatcloud.account.entity.order.detail.PersonalLicenseChangeDetail
+import com.fatcloud.account.entity.order.detail.PersonalLicenseLogoutDetail
 import com.fatcloud.account.entity.order.enterprise.BankInfo
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.persional.PersonalInfo
@@ -257,6 +258,17 @@ interface ApiService {
     fun getPersonalLicenseChangeInfo(
         @Query("id") id: String? = null
     ): Flowable<Response<PersonalLicenseChangeDetail>>
+
+
+
+ /**
+     * 个体户营业执照注销 回显页
+     * @param id 订单id
+     */
+    @GET("$ORDER_API/detail")
+    fun getPersonalLicenseLogout(
+        @Query("id") id: String? = null
+    ): Flowable<Response<PersonalLicenseLogoutDetail>>
 
 
 

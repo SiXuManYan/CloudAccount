@@ -118,7 +118,7 @@
 
 
                 <TextView
-                    android:id="@+id/accountType_tv"
+                    android:id="@+id/enterpriseName_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -152,7 +152,7 @@
 
 
                 <TextView
-                    android:id="@+id/currency_tv"
+                    android:id="@+id/enterpriseCode_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -186,7 +186,7 @@
 
 
                 <TextView
-                    android:id="@+id/addressPost_tv"
+                    android:id="@+id/reason_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -538,7 +538,7 @@
                 android:padding="4dp">
 
                 <ImageView
-                    android:id="@+id/license_iv"
+                    android:id="@+id/commitment_iv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
