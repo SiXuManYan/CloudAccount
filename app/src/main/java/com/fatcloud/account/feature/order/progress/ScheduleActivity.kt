@@ -134,6 +134,7 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
                                 .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
                         )
                     }
+
                     Constants.P6 -> {
                         startActivity(
                             Intent(this@ScheduleActivity, PersonalLicenseLogoutActivity::class.java)
@@ -145,8 +146,6 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
                     else -> {
                     }
                 }
-
-
             }
             Constants.PW2 -> {
                 startActivity(
