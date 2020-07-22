@@ -293,6 +293,7 @@ object Constants {
      * 营业执照副本
      */
     const val I4 = "I4"
+    const val I6 = "I6"
 
 
 

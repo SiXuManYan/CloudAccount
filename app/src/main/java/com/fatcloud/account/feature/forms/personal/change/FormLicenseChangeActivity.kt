@@ -377,8 +377,8 @@ class FormLicenseChangeActivity : BaseMVPActivity<FormLicenseChangePresenter>(),
             }
             imgsLicense = mLicenseImagesUrlList.apply {
                 clear()
-                add(IdentityImg(imgUrl = licenseImageFrontUrl, mold = Constants.I1))
-                add(IdentityImg(imgUrl = licenseImageBackUrl, mold = Constants.I2))
+                add(IdentityImg(imgUrl = licenseImageFrontUrl, mold = Constants.I3))
+                add(IdentityImg(imgUrl = licenseImageBackUrl, mold = Constants.I4))
             }
             legalPersonName = nameValue
             money = mFinalMoney

@@ -462,7 +462,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             )
             updateLicenseImage(
                 image = ArrayList<IdentityImg>().apply {
-                    add(IdentityImg(imgUrl = mLicenseImgUrl, nativeImagePath = mLicensePath, mold = Constants.I1))
+                    add(IdentityImg(imgUrl = mLicenseImgUrl, nativeImagePath = mLicensePath, mold = Constants.I3))
                 },
                 productId = mProductId
             )
@@ -471,7 +471,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
                 // 基本户才有存款账户信息
                 updateDepositImage(
                     image = ArrayList<IdentityImg>().apply {
-                        add(IdentityImg(imgUrl = accountInfoUrl, nativeImagePath = accountInfoPath, mold = Constants.I1))
+                        add(IdentityImg(imgUrl = accountInfoUrl, nativeImagePath = accountInfoPath, mold = Constants.I7))
                     }, productId = mProductId
                 )
             }

@@ -341,7 +341,7 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
             if (mIndex == 0) {
                 imgsCommitment = mCommitmentImagesUrlList.apply {
                     clear()
-                    add(IdentityImg(imgUrl = commitmentImageUrl, mold = Constants.I1))
+                    add(IdentityImg(imgUrl = commitmentImageUrl, mold = Constants.I6))
                 }
             }
 
