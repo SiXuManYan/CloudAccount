@@ -35,8 +35,8 @@ class PersonalLicenseChangeInfoActivity : BaseMVPActivity<PersonalLicenseChangeI
 
     var mIdFrontUrl: String = ""
     var mIdBackUrl: String = ""
-    var mLicenseUrl: String = ""
-    var mBasicImageUrl: String = ""
+    var mLicenseFrontUrl: String = ""
+    var mLicenseBackUrl: String = ""
 
 
     override fun showLoading() = showLoadingDialog()
@@ -180,7 +180,7 @@ class PersonalLicenseChangeInfoActivity : BaseMVPActivity<PersonalLicenseChangeI
                                         .error(R.drawable.ic_error_image_load)
                                         .into(license_front_iv)
 
-                                    this@PersonalLicenseChangeInfoActivity.mIdFrontUrl = url
+                                    this@PersonalLicenseChangeInfoActivity.mLicenseFrontUrl = url
                                 }
 
                             })
@@ -190,7 +190,7 @@ class PersonalLicenseChangeInfoActivity : BaseMVPActivity<PersonalLicenseChangeI
                                 .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                                 .error(R.drawable.ic_error_image_load)
                                 .into(license_front_iv)
-                            this@PersonalLicenseChangeInfoActivity.mIdFrontUrl = imgUrl
+                            this@PersonalLicenseChangeInfoActivity.mLicenseFrontUrl = imgUrl
                         }
 
                     }
@@ -206,7 +206,7 @@ class PersonalLicenseChangeInfoActivity : BaseMVPActivity<PersonalLicenseChangeI
                                         .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                                         .error(R.drawable.ic_error_image_load)
                                         .into(license_back_iv)
-                                    this@PersonalLicenseChangeInfoActivity.mIdBackUrl = url
+                                    this@PersonalLicenseChangeInfoActivity.mLicenseBackUrl = url
                                 }
 
                             })
@@ -216,7 +216,7 @@ class PersonalLicenseChangeInfoActivity : BaseMVPActivity<PersonalLicenseChangeI
                                 .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                                 .error(R.drawable.ic_error_image_load)
                                 .into(license_back_iv)
-                            this@PersonalLicenseChangeInfoActivity.mIdBackUrl = imgUrl
+                            this@PersonalLicenseChangeInfoActivity.mLicenseBackUrl = imgUrl
                         }
 
                     }
@@ -233,7 +233,8 @@ class PersonalLicenseChangeInfoActivity : BaseMVPActivity<PersonalLicenseChangeI
     @OnClick(
         R.id.id_card_front_iv,
         R.id.id_card_back_iv,
-        R.id.license_iv
+        R.id.license_front_iv,
+        R.id.license_back_iv
 
     )
     fun onClick(view: View) {
@@ -247,9 +248,15 @@ class PersonalLicenseChangeInfoActivity : BaseMVPActivity<PersonalLicenseChangeI
             R.id.id_card_back_iv -> {
                 ProductUtils.lookGallery(this, mIdBackUrl)
             }
-            R.id.license_iv -> {
-                ProductUtils.lookGallery(this, mLicenseUrl)
+            R.id.license_front_iv -> {
+                ProductUtils.lookGallery(this, mLicenseFrontUrl)
             }
+
+             R.id.license_back_iv -> {
+                ProductUtils.lookGallery(this, mLicenseBackUrl)
+            }
+
+
             else -> {
             }
         }
