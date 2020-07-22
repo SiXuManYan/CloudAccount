@@ -141,7 +141,6 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
                                 .putExtra(Constants.PARAM_ORDER_ID, orderId)
                                 .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
                         )
-
                     }
                     else -> {
                     }
