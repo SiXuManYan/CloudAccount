@@ -506,6 +506,7 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
             ToastUtils.showShort("请上传营业执照")
             return
         }
+
         if (electronic_seal_url.isBlank()) {
             ToastUtils.showShort("请上传电子公章")
             return

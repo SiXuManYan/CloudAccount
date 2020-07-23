@@ -378,7 +378,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
      *
      */
     private fun getEnterpriseFinalMoney(originalMoney: BigDecimal): BigDecimal {
-        // 企业额外默认金额（其他绑定业务 营业执照+对公账户+刻章+税务登记）
+        // 企业套餐额外默认金额（其他绑定业务 营业执照+对公账户+刻章+税务登记）
         val extraDefaultMoney = BigDecimalUtil
             .add(BigDecimal(priceBusinessLicense), BigDecimal(priceBankPublicAccount))
             .add(BigDecimal(priceSeal))

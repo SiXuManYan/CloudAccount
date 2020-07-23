@@ -10,7 +10,7 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_product_sheet_select.*
 
-class ProductSheetHolder(parent: ViewGroup?) : BaseItemViewHolder<Price>(parent, R.layout.item_product_sheet_select2),
+class ProductSheetHolder(parent: ViewGroup?) : BaseItemViewHolder<Price>(parent, R.layout.item_product_sheet_select),
     LayoutContainer {
 
     override val containerView: View? get() = itemView
