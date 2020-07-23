@@ -24,6 +24,7 @@ import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.extend.RoundTransFormation
 import com.fatcloud.account.feature.forms.enterprise.license.basic.FormEnterpriseBasicActivity
 import com.fatcloud.account.feature.forms.personal.bookkeeping.FormAgentBookkeepingPersonalActivity
+import com.fatcloud.account.feature.forms.personal.packages.common.FormPersonalPackageCommonActivity
 import kotlinx.android.synthetic.main.fragment_product_spinner.*
 import java.math.BigDecimal
 
@@ -35,17 +36,18 @@ import java.math.BigDecimal
  */
 class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPresenter>(), ProductSpinnerView {
 
+
     private var productDetail: ProductDetail? = null
 
     /**
      * 个人代理记账，最终金额倍数 4
      */
-    private val multiplePersonal = 4
+    private val multipleP3P9 = 4
 
     /**
      * 企业代理记账，最终金额倍数 12
      */
-    private val multipleEnterprise = 12
+    private val multipleP2 = 12
 
 
     /**
@@ -117,7 +119,6 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
      * 最终传给服务器的金额
      */
     private var serverFinalMoney: BigDecimal = BigDecimal.ZERO
-
 
 
     companion object {
@@ -265,8 +266,11 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
 
                     when (productDetail!!.mold) {
 
-                        Constants.P2 -> handleAmountEnterprise(price) // 企业代理记账
-                        Constants.P3 -> handleAmountPersonal(price)   // 个人代理记账
+                        Constants.P2 ->
+                            handleAmountEnterpriseP2(price) // 企业代理记账价格
+                        Constants.P3,
+                        Constants.P9 ->
+                            handleAmountPersonalP3P9(price)   // 个人代理记账价格
                     }
 
                 }
@@ -279,7 +283,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
     /**
      * 计算企业代理记账金额
      */
-    private fun handleAmountEnterprise(price: Price) {
+    private fun handleAmountEnterpriseP2(price: Price) {
 
 
         // 根据用户选择的收入获取原始金额
@@ -301,7 +305,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 addExtraTextChangeForEnterprise(price)
             }
             else -> {
-                originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multipleEnterprise)) // PP1
+                originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multipleP2)) // PP1
                 actual_income_rl.visibility = View.INVISIBLE
                 checkActualIncome = false
 
@@ -392,7 +396,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
     /**
      * 计算个人代理记账金额
      */
-    private fun handleAmountPersonal(price: Price) {
+    private fun handleAmountPersonalP3P9(price: Price) {
         // 根据用户选择的收入获取原始金额：个人
         val originalMoney: BigDecimal
 
@@ -411,7 +415,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 addPersonalTextChangeForEnterprise(price)
             }
             else -> {
-                originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multiplePersonal))// PP1
+                originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multipleP3P9))// PP1
                 actual_income_rl.visibility = View.INVISIBLE
                 serverFinalMoney = price.money
                 checkActualIncome = false
@@ -516,7 +520,6 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
 
         when (productDetail?.mold) {
             Constants.P2 -> {
-                // 企业套餐
                 startActivity(
                     Intent(activity, FormEnterpriseBasicActivity::class.java)
                         .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
@@ -528,15 +531,23 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
 
 
             Constants.P3 -> {
-                // 个体户代理记账
                 startActivity(
                     Intent(activity, FormAgentBookkeepingPersonalActivity::class.java)
                         .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
                         .putExtra(Constants.PARAM_FINAL_MONEY, serverFinalMoney.toPlainString())
                         .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, thirdProductPriceId)
                 )
+            }
+            Constants.P9->{
+                startActivity(
+                    Intent(activity, FormPersonalPackageCommonActivity::class.java)
+                        .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
+                        .putExtra(Constants.PARAM_FINAL_MONEY, serverFinalMoney.toPlainString())
+                        .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, thirdProductPriceId)
+                )
 
             }
+
             else -> {
             }
         }

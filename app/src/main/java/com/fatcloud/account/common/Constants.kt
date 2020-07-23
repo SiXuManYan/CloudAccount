@@ -240,6 +240,9 @@ object Constants {
     /** 个体户对公账户 */
     const val P8 = "P8"
 
+    /** 个体户套餐 */
+    const val P9 = "P9"
+
 
     // 产品流程类型 product_word
     // PW1 营业执照办理 PW2 税务登记办理 PW3  PW4

@@ -249,7 +249,6 @@ interface ApiService {
     ): Flowable<Response<PersonalBankDetail>>
 
 
-
     /**
      * 个体户营业执照变更 回显页
      * @param id 订单id
@@ -260,8 +259,7 @@ interface ApiService {
     ): Flowable<Response<PersonalLicenseChangeDetail>>
 
 
-
- /**
+    /**
      * 个体户营业执照注销 回显页
      * @param id 订单id
      */
@@ -269,9 +267,6 @@ interface ApiService {
     fun getPersonalLicenseLogout(
         @Query("id") id: String? = null
     ): Flowable<Response<PersonalLicenseLogoutDetail>>
-
-
-
 
 
     /**
@@ -305,6 +300,11 @@ interface ApiService {
     fun addLicensePersonal(
         @Body `in`: JsonObject? = null
     ): Flowable<Response<PreparePay>>
+
+
+
+
+
 
 
     /**
@@ -561,5 +561,14 @@ interface ApiService {
         @Body `in`: JsonObject? = null
     ): Flowable<Response<PreparePay>>
 
+
+    /**
+     * 添加个体户套餐 P9
+     *
+     */
+    @POST("$ORDER_API/addSelfemployedPackage")
+    fun addPersonalPackageCommon(
+        @Body `in`: JsonObject? = null
+    ): Flowable<Response<PreparePay>>
 
 }

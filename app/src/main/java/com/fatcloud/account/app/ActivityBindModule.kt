@@ -50,6 +50,8 @@ import com.fatcloud.account.feature.forms.personal.license.FormLicensePersonalAc
 import com.fatcloud.account.feature.forms.personal.license.FormLicensePersonalModule
 import com.fatcloud.account.feature.forms.personal.logout.FormLicenseLogoutActivity
 import com.fatcloud.account.feature.forms.personal.logout.FormLicenseLogoutModule
+import com.fatcloud.account.feature.forms.personal.packages.common.FormPersonalPackageCommonActivity
+import com.fatcloud.account.feature.forms.personal.packages.common.FormPersonalPackageCommonModule
 import com.fatcloud.account.feature.forms.personal.tax.FormTaxRegistrationPersonalActivity
 import com.fatcloud.account.feature.forms.personal.tax.FormTaxRegistrationPersonalModule
 import com.fatcloud.account.feature.news.detail.NewsDetailActivity
@@ -254,6 +256,7 @@ abstract class ActivityBindModule {
     @ContributesAndroidInjector(modules = [FragmentBindModule::class, PersonalBankInfoModule::class])
     abstract fun personalBankInfoActivityInjector(): PersonalBankInfoActivity
 
+
     @ActivityScore
     @ContributesAndroidInjector(modules = [PersonalLicenseChangeInfoModule::class])
     abstract fun personalLicenseChangeInfoActivityInjector(): PersonalLicenseChangeInfoActivity
@@ -261,6 +264,11 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [ PersonalLicenseLogoutModule::class])
     abstract fun personalLicenseLogoutActivityInjector(): PersonalLicenseLogoutActivity
+
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [FragmentBindModule::class, FormPersonalPackageCommonModule::class])
+    abstract fun formPersonalPackageCommonActivityInjector(): FormPersonalPackageCommonActivity
 
 
 

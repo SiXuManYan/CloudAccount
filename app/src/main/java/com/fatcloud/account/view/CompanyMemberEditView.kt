@@ -11,6 +11,8 @@ import androidx.core.app.ActivityCompat.startActivityForResult
 import com.baidu.ocr.ui.camera.CameraActivity
 import com.baidu.ocr.ui.camera.CameraActivity.*
 import com.baidu.ocr.ui.util.FileUtil
+import com.blankj.utilcode.util.StringUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -212,14 +214,6 @@ class CompanyMemberEditView : LinearLayout {
         ev_00_name_et.setText(value)
         setEditAble(false, ev_00_name_et)
     }
-
-
-//    fun setGenderValue(value: CharSequence?, editAble: Boolean) {
-//        value?.let {
-//            gender_et.setText(value)
-//            setEditAble(editAble, gender_et)
-//        }
-//    }
 
 
     fun setEditAble(editAble: Boolean, editText: EditText) {
@@ -484,7 +478,7 @@ class CompanyMemberEditView : LinearLayout {
     }
 
 
-    fun hideUploadTagImage(){
+    fun hideUploadTagImage() {
         id_card_front_tag_iv.visibility = View.GONE
         id_card_back_tag_iv.visibility = View.GONE
     }
@@ -598,10 +592,16 @@ class CompanyMemberEditView : LinearLayout {
         bottom_split_view.visibility = View.GONE
     }
 
+    /**
+     * 民族
+     */
     fun showNation() {
         nation_rl.visibility = View.VISIBLE
     }
 
+    /**
+     * 显示民族
+     */
     fun showNation(boolean: Boolean) {
 
         nation_rl.visibility = if (boolean) {
@@ -672,6 +672,63 @@ class CompanyMemberEditView : LinearLayout {
 
     fun setNationValue(it: String) {
         nation_et.setText(it)
+    }
+
+
+    fun checkParams() :Boolean{
+
+        if (frontImageUrl.isBlank()) {
+            ToastUtils.showShort("请上传身份证正面照片")
+            return false
+        }
+        if (backImageUrl.isBlank()) {
+            ToastUtils.showShort("请上传身份证背面照片")
+            return false
+        }
+
+        if (name_rl.visibility == View.VISIBLE && getNameValue().isBlank()) {
+            ToastUtils.showShort("请输姓名")
+            return false
+        }
+
+        if (gender_rl.visibility == View.VISIBLE && genderIndex == 0) {
+            ToastUtils.showShort("请选择性别")
+            return false
+        }
+
+
+        if (nation_rl.visibility == View.VISIBLE && getNationValue().isBlank()) {
+            ToastUtils.showShort("请输入民族")
+            return false
+        }
+
+        if (id_number_rl.visibility == View.VISIBLE && getIdNumberValue().isBlank()) {
+            ToastUtils.showShort("请输入身份证号")
+            return false
+        }
+        if (id_expiration_date_rl.visibility == View.VISIBLE && getExpiryDateValue().isBlank()) {
+            ToastUtils.showShort("请输入身份证号有效期")
+            return false
+        }
+
+        if (address_rl.visibility == View.VISIBLE && getIdAddressValue().isBlank()) {
+            ToastUtils.showShort("请输入身份证地址")
+            return false
+        }
+
+        if (phone_rl.visibility == View.VISIBLE && getPhoneValue().isBlank()) {
+            ToastUtils.showShort("请输入联系电话")
+            return false
+        }
+
+        if (share_ratio_rl.visibility == View.VISIBLE && getShareRatioValue().isBlank()) {
+            ToastUtils.showShort("请输入股份占比")
+            return false
+        }
+
+        return true
+
+
     }
 
 

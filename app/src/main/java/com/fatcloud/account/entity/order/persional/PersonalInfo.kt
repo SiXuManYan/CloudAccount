@@ -40,6 +40,8 @@ class PersonalInfo {
      */
     var mold: String? = null
     var moldText: String? = null
+
+    /** 客户端计算出的金额 */
     var money: BigDecimal? = null
     var nickName: String? = null
     var no: String? = null

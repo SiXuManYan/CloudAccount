@@ -7,7 +7,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
@@ -278,7 +277,7 @@ object ProductUtils {
         val isStart = url.startsWith("/", true)
         newUrl = if (isStart) {
             url.replaceFirst("/", "")
-        }else{
+        } else {
             url
         }
         application.getOssSecurityTokenForSignUrl(getOssSignUrlObjectKey(newUrl), ossCallBack)
@@ -344,6 +343,45 @@ object ProductUtils {
     }
 
     /**
+     * 大于三个字的中文
+     */
+    fun isThreeChineseName(string: String, typeString: String? = ""): Boolean {
+
+        if (string.isBlank()) {
+            ToastUtils.showShort(StringUtils.getString(R.string.input_format, typeString))
+            return false
+        }
+
+        if (RegexUtils.isMatch("^[a-zA-Z]+\$", string) || string.length < 2 || string.length > 15) {
+            ToastUtils.showShort("请输入中文不少于三个字")
+            return false
+        }
+        return true
+    }
+
+
+     /**
+     * 正确的从业人数
+     */
+    fun isRightEmployeesNumber(string: String): Boolean {
+
+        if (string.isBlank()) {
+            ToastUtils.showShort(StringUtils.getString(R.string.employees_number))
+            return false
+        }
+
+        if (string.length < 0) {
+
+            return false
+        }
+        return true
+    }
+
+
+
+
+
+    /**
      * 校验身份证 url是否为空
      */
     fun hasIdCardUrl(idCardUrl: String, isFaceUp: Boolean, typeString: String? = ""): Boolean {
@@ -351,13 +389,9 @@ object ProductUtils {
         if (!nullOrEmpty) {
 
             if (isFaceUp) {
-                ToastUtils.showShort(
-                    StringUtils.getString(R.string.id_card_front_empty_format, typeString)
-                )
+                ToastUtils.showShort(StringUtils.getString(R.string.id_card_front_empty_format, typeString))
             } else {
-                ToastUtils.showShort(
-                    StringUtils.getString(R.string.id_card_back_empty_format, typeString)
-                )
+                ToastUtils.showShort(StringUtils.getString(R.string.id_card_back_empty_format, typeString))
             }
 
 
@@ -410,7 +444,7 @@ object ProductUtils {
     }
 
 
-     fun lookGallery(context: Context,url: String) {
+    fun lookGallery(context: Context, url: String) {
         if (url.isBlank()) {
             return
         }
@@ -422,7 +456,6 @@ object ProductUtils {
         }
         context.startActivity(Intent(context, GalleryActivity::class.java).putExtras(bundle))
     }
-
 
 
 }

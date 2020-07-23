@@ -334,6 +334,7 @@
         <activity android:name=".feature.order.details.personal.bank.PersonalBankInfoActivity" />
         <activity android:name=".feature.order.details.personal.license.change.PersonalLicenseChangeInfoActivity" />
         <activity android:name=".feature.order.details.personal.license.logout.PersonalLicenseLogoutActivity" />
+        <activity android:name=".feature.forms.personal.packages.common.FormPersonalPackageCommonActivity" />
 
 
     </application>

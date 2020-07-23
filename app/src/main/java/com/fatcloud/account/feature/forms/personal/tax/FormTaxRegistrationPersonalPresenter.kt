@@ -12,8 +12,7 @@ import javax.inject.Inject
  * </br>
  *
  */
-class FormTaxRegistrationPersonalPresenter @Inject constructor(private var view: FormTaxRegistrationPersonalView) :
-    BasePresenter(view) {
+class FormTaxRegistrationPersonalPresenter @Inject constructor(private var view: FormTaxRegistrationPersonalView) : BasePresenter(view) {
 
 
     /**

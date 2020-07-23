@@ -340,7 +340,8 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
 
             }
             Constants.P2,
-            Constants.P3 -> {
+            Constants.P3,
+            Constants.P9 -> {
                 // P2 企业套餐 ,P3个体户代理记账
                 ProductSpinnerFragment.newInstance(it).apply {
                     show(supportFragmentManager, this.tag)

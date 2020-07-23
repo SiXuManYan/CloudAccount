@@ -49,71 +49,43 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
 
     lateinit var database: CloudDataBase @Inject set
 
-    /**
-     * 用户选中的一级经营范围pid
-     */
+    /** 用户选中的一级经营范围pid */
     private var selectPid = ArrayList<String>()
 
-    /**
-     * 用户选中的一级经营范围pid名称
-     */
+    /** 用户选中的一级经营范围pid名称 */
     private var selectPidNames = ArrayList<String>()
 
-    /**
-     * 用户选中的组成形式id
-     */
+    /** 用户选中的组成形式id */
     private var selectFormId = ""
 
-    /**
-     * 用户选中的组成形式名字
-     */
+    /** 用户选中的组成形式名字 */
     private var selectFormName = ""
 
 
-    /**
-     * 最终需支付金额
-     */
+    /** 最终需支付金额 */
     private var mFinalMoney: String = ""
 
 
-    /**
-     * 选中的产品价格id
-     */
+    /** 选中的产品价格id */
     private var mProductPriceId: String = "0"
 
-    /**
-     * 产品类型
-     * P1 P2 ....
-     */
-    private var mProductType: String = Constants.P1
 
-    /**
-     * 产品id
-     */
+    /** 产品id */
     private var mProductId: String = "0"
 
-    /**
-     * 用户选中的城市信息id
-     */
+    /** 用户选中的城市信息id */
     private var mAreaId: String = ""
 
-    /**
-     * 用户选中的城市名称
-     */
+    /** 用户选中的城市名称 */
     private var mAreaName: String = ""
-
 
 
     var mediaType = 0
 
-    /**
-     * 身份证正反面地址集合
-     */
+    /** 身份证正反面地址集合 */
     var mIdEntityImg: ArrayList<IdentityImg> = ArrayList()
 
-    /**
-     * 正面
-     */
+    /** 正面 */
     var isFaceUp = false
 
 
@@ -148,9 +120,6 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             mProductPriceId = it
         }
 
-        intent.extras!!.getString(Constants.PARAM_PRODUCT_TYPE)?.let {
-            mProductType = it
-        }
 
     }
 
@@ -275,7 +244,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         when (view.id) {
             R.id.business_scope_rl -> {
                 startActivityForResult(
-                    Intent(this, BusinessScopeActivity::class.java).putExtra(Constants.PARAM_PRODUCT_TYPE, mProductType),
+                    Intent(this, BusinessScopeActivity::class.java).putExtra(Constants.PARAM_PRODUCT_TYPE, Constants.P1),
                     Constants.REQUEST_BUSINESS_SCOPE
                 )
             }
