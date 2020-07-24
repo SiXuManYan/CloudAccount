@@ -2,6 +2,7 @@ package com.fatcloud.account.feature.forms.personal.bank
 
 import com.fatcloud.account.base.common.BaseTaskView
 import com.fatcloud.account.entity.defray.prepare.PreparePay
+import com.google.gson.JsonElement
 
 /**
  * Created by Wangsw on 2020/7/16 0016 10:59.
@@ -10,4 +11,5 @@ import com.fatcloud.account.entity.defray.prepare.PreparePay
  */
 interface FormPersonalBankView : BaseTaskView {
     fun commitSuccess(preparePay: PreparePay)
+    fun commitSuccessP9()
 }

@@ -354,6 +354,7 @@ class FormPersonalPackageCommonActivity : BaseMVPActivity<FormPersonalPackageCom
         }
 
 
+/*
         try {
             val amountInt = amountOfFundsStr.toInt()
             if (amountInt < 10000 || amountInt > 1000000) {
@@ -364,6 +365,7 @@ class FormPersonalPackageCommonActivity : BaseMVPActivity<FormPersonalPackageCom
         } catch (e: Exception) {
 
         }
+*/
 
         if (!legal_person_view.checkParams()) {
             return

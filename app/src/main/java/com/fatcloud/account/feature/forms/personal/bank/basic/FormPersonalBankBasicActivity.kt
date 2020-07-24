@@ -15,6 +15,7 @@ import com.fatcloud.account.data.CloudDataBase
 import com.fatcloud.account.entity.commons.AccountNature
 import com.fatcloud.account.entity.local.form.BankPersonalDraft
 import com.fatcloud.account.entity.users.User
+import com.fatcloud.account.event.entity.BankFormCommitSuccessEvent
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.forms.personal.bank.FormPersonalBankActivity
 import com.fatcloud.account.feature.sheet.nature.AccountNatureSheetFragment
@@ -29,7 +30,8 @@ import javax.inject.Inject
 /**
  * Created by Wangsw on 2020/7/16 0016 11:53.
  * </br>
- * 个体户对公账户
+ * 个体户银行对公账户表单 P8
+ * 个体户套餐银行对公账户表单 P9 (提交接口不同)
  */
 class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPresenter>(), FormPersonalBankBasicView {
 
@@ -38,23 +40,35 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
     /**
      * 产品id
      */
-    private var mProductId: String = "0"
+    private var mProductId: String? = null
 
     /**
      * 最终需支付金额
      */
-    private var mFinalMoney: String = ""
+    private var mFinalMoney: String? = null
 
     /**
      * 选中的产品价格id
      */
-    private var mProductPriceId: String = "0"
+    private var mProductPriceId: String? = null
+
+
+    /**
+     * 订单流程ID
+     */
+    private var mOrderWorkId: String? = null
+
+
+    /**
+     * 产品类型
+     */
+    private var mMold: String = ""
+
 
     /**
      * 用户选中的城市名称
      */
     private var mAreaName: String = ""
-
 
 
     private var mAccountNatureType: String = ""
@@ -77,6 +91,10 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
             finish()
         })
 
+        presenter.subsribeEventEntity<BankFormCommitSuccessEvent>(Consumer {
+            finish()
+        })
+
         presenter.subsribeEvent(Consumer {
             when (it.code) {
                 Constants.EVENT_FORM_CLOSE,
@@ -93,37 +111,55 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
 
     private fun initExtra() {
 
-        if (intent.extras == null || !intent.extras!!.containsKey(Constants.PARAM_FINAL_MONEY)) {
+        if (intent.extras == null || !intent.extras!!.containsKey(Constants.PARAM_MOLD)) {
             finish()
             return
         }
 
-        intent.extras!!.getString(Constants.PARAM_PRODUCT_ID)?.let {
-            mProductId = it
+        mProductId = intent.extras!!.getString(Constants.PARAM_PRODUCT_ID)
+
+        mFinalMoney = intent.extras!!.getString(Constants.PARAM_FINAL_MONEY)
+
+        mProductPriceId = intent.extras!!.getString(Constants.PARAM_PRODUCT_PRICE_ID)
+
+        mOrderWorkId = intent.extras!!.getString(Constants.PARAM_ORDER_WORK_ID)
+
+        intent.extras!!.getString(Constants.PARAM_MOLD)?.let {
+            mMold = it
         }
 
-        intent.extras!!.getString(Constants.PARAM_FINAL_MONEY)?.let {
-            mFinalMoney = it
-        }
-
-        intent.extras!!.getString(Constants.PARAM_PRODUCT_PRICE_ID)?.let {
-            mProductPriceId = it
-        }
 
     }
 
 
     private fun initView() {
-        setMainTitle("个体户银行对公账户")
+        if (mMold == Constants.P9) {
+            setMainTitle("企业基本信息")
+        } else {
+            setMainTitle("个体户银行对公账户")
+        }
         restoreDraft()
     }
 
     private fun restoreDraft() {
 
         val draft = BankPersonalDraft.get()
-        if (draft.loginPhone != User.get().username || draft.productId.isNullOrBlank() || draft.productId != mProductId) {
+        if (draft.loginPhone != User.get().username) {
             return
         }
+
+        // P8 需要支付，有 productId
+        // P9 不需要支付，只有 productId
+        // 两种条件都未验证通过是，时，说明不是当前草稿
+        val productId = draft.productId
+        val orderWorkId = draft.orderWorkId
+
+        if ((productId.isNullOrBlank() || productId != mProductId) &&
+            (orderWorkId.isNullOrBlank() || orderWorkId != mOrderWorkId)
+        ) {
+            return
+        }
+
 
         draft.depositorName?.let {
             name_et.setText(it)
@@ -206,6 +242,11 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
             productId = mProductId
             productPriceId = mProductPriceId
             finalMoney = mFinalMoney
+            mOrderWorkId?.let {
+                orderWorkId = it
+            }
+
+
             bank = "渤海银行"
             depositorName = name_et.text.toString().trim()
             enterpriseCode = trn_et.text.toString().trim()
@@ -215,6 +256,10 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
             addressPost = mAreaName
             addressDetailed = mailing_detail_address_et.text.toString().trim()
 
+            mOrderWorkId?.let {
+                orderWorkId = it
+            }
+            mold = mMold
         }
 
         database.bankPersonalDraftDao().add(draft)
@@ -273,6 +318,9 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
             putString(Constants.PARAM_ACCOUNT_NATURE_TYPE, mAccountNatureType)
             putString(Constants.PARAM_MAILING_ADDRESS, mAreaName)
             putString(Constants.PARAM_MAILING_DETAIL_ADDRESS, mailingDetailAddressValue)
+
+            putString(Constants.PARAM_ORDER_WORK_ID, mOrderWorkId)
+            putString(Constants.PARAM_MOLD, mMold)
         }
         startActivity(Intent(this, FormPersonalBankActivity::class.java).putExtras(bundle))
     }

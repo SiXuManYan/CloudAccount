@@ -19,18 +19,14 @@ import kotlinx.android.synthetic.main.activity_personal_bank_info.*
 /**
  * Created by Wangsw on 2020/7/21 0021 14:52.
  * </br>
- *
+ *  个体户银行对公账户回显
+ *  单独产品P8回显，以及P9个体户套餐的银行对公账户回显
  */
 
 class PersonalBankInfoActivity : BaseMVPActivity<PersonalBankInfoPresenter>(), PersonalBankInfoView {
 
 
-    /**
-     * 订单id，
-     * 当为 产品流程类型为：PW3银行账户办理时，tOrderWork/detail 接口不返回相关法人信息
-     * 需要使用订单id调用  tOrder/detail 接口请求法人股东信息
-     *
-     */
+
     private var orderId: String? = ""
 
 

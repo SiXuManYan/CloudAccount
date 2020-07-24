@@ -373,9 +373,9 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
                             .putExtra(Constants.PARAM_PRODUCT_ID, mProductId)
                             .putExtra(Constants.PARAM_FINAL_MONEY, mData!!.money.stripTrailingZeros()?.toPlainString())
                             .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, prices[0].id)
+                            .putExtra(Constants.PARAM_MOLD, Constants.P8)
                     )
                 }
-
             }
             else -> {
             }

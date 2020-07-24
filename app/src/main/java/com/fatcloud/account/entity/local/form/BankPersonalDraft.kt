@@ -54,11 +54,7 @@ class BankPersonalDraft {
     var loginPhone: String? = ""
 
 
-    /**
-     * 订单流程id
-     */
-    @ColumnInfo(name = "order_work_id")
-    var orderWorkId: String? = ""
+
 
 
     /** 产品id */
@@ -165,6 +161,26 @@ class BankPersonalDraft {
      */
     @ColumnInfo(name = "person_reconciliation")
     var personReconciliation: NamePhoneBean? = NamePhoneBean()
+
+    /**
+     * 订单流程id
+     * P9(个体户套餐中的银行表单) ,P10(个人独资银行表单)不需要支付，所以额外需要此字段
+     *
+     */
+    @ColumnInfo(name = "order_work_id")
+    var orderWorkId: String? = ""
+
+     /**
+      * 区分来源，判断表单内是否需要支付
+     * P9(个体户套餐中的银行表单) , P10(个人独资银行表单)不需要支付，所以额外需要此字段
+     * @see Constants.P8
+     * @see Constants.P9
+     * @see Constants.P10
+     */
+    @ColumnInfo(name = "mold")
+    var mold: String? = ""
+
+
 
 
 }

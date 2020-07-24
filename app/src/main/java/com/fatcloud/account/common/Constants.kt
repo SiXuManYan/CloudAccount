@@ -237,11 +237,12 @@ object Constants {
     /** 大师起名 */
     const val P7 = "P7"
 
-    /** 个体户对公账户 */
+    /** 个体户银行对公账户 */
     const val P8 = "P8"
 
     /** 个体户套餐 */
     const val P9 = "P9"
+    const val P10 = "P10"
 
 
     // 产品流程类型 product_word

@@ -14,6 +14,7 @@ import com.fatcloud.account.event.entity.BankFormCommitSuccessEvent
 import com.fatcloud.account.event.entity.RefreshOrderEvent
 import com.fatcloud.account.feature.forms.enterprise.bank.FormBankActivity
 import com.fatcloud.account.feature.forms.enterprise.bank.basic.FormBankBasicActivity
+import com.fatcloud.account.feature.forms.personal.bank.basic.FormPersonalBankBasicActivity
 import com.fatcloud.account.feature.order.details.bookkeeping.BookkeepingInfoActivity
 import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterInfoActivity
 import com.fatcloud.account.feature.order.details.personal.RegistrantInfoActivity
@@ -154,7 +155,32 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
                 )
             }
             Constants.PW3 -> {
-                startActivity(Intent(this@ScheduleActivity, PersonalBankInfoActivity::class.java).putExtra(Constants.PARAM_ORDER_ID, orderId))
+                when (it.mold) {
+                    Constants.P8 -> {
+                        startActivity(
+                            Intent(this@ScheduleActivity, PersonalBankInfoActivity::class.java)
+                                .putExtra(Constants.PARAM_ORDER_ID, orderId)
+                                .putExtra(Constants.PARAM_MOLD, it.mold)
+                        )
+                    }
+                    Constants.P9 -> {
+
+                        if (it.state == Constants.OW1) {
+                            // 编辑
+                            startActivity(
+                                Intent(this, FormPersonalBankBasicActivity::class.java).putExtra(Constants.PARAM_MOLD, Constants.P9)
+                                    .putExtra(Constants.PARAM_ORDER_WORK_ID, it.id)
+                                    .putExtra(Constants.PARAM_MOLD, it.mold)
+                            )
+                        } else {
+                            // 回显
+                            startActivity(Intent(this@ScheduleActivity, PersonalBankInfoActivity::class.java)
+                                .putExtra(Constants.PARAM_ORDER_ID, orderId))
+                        }
+
+
+                    }
+                }
             }
             Constants.PW4 -> {
                 startActivity(

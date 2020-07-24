@@ -302,11 +302,6 @@ interface ApiService {
     ): Flowable<Response<PreparePay>>
 
 
-
-
-
-
-
     /**
      * 添加税务登记
      */
@@ -560,6 +555,15 @@ interface ApiService {
     fun addSelfemployedBank(
         @Body `in`: JsonObject? = null
     ): Flowable<Response<PreparePay>>
+
+    /**
+     * 添加P9个体户套餐的个体户银行对公账户
+     *
+     */
+    @POST("$API_ACCOUNT_URI/tOrderWork/addSelfemployedPackage3")
+    fun addSelfemployedBankP9(
+        @Body `in`: JsonObject? = null
+    ): Flowable<Response<JsonElement>>
 
 
     /**

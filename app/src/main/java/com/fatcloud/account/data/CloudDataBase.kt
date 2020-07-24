@@ -70,10 +70,7 @@ abstract class CloudDataBase : RoomDatabase() {
                 database.execSQL("CREATE TABLE IF NOT EXISTS `tb_bank_public_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `order_work_id` TEXT, `company_name` TEXT, `company_address` TEXT, `registered_capital` TEXT, `account_nature` TEXT, `reconciliation_name` TEXT, `reconciliation_phone` TEXT, `detail_address` TEXT, `area` TEXT, `area_id` TEXT, `share_holders` TEXT, `business_license_url` TEXT, `business_license_path` TEXT, `electronic_seal_url` TEXT, `electronic_seal_path` TEXT, `legal_person_warrant_image_url` TEXT, `legal_person_warrant_image_path` TEXT, `postcode` TEXT, PRIMARY KEY(`id`))")
 
                 // 个人对公账户
-                database.execSQL( "CREATE TABLE IF NOT EXISTS `tb_bank_personal_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `order_work_id` TEXT, `product_id` TEXT, `product_price_id` TEXT, `final_money` TEXT, `bank_name` TEXT, `depositor_name` TEXT, `enterprise_code` TEXT, `address_registered` TEXT, `currency` TEXT, `account_type` TEXT, `address_post` TEXT, `address_detailed` TEXT, `identity_img` TEXT, `license_img` TEXT, `deposit_img` TEXT, `person_legal` TEXT, `person_finance` TEXT, `person_verification_first` TEXT, `person_verification_second` TEXT, `person_reconciliation` TEXT, PRIMARY KEY(`id`))")
-
-
-
+                database.execSQL( "CREATE TABLE IF NOT EXISTS `tb_bank_personal_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `product_id` TEXT, `product_price_id` TEXT, `final_money` TEXT, `bank_name` TEXT, `depositor_name` TEXT, `enterprise_code` TEXT, `address_registered` TEXT, `currency` TEXT, `account_type` TEXT, `address_post` TEXT, `address_detailed` TEXT, `identity_img` TEXT, `license_img` TEXT, `deposit_img` TEXT, `person_legal` TEXT, `person_finance` TEXT, `person_verification_first` TEXT, `person_verification_second` TEXT, `person_reconciliation` TEXT, `order_work_id` TEXT, `mold` TEXT, PRIMARY KEY(`id`))")
             }
         }
 

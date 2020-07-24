@@ -27,6 +27,8 @@ import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.persional.BankPersonal
 import com.fatcloud.account.entity.order.persional.NamePhoneBean
 import com.fatcloud.account.entity.users.User
+import com.fatcloud.account.event.RxBus
+import com.fatcloud.account.event.entity.BankFormCommitSuccessEvent
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
@@ -38,7 +40,9 @@ import javax.inject.Inject
 /**
  * Created by Wangsw on 2020/7/16 0016 11:04.
  * </br>
- * 个体户银行对公账户
+ * 个体户银行对公账户表单 P8
+ * 个体户套餐银行对公账户表单 P9 (提交接口不同)
+ *
  */
 class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), FormPersonalBankView {
 
@@ -48,17 +52,30 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
     /**
      * 产品id
      */
-    private var mProductId: String = "0"
+    private var mProductId: String? = null
 
     /**
      * 最终需支付金额
      */
-    private var mFinalMoney: String = ""
+    private var mFinalMoney: String? = null
 
     /**
      * 选中的产品价格id
      */
-    private var mProductPriceId: String = "0"
+    private var mProductPriceId: String? = null
+
+
+    /**
+     * 订单流程ID
+     */
+    private var mOrderWorkId: String? = null
+
+
+    /**
+     * 产品类型
+     */
+    private var mMold: String = ""
+
 
     /** 存款人姓名 */
     private var mDepositorNameValue: String = ""
@@ -120,21 +137,21 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
 
     private fun initExtra() {
 
-        if (intent.extras == null || !intent.extras!!.containsKey(Constants.PARAM_FINAL_MONEY)) {
+        if (intent.extras == null || !intent.extras!!.containsKey(Constants.PARAM_MOLD)) {
             finish()
             return
         }
 
-        intent.extras!!.getString(Constants.PARAM_PRODUCT_ID)?.let {
-            mProductId = it
-        }
+        mProductId = intent.extras!!.getString(Constants.PARAM_PRODUCT_ID)
 
-        intent.extras!!.getString(Constants.PARAM_FINAL_MONEY)?.let {
-            mFinalMoney = it
-        }
+        mFinalMoney = intent.extras!!.getString(Constants.PARAM_FINAL_MONEY)
 
-        intent.extras!!.getString(Constants.PARAM_PRODUCT_PRICE_ID)?.let {
-            mProductPriceId = it
+        mProductPriceId = intent.extras!!.getString(Constants.PARAM_PRODUCT_PRICE_ID)
+        mOrderWorkId = intent.extras!!.getString(Constants.PARAM_ORDER_WORK_ID)
+
+
+        intent.extras!!.getString(Constants.PARAM_MOLD)?.let {
+            mMold = it
         }
 
         intent.extras!!.getString(Constants.PARAM_NAME)?.let {
@@ -152,7 +169,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
         intent.extras!!.getString(Constants.PARAM_ACCOUNT_NATURE)?.let {
             mAccountNatureValue = it
         }
-           intent.extras!!.getString(Constants.PARAM_ACCOUNT_NATURE_TYPE)?.let {
+        intent.extras!!.getString(Constants.PARAM_ACCOUNT_NATURE_TYPE)?.let {
             mAccountNatureType = it
         }
 
@@ -213,7 +230,14 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
 
 
     private fun initView() {
-        setMainTitle("个体户银行对公账户")
+
+        if (mMold == Constants.P9) {
+            setMainTitle("开立银行对公账户")
+        } else {
+            setMainTitle("个体户银行对公账户")
+        }
+
+
         legal_person_view.apply {
             currentMold = Constants.SH1
             initHighlightTitle("法人信息")
@@ -227,14 +251,11 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             hideShareRatio()
         }
 
-        when (mAccountNatureType) {
-            Constants.AN1 -> {
-                // 显示基本信息
-                basic_ll.visibility = View.VISIBLE
-            }
-            else -> {
-                basic_ll.visibility = View.GONE
-            }
+        basic_ll.visibility = if (mAccountNatureType != Constants.AN1) {
+            // 显示基本信息
+            View.VISIBLE
+        } else {
+            View.GONE
         }
     }
 
@@ -242,16 +263,21 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
     private fun restoreDraft() {
 
         val draft = BankPersonalDraft.get()
-        if (draft.loginPhone != User.get().username || draft.productId.isNullOrBlank() || draft.productId != mProductId) {
+        if (draft.loginPhone != User.get().username) {
+            return
+        }
+
+        val productId = draft.productId
+        val orderWorkId = draft.orderWorkId
+
+        if ((productId.isNullOrBlank() || productId != mProductId) && (orderWorkId.isNullOrBlank() || orderWorkId != mOrderWorkId)) {
             return
         }
 
         draft.imgsIdno?.let {
-
             if (!it.isNullOrEmpty()) {
                 legal_person_view.setServerImage(it as ArrayList<IdentityImg>)
             }
-
         }
 
         draft.imgsLicense?.let {
@@ -451,64 +477,54 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
 
     private fun saveDraft() {
 
-        database.bankPersonalDraftDao().apply {
-
-            updateLegalPersonIdImage(
-                image = ArrayList<IdentityImg>().apply {
-                    add(IdentityImg(imgUrl = legal_person_view.frontImageUrl, mold = Constants.I1))
-                    add(IdentityImg(imgUrl = legal_person_view.backImageUrl, mold = Constants.I2))
-                },
-                productId = mProductId
-            )
-            updateLicenseImage(
-                image = ArrayList<IdentityImg>().apply {
-                    add(IdentityImg(imgUrl = mLicenseImgUrl, nativeImagePath = mLicensePath, mold = Constants.I3))
-                },
-                productId = mProductId
-            )
-
-            if (mAccountNatureType == Constants.AN1) {
-                // 基本户才有存款账户信息
-                updateDepositImage(
-                    image = ArrayList<IdentityImg>().apply {
-                        add(IdentityImg(imgUrl = accountInfoUrl, nativeImagePath = accountInfoPath, mold = Constants.I7))
-                    }, productId = mProductId
-                )
-            }
-
-            updatePersonLegal(model = NamePhoneBean().apply {
-                name = legal_person_view.getNameValue()
-                phone = legal_person_view.getPhoneValue()
-            }, productId = mProductId)
-
-            updatePersonFinance(model = NamePhoneBean().apply {
-                name = finance_name_et.text.toString().trim()
-                phone = finance_phone_et.text.toString().trim()
-            }, productId = mProductId)
-
-            updatePersonVerification1(model = NamePhoneBean().apply {
-                name = verification_first_name_et.text.toString().trim()
-                phone = verification_first_phone_et.text.toString().trim()
-            }, productId = mProductId)
-
-
-            updatePersonVerification2(
-                model = NamePhoneBean().apply {
-                    name = verification_second_name_et.text.toString().trim()
-                    phone = verification_second_phone_et.text.toString().trim()
-                }, productId = mProductId
-            )
-
-            updatePersonReconciliation(
-                model = NamePhoneBean().apply {
-                    name = reconciliation_name_et.text.toString().trim()
-                    phone = reconciliation_phone_et.text.toString().trim()
-                }, productId = mProductId
-            )
-
+        val idImage = ArrayList<IdentityImg>().apply {
+            add(IdentityImg(imgUrl = legal_person_view.frontImageUrl, mold = Constants.I1))
+            add(IdentityImg(imgUrl = legal_person_view.backImageUrl, mold = Constants.I2))
         }
-        BankPersonalDraft.update()
-        ToastUtils.showShort(R.string.save_success)
+
+        val licenseImage = ArrayList<IdentityImg>().apply {
+            add(IdentityImg(imgUrl = mLicenseImgUrl, nativeImagePath = mLicensePath, mold = Constants.I3))
+        }
+
+        val depositImage = ArrayList<IdentityImg>().apply {
+            add(IdentityImg(imgUrl = accountInfoUrl, nativeImagePath = accountInfoPath, mold = Constants.I7))
+        }
+
+        val personLegal = NamePhoneBean().apply {
+            name = legal_person_view.getNameValue()
+            phone = legal_person_view.getPhoneValue()
+        }
+
+        val personFinance = NamePhoneBean().apply {
+            name = finance_name_et.text.toString().trim()
+            phone = finance_phone_et.text.toString().trim()
+        }
+
+        val personVerification1 = NamePhoneBean().apply {
+            name = verification_first_name_et.text.toString().trim()
+            phone = verification_first_phone_et.text.toString().trim()
+        }
+
+        val personVerification2 = NamePhoneBean().apply {
+            name = verification_second_name_et.text.toString().trim()
+            phone = verification_second_phone_et.text.toString().trim()
+        }
+
+
+        val personReconciliation = NamePhoneBean().apply {
+            name = reconciliation_name_et.text.toString().trim()
+            phone = reconciliation_phone_et.text.toString().trim()
+        }
+
+        presenter.saveDraft(
+            mProductId, mOrderWorkId, mAccountNatureType,
+            idImage, licenseImage, depositImage,
+            personLegal, personFinance,
+            personVerification1, personVerification2,
+            personReconciliation
+        )
+
+
     }
 
     private fun handleNext() {
@@ -616,7 +632,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             productPriceId = mProductPriceId
             money = mFinalMoney
             depositorName = mDepositorNameValue
-
+            orderWorkId = mOrderWorkId
             enterpriseCode = mTaxpayerNumberValue
             addressRegistered = mRegisteredAddressValue
             accountType = mAccountNatureValue
@@ -630,7 +646,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
                 add(IdentityImg(imgUrl = mLicenseImgUrl, mold = Constants.I3))
             }
 
-            if (mAccountNatureType == Constants.AN1) {
+            if (mAccountNatureType != Constants.AN1) {
                 // 基本户才上传存款账户图片
                 imgsDepositAccount = ArrayList<IdentityImg>().apply {
                     clear()
@@ -663,7 +679,17 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             }
         }
 
-        presenter.addLicenseChangePersonal(this, model)
+        when (mMold) {
+            Constants.P5 -> {
+                presenter.addLicenseChangePersonal(this, model)
+            }
+            Constants.P9 -> {
+                presenter.addLicenseChangePersonalP9(this, model)
+            }
+            else -> {
+            }
+        }
+
 
     }
 
@@ -682,5 +708,11 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
         finish()
     }
 
+
+    override fun commitSuccessP9() {
+        ToastUtils.showShort("添加成功")
+        RxBus.post(BankFormCommitSuccessEvent())
+        finish()
+    }
 
 }

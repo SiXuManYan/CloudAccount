@@ -94,5 +94,12 @@ class BankPersonal {
      */
     var personReconciliation: NamePhoneBean? = null
 
+    /**
+     * 订单流程id
+     * P9(个体户套餐中的银行表单) ,P10(个人独资银行表单)不需要支付，所以额外需要此字段
+     *
+     */
+    var orderWorkId: String? = null
+
 
 }
