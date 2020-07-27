@@ -1,56 +1,41 @@
 apply plugin: 'com.mob.sdk'
 
 MobSDK {
-
-
-    appKey "11"
-    appSecret "11"
+    appKey "303a1a1d501b8"
+    appSecret "fc86b6ecc1907d019066e531279565b0"
 
     ShareSDK {
-        gui false
-
+        loopShare true
         devInfo {
-
             Wechat {
-                appId "1"
-                appSecret "1"
-                userName "gh_1"
-                path "pages/index/index"
+                appId "wx4868b35061f87885"
+                appSecret "64020361b8ec4c99936c0e3999a9f249"
+                userName "gh_afb25ac019c9"
+                path "pages/index/index.html?id=1"
                 withShareTicket true
-                miniprogramType 0
-                enable true
+                miniprogramType 2
             }
-
-            WechatMoments {
-                appId "1"
-                appSecret "1"
-                enable true
-            }
-
             QQ {
-                appId "1"
-                appKey "1"
-                shareByAppClient true
-                enable true
+                appId "100371282"
+                appKey "aed9b0303e3ed1e27bae87c33761161d"
             }
-
             SinaWeibo {
-                appKey "1"
-                appSecret "1"
-                callbackUri "http://www.cloud.com官网地址"
-                shareByAppClient true
-                enable true
+                appKey "568898243"
+                appSecret "38a4f8204cc784f81f9f0daaf31e02e3"
+                callbackUri "http://www.sharesdk.cn"
             }
-
+            WechatMoments {
+                appId "wx4868b35061f87885"
+                appSecret "64020361b8ec4c99936c0e3999a9f249"
+            }
+            WechatFavorite {
+                appId "wx4868b35061f87885"
+                appSecret "64020361b8ec4c99936c0e3999a9f249"
+            }
             QZone {
-                appId "11"
-                appKey "11"
-                shareByAppClient true
-                enable true
+                appId "100371282"
+                appKey "aed9b0303e3ed1e27bae87c33761161d"
             }
-
         }
-        // wiki: http://wiki.mob.com/sdk-share-android-3-0-0/#map-2
     }
-
 }

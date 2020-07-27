@@ -5,8 +5,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-noarg'
 apply plugin: "kotlin-allopen"
 apply plugin: 'com.jakewharton.butterknife'
-apply from: './mob.gradle'
-//apply plugin: 'mtj-circle-plugin'
+apply plugin: 'com.mob.sdk'
 
 static def releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
@@ -273,6 +272,7 @@ dependencies {
 
     // 百度统计
     implementation 'com.baidu.mobstat:mtj-sdk-circle:latest.integration'
+
 }
 noArg {
     annotation("com.jz.cloud.activity.entity.kotlin.NoArg")
