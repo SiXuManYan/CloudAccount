@@ -168,7 +168,8 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
                                 .putExtra(Constants.PARAM_MOLD, it.mold)
                         )
                     }
-                    Constants.P9 -> {
+                    Constants.P9,
+                    Constants.P10 -> {
                         if (it.state == Constants.OW1) {
                             // 编辑
                             startActivity(

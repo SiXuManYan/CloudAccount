@@ -32,6 +32,7 @@ import javax.inject.Inject
  * </br>
  * 个体户银行对公账户表单 P8
  * 个体户套餐银行对公账户表单 P9 (提交接口不同)
+ * 个人独资银行对公账户表单 P10 (提交接口不同)
  */
 class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPresenter>(), FormPersonalBankBasicView {
 
@@ -133,11 +134,22 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
 
 
     private fun initView() {
-        if (mMold == Constants.P9) {
-            setMainTitle("企业基本信息")
-        } else {
-            setMainTitle("个体户银行对公账户")
+
+
+        when (mMold) {
+            Constants.P8 -> {
+                setMainTitle("个体户银行对公账户")
+            }
+
+            Constants.P9, Constants.P10 -> {
+                setMainTitle("企业基本信息")
+            }
+
+            else -> {
+                setMainTitle("个体户银行对公账户")
+            }
         }
+
         restoreDraft()
     }
 

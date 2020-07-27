@@ -686,6 +686,9 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             Constants.P9 -> {
                 presenter.addLicenseChangePersonalP9(this, model)
             }
+            Constants.P10->{
+                presenter.addLicenseChangePersonalP10(this, model)
+            }
             else -> {
             }
         }
@@ -709,7 +712,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
     }
 
 
-    override fun commitSuccessP9() {
+    override fun commitSuccessP9P10() {
         ToastUtils.showShort("添加成功")
         RxBus.post(BankFormCommitSuccessEvent())
         finish()

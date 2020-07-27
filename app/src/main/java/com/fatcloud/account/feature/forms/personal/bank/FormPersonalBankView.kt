@@ -11,5 +11,5 @@ import com.google.gson.JsonElement
  */
 interface FormPersonalBankView : BaseTaskView {
     fun commitSuccess(preparePay: PreparePay)
-    fun commitSuccessP9()
+    fun commitSuccessP9P10()
 }

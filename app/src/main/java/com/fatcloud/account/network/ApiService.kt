@@ -572,7 +572,18 @@ interface ApiService {
      *
      */
     @POST("$API_ACCOUNT_URI/tOrderWork/addSelfemployedPackage3")
-    fun addSelfemployedBankP9(
+    fun addPersonalBankP9(
+        @Body `in`: JsonObject? = null
+    ): Flowable<Response<JsonElement>>
+
+
+    /**
+     * 添加
+     * P10=增加个人独资企业套餐：流程三：开立银行对公账户
+     *
+     */
+    @POST("$API_ACCOUNT_URI/tOrderWork/addEnterpriseProprietorship3")
+    fun addPersonalPackageBankP10(
         @Body `in`: JsonObject? = null
     ): Flowable<Response<JsonElement>>
 

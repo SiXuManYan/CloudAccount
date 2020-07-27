@@ -1,16 +1,9 @@
 package com.fatcloud.account.feature.forms.personal.bank
 
-import android.graphics.drawable.Drawable
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.blankj.utilcode.util.ToastUtils
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.fatcloud.account.R
-import com.fatcloud.account.app.Glide
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
 import com.fatcloud.account.common.Constants
@@ -20,7 +13,6 @@ import com.fatcloud.account.entity.local.form.BankPersonalDraft
 import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.persional.BankPersonal
 import com.fatcloud.account.entity.order.persional.NamePhoneBean
-import com.fatcloud.account.entity.users.User
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
@@ -72,17 +64,42 @@ class FormPersonalBankPresenter @Inject constructor(private var view: FormPerson
         val jsonObject: JsonObject = gson.fromJson(bodyJsonStr, JsonObject::class.java)
 
         requestApi(lifecycle, Lifecycle.Event.ON_DESTROY,
-            apiService.addSelfemployedBankP9(jsonObject),
+            apiService.addPersonalBankP9(jsonObject),
             object : BaseHttpSubscriber<JsonElement>(view) {
                 override fun onSuccess(data: JsonElement?) {
 
-                    view.commitSuccessP9()
+                    view.commitSuccessP9P10()
 
                 }
 
             }
         )
     }
+
+
+
+    /**
+     * 添加个体营业执照注销
+     */
+    fun addLicenseChangePersonalP10(lifecycle: LifecycleOwner, model: BankPersonal) {
+
+        val bodyJsonStr = gson.toJson(model)
+
+        val jsonObject: JsonObject = gson.fromJson(bodyJsonStr, JsonObject::class.java)
+
+        requestApi(lifecycle, Lifecycle.Event.ON_DESTROY,
+            apiService.addPersonalPackageBankP10(jsonObject),
+            object : BaseHttpSubscriber<JsonElement>(view) {
+                override fun onSuccess(data: JsonElement?) {
+
+                    view.commitSuccessP9P10()
+
+                }
+
+            }
+        )
+    }
+
 
 
     fun saveDraft(
