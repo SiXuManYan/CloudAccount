@@ -11,6 +11,7 @@ import com.fatcloud.account.entity.news.News
 import com.fatcloud.account.entity.news.NewsCategory
 import com.fatcloud.account.entity.order.detail.PersonalLicenseChangeDetail
 import com.fatcloud.account.entity.order.detail.PersonalLicenseLogoutDetail
+import com.fatcloud.account.entity.order.detail.PersonalPackageDetail
 import com.fatcloud.account.entity.order.enterprise.BankInfo
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.persional.PersonalInfo
@@ -267,6 +268,16 @@ interface ApiService {
     fun getPersonalLicenseLogout(
         @Query("id") id: String? = null
     ): Flowable<Response<PersonalLicenseLogoutDetail>>
+
+
+    /**
+     * P9P10 回显页
+     * @param id 订单id
+     */
+    @GET("$ORDER_API/detail")
+    fun getP9P10PersonalPackageInfo(
+        @Query("id") id: String? = null
+    ): Flowable<Response<PersonalPackageDetail>>
 
 
     /**
@@ -571,8 +582,19 @@ interface ApiService {
      *
      */
     @POST("$ORDER_API/addSelfemployedPackage")
-    fun addPersonalPackageCommon(
+    fun addPersonalPackageCommonP9(
         @Body `in`: JsonObject? = null
     ): Flowable<Response<PreparePay>>
+
+
+    /**
+     *  P10增加个人独资企业套餐
+     *
+     */
+    @POST("$ORDER_API/addEnterpriseProprietorship")
+    fun addPersonalPackageSoleP10(
+        @Body `in`: JsonObject? = null
+    ): Flowable<Response<PreparePay>>
+
 
 }

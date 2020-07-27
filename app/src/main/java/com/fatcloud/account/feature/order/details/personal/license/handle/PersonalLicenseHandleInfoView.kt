@@ -1,4 +1,4 @@
-package com.fatcloud.account.feature.order.details.personal
+package com.fatcloud.account.feature.order.details.personal.license.handle
 
 import com.fatcloud.account.base.common.BaseTaskView
 import com.fatcloud.account.entity.order.persional.PersonalInfo
@@ -8,6 +8,6 @@ import com.fatcloud.account.entity.order.persional.PersonalInfo
  * </br>
  *  注册人信息
  */
-interface RegistrantInfoView : BaseTaskView {
+interface PersonalLicenseHandleInfoView : BaseTaskView {
     fun bindDetailInfo(data: PersonalInfo)
 }

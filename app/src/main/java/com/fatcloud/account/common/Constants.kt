@@ -242,7 +242,12 @@ object Constants {
 
     /** 个体户套餐 */
     const val P9 = "P9"
+
+    /** 个人独资企业套餐 */
     const val P10 = "P10"
+
+    /** 个体户税务核定 */
+    const val P11 = "P11"
 
 
     // 产品流程类型 product_word

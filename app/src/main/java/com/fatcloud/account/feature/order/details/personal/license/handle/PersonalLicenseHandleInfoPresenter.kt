@@ -1,4 +1,4 @@
-package com.fatcloud.account.feature.order.details.personal
+package com.fatcloud.account.feature.order.details.personal.license.handle
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -12,7 +12,7 @@ import javax.inject.Inject
  * </br>
  *
  */
-class RegistrantInfoPresenter @Inject constructor(private var registrantInfoView: RegistrantInfoView) : BasePresenter(registrantInfoView) {
+class PersonalLicenseHandleInfoPresenter @Inject constructor(private var personalLicenseHandleInfoView: PersonalLicenseHandleInfoView) : BasePresenter(personalLicenseHandleInfoView) {
 
 
 
@@ -20,12 +20,12 @@ class RegistrantInfoPresenter @Inject constructor(private var registrantInfoView
         requestApi(lifecycle, Lifecycle.Event.ON_DESTROY,
             apiService.getPersonalOrderDetail(orderId),
 
-            object :BaseHttpSubscriber<PersonalInfo>(registrantInfoView){
+            object :BaseHttpSubscriber<PersonalInfo>(personalLicenseHandleInfoView){
 
                 override fun onSuccess(data: PersonalInfo?) {
 
                     data?.let {
-                        registrantInfoView.bindDetailInfo(data)
+                        personalLicenseHandleInfoView.bindDetailInfo(data)
                     }
 
                 }

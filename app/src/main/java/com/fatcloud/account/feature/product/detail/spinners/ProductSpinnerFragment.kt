@@ -24,7 +24,7 @@ import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.extend.RoundTransFormation
 import com.fatcloud.account.feature.forms.enterprise.license.basic.FormEnterpriseBasicActivity
 import com.fatcloud.account.feature.forms.personal.bookkeeping.FormAgentBookkeepingPersonalActivity
-import com.fatcloud.account.feature.forms.personal.packages.common.FormPersonalPackageCommonActivity
+import com.fatcloud.account.feature.forms.personal.packages.FormPersonalPackageP9P10Activity
 import kotlinx.android.synthetic.main.fragment_product_spinner.*
 import java.math.BigDecimal
 
@@ -47,7 +47,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
     /**
      * 企业代理记账，最终金额倍数 12
      */
-    private val multipleP2 = 12
+    private val multipleP2P10 = 12
 
 
     /**
@@ -266,8 +266,9 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
 
                     when (productDetail!!.mold) {
 
-                        Constants.P2 ->
-                            handleAmountEnterpriseP2(price) // 企业代理记账价格
+                        Constants.P2,
+                        Constants.P10 ->
+                            handleAmountEnterpriseP2P10(price) // 企业代理记账价格
                         Constants.P3,
                         Constants.P9 ->
                             handleAmountPersonalP3P9(price)   // 个人代理记账价格
@@ -283,7 +284,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
     /**
      * 计算企业代理记账金额
      */
-    private fun handleAmountEnterpriseP2(price: Price) {
+    private fun handleAmountEnterpriseP2P10(price: Price) {
 
 
         // 根据用户选择的收入获取原始金额
@@ -305,7 +306,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 addExtraTextChangeForEnterprise(price)
             }
             else -> {
-                originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multipleP2)) // PP1
+                originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multipleP2P10)) // PP1
                 actual_income_rl.visibility = View.INVISIBLE
                 checkActualIncome = false
 
@@ -518,7 +519,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
         }
 
 
-        when (productDetail?.mold) {
+        when (val productMold = productDetail?.mold) {
             Constants.P2 -> {
                 startActivity(
                     Intent(activity, FormEnterpriseBasicActivity::class.java)
@@ -538,15 +539,17 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                         .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, thirdProductPriceId)
                 )
             }
-            Constants.P9->{
+            Constants.P9,
+            Constants.P10-> {
                 startActivity(
-                    Intent(activity, FormPersonalPackageCommonActivity::class.java)
+                    Intent(activity, FormPersonalPackageP9P10Activity::class.java)
                         .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
                         .putExtra(Constants.PARAM_FINAL_MONEY, serverFinalMoney.toPlainString())
                         .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, thirdProductPriceId)
+                        .putExtra(Constants.PARAM_MOLD, productMold)
                 )
-
             }
+
 
             else -> {
             }

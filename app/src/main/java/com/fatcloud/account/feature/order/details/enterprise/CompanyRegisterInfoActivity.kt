@@ -1,4 +1,4 @@
-package com.fatcloud.account.feature.order.details.enterprise.company
+package com.fatcloud.account.feature.order.details.enterprise
 
 import android.view.View
 import com.bumptech.glide.load.MultiTransformation
@@ -22,10 +22,10 @@ import kotlinx.android.synthetic.main.layout_company_info.*
 /**
  * Created by Wangsw on 2020/6/4 0004 14:03.
  * </br>
- *  公司信息 ,银行信息
+ *
+ * P2 回显信息页
  */
-class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter>(),
-    CompanyRegisterInfoView {
+class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter>(), CompanyRegisterInfoView {
 
     /**
      * 订单流程id

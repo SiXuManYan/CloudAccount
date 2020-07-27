@@ -1,4 +1,4 @@
-package com.fatcloud.account.feature.order.details.enterprise.company
+package com.fatcloud.account.feature.order.details.enterprise
 
 import dagger.Module
 import dagger.Provides

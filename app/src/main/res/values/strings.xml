@@ -19,17 +19,18 @@
 
     <!--  android/开发环境/资源类型/是否为加密文件/时间戳.jpg-->
 
-    <!-- 普通图片，正式环境 -->
-    <string name="upload_image_path_format">android/formal/image/general/%1$s.jpg</string>
+    <!-- 普通图片，正式 -->
+    <string name="upload_image_path_format">prod/android/account/general%1$s.jpg</string>
 
-    <!-- 普通图片，开发环境 -->
-    <string name="upload_image_path_dev_format">android/dev/image/general/%1$s.jpg</string>
+    <!-- 加密图片，正式 -->
+    <string name="upload_image_encryption_path_format">prod/android/order/encryption%1$s.jpg</string>
 
-    <!-- 加密图片，正式环境 -->
-    <string name="upload_image_encryption_path_format">android/formal/image/encryption/%1$s.jpg</string>
 
-    <!-- 加密图片，开发环境 -->
-    <string name="upload_image_encryption_path_dev_format">android/dev/image/encryption/%1$s.jpg</string>
+    <!-- 普通图片，开发 -->
+    <string name="upload_image_path_dev_format">dev/android/account/general%1$s.jpg</string>
+
+    <!-- 加密图片，开发 -->
+    <string name="upload_image_encryption_path_dev_format">dev/android/order/encryption%1$s.jpg</string>
 
     <!-- 上传成功后的最终URL val finalUrl = "https://$imageBucketName.$endpoint/$imageObjectKey" -->
     <string name="final_url_format">https://%1$s.%2$s/%3$s</string>

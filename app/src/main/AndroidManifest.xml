@@ -228,10 +228,10 @@
 
 
         <activity
-            android:name=".feature.order.details.enterprise.company.CompanyRegisterInfoActivity"
+            android:name=".feature.order.details.enterprise.CompanyRegisterInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".feature.order.details.personal.RegistrantInfoActivity"
+            android:name=".feature.order.details.personal.license.handle.PersonalLicenseHandleInfoActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -317,24 +317,43 @@
         <activity
             android:name=".feature.gallery.GalleryActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".feature.forms.enterprise.license.basic.FormEnterpriseBasicActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".feature.forms.enterprise.bank.basic.FormBankBasicActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".feature.forms.personal.change.FormLicenseChangeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".feature.forms.personal.logout.FormLicenseLogoutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".feature.forms.master.MasterNamingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".feature.forms.personal.bank.FormPersonalBankActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".feature.forms.personal.bank.basic.FormPersonalBankBasicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".feature.order.details.personal.bank.PersonalBankInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".feature.order.details.personal.license.change.PersonalLicenseChangeInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".feature.order.details.personal.license.logout.PersonalLicenseLogoutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".feature.forms.personal.packages.FormPersonalPackageP9P10Activity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".feature.forms.personal.change.FormLicenseChangeActivity" />
-        <activity android:name=".feature.forms.personal.logout.FormLicenseLogoutActivity" />
-        <activity android:name=".feature.forms.master.MasterNamingActivity" />
-        <activity android:name=".feature.forms.personal.bank.FormPersonalBankActivity" />
-        <activity android:name=".feature.forms.personal.bank.basic.FormPersonalBankBasicActivity" />
-        <activity android:name=".feature.order.details.personal.bank.PersonalBankInfoActivity" />
-        <activity android:name=".feature.order.details.personal.license.change.PersonalLicenseChangeInfoActivity" />
-        <activity android:name=".feature.order.details.personal.license.logout.PersonalLicenseLogoutActivity" />
-        <activity android:name=".feature.forms.personal.packages.common.FormPersonalPackageCommonActivity" />
+        <activity
+            android:name=".feature.order.details.personal.packages.PersonalPackageInfoActivity"
+            android:screenOrientation="portrait" />
 
 
     </application>

@@ -24,14 +24,8 @@ import kotlinx.android.synthetic.main.activity_personal_license_info_logout.*
  */
 class PersonalLicenseLogoutActivity : BaseMVPActivity<PersonalLicenseLogoutPresenter>(), PersonalLicenseLogoutView {
 
-    /**
-     * 订单id，
-     * 当为 产品流程类型为：PW3银行账户办理时，tOrderWork/detail 接口不返回相关法人信息
-     * 需要使用订单id调用  tOrder/detail 接口请求法人股东信息
-     *
-     */
-    private var orderId: String? = ""
 
+    private var mOrderId: String? = ""
 
     var mIdFrontUrl: String = ""
     var mIdBackUrl: String = ""
@@ -52,7 +46,7 @@ class PersonalLicenseLogoutActivity : BaseMVPActivity<PersonalLicenseLogoutPrese
             finish()
             return
         }
-        orderId = intent.extras!!.getString(Constants.PARAM_ORDER_ID)
+        mOrderId = intent.extras!!.getString(Constants.PARAM_ORDER_ID)
     }
 
 
@@ -60,7 +54,7 @@ class PersonalLicenseLogoutActivity : BaseMVPActivity<PersonalLicenseLogoutPrese
         initExtra()
 
         setMainTitle("订单详情")
-        presenter.getDetailInfo(this, orderId)
+        presenter.getDetailInfo(this, mOrderId)
     }
 
     override fun bindDetailInfo(data: PersonalLicenseLogoutDetail) {

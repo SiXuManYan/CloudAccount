@@ -11,16 +11,15 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.order.persional.Order
 import com.fatcloud.account.entity.order.progress.BusinessProgress
 import com.fatcloud.account.event.entity.BankFormCommitSuccessEvent
-import com.fatcloud.account.event.entity.RefreshOrderEvent
-import com.fatcloud.account.feature.forms.enterprise.bank.FormBankActivity
 import com.fatcloud.account.feature.forms.enterprise.bank.basic.FormBankBasicActivity
 import com.fatcloud.account.feature.forms.personal.bank.basic.FormPersonalBankBasicActivity
 import com.fatcloud.account.feature.order.details.bookkeeping.BookkeepingInfoActivity
-import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterInfoActivity
-import com.fatcloud.account.feature.order.details.personal.RegistrantInfoActivity
+import com.fatcloud.account.feature.order.details.enterprise.CompanyRegisterInfoActivity
 import com.fatcloud.account.feature.order.details.personal.bank.PersonalBankInfoActivity
 import com.fatcloud.account.feature.order.details.personal.license.change.PersonalLicenseChangeInfoActivity
+import com.fatcloud.account.feature.order.details.personal.license.handle.PersonalLicenseHandleInfoActivity
 import com.fatcloud.account.feature.order.details.personal.license.logout.PersonalLicenseLogoutActivity
+import com.fatcloud.account.feature.order.details.personal.packages.PersonalPackageInfoActivity
 import com.fatcloud.account.feature.order.progress.holders.ScheduleHolder
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
@@ -123,7 +122,7 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
                 when (it.mold) {
                     Constants.P1 -> {
                         startActivity(
-                            Intent(this@ScheduleActivity, RegistrantInfoActivity::class.java)
+                            Intent(this@ScheduleActivity, PersonalLicenseHandleInfoActivity::class.java)
                                 .putExtra(Constants.PARAM_ORDER_ID, orderId)
                                 .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
                         )
@@ -132,7 +131,6 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
                         startActivity(
                             Intent(this@ScheduleActivity, PersonalLicenseChangeInfoActivity::class.java)
                                 .putExtra(Constants.PARAM_ORDER_ID, orderId)
-                                .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
                         )
                     }
 
@@ -140,16 +138,23 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
                         startActivity(
                             Intent(this@ScheduleActivity, PersonalLicenseLogoutActivity::class.java)
                                 .putExtra(Constants.PARAM_ORDER_ID, orderId)
-                                .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
                         )
                     }
+                    Constants.P9,
+                    Constants.P10 -> {
+                        startActivity(
+                            Intent(this@ScheduleActivity, PersonalPackageInfoActivity::class.java)
+                                .putExtra(Constants.PARAM_ORDER_ID, orderId)
+                        )
+                    }
+
                     else -> {
                     }
                 }
             }
             Constants.PW2 -> {
                 startActivity(
-                    Intent(this@ScheduleActivity, RegistrantInfoActivity::class.java)
+                    Intent(this@ScheduleActivity, PersonalLicenseHandleInfoActivity::class.java)
                         .putExtra(Constants.PARAM_ORDER_ID, orderId)
                         .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
                 )
@@ -164,7 +169,6 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
                         )
                     }
                     Constants.P9 -> {
-
                         if (it.state == Constants.OW1) {
                             // 编辑
                             startActivity(
@@ -174,8 +178,10 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
                             )
                         } else {
                             // 回显
-                            startActivity(Intent(this@ScheduleActivity, PersonalBankInfoActivity::class.java)
-                                .putExtra(Constants.PARAM_ORDER_ID, orderId))
+                            startActivity(
+                                Intent(this@ScheduleActivity, PersonalBankInfoActivity::class.java)
+                                    .putExtra(Constants.PARAM_ORDER_ID, orderId)
+                            )
                         }
 
 

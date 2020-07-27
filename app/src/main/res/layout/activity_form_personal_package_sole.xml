@@ -299,7 +299,7 @@
                     android:lineSpacingMultiplier="1.1"
                     android:maxWidth="150dp"
                     android:maxLines="2"
-                    android:text="资金数额(元)"
+                    android:text="资金数额(万元)"
                     android:textColor="@color/color_first_level" />
 
                 <androidx.appcompat.widget.AppCompatEditText

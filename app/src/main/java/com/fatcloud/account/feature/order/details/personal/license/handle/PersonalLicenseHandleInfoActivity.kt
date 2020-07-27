@@ -1,4 +1,4 @@
-package com.fatcloud.account.feature.order.details.personal
+package com.fatcloud.account.feature.order.details.personal.license.handle
 
 import android.view.View
 import com.bumptech.glide.load.MultiTransformation
@@ -20,9 +20,9 @@ import kotlinx.android.synthetic.main.layout_detail_tax_registration.*
 /**
  * Created by Wangsw on 2020/6/4 0004 14:03.
  * </br>
- *  个人业务订单详情 注册信息
+ * 个体户营业执照办理 P1回显
  */
-class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), RegistrantInfoView {
+class PersonalLicenseHandleInfoActivity : BaseMVPActivity<PersonalLicenseHandleInfoPresenter>(), PersonalLicenseHandleInfoView {
 
 
     private var orderId: String? = ""
@@ -127,7 +127,7 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
                         override fun ossUrlSignEnd(url: String) {
 
 
-                            Glide.with(this@RegistrantInfoActivity)
+                            Glide.with(this@PersonalLicenseHandleInfoActivity)
                                 .load(url)
                                 .apply(
                                     RequestOptions().transform(
@@ -200,7 +200,7 @@ class RegistrantInfoActivity : BaseMVPActivity<RegistrantInfoPresenter>(), Regis
                     override fun ossUrlSignEnd(url: String) {
 
 
-                        Glide.with(this@RegistrantInfoActivity)
+                        Glide.with(this@PersonalLicenseHandleInfoActivity)
                             .load(url)
                             .apply(
                                 RequestOptions().transform(

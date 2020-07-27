@@ -670,6 +670,18 @@ class CompanyMemberEditView : LinearLayout {
         }
     }
 
+    fun getGenderValue() :String{
+      return  if (genderIndex == 1) {
+            "男"
+        } else {
+            "女"
+        }
+    }
+
+
+
+
+
     fun setNationValue(it: String) {
         nation_et.setText(it)
     }

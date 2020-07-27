@@ -6,7 +6,7 @@ import java.math.BigDecimal
 /**
  * 个体户套餐 P9
  */
-data class NativeFormPersonalPackage(
+data class NativeFormPersonalPackageP9P10(
 
     /** 详细地址 */
     var addr: String? = null,

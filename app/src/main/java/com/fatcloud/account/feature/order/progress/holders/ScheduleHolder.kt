@@ -48,14 +48,15 @@ class ScheduleHolder(parent: ViewGroup?) : BaseItemViewHolder<BusinessProgress>(
 
         when (data.mold) {
             Constants.P2 -> handleEnterpriseProduct(data)
-            Constants.P9 -> {
-                handlePersonalProductP9(data)
+            Constants.P9,
+            Constants.P10 -> {
+                handlePersonalProductP9P10(data)
             }
             else -> handlePersonalProduct(data)
         }
     }
 
-    private fun handlePersonalProductP9(data: BusinessProgress) {
+    private fun handlePersonalProductP9P10(data: BusinessProgress) {
         when (data.code) {
             Constants.PW1 -> {
                 look_detail_tv.visibility = View.VISIBLE

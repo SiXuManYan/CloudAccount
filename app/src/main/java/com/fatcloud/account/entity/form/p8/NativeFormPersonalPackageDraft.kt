@@ -68,4 +68,8 @@ class NativeFormPersonalPackageDraft {
 
     /** 法人联系方式 */
     val tel: String = ""
+
+    /** 区分P9和P10 */
+    val mold: String = ""
+
 }

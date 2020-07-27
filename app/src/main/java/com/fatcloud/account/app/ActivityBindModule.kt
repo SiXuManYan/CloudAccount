@@ -50,24 +50,26 @@ import com.fatcloud.account.feature.forms.personal.license.FormLicensePersonalAc
 import com.fatcloud.account.feature.forms.personal.license.FormLicensePersonalModule
 import com.fatcloud.account.feature.forms.personal.logout.FormLicenseLogoutActivity
 import com.fatcloud.account.feature.forms.personal.logout.FormLicenseLogoutModule
-import com.fatcloud.account.feature.forms.personal.packages.common.FormPersonalPackageCommonActivity
-import com.fatcloud.account.feature.forms.personal.packages.common.FormPersonalPackageCommonModule
+import com.fatcloud.account.feature.forms.personal.packages.FormPersonalPackageP9P10Activity
+import com.fatcloud.account.feature.forms.personal.packages.FormPersonalPackageP9P10Module
 import com.fatcloud.account.feature.forms.personal.tax.FormTaxRegistrationPersonalActivity
 import com.fatcloud.account.feature.forms.personal.tax.FormTaxRegistrationPersonalModule
 import com.fatcloud.account.feature.news.detail.NewsDetailActivity
 import com.fatcloud.account.feature.news.detail.NewsDetailModule
 import com.fatcloud.account.feature.order.details.bookkeeping.BookkeepingInfoActivity
 import com.fatcloud.account.feature.order.details.bookkeeping.BookkeepingInfoModule
-import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterInfoModule
-import com.fatcloud.account.feature.order.details.enterprise.company.CompanyRegisterInfoActivity
-import com.fatcloud.account.feature.order.details.personal.RegistrantInfoActivity
-import com.fatcloud.account.feature.order.details.personal.RegistrantInfoModule
+import com.fatcloud.account.feature.order.details.enterprise.CompanyRegisterInfoActivity
+import com.fatcloud.account.feature.order.details.enterprise.CompanyRegisterInfoModule
+import com.fatcloud.account.feature.order.details.personal.license.handle.PersonalLicenseHandleInfoActivity
+import com.fatcloud.account.feature.order.details.personal.license.handle.PersonalLicenseHandleInfoModule
 import com.fatcloud.account.feature.order.details.personal.bank.PersonalBankInfoActivity
 import com.fatcloud.account.feature.order.details.personal.bank.PersonalBankInfoModule
 import com.fatcloud.account.feature.order.details.personal.license.change.PersonalLicenseChangeInfoActivity
 import com.fatcloud.account.feature.order.details.personal.license.change.PersonalLicenseChangeInfoModule
 import com.fatcloud.account.feature.order.details.personal.license.logout.PersonalLicenseLogoutActivity
 import com.fatcloud.account.feature.order.details.personal.license.logout.PersonalLicenseLogoutModule
+import com.fatcloud.account.feature.order.details.personal.packages.PersonalPackageInfoActivity
+import com.fatcloud.account.feature.order.details.personal.packages.PersonalPackageInfoModule
 import com.fatcloud.account.feature.order.lists.OrderListActivity
 import com.fatcloud.account.feature.order.lists.OrderListModule
 import com.fatcloud.account.feature.order.progress.ScheduleActivity
@@ -149,8 +151,8 @@ abstract class ActivityBindModule {
     abstract fun businessProgressActivityInjector(): ScheduleActivity
 
     @ActivityScore
-    @ContributesAndroidInjector(modules = [RegistrantInfoModule::class])
-    abstract fun registrantInfoActivityInjector(): RegistrantInfoActivity
+    @ContributesAndroidInjector(modules = [PersonalLicenseHandleInfoModule::class])
+    abstract fun registrantInfoActivityInjector(): PersonalLicenseHandleInfoActivity
 
     @ActivityScore
     @ContributesAndroidInjector(modules = [FormLicenseEnterpriseModule::class])
@@ -262,15 +264,17 @@ abstract class ActivityBindModule {
     abstract fun personalLicenseChangeInfoActivityInjector(): PersonalLicenseChangeInfoActivity
 
     @ActivityScore
-    @ContributesAndroidInjector(modules = [ PersonalLicenseLogoutModule::class])
+    @ContributesAndroidInjector(modules = [PersonalLicenseLogoutModule::class])
     abstract fun personalLicenseLogoutActivityInjector(): PersonalLicenseLogoutActivity
 
 
     @ActivityScore
-    @ContributesAndroidInjector(modules = [FragmentBindModule::class, FormPersonalPackageCommonModule::class])
-    abstract fun formPersonalPackageCommonActivityInjector(): FormPersonalPackageCommonActivity
+    @ContributesAndroidInjector(modules = [FragmentBindModule::class, FormPersonalPackageP9P10Module::class])
+    abstract fun formPersonalPackageCommonActivityInjector(): FormPersonalPackageP9P10Activity
 
-
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [FragmentBindModule::class, PersonalPackageInfoModule::class])
+    abstract fun personalPackageInfoActivityInjector(): PersonalPackageInfoActivity
 
 
 }

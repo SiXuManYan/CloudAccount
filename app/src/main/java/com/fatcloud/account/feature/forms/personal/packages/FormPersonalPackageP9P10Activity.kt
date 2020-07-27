@@ -1,4 +1,4 @@
-package com.fatcloud.account.feature.forms.personal.packages.common
+package com.fatcloud.account.feature.forms.personal.packages
 
 import android.content.Intent
 import android.view.View
@@ -18,7 +18,7 @@ import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.data.CloudDataBase
 import com.fatcloud.account.entity.commons.Form
 import com.fatcloud.account.entity.defray.prepare.PreparePay
-import com.fatcloud.account.entity.form.p8.NativeFormPersonalPackage
+import com.fatcloud.account.entity.form.p8.NativeFormPersonalPackageP9P10
 import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
@@ -40,8 +40,9 @@ import kotlin.collections.ArrayList
  * Created by Wangsw on 2020/7/23 0023 10:23.
  * </br>
  * 个体户套餐 P9
+ * 个人独资企业套餐 P10 (UI完全一样，只是接口不一样)
  */
-class FormPersonalPackageCommonActivity : BaseMVPActivity<FormPersonalPackageCommonPresenter>(), FormPersonalPackageCommonView {
+class FormPersonalPackageP9P10Activity : BaseMVPActivity<FormPersonalPackageP9P10Presenter>(), FormPersonalPackageP9P10View {
 
     lateinit var database: CloudDataBase @Inject set
 
@@ -61,10 +62,17 @@ class FormPersonalPackageCommonActivity : BaseMVPActivity<FormPersonalPackageCom
     private var mFinalMoney: String = ""
 
     /** 选中的产品价格id */
-    private var mProductPriceId: String = "0"
+    private var mProductPriceId: String = ""
 
     /** 产品id */
-    private var mProductId: String = "0"
+    private var mProductId: String = ""
+
+    /** 区分类型P9 P10
+     * @see Constants.P9
+     * @see Constants.P10
+     * */
+    private var mMold: String = ""
+
 
     /** 用户选中的城市信息id */
     private var mAreaId: String = ""
@@ -108,6 +116,10 @@ class FormPersonalPackageCommonActivity : BaseMVPActivity<FormPersonalPackageCom
 
         intent.extras!!.getString(Constants.PARAM_PRODUCT_PRICE_ID)?.let {
             mProductPriceId = it
+        }
+
+        intent.extras!!.getString(Constants.PARAM_MOLD)?.let {
+            mMold = it
         }
 
 
@@ -179,9 +191,9 @@ class FormPersonalPackageCommonActivity : BaseMVPActivity<FormPersonalPackageCom
                 FormSheetFragment.newInstance().apply {
                     setOnFormSelectListener(object : FormSheetFragment.OnItemSelectedListener {
                         override fun onItemSelected(currentSelected: Form) {
-                            this@FormPersonalPackageCommonActivity.selectFormId = currentSelected.id
-                            this@FormPersonalPackageCommonActivity.selectFormName = currentSelected.name
-                            this@FormPersonalPackageCommonActivity.formation_value.text = currentSelected.name
+                            this@FormPersonalPackageP9P10Activity.selectFormId = currentSelected.id
+                            this@FormPersonalPackageP9P10Activity.selectFormName = currentSelected.name
+                            this@FormPersonalPackageP9P10Activity.formation_value.text = currentSelected.name
                         }
                     })
                     show(supportFragmentManager, this.tag)
@@ -255,7 +267,7 @@ class FormPersonalPackageCommonActivity : BaseMVPActivity<FormPersonalPackageCom
             isFaceUp,
             filePath,
             fromViewId,
-            this@FormPersonalPackageCommonActivity.javaClass
+            this@FormPersonalPackageP9P10Activity.javaClass
         )
         if (contentType.isEmpty()) {
             return
@@ -354,7 +366,6 @@ class FormPersonalPackageCommonActivity : BaseMVPActivity<FormPersonalPackageCom
         }
 
 
-/*
         try {
             val amountInt = amountOfFundsStr.toInt()
             if (amountInt < 10000 || amountInt > 1000000) {
@@ -365,7 +376,6 @@ class FormPersonalPackageCommonActivity : BaseMVPActivity<FormPersonalPackageCom
         } catch (e: Exception) {
 
         }
-*/
 
         if (!legal_person_view.checkParams()) {
             return
@@ -377,7 +387,7 @@ class FormPersonalPackageCommonActivity : BaseMVPActivity<FormPersonalPackageCom
             add(IdentityImg(imgUrl = legal_person_view.backImageUrl, mold = Constants.I2))
         }
 
-        val model = NativeFormPersonalPackage().apply {
+        val model = NativeFormPersonalPackageP9P10().apply {
             addr = detailAddrStr
             area = mAreaName
 
@@ -389,7 +399,7 @@ class FormPersonalPackageCommonActivity : BaseMVPActivity<FormPersonalPackageCom
             employedNum = employeesNumberStr
             form = selectFormId.toInt()
 
-            gender = legal_person_view.genderIndex.toString()
+            gender = legal_person_view.getGenderValue()
 
             idno = legal_person_view.getIdNumberValue()
             imgs = mIdEntityImg
@@ -403,8 +413,9 @@ class FormPersonalPackageCommonActivity : BaseMVPActivity<FormPersonalPackageCom
             realName = legal_person_view.getNameValue()
             tel = legal_person_view.getPhoneValue()
         }
-        presenter.addLicensePersonal(this, model)
 
+
+        presenter.addPersonalPackageP9P10(this, model, mMold)
 
     }
 
