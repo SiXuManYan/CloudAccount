@@ -8,7 +8,7 @@ import com.fatcloud.account.entity.order.detail.PersonalPackageDetail
  * </br>
  * P9 P10回显页
  */
-interface PersonalPackageInfoView : BaseTaskView {
+interface PersonalPackageInfoP9P10View : BaseTaskView {
     fun bindDetailInfo(data: PersonalPackageDetail)
 
 

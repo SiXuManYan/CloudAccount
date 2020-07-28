@@ -68,8 +68,8 @@ import com.fatcloud.account.feature.order.details.personal.license.change.Person
 import com.fatcloud.account.feature.order.details.personal.license.change.PersonalLicenseChangeInfoModule
 import com.fatcloud.account.feature.order.details.personal.license.logout.PersonalLicenseLogoutActivity
 import com.fatcloud.account.feature.order.details.personal.license.logout.PersonalLicenseLogoutModule
-import com.fatcloud.account.feature.order.details.personal.packages.PersonalPackageInfoActivity
-import com.fatcloud.account.feature.order.details.personal.packages.PersonalPackageInfoModule
+import com.fatcloud.account.feature.order.details.personal.packages.PersonalPackageInfoP9P10Activity
+import com.fatcloud.account.feature.order.details.personal.packages.PersonalPackageInfoP9P10Module
 import com.fatcloud.account.feature.order.lists.OrderListActivity
 import com.fatcloud.account.feature.order.lists.OrderListModule
 import com.fatcloud.account.feature.order.progress.ScheduleActivity
@@ -273,8 +273,8 @@ abstract class ActivityBindModule {
     abstract fun formPersonalPackageCommonActivityInjector(): FormPersonalPackageP9P10Activity
 
     @ActivityScore
-    @ContributesAndroidInjector(modules = [FragmentBindModule::class, PersonalPackageInfoModule::class])
-    abstract fun personalPackageInfoActivityInjector(): PersonalPackageInfoActivity
+    @ContributesAndroidInjector(modules = [FragmentBindModule::class, PersonalPackageInfoP9P10Module::class])
+    abstract fun personalPackageInfoActivityInjector(): PersonalPackageInfoP9P10Activity
 
 
 }

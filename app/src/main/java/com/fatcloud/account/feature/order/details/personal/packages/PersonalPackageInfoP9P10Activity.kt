@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_personal_package_info.*
  * </br>
  *  P9 P10 回显信息页
  */
-class PersonalPackageInfoActivity : BaseMVPActivity<PersonalPackageInfoPresenter>(), PersonalPackageInfoView{
+class PersonalPackageInfoP9P10Activity : BaseMVPActivity<PersonalPackageInfoP9P10Presenter>(), PersonalPackageInfoP9P10View{
 
 
     private var mOrderId: String? = ""
@@ -93,13 +93,13 @@ class PersonalPackageInfoActivity : BaseMVPActivity<PersonalPackageInfoPresenter
                         if (ProductUtils.isOssSignUrl(imgUrl)) {
                             ProductUtils.getRealOssUrl(this, imgUrl, object : CloudAccountApplication.OssSignCallBack {
                                 override fun ossUrlSignEnd(url: String) {
-                                    Glide.with(this@PersonalPackageInfoActivity)
+                                    Glide.with(this@PersonalPackageInfoP9P10Activity)
                                         .load(url)
                                         .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                                         .error(R.drawable.ic_error_image_load)
                                         .into(id_card_front_iv)
 
-                                    this@PersonalPackageInfoActivity.mIdFrontUrl = url
+                                    this@PersonalPackageInfoP9P10Activity.mIdFrontUrl = url
                                 }
 
                             })
@@ -109,7 +109,7 @@ class PersonalPackageInfoActivity : BaseMVPActivity<PersonalPackageInfoPresenter
                                 .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                                 .error(R.drawable.ic_error_image_load)
                                 .into(id_card_front_iv)
-                            this@PersonalPackageInfoActivity.mIdFrontUrl = imgUrl
+                            this@PersonalPackageInfoP9P10Activity.mIdFrontUrl = imgUrl
                         }
 
                     }
@@ -120,12 +120,12 @@ class PersonalPackageInfoActivity : BaseMVPActivity<PersonalPackageInfoPresenter
                         if (ProductUtils.isOssSignUrl(imgUrl)) {
                             ProductUtils.getRealOssUrl(this, imgUrl, object : CloudAccountApplication.OssSignCallBack {
                                 override fun ossUrlSignEnd(url: String) {
-                                    Glide.with(this@PersonalPackageInfoActivity)
+                                    Glide.with(this@PersonalPackageInfoP9P10Activity)
                                         .load(url)
                                         .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                                         .error(R.drawable.ic_error_image_load)
                                         .into(id_card_back_iv)
-                                    this@PersonalPackageInfoActivity.mIdBackUrl = url
+                                    this@PersonalPackageInfoP9P10Activity.mIdBackUrl = url
                                 }
 
                             })
@@ -135,7 +135,7 @@ class PersonalPackageInfoActivity : BaseMVPActivity<PersonalPackageInfoPresenter
                                 .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                                 .error(R.drawable.ic_error_image_load)
                                 .into(id_card_back_iv)
-                            this@PersonalPackageInfoActivity.mIdBackUrl = imgUrl
+                            this@PersonalPackageInfoP9P10Activity.mIdBackUrl = imgUrl
                         }
 
                     }

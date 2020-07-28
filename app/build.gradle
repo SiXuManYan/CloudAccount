@@ -5,7 +5,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-noarg'
 apply plugin: "kotlin-allopen"
 apply plugin: 'com.jakewharton.butterknife'
-apply plugin: 'com.mob.sdk'
+apply from: './mob.gradle'
 
 static def releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))

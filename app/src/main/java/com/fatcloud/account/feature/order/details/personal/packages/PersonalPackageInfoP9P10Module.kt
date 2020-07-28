@@ -9,10 +9,10 @@ import dagger.Provides
  *
  */
 @Module
-class PersonalPackageInfoModule {
+class PersonalPackageInfoP9P10Module {
 
     @Provides
-    fun viewProvider(activity: PersonalPackageInfoActivity): PersonalPackageInfoView {
+    fun viewProvider(activity: PersonalPackageInfoP9P10Activity): PersonalPackageInfoP9P10View {
         return activity
     }
 

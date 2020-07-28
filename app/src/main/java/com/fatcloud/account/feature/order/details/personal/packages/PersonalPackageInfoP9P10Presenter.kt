@@ -4,7 +4,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
-import com.fatcloud.account.entity.order.detail.PersonalLicenseLogoutDetail
 import com.fatcloud.account.entity.order.detail.PersonalPackageDetail
 import javax.inject.Inject
 
@@ -13,19 +12,19 @@ import javax.inject.Inject
  * </br>
  *
  */
-class PersonalPackageInfoPresenter @Inject constructor(private var view: PersonalPackageInfoView) : BasePresenter(view) {
+class PersonalPackageInfoP9P10Presenter @Inject constructor(private var p9P10View: PersonalPackageInfoP9P10View) : BasePresenter(p9P10View) {
 
 
     fun getDetailInfo(lifecycle: LifecycleOwner, orderId: String?) {
         requestApi(lifecycle, Lifecycle.Event.ON_DESTROY,
             apiService.getP9P10PersonalPackageInfo(orderId),
 
-            object : BaseHttpSubscriber<PersonalPackageDetail>(view) {
+            object : BaseHttpSubscriber<PersonalPackageDetail>(p9P10View) {
 
                 override fun onSuccess(data: PersonalPackageDetail?) {
 
                     data?.let {
-                        view.bindDetailInfo(data)
+                        p9P10View.bindDetailInfo(data)
                     }
 
                 }

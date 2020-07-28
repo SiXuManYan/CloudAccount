@@ -608,4 +608,14 @@ interface ApiService {
     ): Flowable<Response<PreparePay>>
 
 
+    /**
+     *  P11增加个体户税务核定
+     *
+     */
+    @POST("$ORDER_API/addSelfemployedTaxAssess")
+    fun addEmployedTaxAssessmentP11(
+        @Body `in`: JsonObject? = null
+    ): Flowable<Response<PreparePay>>
+
+
 }

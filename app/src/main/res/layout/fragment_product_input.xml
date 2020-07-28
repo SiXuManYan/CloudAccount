@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/corner_other_bt_top"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="83dp"
+        android:paddingRight="15dp">
+
+        <ImageView
+            android:id="@+id/image_iv"
+            android:layout_width="110dp"
+            android:layout_height="73dp"
+            android:layout_marginRight="10dp"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            tools:background="@tools:sample/backgrounds/scenic[3]" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/image_iv"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/amount_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.2"
+                    android:maxLines="2"
+                    android:textColor="@color/color_app_red"
+                    android:textSize="@dimen/font_size_18"
+                    android:textStyle="bold"
+                    tools:text="￥10000" />
+
+                <TextView
+                    android:id="@+id/amount_hint_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="（每年）"
+                    android:textColor="@color/color_third_level"
+                    android:textSize="@dimen/font_size_12"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/content_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:lineSpacingMultiplier="1.2"
+                android:maxLines="1"
+                android:textColor="@color/color_first_level"
+                android:textSize="@dimen/font_size_14"
+                tools:text="个人独资企业" />
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/split_line_color" />
+
+    <RelativeLayout
+        android:id="@+id/name_rl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="?android:attr/selectableItemBackground"
+        tools:background="@color/font_white">
+
+        <TextView
+            android:id="@+id/ev_00_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.1"
+            android:maxWidth="150dp"
+            android:maxLines="2"
+            android:text="营业执照名称："
+            android:textColor="@color/color_first_level" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/name_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_toRightOf="@+id/ev_00_name_tv"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="输入营业执照名称"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:paddingRight="0dp"
+            android:singleLine="true"
+            android:textColor="@color/color_first_level"
+            android:textColorHint="@color/color_cccccc"
+            android:textSize="14sp" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/split_line_color" />
+
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/split_line_color" />
+
+
+    <TextView
+        android:id="@+id/next_tv"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/shape_bg_4_red"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/font_white"
+        android:textSize="@dimen/font_size_14" />
+
+
+</LinearLayout>

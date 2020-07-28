@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DevInfor>
-<SinaWeibo AppKey="1" AppSecret="1" ShareByAppClient="true" Enable="true" RedirectUrl="http://www.cloud.com官网地址" />
+<SinaWeibo AppKey="568898243" AppSecret="38a4f8204cc784f81f9f0daaf31e02e3" RedirectUrl="http://www.sharesdk.cn" />
 <TencentWeibo Enable="false" />
 <Douban Enable="false" />
-<QZone AppId="11" AppKey="11" ShareByAppClient="true" Enable="true" />
+<QZone AppId="100371282" AppKey="aed9b0303e3ed1e27bae87c33761161d" />
 <Renren Enable="false" />
 <KaiXin Enable="false" />
 <Facebook Enable="false" />
@@ -16,9 +16,9 @@
 <Tumblr Enable="false" />
 <Email Enable="false" />
 <ShortMessage Enable="false" />
-<Wechat AppId="1" AppSecret="1" userName="gh_1" path="pages/index/index" WithShareTicket="true" MiniprogramType="0" Enable="true" />
-<WechatMoments AppId="1" AppSecret="1" Enable="true" />
-<QQ AppId="1" AppKey="1" ShareByAppClient="true" Enable="true" />
+<Wechat AppId="wx4868b35061f87885" AppSecret="64020361b8ec4c99936c0e3999a9f249" userName="gh_afb25ac019c9" path="pages/index/index.html?id=1" WithShareTicket="true" MiniprogramType="2" />
+<WechatMoments AppId="wx4868b35061f87885" AppSecret="64020361b8ec4c99936c0e3999a9f249" />
+<QQ AppId="100371282" AppKey="aed9b0303e3ed1e27bae87c33761161d" />
 <Instapaper Enable="false" />
 <Pocket Enable="false" />
 <YouDao Enable="false" />
@@ -26,7 +26,7 @@
 <Flickr Enable="false" />
 <Dropbox Enable="false" />
 <VKontakte Enable="false" />
-<WechatFavorite Enable="false" />
+<WechatFavorite AppId="wx4868b35061f87885" AppSecret="64020361b8ec4c99936c0e3999a9f249" />
 <Yixin Enable="false" />
 <YixinMoments Enable="false" />
 <Mingdao Enable="false" />

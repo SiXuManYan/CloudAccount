@@ -352,7 +352,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".feature.order.details.personal.packages.PersonalPackageInfoActivity"
+            android:name=".feature.order.details.personal.packages.PersonalPackageInfoP9P10Activity"
             android:screenOrientation="portrait" />
 
 

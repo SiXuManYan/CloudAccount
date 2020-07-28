@@ -12,7 +12,10 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.ImageView
 import android.widget.LinearLayout
 import butterknife.OnClick
-import com.blankj.utilcode.util.*
+import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.SpanUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -30,6 +33,7 @@ import com.fatcloud.account.feature.account.login.LoginActivity
 import com.fatcloud.account.feature.forms.master.MasterNamingActivity
 import com.fatcloud.account.feature.forms.personal.bank.basic.FormPersonalBankBasicActivity
 import com.fatcloud.account.feature.product.detail.check.ProductCheckFragment
+import com.fatcloud.account.feature.product.detail.input.ProductInputFragment
 import com.fatcloud.account.feature.product.detail.sheet.ProductSheetFragment
 import com.fatcloud.account.feature.product.detail.spinners.ProductSpinnerFragment
 import com.fatcloud.account.feature.webs.WebCommonActivity
@@ -364,7 +368,6 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
                     )
                 }
             }
-
             Constants.P8 -> {
                 val prices = it.prices
                 if (prices.isNotEmpty()) {
@@ -375,6 +378,11 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
                             .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, prices[0].id)
                             .putExtra(Constants.PARAM_MOLD, Constants.P8)
                     )
+                }
+            }
+            Constants.P11 -> {
+                ProductInputFragment.newInstance(it).apply {
+                    show(supportFragmentManager, this.tag)
                 }
             }
             else -> {
