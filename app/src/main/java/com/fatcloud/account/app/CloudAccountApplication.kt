@@ -1,13 +1,20 @@
 package com.fatcloud.account.app
 
-import android.app.Activity
-import android.app.Application
+import android.annotation.TargetApi
+import android.app.*
 import android.content.Context
+import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.annotation.IdRes
+import androidx.core.app.NotificationCompat
 import androidx.multidex.MultiDex
+import com.alibaba.sdk.android.push.CloudPushService
+import com.alibaba.sdk.android.push.CommonCallback
+import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory
 import com.baidu.mobstat.StatService
 import com.baidu.ocr.sdk.OCR
 import com.baidu.ocr.sdk.OnResultListener
@@ -23,6 +30,7 @@ import com.fatcloud.account.common.CrashHandler
 import com.fatcloud.account.data.CloudDataBase
 import com.fatcloud.account.entity.commons.Commons
 import com.fatcloud.account.network.ApiService
+import com.fatcloud.account.pushs.NotificationUtil
 import com.fatcloud.account.view.dialog.LoadingDialog
 import com.fatcloud.account.view.swipe.smart.CommonSmartAnimRefreshHeaderView
 import com.fatcloud.account.view.swipe.smart.CommonSmartRefreshFooter
@@ -77,7 +85,9 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
         DataServiceFaker.startService(this, Constants.ACTION_SYNC)
         registerActivityLifecycleCallbacks(this)
         loadCommonData()
+        NotificationUtil.initCloudChannel(this)
     }
+
 
     private fun initEvent() {
         presenter.subsribeEvent(Consumer {
@@ -189,6 +199,7 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
 
 
     }
+
 
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> =

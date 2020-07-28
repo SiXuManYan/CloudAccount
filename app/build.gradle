@@ -40,6 +40,11 @@ android {
             }
         }
 
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'x86'
+        }
+
     }
 
     signingConfigs {
@@ -258,7 +263,11 @@ dependencies {
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 
     // 支付宝支付
-    implementation(name: 'alipaySdk-15.7.6-20200521195109', ext: 'aar')
+    implementation(name: 'alipaySdk-15.7.6-20200521195109', ext: 'aar') {
+        exclude module: 'jetified-alipaySdk-15.7.6-20200521195109-runtime'
+        exclude module: 'alicloud-android-utdid'
+        exclude module: 'jetified-alicloud-android-utdid-1.5.2'
+    }
 
     // 城市选择 https://github.com/crazyandcoder/citypicker
     implementation 'liji.library.dev:citypickerview:5.2.2'
@@ -272,6 +281,13 @@ dependencies {
 
     // 百度统计
     implementation 'com.baidu.mobstat:mtj-sdk-circle:latest.integration'
+
+    // 阿里云推送
+    implementation('com.aliyun.ams:alicloud-android-push:3.1.10') {
+        exclude module: 'jetified-alipaySdk-15.7.6-20200521195109-runtime'
+        exclude(module: 'alicloud-android-utdid')
+        exclude module: 'jetified-alicloud-android-utdid-1.5.2'
+    }
 
 }
 noArg {
