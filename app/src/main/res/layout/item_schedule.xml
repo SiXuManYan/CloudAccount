@@ -13,18 +13,19 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity=""
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="15dp"
+
         android:src="@drawable/ic_order_detail_progress_top" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_cv"
+        android:layout_marginLeft="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="15dp"
         android:foreground="?attr/selectableItemBackground"
         app:cardBackgroundColor="@color/font_white"
-        app:cardCornerRadius="12dp"
+        app:cardCornerRadius="8dp"
         app:cardElevation="1dp"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="false">
@@ -42,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_first_level"
-                android:textSize="@dimen/font_size_18"
+                android:textSize="@dimen/font_size_16"
                 android:textStyle="bold"
                 tools:text="企业营业执照办理" />
 
@@ -54,7 +55,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:textColor="@color/color_third_level"
-                android:textSize="@dimen/font_size_14"
+                android:textSize="@dimen/font_size_13"
                 tools:text="营业执照办结后可办理" />
 
             <TextView
@@ -73,12 +74,12 @@
                 android:layout_below="@+id/content_tv"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/shape_stock_gray_18"
-                android:paddingLeft="25dp"
+                android:paddingLeft="20dp"
                 android:visibility="invisible"
                 tools:visibility="visible"
-                android:paddingTop="10dp"
-                android:paddingRight="25dp"
-                android:paddingBottom="10dp"
+                android:paddingTop="8dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="8dp"
                 android:text="@string/view"
                 android:textColor="@color/color_first_level"
                 android:textSize="@dimen/font_size_12"

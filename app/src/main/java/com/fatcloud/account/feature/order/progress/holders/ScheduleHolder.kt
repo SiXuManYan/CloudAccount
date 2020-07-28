@@ -52,9 +52,19 @@ class ScheduleHolder(parent: ViewGroup?) : BaseItemViewHolder<BusinessProgress>(
             Constants.P10 -> {
                 handlePersonalProductP9P10(data)
             }
+            Constants.P11 -> {
+                handlePersonalProductP11(data)
+            }
             else -> handlePersonalProduct(data)
         }
     }
+
+
+    private fun handlePersonalProductP11(data: BusinessProgress) {
+        image_iv.visibility = View.GONE
+        look_detail_tv.visibility = View.INVISIBLE
+    }
+
 
     private fun handlePersonalProductP9P10(data: BusinessProgress) {
         when (data.code) {

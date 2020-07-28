@@ -73,7 +73,7 @@
                 android:maxLines="1"
                 android:textColor="@color/color_first_level"
                 android:textSize="@dimen/font_size_14"
-                tools:text="个人独资企业" />
+                tools:text="个体户税务核定" />
 
 
         </LinearLayout>
