@@ -6,6 +6,7 @@ apply plugin: 'kotlin-noarg'
 apply plugin: "kotlin-allopen"
 apply plugin: 'com.jakewharton.butterknife'
 apply from: './mob.gradle'
+//apply plugin: 'com.aliyun.ams.emas-services'
 
 static def releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
@@ -66,7 +67,7 @@ android {
             signingConfig signingConfigs.release
         }
         release {
-            debuggable false
+            debuggable true
             minifyEnabled false // 是否运行混淆
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
@@ -266,7 +267,7 @@ dependencies {
     implementation(name: 'alipaySdk-15.7.6-20200521195109', ext: 'aar') {
         exclude module: 'jetified-alipaySdk-15.7.6-20200521195109-runtime'
         exclude module: 'alicloud-android-utdid'
-        exclude module: 'jetified-alicloud-android-utdid-1.5.2'
+        exclude module: 'jetified-alicloud-android-utdid-2.5.1'
     }
 
     // 城市选择 https://github.com/crazyandcoder/citypicker
@@ -283,10 +284,37 @@ dependencies {
     implementation 'com.baidu.mobstat:mtj-sdk-circle:latest.integration'
 
     // 阿里云推送
-    implementation('com.aliyun.ams:alicloud-android-push:3.1.10') {
+
+/*    implementation('com.aliyun.ams:alicloud-android-push:3.1.11@aar') {
         exclude module: 'jetified-alipaySdk-15.7.6-20200521195109-runtime'
         exclude(module: 'alicloud-android-utdid')
-        exclude module: 'jetified-alicloud-android-utdid-1.5.2'
+        exclude module: 'jetified-alicloud-android-utdid-2.5.1'
+    }
+    implementation('com.aliyun.ams:alicloud-android-utdid:2.5.1-proguard') {
+        exclude module: 'jetified-alipaySdk-15.7.6-20200521195109-runtime'
+        exclude(module: 'alicloud-android-utdid')
+        exclude module: 'jetified-alicloud-android-utdid-2.5.1'
+    }
+    implementation('com.aliyun.ams:alicloud-android-utils:1.1.6.4') {
+        exclude module: 'jetified-alipaySdk-15.7.6-20200521195109-runtime'
+        exclude(module: 'alicloud-android-utdid')
+        exclude module: 'jetified-alicloud-android-utdid-2.5.1'
+    }
+    implementation('com.aliyun.ams:alicloud-android-ut:5.4.3') {
+        exclude module: 'jetified-alipaySdk-15.7.6-20200521195109-runtime'
+        exclude(module: 'alicloud-android-utdid')
+        exclude module: 'jetified-alicloud-android-utdid-2.5.1'
+    }
+    implementation('com.aliyun.ams:alicloud-android-beacon:1.0.4.3') {
+        exclude module: 'jetified-alipaySdk-15.7.6-20200521195109-runtime'
+        exclude(module: 'alicloud-android-utdid')
+        exclude module: 'jetified-alicloud-android-utdid-2.5.1'
+    }*/
+
+    implementation('com.aliyun.ams:alicloud-android-push:3.1.11') {
+        exclude module: 'jetified-alipaySdk-15.7.6-20200521195109-runtime'
+        exclude(module: 'alicloud-android-utdid')
+        exclude module: 'jetified-alicloud-android-utdid-2.5.1'
     }
 
 }

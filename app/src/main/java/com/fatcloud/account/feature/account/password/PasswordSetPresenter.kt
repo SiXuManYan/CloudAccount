@@ -54,7 +54,8 @@ class PasswordSetPresenter @Inject constructor(private var passwordSetView: Pass
                 "Android",
                 CommonUtils.getLocationInfo()[2],
                 CommonUtils.getLocationInfo()[4],
-                CommonUtils.getLocationInfo()[5]
+                CommonUtils.getLocationInfo()[5],
+                CommonUtils.getShareDefault().getString(Constants.SP_PUSH_DEVICE_ID)
             ),
             object : BaseHttpSubscriber<User>(passwordSetView) {
                 override fun onSuccess(data: User?) {

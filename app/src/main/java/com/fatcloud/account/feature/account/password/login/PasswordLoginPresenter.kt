@@ -24,13 +24,19 @@ class PasswordLoginPresenter @Inject constructor(private var view: PasswordLogin
     lateinit var database: CloudDataBase @Inject set
 
     fun passwordLogin(lifecycleOwner: LifecycleOwner, currentAccount: String, password: String) {
-        requestApi(lifecycleOwner, Lifecycle.Event.ON_DESTROY,
-            apiService.passwordLogin(currentAccount, password), object : BaseHttpSubscriber<User>(view) {
+        val deviceId = CommonUtils.getShareDefault().getString(Constants.SP_PUSH_DEVICE_ID)
+        requestApi(lifecycleOwner,
+            Lifecycle.Event.ON_DESTROY,
+            apiService.passwordLogin(currentAccount,
+                password,
+                deviceId
+            ),
+            object : BaseHttpSubscriber<User>(view) {
                 override fun onSuccess(data: User?) {
 
 
                     data?.let {
-                        loginSuccess(it,currentAccount)
+                        loginSuccess(it, currentAccount)
                         view.loginSuccess()
                     }
                 }

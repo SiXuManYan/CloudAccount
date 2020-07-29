@@ -89,7 +89,7 @@ class AppModule {
             }
 
             val bodyInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
-                Log.i("bodyInterceptor", it)
+                Log.w("bodyInterceptor", it)
             }).apply {
                 this.level = HttpLoggingInterceptor.Level.BODY
             }
@@ -97,7 +97,6 @@ class AppModule {
             builder.addInterceptor(loggingInterceptor)
             builder.addInterceptor(bodyInterceptor)
         }
-
 
 
         builder.protocols(Collections.singletonList(Protocol.HTTP_1_1))

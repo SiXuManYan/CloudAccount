@@ -109,7 +109,7 @@
         <!-- 是否开启错误日志统计，默认为false -->
         <meta-data
             android:name="BaiduMobAd_EXCEPTION_LOG"
-            android:value="false" />
+            android:value="true" />
 
         <!-- 日志仅在wifi网络下发送，默认为false -->
         <meta-data
@@ -134,10 +134,10 @@
         <!-- 阿里云推送 -->
         <meta-data
             android:name="com.alibaba.app.appkey"
-            android:value="30278799" />
+            android:value="30440830" />
         <meta-data
             android:name="com.alibaba.app.appsecret"
-            android:value="7eaab5d3c2f623690ebc9ed70c2e25e3" />
+            android:value="e36353e26dbc25f5fd9e01650eb854b0" />
 
         <activity
             android:name=".feature.splash.SplashActivity"
@@ -364,11 +364,44 @@
             android:name=".feature.order.details.personal.packages.PersonalPackageInfoP9P10Activity"
             android:screenOrientation="portrait" />
 
-<!--        &lt;!&ndash; 消息接收监听器 （用户可自主扩展） &ndash;&gt;
-        &lt;!&ndash; 为保证receiver安全，建议设置不可导出，如需对其他应用开放可通过android：permission进行限制 &ndash;&gt;
+        <!--        &lt;!&ndash; 消息接收监听器 （用户可自主扩展） &ndash;&gt;
+                &lt;!&ndash; 为保证receiver安全，建议设置不可导出，如需对其他应用开放可通过android：permission进行限制 &ndash;&gt;
+                <receiver
+                    android:name=".pushs.PushReceiver"
+                    android:exported="false">
+                    <intent-filter>
+                        <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED" />
+                    </intent-filter>
+                    <intent-filter>
+                        <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED" />
+                    </intent-filter>
+                    <intent-filter>
+                        <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
+                    </intent-filter>
+                </receiver>-->
+
+
+<!--        <service
+            android:name=".pushs.PushIntentService"
+            android:exported="false">
+            <intent-filter> 
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED" />
+            </intent-filter>
+            <intent-filter>     
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
+            </intent-filter>
+
+
+        </service>-->
+
+
         <receiver
             android:name=".pushs.PushReceiver"
             android:exported="false">
+
             <intent-filter>
                 <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED" />
             </intent-filter>
@@ -378,10 +411,11 @@
             <intent-filter>
                 <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
             </intent-filter>
-        </receiver>-->
 
 
-        <service android:name=".pushs.PushIntentService" />
+        </receiver>
+
+
     </application>
 
 </manifest>

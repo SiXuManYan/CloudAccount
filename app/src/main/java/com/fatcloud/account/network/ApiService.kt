@@ -1,5 +1,6 @@
 package com.fatcloud.account.network
 
+import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.commons.Commons
 import com.fatcloud.account.entity.defray.AliPayInfo
@@ -175,7 +176,9 @@ interface ApiService {
         @Query("from") from: String?,
         @Query("cityCode") cityCode: String?,
         @Query("lng") lng: String?,
-        @Query("lat") lat: String?
+        @Query("lat") lat: String?,
+        @Query("deviceId") deviceId: String? ,
+        @Query("platform") platform: String? = Constants.FROM_TYPE_ANDROID
     ): Flowable<Response<User>>
 
     /**
@@ -185,7 +188,9 @@ interface ApiService {
     @POST("$T_ACCOUNT_API/login")
     fun passwordLogin(
         @Query("username") username: String?,
-        @Query("passwd") passwd: String?
+        @Query("passwd") passwd: String?,
+        @Query("deviceId") deviceId: String? ,
+        @Query("platform") platform: String? = Constants.FROM_TYPE_ANDROID
     ): Flowable<Response<User>>
 
 
@@ -507,7 +512,9 @@ interface ApiService {
         @Field("phone") phone: String?,
         @Field("city") city: String?,
         @Field("lat") lat: String?,
-        @Field("lng") lng: String?
+        @Field("lng") lng: String?,
+        @Query("deviceId") deviceId: String? ,
+        @Query("platform") platform: String? = Constants.FROM_TYPE_ANDROID
     ): Flowable<Response<User>>
 
 

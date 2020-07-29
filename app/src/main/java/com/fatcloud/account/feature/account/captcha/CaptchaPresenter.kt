@@ -127,7 +127,8 @@ class CaptchaPresenter @Inject constructor(private var captchaView: CaptchaView)
                 account,
                 "1000",
                 "0",
-                "0"
+                "0",
+                CommonUtils.getShareDefault().getString(Constants.SP_PUSH_DEVICE_ID)
             ),
 
             object : BaseHttpSubscriber<User>(captchaView) {

@@ -19,8 +19,8 @@ class DataServiceFaker {
          * @see Worker
          */
         fun startService(context: Context, action: Int, data: Data? = null) {
-            WorkManager.getInstance(Utils.getApp()).enqueue(
-                OneTimeWorkRequest.Builder(DataWork::class.java)
+            WorkManager.getInstance(Utils.getApp())
+                .enqueue(OneTimeWorkRequest.Builder(DataWork::class.java)
                     .setInputData(Data.Builder().putInt(Constants.ACTION_DATA_WORK, action).apply {
                         data?.let {
                             putAll(it)

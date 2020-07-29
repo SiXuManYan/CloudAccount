@@ -29,6 +29,9 @@ buildscript {
 //        // 百度统计
 //        classpath 'com.baidu.mobstat:mtj-circle-plugin:1.4.0'
 
+        // 添加emas-services插件
+//        classpath 'com.aliyun.ams:emas-services:1.0.1'
+
     }
 }
 

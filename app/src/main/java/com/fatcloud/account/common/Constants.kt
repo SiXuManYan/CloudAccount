@@ -3,6 +3,9 @@ package com.fatcloud.account.common
 object Constants {
 
 
+    const val FROM_TYPE_ANDROID = "F1"
+
+
     const val PR_DEFAULT = "cloud"
     const val PR_LOCATION = "location"
 
@@ -26,6 +29,7 @@ object Constants {
     const val SP_AUTO_PLAY_VIDEO = "sp_auto_play_video"// 是否自动播放视频
     const val SP_IS_SHOW_USER_AGREEMENT = "sp_is_show_user_agreement"// 是否展示过用户协议
     const val SP_OCR_ACCESS_TOKEN = "sp_ocr_access_token"// ocr access token
+    const val SP_PUSH_DEVICE_ID = "sp_push_device_id"
 
     const val PARAM_INDEX = "param_index"
     const val PARAM_LIST = "param_list"
