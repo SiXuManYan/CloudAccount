@@ -24,6 +24,7 @@ import com.fatcloud.account.extend.RoundTransFormation
 import com.fatcloud.account.feature.about.AboutActivity
 import com.fatcloud.account.feature.account.login.LoginActivity
 import com.fatcloud.account.feature.matisse.Matisse
+import com.fatcloud.account.feature.message.MessageActivity
 import com.fatcloud.account.feature.order.lists.OrderListActivity
 import com.fatcloud.account.view.dialog.AlertDialog
 import com.fatcloud.account.view.dialog.InputDialog
@@ -40,6 +41,9 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
     init {
         needMenuControl = true
     }
+
+    private var isRequest = false
+    private var lastRequestTime: Long = 0L
 
     override fun showLoading() = showLoadingDialog()
 
@@ -85,16 +89,35 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
+
         if (isVisibleToUser) {
             if (isViewCreated) {
                 CommonUtils.getFriendlyTime(time_tv)
+
+                requestNewsUnreadCount()
+
             }
+
+
+        }
+
+
+    }
+
+    private fun requestNewsUnreadCount() {
+        if (!isRequest && System.currentTimeMillis() - lastRequestTime >= 1000 * 2) {
+
+            isRequest = true
+            lastRequestTime = System.currentTimeMillis()
+            presenter.getNewsUnreadCount(this)
+            isRequest = false
         }
     }
 
 
     override fun loadOnVisible() {
         loginInit()
+        requestNewsUnreadCount()
     }
 
     private fun loginInit() {
@@ -215,7 +238,8 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
         R.id.ic_avatar_civ,
         R.id.order_rl,
         R.id.about_rl,
-        R.id.name_tv
+        R.id.name_tv,
+        R.id.message_rl
 
     )
     fun onClick(view: View) {
@@ -255,6 +279,9 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
                 startActivity(AboutActivity::class.java)
             }
 
+            R.id.message_rl -> {
+                startActivityAfterLogin(MessageActivity::class.java)
+            }
             else -> {
             }
         }
@@ -294,6 +321,15 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
 
     override fun updateAvatarAndNicknameSuccess() {
         ToastUtils.showShort("更新成功")
+    }
+
+    override fun updateMessageUnReadNumber(messageUnReadNumber: Long) {
+        if (messageUnReadNumber > 0) {
+            message_unread_fl.visibility = View.VISIBLE
+        } else {
+            message_unread_fl.visibility = View.GONE
+        }
+        message_unread_number_tv.text = messageUnReadNumber.toString()
     }
 
 

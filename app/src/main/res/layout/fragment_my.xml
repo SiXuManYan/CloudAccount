@@ -129,10 +129,11 @@
 
                 <ImageView
                     android:id="@+id/order_tag_iv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
+                    android:scaleType="centerInside"
                     android:src="@drawable/ic_my_order" />
 
                 <TextView
@@ -184,10 +185,11 @@
 
                 <ImageView
                     android:id="@+id/income_tag_iv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
+                    android:scaleType="centerInside"
                     android:src="@drawable/ic_my_income" />
 
                 <TextView
@@ -231,10 +233,11 @@
 
                 <ImageView
                     android:id="@+id/qr_tag_iv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
+                    android:scaleType="centerInside"
                     android:src="@drawable/ic_my_qr" />
 
                 <TextView
@@ -267,6 +270,81 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/message_rl"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <ImageView
+                    android:id="@+id/message_tag_iv"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_my_message" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/message_tag_iv"
+                    android:text="我的消息"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_14" />
+
+
+                <ImageView
+                    android:id="@+id/message_tag_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_right_gray" />
+
+                <FrameLayout
+                    android:id="@+id/message_unread_fl"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_toLeftOf="@+id/message_tag_tv"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/message_point_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/shape_point_red" />
+
+                    <TextView
+                        android:id="@+id/message_unread_number_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:maxLines="1"
+                        android:textColor="@color/font_white"
+                        android:textSize="@dimen/font_size_10"
+                        tools:text="11" />
+
+                </FrameLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/color_list_gray_background" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
                 android:id="@+id/spread_rl"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -278,10 +356,11 @@
 
                 <ImageView
                     android:id="@+id/money_tag_iv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
+                    android:scaleType="centerInside"
                     android:src="@drawable/ic_my_money" />
 
                 <TextView
@@ -334,10 +413,11 @@
 
                 <ImageView
                     android:id="@+id/about_tag_iv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
+                    android:scaleType="centerInside"
                     android:src="@drawable/ic_my_about" />
 
                 <TextView

@@ -4,5 +4,6 @@ import com.fatcloud.account.base.common.BaseTaskView
 
 interface MyPageView :BaseTaskView{
     fun updateAvatarAndNicknameSuccess()
+    fun updateMessageUnReadNumber(messageUnReadNumber: Long)
 
 }

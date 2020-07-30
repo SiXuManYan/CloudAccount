@@ -5,25 +5,26 @@ package com.fatcloud.account.entity.pushs
  *
  */
 class PushOrder {
+
     // 订单ID
-    private val orderId: Long? = null
+    val orderId: String = ""
 
     // 订单号
-    private val orderNo: String? = null
+    val orderNo: String= ""
 
     // 订单流程ID
-    private val orderWorkId: Long? = null
+    val orderWorkId: String = ""
 
     // 订单流程code
-    private val productWorkCode: String? = null
+    val productWorkCode: String= ""
 
     // 订单流程名称
-    private val productWorkName: String? = null
+    val productWorkName: String= ""
 
     // 订单流程状态code
-    private val orderWorkStateCode: String? = null
+    val orderWorkStateCode: String= ""
 
     // 订单流程状态名称
-    private val orderWorkStateName: String? = null
+    val orderWorkStateName: String= ""
 
 }

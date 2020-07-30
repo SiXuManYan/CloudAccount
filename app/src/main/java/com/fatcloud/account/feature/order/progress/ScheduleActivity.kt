@@ -35,10 +35,6 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
 
     var orderId: String? = ""
 
-    /**
-     * @see Order.mold
-     */
-    var mold: String? = ""
 
     override fun getMainTitle(): Int? {
         return R.string.business_progress_title
@@ -74,7 +70,6 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
             return
         }
         orderId = intent.extras!!.getString(Constants.PARAM_ORDER_ID)
-        mold = intent.extras!!.getString(Constants.PARAM_MOLD)
         loadDetailData()
     }
 

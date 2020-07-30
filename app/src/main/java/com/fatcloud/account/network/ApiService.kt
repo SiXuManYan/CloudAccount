@@ -7,6 +7,7 @@ import com.fatcloud.account.entity.defray.AliPayInfo
 import com.fatcloud.account.entity.defray.WechatPayInfo
 import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.entity.home.HomeMix
+import com.fatcloud.account.entity.message.Message
 import com.fatcloud.account.entity.news.NewDetail
 import com.fatcloud.account.entity.news.News
 import com.fatcloud.account.entity.news.NewsCategory
@@ -177,7 +178,7 @@ interface ApiService {
         @Query("cityCode") cityCode: String?,
         @Query("lng") lng: String?,
         @Query("lat") lat: String?,
-        @Query("deviceId") deviceId: String? ,
+        @Query("deviceId") deviceId: String?,
         @Query("platform") platform: String? = Constants.FROM_TYPE_ANDROID
     ): Flowable<Response<User>>
 
@@ -189,7 +190,7 @@ interface ApiService {
     fun passwordLogin(
         @Query("username") username: String?,
         @Query("passwd") passwd: String?,
-        @Query("deviceId") deviceId: String? ,
+        @Query("deviceId") deviceId: String?,
         @Query("platform") platform: String? = Constants.FROM_TYPE_ANDROID
     ): Flowable<Response<User>>
 
@@ -513,7 +514,7 @@ interface ApiService {
         @Field("city") city: String?,
         @Field("lat") lat: String?,
         @Field("lng") lng: String?,
-        @Query("deviceId") deviceId: String? ,
+        @Query("deviceId") deviceId: String?,
         @Query("platform") platform: String? = Constants.FROM_TYPE_ANDROID
     ): Flowable<Response<User>>
 
@@ -618,11 +619,28 @@ interface ApiService {
     /**
      *  P11增加个体户税务核定
      *
+     *
      */
     @POST("$ORDER_API/addSelfemployedTaxAssess")
     fun addEmployedTaxAssessmentP11(
         @Body `in`: JsonObject? = null
     ): Flowable<Response<PreparePay>>
 
+
+    /**
+     * 获取消息未读数量
+     */
+    @GET("$API_ACCOUNT_URI/tNotice/count")
+    fun getNewsUnreadCount(): Flowable<Response<JsonElement>>
+
+
+    /**
+     * 消息列表
+     */
+    @GET("$API_ACCOUNT_URI/tNotice/")
+    fun getMessageList(
+        @Query("pageSize") pageSize: Int,
+        @Query("tailId") tailId: String? = null
+    ): Flowable<Response<JsonArray>>
 
 }

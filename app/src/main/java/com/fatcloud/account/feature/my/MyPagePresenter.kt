@@ -63,6 +63,29 @@ class MyPagePresenter @Inject constructor(private val view: MyPageView) : BasePr
     }
 
 
+    /**
+     * 退出登录
+     */
+    fun getNewsUnreadCount(lifecycleOwner: LifecycleOwner) {
+        if (!User.isLogon()) {
+            return
+        }
+        requestApi(lifecycleOwner, Lifecycle.Event.ON_DESTROY, apiService.getNewsUnreadCount(), object : BaseHttpSubscriber<JsonElement>(view) {
+            override fun onSuccess(data: JsonElement?) {
+                if (data == null) {
+                    return
+                }
+
+                if (data.isJsonPrimitive) {
+                    val messageUnReadNumber = data.asLong
+                    view.updateMessageUnReadNumber(messageUnReadNumber)
+
+                }
+            }
+        })
+    }
+
+
     private fun removeUserInfo() {
         // 清空用户信息
         database.userDao().clear()

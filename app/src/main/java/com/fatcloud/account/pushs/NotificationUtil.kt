@@ -18,8 +18,15 @@ import com.blankj.utilcode.util.LogUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.entity.pushs.PushModel
+import com.fatcloud.account.entity.pushs.PushNews
+import com.fatcloud.account.entity.pushs.PushOrder
 import com.fatcloud.account.entity.users.User
+import com.fatcloud.account.feature.MainActivity
 import com.fatcloud.account.feature.account.login.LoginActivity
+import com.fatcloud.account.feature.news.detail.NewsDetailActivity
+import com.fatcloud.account.feature.order.progress.ScheduleActivity
+import com.google.gson.Gson
 
 /**
  * Created by Wangsw on 2020/7/28 0028 14:31.
@@ -36,14 +43,24 @@ object NotificationUtil {
     private var nativeNotifyId = 0
 
 
-    private const val CHANNEL_ID_SYSTEM = "channel_id_system"
-    private const val CHANNEL_NAME_SYSTEM = "系统消息通知"
+    private const val CHANNEL_ID_ORDER = "channel_id_order"
+    private const val CHANNEL_NAME_ORDER = "订单相关通知"
 
-    private const val CHANNEL_ID_INTERACTION = "CHANNEL_ID_INTERACTION"
-    private const val CHANNEL_NAME_INTERACTION = "社区互动通知"
+    private const val CHANNEL_ID_NEWS = "channel_id_news"
+    private const val CHANNEL_NAME_NEWS = "资讯相关通知"
+
+    private const val CHANNEL_ID_SHARE = "channel_id_share"
+    private const val CHANNEL_NAME_SHARE = "分享相关通知"
 
     private const val CHANNEL_ID_OTHER = "channel_id_other"
     private const val CHANNEL_NAME_OTHER = "其他通知"
+
+    // extra map
+    private const val pushType = "pushType"
+    private const val news = "news"
+    private const val order = "order"
+    private const val ALIYUN_NOTIFICATION_ID = "_ALIYUN_NOTIFICATION_ID_"
+    private const val ALIYUN_NOTIFICATION_PRIORITY = "_ALIYUN_NOTIFICATION_PRIORITY_"
 
 
     fun initCloudChannel(applicationContext: Context) {
@@ -74,56 +91,94 @@ object NotificationUtil {
     }
 
 
+    fun handlePush(context: Context, title: String, summary: String, extraMap: MutableMap<String, String>) {
 
-    fun handlePush(context: Context, forPenetratePush: Boolean) {
 
-        var notifyTitle: String? = ""
-        var notifyMessage: String? = ""
+        if (!extraMap.containsKey(pushType)) {
+            return
+        }
+
+
+        val notifyTitle: String? = title
+        val notifyMessage: String? = summary
+
         var notifyId: Long = 0
         var notifyIntent: Intent? = null
 
         var defChannelId = CHANNEL_ID_OTHER
         var defChannelName = CHANNEL_NAME_OTHER
 
-        try {
-//            val jsonObject = JSONObject(model.data)
-//            val gson = Gson()
-//            val notificationModel = gson.fromJson<NotificationModel>(jsonObject.toString(), NotificationModel::class.java) ?: return
 
-//            notifyId = notificationModel.id
-//            val dataid = notificationModel.dataid
-//
-//            notifyTitle = notificationModel.title
-//            notifyMessage = notificationModel.message
-//
-//            when (notificationModel.type) {
-//                2 -> {
-//
-//                    notifyIntent = Intent(context,ScheduleActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                }
-//
-//                else -> {
-//                }
-//            }
+        val gson = Gson()
+
+
+        try {
+
+            if (extraMap.containsKey(ALIYUN_NOTIFICATION_ID)) {
+                notifyId = extraMap[ALIYUN_NOTIFICATION_ID]!!.toLong()
+            }
+
+
+            when (extraMap[pushType]) {
+
+                PushModel.PUSH_TYPE_ORDER -> {
+
+                    defChannelId = CHANNEL_ID_ORDER
+                    defChannelName = CHANNEL_NAME_ORDER
+
+                    if (extraMap.containsKey(order)) {
+                        val jsonStr = extraMap[order]
+                        val pushOrder = gson.fromJson(jsonStr, PushOrder::class.java) ?: return
+
+                        notifyIntent = Intent(context, ScheduleActivity::class.java)
+                            .putExtra(Constants.PARAM_ORDER_ID, pushOrder.orderId)
+                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    } else {
+                        return
+                    }
+
+                }
+                PushModel.PUSH_TYPE_NEWS -> {
+
+                    defChannelId = CHANNEL_ID_NEWS
+                    defChannelName = CHANNEL_NAME_NEWS
+
+                    if (extraMap.containsKey(news)) {
+                        val newsJsonString = extraMap[news]
+                        val pushNews = gson.fromJson(newsJsonString, PushNews::class.java) ?: return
+
+                        notifyIntent = Intent(context, NewsDetailActivity::class.java)
+                            .putExtra(Constants.PARAM_ID, pushNews.newsId)
+                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    } else {
+                        return
+                    }
+
+                }
+                PushModel.PUSH_TYPE_DISTRIBUTION -> {
+                    defChannelId = CHANNEL_ID_SHARE
+                    defChannelName = CHANNEL_NAME_SHARE
+
+                }
+
+                else -> {
+                    notifyIntent = Intent(context, MainActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                }
+            }
+
             if (!User.isLogon()) {
                 context.startActivity(Intent(context.applicationContext, LoginActivity::class.java))
                 return
             }
 
             notifyIntent?.let {
-
-                if (forPenetratePush) {
-                    // 处理透传消息，直接跳转至目标页面
-                    context.startActivity(it)
-                } else {
-                    showNotification(context, it, defChannelId, defChannelName, notifyTitle, notifyMessage, notifyId)
-                }
+                showNotification(context, it, defChannelId, defChannelName, notifyTitle, notifyMessage, notifyId)
             }
+
         } catch (e: Exception) {
             Log.e("getui", "json 解析失败 exception :$e")
         }
     }
-
 
 
     /**
@@ -136,9 +191,9 @@ object NotificationUtil {
      * @param channelName 通知渠道说明（用户可见）
      * @param title
      * @param contentText
-     * @param notifyId    通知类型（1.系统Device type does not match with app type通知 2.顾客消费通知 3.收到的评论/赞/@ 4.打款成功通知 5.加入门店申请）
+     * @param notifyId    通知类型
      */
-    fun showNotification(
+    private fun showNotification(
         context: Context,
         intent: Intent,
         channelId: String,

@@ -54,6 +54,8 @@ import com.fatcloud.account.feature.forms.personal.packages.FormPersonalPackageP
 import com.fatcloud.account.feature.forms.personal.packages.FormPersonalPackageP9P10Module
 import com.fatcloud.account.feature.forms.personal.tax.FormTaxRegistrationPersonalActivity
 import com.fatcloud.account.feature.forms.personal.tax.FormTaxRegistrationPersonalModule
+import com.fatcloud.account.feature.message.MessageActivity
+import com.fatcloud.account.feature.message.MessageModule
 import com.fatcloud.account.feature.news.detail.NewsDetailActivity
 import com.fatcloud.account.feature.news.detail.NewsDetailModule
 import com.fatcloud.account.feature.order.details.bookkeeping.BookkeepingInfoActivity
@@ -275,6 +277,10 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [FragmentBindModule::class, PersonalPackageInfoP9P10Module::class])
     abstract fun personalPackageInfoActivityInjector(): PersonalPackageInfoP9P10Activity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [MessageModule::class])
+    abstract fun messageActivityInjector(): MessageActivity
 
 
 }

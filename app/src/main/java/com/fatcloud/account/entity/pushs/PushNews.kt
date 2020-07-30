@@ -6,11 +6,11 @@ package com.fatcloud.account.entity.pushs
  */
 class PushNews {
     // 新闻ID
-    private val newsId: Long? = null
+    val newsId: String = ""
 
     // 新闻内容
-    private val newsContent: String? = null
+    val newsContent: String = ""
 
     // 新闻URL
-    private val newsUrl: String? = null
+    val newsUrl: String = ""
 }

@@ -14,7 +14,6 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.order.persional.Order
 import com.fatcloud.account.event.entity.BankFormCommitSuccessEvent
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
-import com.fatcloud.account.event.entity.RefreshOrderEvent
 import com.fatcloud.account.feature.defray.PayActivity
 import com.fatcloud.account.feature.order.lists.holders.OrderListHolder
 import com.fatcloud.account.feature.order.progress.ScheduleActivity
@@ -22,7 +21,6 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import com.jude.easyrecyclerview.decoration.DividerDecoration
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.item_order.*
 
 /**
  * Created by Wangsw on 2020/6/3 0003 17:42.
@@ -113,7 +111,6 @@ class OrderListActivity : BaseRefreshListActivity<Order, OrderListPresenter>(), 
                         startActivity(
                             Intent(this@OrderListActivity, ScheduleActivity::class.java)
                                 .putExtra(Constants.PARAM_ORDER_ID, model.id)
-                                .putExtra(Constants.PARAM_MOLD, model.mold)
                         )
                     }
 

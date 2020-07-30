@@ -199,5 +199,6 @@
     <string name="input_format">请输入%1$s</string>
     <string name="employees_number">从业人数</string>
 
+    <string name="message_title">我的消息</string>
 
 </resources>

@@ -392,6 +392,15 @@ object Constants {
     /** 老用户，微信直接登陆 */
     const val L1 = "L1"
 
+    /** 新闻推送 */
+    const val NOTICE1 = "NOTICE1"
+
+    /** 订单推送 */
+    const val NOTICE2 = "NOTICE2"
+
+    /** 分销推送 */
+    const val NOTICE3 = "NOTICE3"
+
     const val REQUEST_CODE_CAMERA = 102
 
 

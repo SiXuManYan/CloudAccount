@@ -49,6 +49,11 @@ class NewsDetailActivity : BaseMVPActivity<NewsDetailPresenter>(), NewsDetailVie
     override fun initViews() {
         initView()
         newsId = intent.getStringExtra(Constants.PARAM_ID)
+        if (newsId.isNullOrBlank()) {
+            return
+        }
+
+
         presenter.getNewsDetail(this, newsId)
     }
 
