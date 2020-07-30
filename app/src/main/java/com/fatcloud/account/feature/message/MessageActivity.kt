@@ -23,7 +23,6 @@ class MessageActivity : BaseRefreshListActivity<Message, MessagePresenter>(), Me
     override fun getMainTitle(): Int? = R.string.message_title
 
     override fun initViews() {
-        disableLoadMoreView = true
         super.initViews()
         parent_container.setBackgroundColor(ColorUtils.getColor(R.color.color_list_gray_background))
         recyclerView.setBackgroundColor(ColorUtils.getColor(R.color.color_list_gray_background))
