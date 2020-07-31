@@ -64,7 +64,27 @@ class ShareFragment : BaseBottomSheetDialogFragment<SharePresenter>(), ShareView
 
             }
             R.id.moment_ll -> {
+                ShareUtil.shareWebpagerMoment(
+                    "测试标题",
+                    "https://ftacloud-bucket-public.oss-cn-qingdao.aliyuncs.com/product/web-2020710925369952208-app-p8-00-logo.png",
+                    null,
+                    null,
+                    "https://www.github.com",
 
+                    object : PlatformActionListener {
+                        override fun onComplete(p0: Platform?, p1: Int, p2: HashMap<String, Any>?) {
+                            ToastUtils.showShort("分享成功")
+                        }
+
+                        override fun onCancel(p0: Platform?, p1: Int) {
+                            ToastUtils.showShort("分享取消")
+                        }
+
+                        override fun onError(p0: Platform?, p1: Int, p2: Throwable?) {
+                            ToastUtils.showShort("分享失败")
+                        }
+
+                    })
             }
             R.id.qq_ll -> {
 
