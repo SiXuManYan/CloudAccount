@@ -11,4 +11,5 @@ interface BaseView {
      * @param message  错误信息
      */
     fun showError(code: Int, message: String)
+
 }

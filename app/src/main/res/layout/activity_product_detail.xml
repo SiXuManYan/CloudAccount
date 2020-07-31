@@ -204,8 +204,9 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_share"
-            android:visibility="invisible" />
+            android:src="@drawable/ic_detail_more" />
+
+
     </RelativeLayout>
 
     <include layout="@layout/layout_bottom_action" />

@@ -2,15 +2,17 @@ package com.fatcloud.account.feature.product.detail
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.ImageView
-import android.widget.LinearLayout
+import android.view.WindowManager
+import android.widget.*
 import butterknife.OnClick
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ScreenUtils
@@ -32,8 +34,10 @@ import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.account.login.LoginActivity
 import com.fatcloud.account.feature.forms.master.MasterNamingActivity
 import com.fatcloud.account.feature.forms.personal.bank.basic.FormPersonalBankBasicActivity
+import com.fatcloud.account.feature.message.MessageActivity
 import com.fatcloud.account.feature.product.detail.check.ProductCheckFragment
 import com.fatcloud.account.feature.product.detail.input.ProductInputFragment
+import com.fatcloud.account.feature.product.detail.share.ShareFragment
 import com.fatcloud.account.feature.product.detail.sheet.ProductSheetFragment
 import com.fatcloud.account.feature.product.detail.spinners.ProductSpinnerFragment
 import com.fatcloud.account.feature.webs.WebCommonActivity
@@ -51,8 +55,8 @@ import kotlinx.android.synthetic.main.layout_bottom_action.*
 class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), ProductDetailView {
 
     private var mData: ProductDetail? = null
-    private var mProductId = "0"
-
+    private var mProductId = ""
+    private var unReadNumber: Long = 0
 
     override fun getLayoutId() = R.layout.activity_product_detail
 
@@ -158,6 +162,7 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
 
 
         presenter.getDetail(this, mProductId)
+        presenter.getNewsUnreadCount(this)
     }
 
 
@@ -298,7 +303,8 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
         R.id.back_iv,
         R.id.title_rl,
         R.id.bottom_left_tv,
-        R.id.bottom_right_tv
+        R.id.bottom_right_tv,
+        R.id.share_iv
     )
     fun click(view: View) {
         when (view.id) {
@@ -318,6 +324,10 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
                     handleNext(it)
                 }
             }
+            R.id.share_iv -> {
+                val showTipPopupWindow = showTipPopupWindow()
+            }
+
             else -> {
             }
         }
@@ -391,5 +401,49 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
 
     }
 
+
+    fun showTipPopupWindow(): PopupWindow? {
+
+        val contentView = LayoutInflater.from(context).inflate(R.layout.layout_view_pop, null)
+        contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+
+        val message_unread_fl = contentView.findViewById<FrameLayout>(R.id.message_unread_fl)
+        val message_unread_number_tv = contentView.findViewById<TextView>(R.id.message_unread_number_tv)
+
+        val message_ll = contentView.findViewById<LinearLayout>(R.id.message_l)
+        val share_ll = contentView.findViewById<LinearLayout>(R.id.shar_l)
+
+
+        if (unReadNumber > 0L) {
+            message_unread_fl.visibility = View.VISIBLE
+            message_unread_number_tv.setText(unReadNumber.toString())
+        } else {
+            message_unread_fl.visibility = View.GONE
+        }
+
+        message_ll.setOnClickListener {
+            startActivity(MessageActivity::class.java)
+        }
+
+        share_ll.setOnClickListener {
+            ShareFragment().apply {
+                show(supportFragmentManager, this.tag)
+            }
+        }
+
+        val popupWindow = PopupWindow(contentView, contentView.measuredWidth, contentView.measuredHeight, false).apply {
+            isOutsideTouchable = true
+            inputMethodMode = PopupWindow.INPUT_METHOD_NEEDED
+            softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+            setBackgroundDrawable(ColorDrawable())
+            showAsDropDown(share_iv)
+        }
+        return popupWindow
+    }
+
+
+    override fun updateMessageUnReadNumber(messageUnReadNumber: Long) {
+        unReadNumber = messageUnReadNumber
+    }
 
 }

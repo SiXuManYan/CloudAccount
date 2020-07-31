@@ -18,6 +18,8 @@ import com.fatcloud.account.feature.product.detail.check.ProductCheckFragment
 import com.fatcloud.account.feature.product.detail.check.ProductCheckModule
 import com.fatcloud.account.feature.product.detail.input.ProductInputFragment
 import com.fatcloud.account.feature.product.detail.input.ProductInputModule
+import com.fatcloud.account.feature.product.detail.share.ShareFragment
+import com.fatcloud.account.feature.product.detail.share.ShareModule
 import com.fatcloud.account.feature.product.detail.sheet.ProductSheetFragment
 import com.fatcloud.account.feature.product.detail.sheet.ProductSheetModule
 import com.fatcloud.account.feature.product.detail.spinners.ProductSpinnerFragment
@@ -83,12 +85,13 @@ abstract class FragmentBindModule {
     abstract fun productCheckFragmentInjector(): ProductCheckFragment
 
 
-
     @FragmentScope
     @ContributesAndroidInjector(modules = [ProductInputModule::class])
     abstract fun productInputFragmentInjector(): ProductInputFragment
 
-
+    @FragmentScope
+    @ContributesAndroidInjector(modules = [ShareModule::class])
+    abstract fun shareFragmentInjector(): ShareFragment
 
 
 }

@@ -18,6 +18,7 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.feature.MainActivity
 import com.fatcloud.account.feature.webs.WebCommonActivity
 import com.fatcloud.account.view.dialog.ActionAlertDialog
+import com.mob.MobSDK
 import kotlinx.android.synthetic.main.activity_splash.*
 
 /**
@@ -123,6 +124,8 @@ class SplashActivity : BaseActivity() {
                 .create()
                 .show()
 
+            // mob sdk 用户隐私
+            MobSDK.submitPolicyGrantResult(true, null)
         }
     }
 

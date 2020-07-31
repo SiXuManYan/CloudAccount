@@ -5,6 +5,8 @@ import androidx.lifecycle.LifecycleOwner
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
 import com.fatcloud.account.entity.product.ProductDetail
+import com.fatcloud.account.entity.users.User
+import com.google.gson.JsonElement
 import javax.inject.Inject
 
 /**
@@ -31,6 +33,27 @@ class ProductDetailPresenter @Inject constructor(private var productView: Produc
             })
 
     }
+
+
+    fun getNewsUnreadCount(lifecycleOwner: LifecycleOwner) {
+        if (!User.isLogon()) {
+            return
+        }
+        requestApi(lifecycleOwner, Lifecycle.Event.ON_DESTROY, apiService.getNewsUnreadCount(), object : BaseHttpSubscriber<JsonElement>(productView) {
+            override fun onSuccess(data: JsonElement?) {
+                if (data == null) {
+                    return
+                }
+
+                if (data.isJsonPrimitive) {
+                    val messageUnReadNumber = data.asLong
+                    productView.updateMessageUnReadNumber(messageUnReadNumber)
+
+                }
+            }
+        })
+    }
+
 
 
 }

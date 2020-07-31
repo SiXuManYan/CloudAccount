@@ -64,7 +64,7 @@ class MyPagePresenter @Inject constructor(private val view: MyPageView) : BasePr
 
 
     /**
-     * 退出登录
+     * 消息未读数量
      */
     fun getNewsUnreadCount(lifecycleOwner: LifecycleOwner) {
         if (!User.isLogon()) {

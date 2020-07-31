@@ -10,6 +10,6 @@ import com.fatcloud.account.entity.product.ProductDetail
  */
 interface ProductDetailView :BaseTaskView{
     fun bindDetailData(data: ProductDetail)
-
+    fun updateMessageUnReadNumber(messageUnReadNumber: Long)
 
 }
