@@ -20,8 +20,8 @@ import com.fatcloud.account.feature.forms.personal.change.FormLicenseChangeActiv
 import com.fatcloud.account.feature.forms.personal.change.FormLicenseChangeActivity.Companion.TYPE_CHANGE_NAME
 import com.fatcloud.account.feature.forms.personal.change.FormLicenseChangeActivity.Companion.TYPE_CHANGE_NAME_AND_SCOPE
 import com.fatcloud.account.feature.forms.personal.change.FormLicenseChangeActivity.Companion.TYPE_CHANGE_SCOPE
-import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import kotlinx.android.synthetic.main.fragment_product_check.*
+import java.lang.Exception
 import java.math.BigDecimal
 
 /**
@@ -35,7 +35,7 @@ class ProductCheckFragment : BaseBottomSheetDialogFragment<ProductCheckPresenter
     private var productDetail: ProductDetail? = null
     private var finalMoney: BigDecimal = BigDecimal.ZERO
     private var productPriceId: String = ""
-    private var prices: ArrayList<Price> = ArrayList()
+    private var mPrices: ArrayList<Price> = ArrayList()
 
 
     companion object {
@@ -58,7 +58,7 @@ class ProductCheckFragment : BaseBottomSheetDialogFragment<ProductCheckPresenter
             productDetail = arguments!!.getSerializable(Constants.PARAM_DATA) as ProductDetail
 
             productDetail?.let {
-                prices = it.prices
+                mPrices = it.prices
             }
         }
 
@@ -75,9 +75,25 @@ class ProductCheckFragment : BaseBottomSheetDialogFragment<ProductCheckPresenter
             content_tv.text = it.name
 
 
-            val price = prices[0].childs[0]
-            productPriceId = price.id
-            finalMoney = price.money
+            // 预先选中第一项
+            val storeNameChangePrice = mPrices[0].childs[0]
+            productPriceId = storeNameChangePrice.id
+            finalMoney = storeNameChangePrice.money
+            work_change_tax_rb.isChecked = true
+            type_change_store_name_rb.isChecked = true
+
+
+            try {
+                // 营业执照变更
+                work_change_tax_rb.text = mPrices[0].name
+
+                // 营业执照+税务登记变更
+                work_change_tax_rb.text = mPrices[1].name
+
+            } catch (e: Exception) {
+
+            }
+
 
         }
 
@@ -102,6 +118,28 @@ class ProductCheckFragment : BaseBottomSheetDialogFragment<ProductCheckPresenter
 
             R.id.work_change_tax_rb -> {
                 type_change_store_name_rb.isEnabled = true
+
+                try {
+                    // 店铺名称变更
+                    type_change_store_name_rb.text = mPrices[0].childs[0].name
+
+                    // 经营范围变更
+                    type_change_business_scope_rb.text = mPrices[0].childs[1].name
+
+                    // 店铺名称 + 经营范围变更
+                    type_change_name_and_scope.text = mPrices[0].childs[2].name
+
+                    work_change_tax_and_license_rb.isChecked = false
+                    getChangeStoreNameMoney()
+                    getBusinessScopeChangeMoney()
+                    getStoreNameAndScopeChangeMoney()
+
+
+                } catch (e: Exception) {
+
+                }
+
+
             }
             R.id.work_change_tax_and_license_rb -> {
                 if (type_change_store_name_rb.isChecked) {
@@ -109,59 +147,108 @@ class ProductCheckFragment : BaseBottomSheetDialogFragment<ProductCheckPresenter
                 }
                 type_change_store_name_rb.isEnabled = false
                 type_change_business_scope_rb.isChecked = true
-            }
-
-            R.id.type_change_store_name_rb -> {
 
 
-                type_change_business_scope_rb.isChecked = false
-                type_change_name_and_scope.isChecked = false
+                try {
+                    // 经营范围变更
+                    type_change_business_scope_rb.text = mPrices[1].childs[0].name
 
-                if (work_change_tax_rb.isChecked) {
-                    val price = prices[0].childs[0]
-                    productPriceId = price.id
-                    finalMoney = price.money
-                    amount_tv.text = getString(R.string.money_symbol_format, finalMoney.stripTrailingZeros()?.toPlainString())
+                    // 店铺名称 + 经营范围变更
+                    type_change_name_and_scope.text = mPrices[1].childs[1].name
+
+                    work_change_tax_rb.isChecked = false
+
+                    getChangeStoreNameMoney()
+                    getBusinessScopeChangeMoney()
+                    getStoreNameAndScopeChangeMoney()
+
+
+                } catch (e: Exception) {
+
                 }
 
+            }
+
+
+            R.id.type_change_store_name_rb -> {
+                type_change_business_scope_rb.isChecked = false
+                type_change_name_and_scope.isChecked = false
+                getChangeStoreNameMoney()
 
             }
             R.id.type_change_business_scope_rb -> {
                 type_change_store_name_rb.isChecked = false
                 type_change_name_and_scope.isChecked = false
 
+                getBusinessScopeChangeMoney()
 
-                if (work_change_tax_rb.isChecked) {
-                    val price = prices[0].childs[1]
-                    productPriceId = price.id
-                    finalMoney = price.money
-                } else {
-                    val price = prices[1].childs[0]
-                    productPriceId = price.id
-                    finalMoney = price.money
-                }
-                amount_tv.text = getString(R.string.money_symbol_format, finalMoney.stripTrailingZeros()?.toPlainString())
 
             }
             R.id.type_change_name_and_scope -> {
 
                 type_change_store_name_rb.isChecked = false
                 type_change_business_scope_rb.isChecked = false
+                getStoreNameAndScopeChangeMoney()
 
-                if (work_change_tax_rb.isChecked) {
-                    val price = prices[0].childs[2]
-                    productPriceId = price.id
-                    finalMoney = price.money
-                } else {
-                    val price = prices[1].childs[1]
-                    productPriceId = price.id
-                    finalMoney = price.money
-                }
-                amount_tv.text = getString(R.string.money_symbol_format, finalMoney.stripTrailingZeros()?.toPlainString())
             }
             else -> {
             }
         }
+    }
+
+    /**
+     * 店铺名称+经营范围变更价格
+     */
+    private fun getStoreNameAndScopeChangeMoney() {
+        if (!type_change_name_and_scope.isChecked) {
+            return
+        }
+        if (work_change_tax_rb.isChecked) {
+            val price = mPrices[0].childs[2]
+            productPriceId = price.id
+            finalMoney = price.money
+        } else {
+            val price = mPrices[1].childs[1]
+            productPriceId = price.id
+            finalMoney = price.money
+        }
+        amount_tv.text = getString(R.string.money_symbol_format, finalMoney.stripTrailingZeros()?.toPlainString())
+    }
+
+    /**
+     * 经营范围变更价格
+     */
+    private fun getBusinessScopeChangeMoney() {
+        if (!type_change_business_scope_rb.isChecked) {
+            return
+        }
+        if (work_change_tax_rb.isChecked) {
+            val price = mPrices[0].childs[1]
+            productPriceId = price.id
+            finalMoney = price.money
+        } else {
+            val price = mPrices[1].childs[0]
+            productPriceId = price.id
+            finalMoney = price.money
+        }
+        amount_tv.text = getString(R.string.money_symbol_format, finalMoney.stripTrailingZeros()?.toPlainString())
+    }
+
+    /**
+     * 店铺名称变更 价格
+     */
+    private fun getChangeStoreNameMoney() {
+        if (!type_change_store_name_rb.isChecked) {
+            return
+        }
+
+        if (work_change_tax_rb.isChecked) {
+            val price = mPrices[0].childs[0]
+            productPriceId = price.id
+            finalMoney = price.money
+        }
+        amount_tv.text = getString(R.string.money_symbol_format, finalMoney.stripTrailingZeros()?.toPlainString())
+
     }
 
 
@@ -189,7 +276,7 @@ class ProductCheckFragment : BaseBottomSheetDialogFragment<ProductCheckPresenter
                             }
                         )
                 )
-
+                dismissAllowingStateLoss()
             }
             else -> {
             }

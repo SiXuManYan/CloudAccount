@@ -57,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/amount_tv"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:layout_toRightOf="@+id/image_iv"
             android:ellipsize="end"
             android:lineSpacingMultiplier="1.2"
@@ -65,6 +65,20 @@
             android:textColor="@color/color_first_level"
             android:textSize="@dimen/font_size_14"
             tools:text="个体户营业执照" />
+
+        <TextView
+            android:id="@+id/hint_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/content_tv"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/image_iv"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.2"
+            android:textColor="@color/color_app_red"
+            android:textSize="@dimen/font_size_12"
+            android:text="此价格为初始评估价格，具体价格以实际业务办理为准" />
+
 
     </RelativeLayout>
 
@@ -106,7 +120,7 @@
             android:gravity="center"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:text="个体户税务登记"
+            android:text="营业执照变更"
             android:textColor="@color/selector_radio_button_text_color_product_check"
             android:textSize="@dimen/font_size_14" />
 
