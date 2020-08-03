@@ -456,10 +456,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 actual_income_rl.visibility = View.VISIBLE
                 checkActualIncome = true
 
-                originalMoney = BigDecimalUtil.mul(
-                    price.money,
-                    BigDecimalUtil.mul(BigDecimal(multipleBigIncome), BigDecimal(10000))
-                )
+                originalMoney = BigDecimalUtil.mul(price.money, BigDecimalUtil.mul(BigDecimal(multipleBigIncome), BigDecimal(10000)))
 
                 serverFinalMoney = BigDecimal(bigAmount)
                 addPersonalTextChangeForEnterprise(price)
