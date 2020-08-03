@@ -304,7 +304,12 @@ class FormPersonalPackageP9P10Activity : BaseMVPActivity<FormPersonalPackageP9P1
 
     private fun saveDraft() {
 
+        val zeroName = zero_choice_name_et.text.toString().trim()
+        if (zeroName.isBlank()) {
+            return
+        }
 
+        ToastUtils.showShort("保存成功")
     }
 
     private fun handlePost() {

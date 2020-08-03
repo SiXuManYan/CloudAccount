@@ -42,12 +42,12 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
     /**
      * 个人代理记账，最终金额倍数 4
      */
-    private val multipleP3P9 = 4
+    private val multiple4ForP3P9 = 4
 
     /**
      * 企业代理记账，最终金额倍数 12
      */
-    private val multipleP2P10 = 12
+    private val multiple12ForP2P10 = 12
 
 
     /**
@@ -157,14 +157,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
 
         Glide.with(this)
             .load(productDetail?.logoImgUrl)
-            .apply(
-                RequestOptions().transform(
-                    MultiTransformation(
-                        CenterCrop(),
-                        RoundTransFormation(context, 4)
-                    )
-                )
-            )
+            .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
             .error(R.drawable.ic_error_image_load)
             .into(image_iv)
 
@@ -268,10 +261,13 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
 
                         Constants.P2,
                         Constants.P10 ->
-                            handleAmountEnterpriseP2P10(price) // 企业代理记账价格
-                        Constants.P3,
-                        Constants.P9 ->
-                            handleAmountPersonalP3P9(price)   // 个人代理记账价格
+                            handleAmountEnterpriseP2P10(price)
+                        Constants.P3 ->
+                            handleAmountPersonalP3(price)
+
+                        Constants.P9 -> {
+                            handleAmountPersonalP9(price)
+                        }
                     }
 
                 }
@@ -306,7 +302,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 addExtraTextChangeForEnterprise(price)
             }
             else -> {
-                originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multipleP2P10)) // PP1
+                originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multiple12ForP2P10)) // PP1
                 actual_income_rl.visibility = View.INVISIBLE
                 checkActualIncome = false
 
@@ -397,7 +393,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
     /**
      * 计算个人代理记账金额
      */
-    private fun handleAmountPersonalP3P9(price: Price) {
+    private fun handleAmountPersonalP3(price: Price) {
         // 根据用户选择的收入获取原始金额：个人
         val originalMoney: BigDecimal
 
@@ -416,7 +412,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 addPersonalTextChangeForEnterprise(price)
             }
             else -> {
-                originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multipleP3P9))// PP1
+                originalMoney = BigDecimalUtil.mul(price.money, BigDecimal(multiple4ForP3P9))// PP1
                 actual_income_rl.visibility = View.INVISIBLE
                 serverFinalMoney = price.money
                 checkActualIncome = false
@@ -425,6 +421,70 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
 
         mFinalMoney = originalMoney
         // 个人只计算代理记账最终金额即可
+        if (isThirdSelect) {
+            amount_tv.text = getString(R.string.money_symbol_format, mFinalMoney.stripTrailingZeros().toPlainString())
+        }
+    }
+
+
+    /**
+     * 计算个体户套餐价格
+     * 298 + 298 + 330 + 代理记账x4
+     */
+    private fun handleAmountPersonalP9(price: Price) {
+
+
+        /** 营业执照价格  */
+        val priceBusinessLicense298 = 298
+
+        /** 对公账户 */
+        val priceBankPublicAccount298 = 298
+
+        /** 刻章  */
+        val priceSeal330 = 330
+
+        /** 税务登记 */
+        val priceTaxRegistration0 = 0
+
+
+        // 根据用户选择的收入获取原始金额：个人
+        val originalMoney: BigDecimal
+
+        when (price.mold) {
+            Constants.PP2 -> {
+
+                actual_income_rl.visibility = View.VISIBLE
+                checkActualIncome = true
+
+                originalMoney = BigDecimalUtil.mul(
+                    price.money,
+                    BigDecimalUtil.mul(BigDecimal(multipleBigIncome), BigDecimal(10000))
+                )
+
+                serverFinalMoney = BigDecimal(bigAmount)
+                addPersonalTextChangeForEnterprise(price)
+            }
+            else -> {
+
+                // 固定价格 298 + 298 + 330 + 代理记账x4
+                val extraDefaultMoney = BigDecimalUtil
+                    .add(BigDecimal(priceBusinessLicense298), BigDecimal(priceBankPublicAccount298))
+                    .add(BigDecimal(priceSeal330))
+                    .add(BigDecimal(priceTaxRegistration0))
+
+
+                // 代理记账价格
+                val priceBookkeeping = BigDecimalUtil.mul(price.money, BigDecimal(multiple4ForP3P9))// PP1
+
+                // 最终金额
+                originalMoney = BigDecimalUtil.add(priceBookkeeping, extraDefaultMoney)
+
+                actual_income_rl.visibility = View.INVISIBLE
+                serverFinalMoney = price.money
+                checkActualIncome = false
+            }
+        }
+        mFinalMoney = originalMoney
         if (isThirdSelect) {
             amount_tv.text = getString(R.string.money_symbol_format, mFinalMoney.stripTrailingZeros().toPlainString())
         }
@@ -540,7 +600,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 )
             }
             Constants.P9,
-            Constants.P10-> {
+            Constants.P10 -> {
                 startActivity(
                     Intent(activity, FormPersonalPackageP9P10Activity::class.java)
                         .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)

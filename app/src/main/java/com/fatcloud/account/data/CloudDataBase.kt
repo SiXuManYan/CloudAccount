@@ -27,8 +27,8 @@ import com.fatcloud.account.entity.users.User
         BankPublicDraft::class,
         BankPersonalDraft::class
     ],
-    version = 2
-//    exportSchema = false
+    version = 2,
+    exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class CloudDataBase : RoomDatabase() {
