@@ -18,8 +18,10 @@ import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.data.CloudDataBase
 import com.fatcloud.account.entity.commons.Form
 import com.fatcloud.account.entity.defray.prepare.PreparePay
-import com.fatcloud.account.entity.form.p8.NativeFormPersonalPackageP9P10
+import com.fatcloud.account.entity.form.p9p10.NativeFormPersonalPackageP9P10Draft
+import com.fatcloud.account.entity.form.p9p10.NativeFormPersonalPackageP9P10
 import com.fatcloud.account.entity.order.IdentityImg
+import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
@@ -74,8 +76,7 @@ class FormPersonalPackageP9P10Activity : BaseMVPActivity<FormPersonalPackageP9P1
     private var mMold: String = ""
 
 
-    /** 用户选中的城市信息id */
-    private var mAreaId: String = ""
+
 
     /** 用户选中的城市名称 */
     private var mAreaName: String = ""
@@ -211,7 +212,6 @@ class FormPersonalPackageP9P10Activity : BaseMVPActivity<FormPersonalPackageP9P1
                             district.name
                         )
                         addr_value_tv.text = mAreaName
-                        mAreaId = district.id
                     }
 
                     override fun onCancel() = Unit
@@ -304,10 +304,32 @@ class FormPersonalPackageP9P10Activity : BaseMVPActivity<FormPersonalPackageP9P1
 
     private fun saveDraft() {
 
-        val zeroName = zero_choice_name_et.text.toString().trim()
-        if (zeroName.isBlank()) {
-            return
+        val draft = NativeFormPersonalPackageP9P10Draft().apply {
+            loginPhone = User.get().username
+            productId = mProductId
+            productPriceId = mProductPriceId
+            finalMoney = mFinalMoney
+            addr = detail_addr_et.text.toString().trim()
+            area = mAreaName
+            bankNo = bank_number_et.text.toString()
+            bankPhone = bank_phone_et.text.toString()
+            businessScopeId = selectPid
+            capital = amount_of_funds_et.text.toString().trim()
+
+            employedNum = employees_number_et.text.toString().trim()
+            formId = selectFormId
+            gender = legal_person_view.genderIndex
+            idNumber = legal_person_view.getIdNumberValue()
+            idImages = mIdEntityImg
+            name0 = zero_choice_name_et.text.toString().trim()
+            name1 = first_choice_name_et.text.toString().trim()
+            name2 = second_choice_name_et.text.toString().trim()
+            nation = legal_person_view.getNationValue()
+            realName = legal_person_view.getNameValue()
+            tel = legal_person_view.getPhoneValue()
+            mold = mMold
         }
+
 
         ToastUtils.showShort("保存成功")
     }

@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.fatcloud.account.entity.form.p9p10.NativeFormPersonalPackageP9P10Draft
 import com.fatcloud.account.entity.local.form.*
 import com.fatcloud.account.entity.news.NewsCategory
 import com.fatcloud.account.entity.users.User
@@ -25,10 +26,11 @@ import com.fatcloud.account.entity.users.User
         PersonalBookkeepingDraft::class,
         EnterprisePackageDraft::class,
         BankPublicDraft::class,
-        BankPersonalDraft::class
+        BankPersonalDraft::class,
+        NativeFormPersonalPackageP9P10Draft::class
     ],
     version = 2,
-    exportSchema = false
+    exportSchema = true
 )
 @TypeConverters(Converters::class)
 abstract class CloudDataBase : RoomDatabase() {
@@ -71,6 +73,10 @@ abstract class CloudDataBase : RoomDatabase() {
 
                 // 个人对公账户
                 database.execSQL( "CREATE TABLE IF NOT EXISTS `tb_bank_personal_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `product_id` TEXT, `product_price_id` TEXT, `final_money` TEXT, `bank_name` TEXT, `depositor_name` TEXT, `enterprise_code` TEXT, `address_registered` TEXT, `currency` TEXT, `account_type` TEXT, `address_post` TEXT, `address_detailed` TEXT, `identity_img` TEXT, `license_img` TEXT, `deposit_img` TEXT, `person_legal` TEXT, `person_finance` TEXT, `person_verification_first` TEXT, `person_verification_second` TEXT, `person_reconciliation` TEXT, `order_work_id` TEXT, `mold` TEXT, PRIMARY KEY(`id`))")
+
+                // p9 个体户套餐 p10 个人独资套餐
+                database.execSQL("CREATE TABLE IF NOT EXISTS `tb_p9_p10_personal_package_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `product_id` TEXT, `product_price_id` TEXT, `final_money` TEXT, `address` TEXT NOT NULL, `area` TEXT NOT NULL, `bank_number` TEXT NOT NULL, `bank_phone` TEXT NOT NULL, `business_scope_id` TEXT, `capital` TEXT NOT NULL, `employed_number` TEXT NOT NULL, `form_id` TEXT NOT NULL, `gender` INTEGER NOT NULL, `id_number` TEXT NOT NULL, `id_images_list` TEXT NOT NULL, `name0` TEXT NOT NULL, `name1` TEXT NOT NULL, `name2` TEXT NOT NULL, `nation` TEXT NOT NULL, `real_name` TEXT NOT NULL, `telephone` TEXT NOT NULL, `product_mold` TEXT NOT NULL, PRIMARY KEY(`id`))")
+
             }
         }
 
@@ -109,6 +115,11 @@ abstract class CloudDataBase : RoomDatabase() {
      * 个体户银行对公账户
      */
     abstract fun bankPersonalDraftDao(): BankPersonalDraftDao
+
+    /**
+     * 个体户套餐，个人独资套餐
+     */
+    abstract fun p9p10PersonalPackageDao(): P9P10PersonalPackageDao
 
 
 }

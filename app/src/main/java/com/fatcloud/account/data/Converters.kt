@@ -47,6 +47,7 @@ object Converters {
     }
 
 
+
     @TypeConverter
     @JvmStatic
     fun listToJson(value: List<EnterpriseInfo>?): String {

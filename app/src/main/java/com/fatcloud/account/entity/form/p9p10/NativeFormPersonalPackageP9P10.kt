@@ -1,4 +1,4 @@
-package com.fatcloud.account.entity.form.p8
+package com.fatcloud.account.entity.form.p9p10
 
 import com.fatcloud.account.entity.order.IdentityImg
 import java.math.BigDecimal
@@ -6,6 +6,7 @@ import java.math.BigDecimal
 /**
  * 个体户套餐 P9
  */
+
 data class NativeFormPersonalPackageP9P10(
 
     /** 详细地址 */

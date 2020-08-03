@@ -6,7 +6,7 @@ import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.defray.prepare.PreparePay
-import com.fatcloud.account.entity.form.p8.NativeFormPersonalPackageP9P10
+import com.fatcloud.account.entity.form.p9p10.NativeFormPersonalPackageP9P10
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import javax.inject.Inject

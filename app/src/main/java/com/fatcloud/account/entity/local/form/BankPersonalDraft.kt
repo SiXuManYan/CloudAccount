@@ -12,7 +12,7 @@ import com.fatcloud.account.entity.order.persional.NamePhoneBean
 /**
  * Created by Wangsw on 2020/7/13 0013 8:53.
  * </br>
- * 个体户营业执照变更
+ * 个体户银行对公账户
  */
 @Entity(tableName = "tb_bank_personal_draft")
 class BankPersonalDraft {
