@@ -331,6 +331,11 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
                 return
             }
 
+            if (investMoneyInt >= 10000) {
+                ToastUtils.showShort("资金数额不能大于10000万")
+                return
+            }
+
 
         } catch (e: Exception) {
         }
