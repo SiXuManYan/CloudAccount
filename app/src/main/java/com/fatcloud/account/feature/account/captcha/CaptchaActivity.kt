@@ -136,6 +136,7 @@ class CaptchaActivity : BaseMVPActivity<CaptchaPresenter>(), CaptchaView {
                 startActivity(
                     Intent(this, PasswordSetActivity::class.java)
                         .putExtra(Constants.PARAM_ACCOUNT, currentAccount)
+                        .putExtra(Constants.PARAM_CAPTCHA, captcha)
                         .putExtra(Constants.PARAM_IS_PASSWORD_REGISTER_SET_MODE, false)
                 )
                 finish()
