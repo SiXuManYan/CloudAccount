@@ -288,8 +288,7 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
         }
 
         val taxpayerNumber = trn_et.text.toString().trim()
-        if (taxpayerNumber.isBlank()) {
-            ToastUtils.showShort("请输入纳税人识别号")
+        if (!ProductUtils.is18TaxNumber(taxpayerNumber)) {
             return
         }
 

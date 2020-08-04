@@ -211,5 +211,6 @@
     <string name="zero_change_name">变更首选名称</string>
     <string name="first_change_name">变更备选名称1</string>
     <string name="second_change_name">变更备选名称2</string>
+    <string name="tax_number">纳税人识别号（社会统一代码）</string>
 
 </resources>

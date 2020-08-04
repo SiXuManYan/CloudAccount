@@ -83,8 +83,9 @@
                     android:lineSpacingMultiplier="1.1"
                     android:maxWidth="150dp"
                     android:maxLines="2"
-                    android:text="纳税人识别号(社会统一代码)"
-                    android:textColor="@color/color_first_level" />
+                    android:text="@string/tax_number"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_14" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/trn_et"
@@ -141,7 +142,8 @@
                     android:maxWidth="150dp"
                     android:maxLines="2"
                     android:text="法人姓名"
-                    android:textColor="@color/color_first_level" />
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_14" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/legal_name_et"
@@ -196,7 +198,8 @@
                     android:maxWidth="150dp"
                     android:maxLines="2"
                     android:text="身份证号"
-                    android:textColor="@color/color_first_level" />
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_14" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/id_number_tv_et"
@@ -231,8 +234,6 @@
 
 
             <!-- 银行卡号 -->
-
-
 
 
             <RelativeLayout
@@ -285,21 +286,7 @@
             </RelativeLayout>
 
 
-
-
-
-
-
-
-
-
-
-
-
             <!-- 银行预留手机号 -->
-
-
-
 
 
             <RelativeLayout
@@ -352,14 +339,6 @@
             </RelativeLayout>
 
 
-
-
-
-
-
-
-
-
             <!--  如果也添加了刻章业务， 额外需要填写地址和详细地址-->
             <RelativeLayout
                 android:id="@+id/addr_rl"
@@ -376,7 +355,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
                     android:text="地址"
-                    android:textColor="@color/color_first_level" />
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_14" />
 
 
                 <TextView
@@ -450,7 +430,7 @@
                     android:paddingRight="0dp"
                     android:textColor="@color/color_first_level"
                     android:textColorHint="@color/color_cccccc"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/font_size_14" />
 
 
                 <View
@@ -530,9 +510,9 @@
             android:layout_weight="1"
             android:background="@color/color_first_level"
             android:gravity="center"
+            android:text="保存"
             android:textColor="@color/font_white"
-            android:textSize="@dimen/font_size_14"
-            android:text="保存" />
+            android:textSize="@dimen/font_size_14" />
 
         <TextView
             android:id="@+id/commit_tv"
@@ -541,12 +521,11 @@
             android:layout_weight="1"
             android:background="@color/color_app_red"
             android:gravity="center"
+            android:text="提交"
             android:textColor="@color/font_white"
-            android:textSize="@dimen/font_size_14"
-            android:text="提交" />
+            android:textSize="@dimen/font_size_14" />
 
     </LinearLayout>
-
 
 
 </RelativeLayout>

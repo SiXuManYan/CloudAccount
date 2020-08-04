@@ -266,10 +266,10 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
 
     private fun handleCommit() {
         val trnValue = trn_et.text.toString().trim()
-        if (trnValue.isBlank()) {
-            ToastUtils.showShort("请输入纳税人识别号")
+        if (!ProductUtils.is18TaxNumber(trnValue)) {
             return
         }
+
 
         val legalNameValue = legal_name_et.text.toString().trim()
         if (legalNameValue.isBlank()) {

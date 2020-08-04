@@ -361,6 +361,20 @@ object ProductUtils {
 
 
     /**
+     * 大于三个字的中文
+     */
+    fun is18TaxNumber(string: String): Boolean {
+
+        if (string.length !=18) {
+            ToastUtils.showShort("请输入18位纳税人识别号")
+            return false
+        }
+        return true
+    }
+
+
+
+    /**
      * 正确的从业人数
      */
     fun isRightEmployeesNumber(string: String): Boolean {

@@ -82,6 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
+                    android:textSize="@dimen/font_size_14"
                     android:ellipsize="end"
                     android:lineSpacingMultiplier="1.1"
                     android:maxWidth="150dp"
@@ -137,6 +138,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
+                    android:textSize="@dimen/font_size_14"
                     android:ellipsize="end"
                     android:lineSpacingMultiplier="1.1"
                     android:maxWidth="150dp"
@@ -190,6 +192,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
                     android:ellipsize="end"
+                    android:textSize="@dimen/font_size_14"
                     android:lineSpacingMultiplier="1.1"
                     android:maxWidth="150dp"
                     android:text="联系电话"
@@ -243,6 +246,7 @@
                     android:ellipsize="end"
                     android:lineSpacingMultiplier="1.1"
                     android:maxWidth="150dp"
+                    android:textSize="@dimen/font_size_14"
                     android:text="机构全称"
                     android:textColor="@color/color_first_level" />
 
@@ -294,7 +298,8 @@
                     android:lineSpacingMultiplier="1.1"
                     android:maxWidth="150dp"
                     android:maxLines="2"
-                    android:text="统一社会代码"
+                    android:text="@string/tax_number"
+                    android:textSize="@dimen/font_size_14"
                     android:textColor="@color/color_first_level" />
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -347,6 +352,7 @@
                     android:ellipsize="end"
                     android:lineSpacingMultiplier="1.1"
                     android:maxWidth="150dp"
+                    android:textSize="@dimen/font_size_14"
                     android:maxLines="2"
                     android:text="注销原因"
                     android:textColor="@color/color_first_level" />
