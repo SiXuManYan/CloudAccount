@@ -94,7 +94,7 @@ class CaptchaPresenter @Inject constructor(private var captchaView: CaptchaView)
     /**
      * 使用access_token ，和 openid ，通过微信api 获取 用户信息
      */
-    fun getWechatUserInfoFromWechatApi(lifecycleOwner: LifecycleOwner, wechatAuthInfo: WechatAuthInfo, account: String) {
+    fun getWechatUserInfoFromWechatApi(lifecycleOwner: LifecycleOwner, wechatAuthInfo: WechatAuthInfo, account: String, captcha: String) {
 
         val hashMap = HashMap<String, String>().apply {
             put("access_token", wechatAuthInfo.access_token)
@@ -107,7 +107,7 @@ class CaptchaPresenter @Inject constructor(private var captchaView: CaptchaView)
                 val gson = Gson()
                 val userInfo = gson.fromJson(jsonStr, WechatUserInfo::class.java)
                 Looper.prepare()
-                doWechatRegister(lifecycleOwner, userInfo, account)
+                doWechatRegister(lifecycleOwner, userInfo, account, captcha)
                 Looper.loop()
 
             }
@@ -116,7 +116,7 @@ class CaptchaPresenter @Inject constructor(private var captchaView: CaptchaView)
     }
 
 
-    private fun doWechatRegister(lifecycleOwner: LifecycleOwner, wechatUserInfo: WechatUserInfo, account: String) {
+    private fun doWechatRegister(lifecycleOwner: LifecycleOwner, wechatUserInfo: WechatUserInfo, account: String, captcha: String) {
 
         requestApi(lifecycleOwner,
             Lifecycle.Event.ON_DESTROY,
@@ -128,6 +128,7 @@ class CaptchaPresenter @Inject constructor(private var captchaView: CaptchaView)
                 "1000",
                 "0",
                 "0",
+                captcha,
                 CommonUtils.getShareDefault().getString(Constants.SP_PUSH_DEVICE_ID)
             ),
 
@@ -137,7 +138,7 @@ class CaptchaPresenter @Inject constructor(private var captchaView: CaptchaView)
 
                     data?.let {
                         // 登录成功
-                        wechatRegisterSuccess(data,account)
+                        wechatRegisterSuccess(data, account)
 
                     }
 

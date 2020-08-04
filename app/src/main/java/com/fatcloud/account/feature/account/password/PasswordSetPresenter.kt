@@ -92,11 +92,12 @@ class PasswordSetPresenter @Inject constructor(private var passwordSetView: Pass
     /**
      * 重设密码
      */
-    fun resetPassword(lifecycleOwner: LifecycleOwner, passWord: String, account: String) {
+    fun resetPassword(lifecycleOwner: LifecycleOwner, passWord: String, account: String,    captcha: String) {
         requestApi(lifecycleOwner, Lifecycle.Event.ON_DESTROY,
             apiService.resetPassword(
                 account,
-                passWord
+                passWord,
+                captcha
             ),
             object : BaseHttpSubscriber<JsonElement>(passwordSetView) {
                 override fun onSuccess(data: JsonElement?) {

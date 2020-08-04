@@ -144,7 +144,7 @@ class CaptchaActivity : BaseMVPActivity<CaptchaPresenter>(), CaptchaView {
             MODE_REGISTER_WECHAT -> {
                 // 进行微信注册
                 wechatAuthInfo?.let {
-                    presenter.getWechatUserInfoFromWechatApi(this, it, account)
+                    presenter.getWechatUserInfoFromWechatApi(this, it, account, captcha)
 
                 }
 

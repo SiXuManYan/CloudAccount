@@ -228,7 +228,7 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
             presenter.register(this, passWord, account, captcha)
         } else {
             // 重置密码
-            presenter.resetPassword(this, passWord, account)
+            presenter.resetPassword(this, passWord, account, captcha)
         }
     }
 

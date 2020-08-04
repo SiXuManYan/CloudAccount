@@ -202,7 +202,8 @@ interface ApiService {
     @POST("$T_ACCOUNT_API/resetPasswd")
     fun resetPassword(
         @Query("username") username: String?,
-        @Query("newPasswd") newPasswd: String?
+        @Query("newPasswd") newPasswd: String?,
+        @Query("vc") vc: String?
     ): Flowable<Response<JsonElement>>
 
     /**
@@ -514,7 +515,9 @@ interface ApiService {
         @Field("city") city: String?,
         @Field("lat") lat: String?,
         @Field("lng") lng: String?,
+        @Query("vc") vc: String?,
         @Query("deviceId") deviceId: String?,
+
         @Query("platform") platform: String? = Constants.FROM_TYPE_ANDROID
     ): Flowable<Response<User>>
 
