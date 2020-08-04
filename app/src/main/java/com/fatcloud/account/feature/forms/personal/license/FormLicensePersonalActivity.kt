@@ -23,6 +23,7 @@ import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.persional.PersonalInfo
 import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.event.entity.ImageUploadEvent
+import com.fatcloud.account.extend.LimitInputTextWatcher
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
 import com.fatcloud.account.feature.ocr.RecognizeIDCardResultCallBack
@@ -153,9 +154,12 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             hideShareRatio()
             hideBottomSplit()
         }
-        zero_choice_name.setTitleAndHint("首选名称", getString(R.string.no_less_than_3_word))
-        first_choice_name.setTitleAndHint("备选名称1", getString(R.string.no_less_than_3_word))
-        second_choice_name.setTitleAndHint("备选名称2", getString(R.string.no_less_than_3_word))
+
+        zero_choice_name_et.addTextChangedListener(LimitInputTextWatcher(zero_choice_name_et))
+        first_choice_name_et.addTextChangedListener(LimitInputTextWatcher(first_choice_name_et))
+        second_choice_name_et.addTextChangedListener(LimitInputTextWatcher(second_choice_name_et))
+
+
         restoreDraft()
     }
 
@@ -165,13 +169,13 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             return
         }
         draft.zeroName?.let {
-            zero_choice_name.setValue(it)
+            zero_choice_name_et.setText(it)
         }
         draft.firstName?.let {
-            first_choice_name.setValue(it)
+            first_choice_name_et.setText(it)
         }
         draft.secondName?.let {
-            second_choice_name.setValue(it)
+            second_choice_name_et.setText(it)
         }
 
         draft.businessScopeId?.let {
@@ -296,9 +300,9 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             productPriceId = mProductPriceId
             mold = Constants.P1
 
-            zeroName = zero_choice_name.value()
-            firstName = first_choice_name.value()
-            secondName = second_choice_name.value()
+            zeroName = zero_choice_name_et.text.toString().trim()
+            firstName = first_choice_name_et.text.toString().trim()
+            secondName = second_choice_name_et.text.toString().trim()
             businessScopeId = selectPid
             businessScopeName = selectPidNames
             employedNum = employees_number_et.text.toString().trim()
@@ -324,19 +328,16 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
 
     private fun handlePost() {
 
-
-        if (zero_choice_name.value().isBlank()) {
-            ToastUtils.showShort("请输入首选名称")
+        val zeroName = zero_choice_name_et.text.toString().trim()
+        if (!ProductUtils.isThreeChineseName(zeroName, getString(R.string.zero_choice_name))) {
             return
         }
-
-        if (first_choice_name.value().isBlank()) {
-            ToastUtils.showShort("请输入备选名称1")
+        val firstName = first_choice_name_et.text.toString().trim()
+        if (!ProductUtils.isThreeChineseName(firstName, getString(R.string.first_choice_name))) {
             return
         }
-
-        if (second_choice_name.value().isBlank()) {
-            ToastUtils.showShort("请输入备选名称2")
+        val secondName = second_choice_name_et.text.toString().trim()
+        if (!ProductUtils.isThreeChineseName(secondName, getString(R.string.second_choise_name))) {
             return
         }
 
@@ -451,9 +452,9 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             idno = idNumberValue
             imgs = mIdEntityImg
             money = ProductUtils.getEditValueToBigDecimal(mFinalMoney)
-            name0 = zero_choice_name.value()
-            name1 = first_choice_name.value()
-            name2 = second_choice_name.value()
+            name0 = zeroName
+            name1 = firstName
+            name2 = secondName
             nation = nationValue
             productId = mProductId
             productPriceId = mProductPriceId

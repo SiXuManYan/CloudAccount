@@ -352,15 +352,15 @@ object ProductUtils {
             return false
         }
 
-        if (RegexUtils.isMatch("^[a-zA-Z]+\$", string) || string.length < 2 || string.length > 15) {
-            ToastUtils.showShort("请输入中文不少于三个字")
+        if (RegexUtils.isMatch("^[a-zA-Z]+\$", string) || string.length < 2 || string.length > 30) {
+            ToastUtils.showShort(typeString + "请输入3~30个中文")
             return false
         }
         return true
     }
 
 
-     /**
+    /**
      * 正确的从业人数
      */
     fun isRightEmployeesNumber(string: String): Boolean {
@@ -376,9 +376,6 @@ object ProductUtils {
         }
         return true
     }
-
-
-
 
 
     /**

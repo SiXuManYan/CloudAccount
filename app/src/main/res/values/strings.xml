@@ -200,5 +200,16 @@
     <string name="employees_number">从业人数</string>
 
     <string name="message_title">我的消息</string>
+    <string name="begin">&#160;(起)</string>
+    <string name="every_year">&#160;(每年)</string>
+    <string name="hint_3_to_30_chinese">请输入3~30个中文</string>
+
+    <string name="zero_choice_name">首选名称</string>
+    <string name="first_choice_name">备选名称1</string>
+    <string name="second_choise_name">备选名称2</string>
+
+    <string name="zero_change_name">变更首选名称</string>
+    <string name="first_change_name">变更备选名称1</string>
+    <string name="second_change_name">变更备选名称2</string>
 
 </resources>

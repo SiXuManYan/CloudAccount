@@ -171,13 +171,31 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
         mData = data
         title_tv.text = data.name
         content_tv.text = data.introduce
-        CommonUtils.setFormatText(
-            amount_tv,
-            getString(R.string.money_symbol),
-            data.money.stripTrailingZeros().toPlainString(),
-            12,
-            18
-        )
+        val money = data.money.stripTrailingZeros().toPlainString()
+//        CommonUtils.setFormatText(
+//            amount_tv,
+//            getString(R.string.money_symbol),
+//            money,
+//            12,
+//            18
+//        )
+
+        val moneySpan = SpanUtils()
+            .append(getString(R.string.money_symbol_with_blank)).setFontSize(12, true)
+            .append(money).setFontSize(18, true)
+        when (data.mold) {
+            Constants.P6 -> {
+                moneySpan.append(getString(R.string.begin)).setVerticalAlign(SpanUtils.ALIGN_BOTTOM).setFontSize(12, true).setBold().setForegroundColor(ColorUtils.getColor(R.color.color_third_level))
+            }
+            Constants.P11 -> {
+                moneySpan.append(getString(R.string.every_year)).setVerticalAlign(SpanUtils.ALIGN_BOTTOM).setFontSize(12, true).setBold().setForegroundColor(ColorUtils.getColor(R.color.color_third_level))
+            }
+            else -> {
+            }
+        }
+        amount_tv.text = moneySpan.create()
+
+
 
         // banner
         val bannerImgUrls = data.bannerImgUrls

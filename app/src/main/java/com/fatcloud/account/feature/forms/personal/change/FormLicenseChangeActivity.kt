@@ -17,6 +17,7 @@ import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.persional.PersonalLicenseChange
 import com.fatcloud.account.event.entity.ImageUploadEvent
+import com.fatcloud.account.extend.LimitInputTextWatcher
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
 import com.fatcloud.account.feature.matisse.Matisse
@@ -38,20 +39,20 @@ class FormLicenseChangeActivity : BaseMVPActivity<FormLicenseChangePresenter>(),
         /**
          * 店铺名称变更
          */
-        val TYPE_CHANGE_NAME = 0
+        const val TYPE_CHANGE_NAME = 0
 
         /**
          * 经营范围变更
          */
-        val TYPE_CHANGE_SCOPE = 1
+        const val TYPE_CHANGE_SCOPE = 1
 
         /**
          * 店铺名称 + 经营范围变更
          */
-        val TYPE_CHANGE_NAME_AND_SCOPE = 2
+        const val TYPE_CHANGE_NAME_AND_SCOPE = 2
     }
 
-    var changeType = TYPE_CHANGE_NAME
+    private var changeType = TYPE_CHANGE_NAME
 
     /**
      * 产品id
@@ -134,6 +135,9 @@ class FormLicenseChangeActivity : BaseMVPActivity<FormLicenseChangePresenter>(),
             else -> {
             }
         }
+        zero_choice_name_et.addTextChangedListener(LimitInputTextWatcher(zero_choice_name_et))
+        first_choice_name_et.addTextChangedListener(LimitInputTextWatcher(first_choice_name_et))
+        second_choice_name_et.addTextChangedListener(LimitInputTextWatcher(second_choice_name_et))
     }
 
     private fun initEvent() {
@@ -317,20 +321,15 @@ class FormLicenseChangeActivity : BaseMVPActivity<FormLicenseChangePresenter>(),
 
         if (name_change_ll.visibility == View.VISIBLE) {
             zeroName = zero_choice_name_et.text.toString().trim()
-            if (zeroName.isBlank()) {
-                ToastUtils.showShort("请输入变更首选名称")
+            if (!ProductUtils.isThreeChineseName(zeroName, getString(R.string.zero_change_name))) {
                 return
             }
-
             firstName = first_choice_name_et.text.toString().trim()
-            if (firstName.isBlank()) {
-                ToastUtils.showShort("请输入变更备选名称1")
+            if (!ProductUtils.isThreeChineseName(firstName, getString(R.string.first_change_name))) {
                 return
             }
-
             secondName = second_choice_name_et.text.toString().trim()
-            if (secondName.isBlank()) {
-                ToastUtils.showShort("请输入变更备选名称2")
+            if (!ProductUtils.isThreeChineseName(secondName, getString(R.string.second_change_name))) {
                 return
             }
         }

@@ -14,6 +14,7 @@ import com.fatcloud.account.data.CloudDataBase
 import com.fatcloud.account.entity.local.form.EnterprisePackageDraft
 import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
+import com.fatcloud.account.extend.LimitInputTextWatcher
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
 import com.fatcloud.account.feature.forms.enterprise.license.FormLicenseEnterpriseActivity
 import com.lljjcoder.Interface.OnCityItemClickListener
@@ -67,12 +68,6 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
      */
     private var mProductId: String = "0"
 
-
-    /**
-     * 产品类型
-     * P1 P2 ....
-     */
-    private var mProductType: String = Constants.P2
 
     /**
      * 位置信息id
@@ -135,6 +130,9 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
 
     private fun initView() {
         setMainTitle("注册信息")
+        zero_choice_name_et.addTextChangedListener(LimitInputTextWatcher(zero_choice_name_et))
+        first_choice_name_et.addTextChangedListener(LimitInputTextWatcher(first_choice_name_et))
+        second_choice_name_et.addTextChangedListener(LimitInputTextWatcher(second_choice_name_et))
         restoreDraft()
     }
 
@@ -230,7 +228,7 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
                     Intent(
                         this,
                         BusinessScopeActivity::class.java
-                    ).putExtra(Constants.PARAM_PRODUCT_TYPE, mProductType),
+                    ).putExtra(Constants.PARAM_PRODUCT_TYPE, Constants.P2),
                     Constants.REQUEST_BUSINESS_SCOPE
                 )
             }
@@ -303,25 +301,15 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
     private fun handleCommit(view: View) {
         ProductUtils.handleDoubleClick(view)
         val zeroName = zero_choice_name_et.text.toString().trim()
-        if (zeroName.isBlank()) {
-            ToastUtils.showShort("请输入首选公司名称")
+        if (!ProductUtils.isThreeChineseName(zeroName, getString(R.string.zero_choice_name))) {
             return
         }
-
-
-        val firstName = first_choice_name_et.text.toString()
-        if (firstName.isBlank()) {
-            ToastUtils.showShort("请输入备选公司名称1")
+        val firstName = first_choice_name_et.text.toString().trim()
+        if (!ProductUtils.isThreeChineseName(firstName, getString(R.string.first_choice_name))) {
             return
         }
-        val secondName = second_choice_name_et.text.toString()
-        if (secondName.isBlank()) {
-            ToastUtils.showShort("请输入备选公司名称2")
-            return
-        }
-
-        if (zeroName.length < 3 || firstName.length < 3 || secondName.length < 3) {
-            ToastUtils.showShort("请输入中文不少于三个字")
+        val secondName = second_choice_name_et.text.toString().trim()
+        if (!ProductUtils.isThreeChineseName(secondName, getString(R.string.second_choise_name))) {
             return
         }
 
@@ -342,6 +330,7 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
                 ToastUtils.showShort("资金数额不能少于50万")
                 return
             }
+
 
         } catch (e: Exception) {
         }

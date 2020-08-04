@@ -1,6 +1,7 @@
-package com.fatcloud.account.wxapi
+package com.fatcloud.account.wxapi.pay
 
 import com.fatcloud.account.base.common.BasePresenter
+import com.fatcloud.account.wxapi.pay.WXPayEntryView
 import javax.inject.Inject
 
 /**

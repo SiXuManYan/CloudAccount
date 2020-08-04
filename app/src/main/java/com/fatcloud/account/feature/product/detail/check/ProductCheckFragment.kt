@@ -88,7 +88,7 @@ class ProductCheckFragment : BaseBottomSheetDialogFragment<ProductCheckPresenter
                 work_change_tax_rb.text = mPrices[0].name
 
                 // 营业执照+税务登记变更
-                work_change_tax_rb.text = mPrices[1].name
+                work_change_tax_and_license_rb.text = mPrices[1].name
 
             } catch (e: Exception) {
 

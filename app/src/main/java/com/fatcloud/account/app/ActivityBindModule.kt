@@ -85,7 +85,7 @@ import com.fatcloud.account.feature.webs.WebCommonModule
 import com.fatcloud.account.scope.ActivityScore
 import com.fatcloud.account.wxapi.WXEntryActivity
 import com.fatcloud.account.wxapi.WXPayEntryActivity
-import com.fatcloud.account.wxapi.WXPayEntryModule
+import com.fatcloud.account.wxapi.pay.WXPayEntryModule
 import com.fatcloud.account.wxapi.entry.WXEntryModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

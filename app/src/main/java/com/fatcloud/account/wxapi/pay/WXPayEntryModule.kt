@@ -1,5 +1,6 @@
-package com.fatcloud.account.wxapi
+package com.fatcloud.account.wxapi.pay
 
+import com.fatcloud.account.wxapi.WXPayEntryActivity
 import dagger.Module
 import dagger.Provides
 

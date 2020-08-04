@@ -28,29 +28,162 @@
 
 
 
-            <!-- 首选名称 -->
-            <com.fatcloud.account.view.EditView
-                android:id="@+id/zero_choice_name"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
+                android:background="?android:attr/selectableItemBackground"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp" />
+                android:paddingRight="15dp"
+                tools:background="@color/font_white">
 
-            <!-- 备选名称1 -->
-            <com.fatcloud.account.view.EditView
-                android:id="@+id/first_choice_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp" />
+                <TextView
+                    android:id="@+id/name_title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.1"
+                    android:maxWidth="150dp"
+                    android:maxLines="2"
+                    android:text="首选名称"
+                    android:textColor="@color/color_first_level" />
 
-            <!-- 备选名称2 -->
-            <com.fatcloud.account.view.EditView
-                android:id="@+id/second_choice_name"
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/zero_choice_name_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_toRightOf="@+id/name_title_tv"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="@string/hint_3_to_30_chinese"
+                    android:imeOptions="actionNext"
+                    android:maxLength="30"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="0dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_first_level"
+                    android:textColorHint="@color/color_cccccc"
+                    android:textSize="14sp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/split_line_color" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
+                android:background="?android:attr/selectableItemBackground"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp" />
+                android:paddingRight="15dp"
+                tools:background="@color/font_white">
+
+                <TextView
+                    android:id="@+id/first_title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.1"
+                    android:maxWidth="150dp"
+                    android:maxLines="2"
+                    android:text="备选名称1"
+                    android:textColor="@color/color_first_level" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/first_choice_name_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_toRightOf="@+id/first_title_tv"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="@string/hint_3_to_30_chinese"
+                    android:imeOptions="actionNext"
+                    android:lineSpacingMultiplier="1.2"
+                    android:maxLength="30"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="0dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_first_level"
+                    android:textColorHint="@color/color_cccccc"
+                    android:textSize="14sp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/split_line_color" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                tools:background="@color/font_white">
+
+                <TextView
+                    android:id="@+id/second_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.1"
+                    android:maxWidth="150dp"
+                    android:maxLines="2"
+                    android:text="备选名称2"
+                    android:textColor="@color/color_first_level" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/second_choice_name_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_toRightOf="@+id/second_tv"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="@string/hint_3_to_30_chinese"
+                    android:imeOptions="actionNext"
+                    android:lineSpacingMultiplier="1.2"
+                    android:maxLength="30"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="0dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_first_level"
+                    android:textColorHint="@color/color_cccccc"
+                    android:textSize="14sp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/split_line_color" />
+
+
+            </RelativeLayout>
+
+
+
 
             <!-- 经营范围 -->
             <RelativeLayout

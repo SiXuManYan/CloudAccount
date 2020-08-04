@@ -89,6 +89,12 @@ class NativeFormPersonalPackageP9P10Draft {
     @ColumnInfo(name = "business_scope_id")
     var businessScopeId: ArrayList<String>? = ArrayList()
 
+    @ColumnInfo(name = "business_scope_name")
+    var businessScopeName: ArrayList<String>? = ArrayList()
+
+
+
+
     /** 资金数额，注册资本 */
     @ColumnInfo(name = "capital")
     var capital: String = ""
@@ -101,9 +107,14 @@ class NativeFormPersonalPackageP9P10Draft {
     @ColumnInfo(name = "form_id")
     var formId: String = ""
 
+    /** 组成形式的 Id */
+    @ColumnInfo(name = "form_name")
+    var formName: String = ""
+
+
     /** 性别 index 1男 2女*/
     @ColumnInfo(name = "gender")
-    var gender: Int = 0
+    var gender: Int = 1
 
 
     /** 身份证号 */
@@ -112,7 +123,7 @@ class NativeFormPersonalPackageP9P10Draft {
 
     /** 身份证正反面 */
     @ColumnInfo(name = "id_images_list")
-    var idImages: List<IdentityImg> = ArrayList()
+    var idImages: List<IdentityImg>? = ArrayList()
 
 
     /** 首选名称 */

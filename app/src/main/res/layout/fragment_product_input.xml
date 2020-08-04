@@ -55,7 +55,7 @@
                     android:layout_marginLeft="5dp"
                     android:ellipsize="end"
                     android:lineSpacingMultiplier="1.2"
-                    android:text="（每年）"
+                    android:text="(每年)"
                     android:textColor="@color/color_third_level"
                     android:textSize="@dimen/font_size_12"
                     android:textStyle="bold" />

@@ -221,13 +221,15 @@ object Constants {
     /** 个体户营业执照办理 */
     const val P1 = "P1"
 
-    /** 个体户代理记账 */
-    const val P3 = "P3"
+
 
     /**
      *  企业套餐  包括 营业执照办理，代理记账，税务登记，银行对公账户
      */
     const val P2 = "P2"
+
+    /** 个体户代理记账 */
+    const val P3 = "P3"
 
     /** 个体户税务登记 */
     const val P4 = "P4"

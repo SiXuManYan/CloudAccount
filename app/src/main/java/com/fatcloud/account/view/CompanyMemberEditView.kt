@@ -491,7 +491,6 @@ class CompanyMemberEditView : LinearLayout {
             return
         }
 
-
         displayImageSwitcher()
 
         images.forEach {
@@ -499,47 +498,30 @@ class CompanyMemberEditView : LinearLayout {
             val sourceImageUrl = it.imgUrl
             if (!sourceImageUrl.isNullOrBlank()) {
                 if (ProductUtils.isOssSignUrl(sourceImageUrl)) {
-                    ProductUtils.getRealOssUrl(
-                        context,
-                        sourceImageUrl,
-                        object : CloudAccountApplication.OssSignCallBack {
-                            override fun ossUrlSignEnd(url: String) {
+                    ProductUtils.getRealOssUrl(context, sourceImageUrl, object : CloudAccountApplication.OssSignCallBack {
+                        override fun ossUrlSignEnd(url: String) {
 
-                                Glide.with(this@CompanyMemberEditView)
-                                    .load(url)
-                                    .apply(
-                                        RequestOptions().transform(
-                                            MultiTransformation(
-                                                CenterCrop(),
-                                                RoundTransFormation(context, 4)
-                                            )
-                                        )
-                                    )
-                                    .error(R.drawable.ic_error_image_load)
-                                    .into(
-                                        when (it.mold) {
-                                            Constants.I1 -> getFrontImage()
-                                            else -> getBackImage()
-                                        }
-                                    )
+                            Glide.with(this@CompanyMemberEditView)
+                                .load(url)
+                                .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
+                                .error(R.drawable.ic_error_image_load)
+                                .into(
+                                    when (it.mold) {
+                                        Constants.I1 -> getFrontImage()
+                                        else -> getBackImage()
+                                    }
+                                )
 
 
-                            }
+                        }
 
-                        })
+                    })
 
 
                 } else {
                     Glide.with(this)
                         .load(sourceImageUrl)
-                        .apply(
-                            RequestOptions().transform(
-                                MultiTransformation(
-                                    CenterCrop(),
-                                    RoundTransFormation(context, 4)
-                                )
-                            )
-                        )
+                        .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                         .error(R.drawable.ic_error_image_load)
                         .into(
                             when (it.mold) {
@@ -552,26 +534,15 @@ class CompanyMemberEditView : LinearLayout {
 
             } else {
                 when (it.mold) {
-                    Constants.I1 -> {
-                        id_card_front_iv.setImageResource(R.drawable.ic_upload_default)
-                    }
-                    else -> {
-                        id_card_back_iv.setImageResource(R.drawable.ic_upload_default)
-                    }
+                    Constants.I1 -> id_card_front_iv.setImageResource(R.drawable.ic_upload_default)
+                    else -> id_card_back_iv.setImageResource(R.drawable.ic_upload_default)
                 }
             }
 
 
-
-
             when (it.mold) {
-                Constants.I1 -> {
-                    frontImageUrl = sourceImageUrl
-                }
-                Constants.I2 -> {
-                    backImageUrl = sourceImageUrl
-                }
-
+                Constants.I1 -> frontImageUrl = sourceImageUrl
+                Constants.I2 -> backImageUrl = sourceImageUrl
             }
         }
 
@@ -665,13 +636,16 @@ class CompanyMemberEditView : LinearLayout {
     fun setGenderValue(it: Int) {
         if (it == 1) {
             gender_spinner.setSelection(1, true)
+
         } else {
             gender_spinner.setSelection(2, true)
         }
+        genderIndex = it
+
     }
 
-    fun getGenderValue() :String{
-      return  if (genderIndex == 1) {
+    fun getGenderValue(): String {
+        return if (genderIndex == 1) {
             "男"
         } else {
             "女"
@@ -679,15 +653,12 @@ class CompanyMemberEditView : LinearLayout {
     }
 
 
-
-
-
     fun setNationValue(it: String) {
         nation_et.setText(it)
     }
 
 
-    fun checkParams() :Boolean{
+    fun checkParams(): Boolean {
 
         if (frontImageUrl.isBlank()) {
             ToastUtils.showShort("请上传身份证正面照片")

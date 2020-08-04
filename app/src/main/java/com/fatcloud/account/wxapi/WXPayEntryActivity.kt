@@ -6,6 +6,8 @@ import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.event.entity.WechatPayResultEvent
+import com.fatcloud.account.wxapi.pay.WXPayEntryPresenter
+import com.fatcloud.account.wxapi.pay.WXPayEntryView
 import com.tencent.mm.opensdk.constants.ConstantsAPI
 import com.tencent.mm.opensdk.modelbase.BaseReq
 import com.tencent.mm.opensdk.modelbase.BaseResp

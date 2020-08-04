@@ -72,17 +72,19 @@ abstract class CloudDataBase : RoomDatabase() {
                 database.execSQL("CREATE TABLE IF NOT EXISTS `tb_bank_public_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `order_work_id` TEXT, `company_name` TEXT, `company_address` TEXT, `registered_capital` TEXT, `account_nature` TEXT, `reconciliation_name` TEXT, `reconciliation_phone` TEXT, `detail_address` TEXT, `area` TEXT, `area_id` TEXT, `share_holders` TEXT, `business_license_url` TEXT, `business_license_path` TEXT, `electronic_seal_url` TEXT, `electronic_seal_path` TEXT, `legal_person_warrant_image_url` TEXT, `legal_person_warrant_image_path` TEXT, `postcode` TEXT, PRIMARY KEY(`id`))")
 
                 // 个人对公账户
-                database.execSQL( "CREATE TABLE IF NOT EXISTS `tb_bank_personal_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `product_id` TEXT, `product_price_id` TEXT, `final_money` TEXT, `bank_name` TEXT, `depositor_name` TEXT, `enterprise_code` TEXT, `address_registered` TEXT, `currency` TEXT, `account_type` TEXT, `address_post` TEXT, `address_detailed` TEXT, `identity_img` TEXT, `license_img` TEXT, `deposit_img` TEXT, `person_legal` TEXT, `person_finance` TEXT, `person_verification_first` TEXT, `person_verification_second` TEXT, `person_reconciliation` TEXT, `order_work_id` TEXT, `mold` TEXT, PRIMARY KEY(`id`))")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `tb_bank_personal_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `product_id` TEXT, `product_price_id` TEXT, `final_money` TEXT, `bank_name` TEXT, `depositor_name` TEXT, `enterprise_code` TEXT, `address_registered` TEXT, `currency` TEXT, `account_type` TEXT, `address_post` TEXT, `address_detailed` TEXT, `identity_img` TEXT, `license_img` TEXT, `deposit_img` TEXT, `person_legal` TEXT, `person_finance` TEXT, `person_verification_first` TEXT, `person_verification_second` TEXT, `person_reconciliation` TEXT, `order_work_id` TEXT, `mold` TEXT, PRIMARY KEY(`id`))")
 
                 // p9 个体户套餐 p10 个人独资套餐
-                database.execSQL("CREATE TABLE IF NOT EXISTS `tb_p9_p10_personal_package_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `product_id` TEXT, `product_price_id` TEXT, `final_money` TEXT, `address` TEXT NOT NULL, `area` TEXT NOT NULL, `bank_number` TEXT NOT NULL, `bank_phone` TEXT NOT NULL, `business_scope_id` TEXT, `capital` TEXT NOT NULL, `employed_number` TEXT NOT NULL, `form_id` TEXT NOT NULL, `gender` INTEGER NOT NULL, `id_number` TEXT NOT NULL, `id_images_list` TEXT NOT NULL, `name0` TEXT NOT NULL, `name1` TEXT NOT NULL, `name2` TEXT NOT NULL, `nation` TEXT NOT NULL, `real_name` TEXT NOT NULL, `telephone` TEXT NOT NULL, `product_mold` TEXT NOT NULL, PRIMARY KEY(`id`))")
-
+                database.execSQL( "CREATE TABLE IF NOT EXISTS `tb_p9_p10_personal_package_draft` (`id` INTEGER NOT NULL, `login_phone` TEXT, `product_id` TEXT, `product_price_id` TEXT, `final_money` TEXT, `address` TEXT NOT NULL, `area` TEXT NOT NULL, `bank_number` TEXT NOT NULL, `bank_phone` TEXT NOT NULL, `business_scope_id` TEXT, `business_scope_name` TEXT, `capital` TEXT NOT NULL, `employed_number` TEXT NOT NULL, `form_id` TEXT NOT NULL, `form_name` TEXT NOT NULL, `gender` INTEGER NOT NULL, `id_number` TEXT NOT NULL, `id_images_list` TEXT, `name0` TEXT NOT NULL, `name1` TEXT NOT NULL, `name2` TEXT NOT NULL, `nation` TEXT NOT NULL, `real_name` TEXT NOT NULL, `telephone` TEXT NOT NULL, `product_mold` TEXT NOT NULL, PRIMARY KEY(`id`))")
             }
         }
 
     }
 
     abstract fun userDao(): UserDao
+
+
+
     abstract fun newsCategoryDao(): NewsCategoryDao
 
     /**

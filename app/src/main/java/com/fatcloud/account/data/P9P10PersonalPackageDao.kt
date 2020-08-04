@@ -11,7 +11,7 @@ import com.fatcloud.account.entity.local.form.PersonalTaxDraft
 interface P9P10PersonalPackageDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun add(user: NativeFormPersonalPackageP9P10Draft)
+    fun add(model: NativeFormPersonalPackageP9P10Draft)
 
     @Query("SELECT * FROM tb_p9_p10_personal_package_draft")
     fun find(): NativeFormPersonalPackageP9P10Draft?

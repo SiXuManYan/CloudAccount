@@ -23,6 +23,7 @@ import com.fatcloud.account.entity.form.p9p10.NativeFormPersonalPackageP9P10
 import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.event.entity.ImageUploadEvent
+import com.fatcloud.account.extend.LimitInputTextWatcher
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
 import com.fatcloud.account.feature.ocr.RecognizeIDCardResultCallBack
@@ -74,8 +75,6 @@ class FormPersonalPackageP9P10Activity : BaseMVPActivity<FormPersonalPackageP9P1
      * @see Constants.P10
      * */
     private var mMold: String = ""
-
-
 
 
     /** 用户选中的城市名称 */
@@ -158,11 +157,71 @@ class FormPersonalPackageP9P10Activity : BaseMVPActivity<FormPersonalPackageP9P1
             showPhone(true)
             showIdExpirationDate(false)
             hideAddress()
-
             hideShareRatio()
             hideBottomSplit()
         }
 
+        zero_choice_name_et.addTextChangedListener(LimitInputTextWatcher(zero_choice_name_et))
+        first_choice_name_et.addTextChangedListener(LimitInputTextWatcher(first_choice_name_et))
+        second_choice_name_et.addTextChangedListener(LimitInputTextWatcher(second_choice_name_et))
+
+        restoreDraft()
+
+    }
+
+    private fun restoreDraft() {
+        val draft = NativeFormPersonalPackageP9P10Draft.get()
+        if (draft.loginPhone != User.get().username || draft.mold != mMold || draft.productId.isNullOrBlank() || draft.productId != mProductId) {
+            return
+        }
+        draft.apply {
+            detail_addr_et.setText(addr)
+            mAreaName = area
+            addr_value_tv.text = area
+
+            bank_number_et.setText(bankNo)
+            bank_phone_et.setText(bankPhone)
+
+
+
+            draft.businessScopeId?.let {
+                selectPid = it
+            }
+
+            draft.businessScopeName?.let {
+                selectPidNames = it
+                business_scope_value.text = Arrays.toString(it.toArray()).replace("[", "").replace("]", "")
+            }
+
+
+
+            amount_of_funds_et.setText(capital)
+            employees_number_et.setText(employedNum)
+            selectFormId = formId
+            selectFormName = formName
+            formation_value.text = formName
+
+            zero_choice_name_et.setText(name0)
+            first_choice_name_et.setText(name1)
+            second_choice_name_et.setText(name2)
+
+            legal_person_view.apply {
+                setGenderValue(gender)
+                setIdNumberValue(idNumber, true)
+                setNationValue(nation)
+                setNameValue(realName, true)
+                setPhoneValue(tel)
+
+            }
+            idImages?.let {
+                if (!it.isNullOrEmpty()) {
+                    legal_person_view.setServerImage(it as ArrayList<IdentityImg>)
+                }
+
+            }
+
+
+        }
     }
 
     @OnClick(
@@ -234,8 +293,8 @@ class FormPersonalPackageP9P10Activity : BaseMVPActivity<FormPersonalPackageP9P1
                 // 选中的经营范围
                 selectPid = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID)
                 selectPidNames = data.getStringArrayListExtra(Constants.PARAM_SELECT_PID_NAME)
-                business_scope_value.text =
-                    Arrays.toString(selectPidNames.toArray()).replace("[", "").replace("]", "")
+                val replace = Arrays.toString(selectPidNames.toArray()).replace("[", "").replace("]", "")
+                business_scope_value.text = replace
             }
             Constants.REQUEST_CODE_CAMERA -> receiveOcrCamera(data)
 
@@ -309,15 +368,21 @@ class FormPersonalPackageP9P10Activity : BaseMVPActivity<FormPersonalPackageP9P1
             productId = mProductId
             productPriceId = mProductPriceId
             finalMoney = mFinalMoney
+
             addr = detail_addr_et.text.toString().trim()
             area = mAreaName
             bankNo = bank_number_et.text.toString()
             bankPhone = bank_phone_et.text.toString()
             businessScopeId = selectPid
+            businessScopeName = selectPidNames
+
             capital = amount_of_funds_et.text.toString().trim()
 
             employedNum = employees_number_et.text.toString().trim()
             formId = selectFormId
+            formName = selectFormName
+
+
             gender = legal_person_view.genderIndex
             idNumber = legal_person_view.getIdNumberValue()
             idImages = mIdEntityImg
@@ -330,21 +395,23 @@ class FormPersonalPackageP9P10Activity : BaseMVPActivity<FormPersonalPackageP9P1
             mold = mMold
         }
 
+        database.p9p10PersonalPackageDao().add(draft)
+        NativeFormPersonalPackageP9P10Draft.update()
 
-        ToastUtils.showShort("保存成功")
+        ToastUtils.showShort(R.string.save_success)
     }
 
     private fun handlePost() {
         val zeroName = zero_choice_name_et.text.toString().trim()
-        if (!ProductUtils.isThreeChineseName(zeroName)) {
+        if (!ProductUtils.isThreeChineseName(zeroName,getString(R.string.zero_choice_name))) {
             return
         }
         val firstName = first_choice_name_et.text.toString().trim()
-        if (!ProductUtils.isThreeChineseName(firstName)) {
+        if (!ProductUtils.isThreeChineseName(firstName,getString(R.string.first_choice_name))) {
             return
         }
         val secondName = second_choice_name_et.text.toString().trim()
-        if (!ProductUtils.isThreeChineseName(secondName)) {
+        if (!ProductUtils.isThreeChineseName(secondName,getString(R.string.second_choise_name))) {
             return
         }
 

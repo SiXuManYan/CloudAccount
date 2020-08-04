@@ -1,7 +1,6 @@
 package com.fatcloud.account.base.ui
 
 import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
 import com.blankj.utilcode.util.ToastUtils
 import com.fatcloud.account.base.common.BasePresenter

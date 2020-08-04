@@ -83,6 +83,9 @@ object Converters {
         return list
     }
 
+
+
+
     @TypeConverter
     @JvmStatic
     fun listToJson3(value: List<Shareholder>?): String {

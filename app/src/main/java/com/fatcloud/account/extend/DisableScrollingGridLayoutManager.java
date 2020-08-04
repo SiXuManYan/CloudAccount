@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 /**
  * Created by Wangsw on 2020/5/26 0026 14:49.
  * </br>
- * 禁用华东
+ * 禁用滑动
  */
 public class DisableScrollingGridLayoutManager extends GridLayoutManager {
 
