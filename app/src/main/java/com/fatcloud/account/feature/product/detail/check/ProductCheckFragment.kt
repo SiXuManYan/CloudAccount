@@ -84,11 +84,24 @@ class ProductCheckFragment : BaseBottomSheetDialogFragment<ProductCheckPresenter
 
 
             try {
+
+
+
                 // 营业执照变更
                 work_change_tax_rb.text = mPrices[0].name
 
                 // 营业执照+税务登记变更
                 work_change_tax_and_license_rb.text = mPrices[1].name
+
+
+                // 店铺名称变更
+                type_change_store_name_rb.text = mPrices[0].childs[0].name
+
+                // 经营范围变更
+                type_change_business_scope_rb.text = mPrices[0].childs[1].name
+
+                // 店铺名称 + 经营范围变更
+                type_change_name_and_scope.text = mPrices[0].childs[2].name
 
             } catch (e: Exception) {
 
@@ -207,7 +220,7 @@ class ProductCheckFragment : BaseBottomSheetDialogFragment<ProductCheckPresenter
             productPriceId = price.id
             finalMoney = price.money
         } else {
-            val price = mPrices[1].childs[1]
+            val price = mPrices[1].childs[2]
             productPriceId = price.id
             finalMoney = price.money
         }
@@ -226,7 +239,7 @@ class ProductCheckFragment : BaseBottomSheetDialogFragment<ProductCheckPresenter
             productPriceId = price.id
             finalMoney = price.money
         } else {
-            val price = mPrices[1].childs[0]
+            val price = mPrices[1].childs[1]
             productPriceId = price.id
             finalMoney = price.money
         }
@@ -243,6 +256,10 @@ class ProductCheckFragment : BaseBottomSheetDialogFragment<ProductCheckPresenter
 
         if (work_change_tax_rb.isChecked) {
             val price = mPrices[0].childs[0]
+            productPriceId = price.id
+            finalMoney = price.money
+        }else{
+            val price = mPrices[1].childs[0]
             productPriceId = price.id
             finalMoney = price.money
         }
