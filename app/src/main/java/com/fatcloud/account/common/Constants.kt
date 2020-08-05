@@ -4,6 +4,7 @@ object Constants {
 
 
     const val FROM_TYPE_ANDROID = "F1"
+    const val PLATFORM_APP = "APP"
 
 
     const val PR_DEFAULT = "cloud"

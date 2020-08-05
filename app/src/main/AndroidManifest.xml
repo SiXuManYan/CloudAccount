@@ -364,6 +364,7 @@
             android:name=".feature.order.details.personal.packages.PersonalPackageInfoP9P10Activity"
             android:screenOrientation="portrait" />
         <activity android:name=".feature.message.MessageActivity" />
+        <activity android:name=".feature.forms.market.FormMarketActivity" />
 
         <!--        &lt;!&ndash; 消息接收监听器 （用户可自主扩展） &ndash;&gt;
                 &lt;!&ndash; 为保证receiver安全，建议设置不可导出，如需对其他应用开放可通过android：permission进行限制 &ndash;&gt;

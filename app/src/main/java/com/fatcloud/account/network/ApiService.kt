@@ -6,6 +6,7 @@ import com.fatcloud.account.entity.commons.Commons
 import com.fatcloud.account.entity.defray.AliPayInfo
 import com.fatcloud.account.entity.defray.WechatPayInfo
 import com.fatcloud.account.entity.defray.prepare.PreparePay
+import com.fatcloud.account.entity.form.MarketData
 import com.fatcloud.account.entity.home.HomeMix
 import com.fatcloud.account.entity.message.Message
 import com.fatcloud.account.entity.news.NewDetail
@@ -645,5 +646,25 @@ interface ApiService {
         @Query("pageSize") pageSize: Int,
         @Query("tailId") tailId: String? = null
     ): Flowable<Response<JsonArray>>
+
+
+    /**
+     * 获取电子化平台数据
+     */
+    @POST("$ORDER_API/lnGovCn")
+    @FormUrlEncoded
+    fun getMarketInfo(
+        @Field("orderId") orderId: String?,
+        @Field("platform") platform: String? = Constants.PLATFORM_APP
+    ): Flowable<Response<MarketData>>
+
+
+    /**
+     *  提交电子化平台表单
+     */
+    @POST("$ORDER_API/lnGovCn/add")
+    fun addMarketInfo(
+        @Body `in`: JsonObject? = null
+    ): Flowable<Response<JsonElement>>
 
 }

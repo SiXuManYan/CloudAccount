@@ -28,24 +28,16 @@
 
 
     <TextView
+        android:id="@+id/countdown_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="您可在我的订单内查看办理进度"
+        android:text="3 秒后自动跳转至操作页面"
         android:textColor="@color/color_first_level"
         android:textSize="@dimen/font_size_14" />
 
 
-    <TextView
-        android:id="@+id/next_tv"
-        android:layout_width="130dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/shape_bg_4_red"
-        android:gravity="center"
-        android:text="查看"
-        android:textColor="@color/font_white"
-        android:textSize="@dimen/font_size_16" />
+
 
 
 </LinearLayout>

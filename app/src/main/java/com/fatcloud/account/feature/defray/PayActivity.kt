@@ -3,6 +3,7 @@ package com.fatcloud.account.feature.defray
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.DialogInterface
+import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.util.Log
@@ -236,7 +237,11 @@ class PayActivity : BaseMVPActivity<PayPresenter>(), PayView {
     }
 
     override fun orderPaySuccess() {
-        startActivity(CloudPayResultActivity::class.java)
+
+
+        startActivity(CloudPayResultActivity::class.java, Bundle().apply {
+            putString(Constants.PARAM_ORDER_ID, orderId)
+        })
         RxBus.post(OrderPaySuccessEvent())
         finish()
     }
@@ -250,7 +255,7 @@ class PayActivity : BaseMVPActivity<PayPresenter>(), PayView {
 
     override fun checkOrderRealPaymentStatusFailure() {
         RxBus.post(Event(Constants.EVENT_CLOSE_PAY_UNKNOWN))
-        startActivityClearTop(PayUnknownActivity::class.java,null)
+        startActivityClearTop(PayUnknownActivity::class.java, null)
         finish()
 
     }

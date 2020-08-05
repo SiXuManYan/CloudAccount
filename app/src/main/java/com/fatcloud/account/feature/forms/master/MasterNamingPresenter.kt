@@ -19,9 +19,7 @@ class MasterNamingPresenter @Inject constructor(private var view: MasterNamingVi
 
     private val gson = Gson()
 
-    /**
-     * 添加个体营业执照注销
-     */
+
     fun addMasterNaming(lifecycle: LifecycleOwner, model: MasterNaming) {
 
         val bodyJsonStr = gson.toJson(model)

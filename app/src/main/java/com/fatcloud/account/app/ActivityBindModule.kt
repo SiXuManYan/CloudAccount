@@ -34,6 +34,8 @@ import com.fatcloud.account.feature.forms.enterprise.license.FormLicenseEnterpri
 import com.fatcloud.account.feature.forms.enterprise.license.FormLicenseEnterpriseModule
 import com.fatcloud.account.feature.forms.enterprise.license.basic.FormEnterpriseBasicActivity
 import com.fatcloud.account.feature.forms.enterprise.license.basic.FormEnterpriseBasicModule
+import com.fatcloud.account.feature.forms.market.FormMarketActivity
+import com.fatcloud.account.feature.forms.market.FormMarketModule
 import com.fatcloud.account.feature.forms.master.MasterNamingActivity
 import com.fatcloud.account.feature.forms.master.MasterNamingModule
 import com.fatcloud.account.feature.forms.personal.bank.FormPersonalBankActivity
@@ -281,6 +283,11 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [MessageModule::class])
     abstract fun messageActivityInjector(): MessageActivity
+
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [FormMarketModule::class])
+    abstract fun formMarketActivityInjector(): FormMarketActivity
 
 
 }
