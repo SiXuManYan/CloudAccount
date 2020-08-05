@@ -117,7 +117,6 @@ class ProductCheckFragment : BaseBottomSheetDialogFragment<ProductCheckPresenter
         when (view.id) {
 
             R.id.work_change_tax_rb -> {
-                type_change_store_name_rb.isEnabled = true
 
                 try {
                     // 店铺名称变更
@@ -129,6 +128,7 @@ class ProductCheckFragment : BaseBottomSheetDialogFragment<ProductCheckPresenter
                     // 店铺名称 + 经营范围变更
                     type_change_name_and_scope.text = mPrices[0].childs[2].name
 
+                    // 更新价格
                     work_change_tax_and_license_rb.isChecked = false
                     getChangeStoreNameMoney()
                     getBusinessScopeChangeMoney()
@@ -142,22 +142,21 @@ class ProductCheckFragment : BaseBottomSheetDialogFragment<ProductCheckPresenter
 
             }
             R.id.work_change_tax_and_license_rb -> {
-                if (type_change_store_name_rb.isChecked) {
-                    type_change_store_name_rb.isChecked = false
-                }
-                type_change_store_name_rb.isEnabled = false
-                type_change_business_scope_rb.isChecked = true
-
 
                 try {
+                    // 店铺名称变更
+                    type_change_store_name_rb.text = mPrices[1].childs[0].name
+
                     // 经营范围变更
-                    type_change_business_scope_rb.text = mPrices[1].childs[0].name
+                    type_change_business_scope_rb.text = mPrices[1].childs[1].name
 
                     // 店铺名称 + 经营范围变更
-                    type_change_name_and_scope.text = mPrices[1].childs[1].name
+                    type_change_name_and_scope.text = mPrices[1].childs[2].name
 
+
+
+                    // 更新价格
                     work_change_tax_rb.isChecked = false
-
                     getChangeStoreNameMoney()
                     getBusinessScopeChangeMoney()
                     getStoreNameAndScopeChangeMoney()
