@@ -305,7 +305,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             }
         }
 
-        if (mAccountNatureType == Constants.AN1) {
+        if (mAccountNatureType != Constants.AN1) {
             draft.imgsDepositAccount?.let {
                 it.forEachIndexed { index, identityImg ->
                     if (index == 0) {
@@ -618,7 +618,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             return
         }
 
-        if (mAccountNatureType == Constants.AN1) {
+        if (mAccountNatureType != Constants.AN1) {
             if (accountInfoUrl.isBlank()) {
                 ToastUtils.showShort("请上传基本存款账户信息")
                 return
@@ -680,8 +680,8 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
         }
 
         when (mMold) {
-            Constants.P5 -> {
-                presenter.addLicenseChangePersonal(this, model)
+            Constants.P8 -> {
+                presenter.addSelfEmployedBankP8(this, model)
             }
             Constants.P9 -> {
                 presenter.addLicenseChangePersonalP9(this, model)

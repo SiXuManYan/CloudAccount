@@ -183,6 +183,9 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
             registered_address_et.setText(it)
         }
         draft.accountType?.let {
+            mAccountNatureType = it
+        }
+        draft.accountTypeName?.let {
             account_nature_value.text = it
         }
 
@@ -264,7 +267,8 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
             enterpriseCode = trn_et.text.toString().trim()
             addressRegistered = registered_address_et.text.toString().trim()
             currency = "人民币"
-            accountType = account_nature_value.text.toString().trim()
+            accountType = mAccountNatureType
+            accountTypeName = account_nature_value.text.toString().trim()
             addressPost = mAreaName
             addressDetailed = mailing_detail_address_et.text.toString().trim()
 

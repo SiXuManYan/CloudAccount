@@ -574,7 +574,7 @@ interface ApiService {
      *
      */
     @POST("$ORDER_API/addSelfemployedBank")
-    fun addSelfemployedBank(
+    fun addSelfEmployedBankP8(
         @Body `in`: JsonObject? = null
     ): Flowable<Response<PreparePay>>
 

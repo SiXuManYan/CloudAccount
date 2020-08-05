@@ -30,16 +30,16 @@ class FormPersonalBankPresenter @Inject constructor(private var view: FormPerson
     private val gson = Gson()
 
     /**
-     * 添加个体营业执照注销
+     * 添加个体银行对公账户
      */
-    fun addLicenseChangePersonal(lifecycle: LifecycleOwner, model: BankPersonal) {
+    fun addSelfEmployedBankP8(lifecycle: LifecycleOwner, model: BankPersonal) {
 
         val bodyJsonStr = gson.toJson(model)
 
         val jsonObject: JsonObject = gson.fromJson(bodyJsonStr, JsonObject::class.java)
 
         requestApi(lifecycle, Lifecycle.Event.ON_DESTROY,
-            apiService.addSelfemployedBank(jsonObject),
+            apiService.addSelfEmployedBankP8(jsonObject),
             object : BaseHttpSubscriber<PreparePay>(view) {
                 override fun onSuccess(data: PreparePay?) {
 

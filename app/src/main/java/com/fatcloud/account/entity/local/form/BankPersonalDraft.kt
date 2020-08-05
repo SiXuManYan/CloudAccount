@@ -100,6 +100,14 @@ class BankPersonalDraft {
     @ColumnInfo(name = "account_type")
     var accountType: String? = ""
 
+
+
+    /**
+     * 账户类型 名字
+     */
+    @ColumnInfo(name = "account_type_name")
+    var accountTypeName: String? = ""
+
     /** 邮寄地址 */
     @ColumnInfo(name = "address_post")
     var addressPost: String? = ""
@@ -161,6 +169,8 @@ class BankPersonalDraft {
      */
     @ColumnInfo(name = "person_reconciliation")
     var personReconciliation: NamePhoneBean? = NamePhoneBean()
+
+
 
     /**
      * 订单流程id

@@ -88,11 +88,11 @@ public class Camera1Control implements ICameraControl {
             os = new ByteArrayOutputStream(data.length);
             img.compressToJpeg(new Rect(0, 0, optSize.width, optSize.height), 80, os);
             byte[] jpeg = os.toByteArray();
-        int status = detectCallback.onDetect(jpeg, getCameraRotation());
+            int status = detectCallback.onDetect(jpeg, getCameraRotation());
 
-        if (status == 0) {
-            clearPreviewCallback();
-        }
+            if (status == 0) {
+                clearPreviewCallback();
+            }
         } catch (OutOfMemoryError e) {
             // 内存溢出则取消当次操作
         } finally {
@@ -225,22 +225,30 @@ public class Camera1Control implements ICameraControl {
             CameraThreadPool.execute(new Runnable() {
                 @Override
                 public void run() {
-                    camera.takePicture(null, null, new Camera.PictureCallback() {
-                        @Override
-                        public void onPictureTaken(byte[] data, Camera camera) {
-                            startPreview(false);
-                            takingPicture.set(false);
-                            if (onTakePictureCallback != null) {
-                                onTakePictureCallback.onPictureTaken(data);
+
+                    try {
+                        camera.takePicture(null, null, new Camera.PictureCallback() {
+                            @Override
+                            public void onPictureTaken(byte[] data, Camera camera) {
+                                startPreview(false);
+                                takingPicture.set(false);
+                                if (onTakePictureCallback != null) {
+                                    onTakePictureCallback.onPictureTaken(data);
+                                }
                             }
-                        }
-                    });
+                        });
+                    } catch (Exception ignored) {
+
+                    }
+
+
                 }
             });
 
         } catch (RuntimeException e) {
             e.printStackTrace();
-            startPreview(false);;
+            startPreview(false);
+            ;
             takingPicture.set(false);
         }
     }
