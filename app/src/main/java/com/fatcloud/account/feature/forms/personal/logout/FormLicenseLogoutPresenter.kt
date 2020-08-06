@@ -21,6 +21,7 @@ import com.fatcloud.account.common.PermissionUtils
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.entity.order.persional.PersonalLicenseLogout
+import com.fatcloud.account.network.UrlUtil
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import io.reactivex.Observable
@@ -84,7 +85,7 @@ class FormLicenseLogoutPresenter @Inject constructor(private var view: FormLicen
                 Observable.just(destFile)
                     .map { dest ->
                         val future =
-                            Glide.with(activity).asFile().load(BuildConfig.SERVER_HOST + commitmentUrl).submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                            Glide.with(activity).asFile().load(UrlUtil.SERVER_HOST + commitmentUrl).submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                         future.get().copyTo(dest, true)
                         return@map dest
                     }
