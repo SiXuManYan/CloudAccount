@@ -60,6 +60,7 @@
     <string name="login">登录</string>
     <string name="captcha_target_format">验证码已经发送到您的手机 \n%1$s</string>
     <string name="count_down_format" formatted="false">%1$d秒</string>
+    <string name="count_down_market_format" formatted="false">%1$d秒&#160;后自动跳转至操作页面</string>
     <string name="get_again">重新获取</string>
 
     <string name="hint">提示</string>
@@ -212,5 +213,6 @@
     <string name="first_change_name">变更备选名称1</string>
     <string name="second_change_name">变更备选名称2</string>
     <string name="tax_number">纳税人识别号（社会统一代码）</string>
+    <string name="information">办理信息</string>
 
 </resources>

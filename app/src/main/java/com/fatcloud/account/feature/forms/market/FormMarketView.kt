@@ -11,4 +11,7 @@ import com.fatcloud.account.entity.form.MarketData
 interface FormMarketView : BaseView {
     fun bindPageInfo(it: MarketData)
 
+    /** 数据提交成功 */
+    fun addMarketSuccess()
+
 }

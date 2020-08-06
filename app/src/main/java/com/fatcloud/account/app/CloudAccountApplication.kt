@@ -284,7 +284,7 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
     /**
      * 应用进入前台状态
      */
-    fun onForeground() = LogUtils.d("ActivityLife--->", "onForeground")
+    fun onForeground() = Unit
 
     /**
      * 应用进入后台状态

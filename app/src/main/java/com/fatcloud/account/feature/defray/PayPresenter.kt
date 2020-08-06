@@ -15,7 +15,6 @@ import javax.inject.Inject
  */
 class PayPresenter @Inject constructor(private var view: PayView) : BasePresenter(view) {
 
-
     /**
      * 微信统一下单
      */

@@ -46,6 +46,7 @@ class PayActivity : BaseMVPActivity<PayPresenter>(), PayView {
     private var orderId = ""
     private var orderNumber = ""
     private var finalMoney = ""
+    private var mMold = ""
     private var api: IWXAPI? = null
 
     /**
@@ -93,6 +94,8 @@ class PayActivity : BaseMVPActivity<PayPresenter>(), PayView {
                 ToastUtils.showShort("您已取消支付")
             } else {
                 presenter.checkOrderRealPaymentStatus(this, orderId, orderNumber)
+
+//                orderPaySuccess()
             }
         })
     }
@@ -108,6 +111,7 @@ class PayActivity : BaseMVPActivity<PayPresenter>(), PayView {
         orderId = intent.extras!!.getString(Constants.PARAM_ORDER_ID, "")
         orderNumber = intent.extras!!.getString(Constants.PARAM_ORDER_NUMBER, "")
         finalMoney = intent.extras!!.getString(Constants.PARAM_MONEY, "")
+        mMold = intent.extras!!.getString(Constants.PARAM_MOLD, "")
     }
 
     private fun initView() {
@@ -237,10 +241,9 @@ class PayActivity : BaseMVPActivity<PayPresenter>(), PayView {
     }
 
     override fun orderPaySuccess() {
-
-
         startActivity(CloudPayResultActivity::class.java, Bundle().apply {
             putString(Constants.PARAM_ORDER_ID, orderId)
+            putString(Constants.PARAM_MOLD, mMold)
         })
         RxBus.post(OrderPaySuccessEvent())
         finish()

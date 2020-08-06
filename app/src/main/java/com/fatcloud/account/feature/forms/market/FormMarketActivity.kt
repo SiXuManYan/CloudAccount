@@ -34,6 +34,7 @@ class FormMarketActivity : BaseMVPActivity<FormMarketPresenter>(), FormMarketVie
     override fun getLayoutId() = R.layout.activity_form_market
 
     override fun initViews() {
+        setMainTitle(R.string.information)
         if (intent.extras == null || !intent.extras!!.containsKey(Constants.PARAM_ORDER_ID)) {
             finish()
             return
@@ -57,6 +58,11 @@ class FormMarketActivity : BaseMVPActivity<FormMarketPresenter>(), FormMarketVie
             }
         }
 
+    }
+
+    override fun addMarketSuccess() {
+        ToastUtils.showShort("数据提交成功")
+        finish()
     }
 
     @OnClick(

@@ -25,10 +25,10 @@ class CloudPayResultPresenter @Inject constructor(private var view: CloudPayResu
      */
     fun countdown(countdownView: TextView) {
         addSubscribe(
-            Flowable.intervalRange(0, Constants.WAIT_DELAYS + 1L, 0, 1, TimeUnit.SECONDS)
+            Flowable.intervalRange(0, 3L, 0, 1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext {
-                    countdownView.text = appContext.getString(R.string.count_down_format, 2 - it)
+                    countdownView.text = appContext.getString(R.string.count_down_market_format, 2 - it)
                 }
                 .doOnComplete {
                     view.countdownComplete()

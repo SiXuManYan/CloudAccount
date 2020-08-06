@@ -118,7 +118,9 @@ class PayPrepareActivity : BaseMVPActivity<PayPreparePresenter>(), PayPrepareVie
                     Intent(this, PayActivity::class.java)
                         .putExtra(Constants.PARAM_ORDER_ID, orderId)
                         .putExtra(Constants.PARAM_ORDER_NUMBER, orderNo)
-                        .putExtra(Constants.PARAM_MONEY, money), closePayListenerRequest
+                        .putExtra(Constants.PARAM_MONEY, money)
+                        .putExtra(Constants.PARAM_MOLD, mMold)
+                    , closePayListenerRequest
                 )
             }
             else -> {

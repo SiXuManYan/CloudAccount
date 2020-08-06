@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/font_white"
@@ -28,16 +29,40 @@
 
 
     <TextView
-        android:id="@+id/countdown_tv"
+        android:id="@+id/countdown_hint_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="3 秒后自动跳转至操作页面"
         android:textColor="@color/color_first_level"
-        android:textSize="@dimen/font_size_14" />
+        android:textSize="@dimen/font_size_14"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
 
+    <TextView
+        android:id="@+id/common_hint_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="您可在我的订单内查看办理进度"
+        android:textColor="@color/color_first_level"
+        android:textSize="@dimen/font_size_14"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
+    <TextView
+        android:id="@+id/common_next_tv"
+        android:layout_width="130dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/shape_bg_4_red"
+        android:gravity="center"
+        android:text="查看"
+        android:textColor="@color/font_white"
+        android:textSize="@dimen/font_size_16"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
 
 </LinearLayout>

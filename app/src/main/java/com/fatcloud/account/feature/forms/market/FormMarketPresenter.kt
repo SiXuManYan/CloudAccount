@@ -53,7 +53,7 @@ class FormMarketPresenter @Inject constructor(private var view: FormMarketView) 
 
         requestApi(lifecycle, Lifecycle.Event.ON_DESTROY, apiService.addMarketInfo(jsonObject), object : BaseHttpSubscriber<JsonElement>(view) {
             override fun onSuccess(data: JsonElement?) {
-
+                view.addMarketSuccess()
             }
         })
     }
