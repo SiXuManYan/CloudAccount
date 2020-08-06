@@ -89,7 +89,7 @@ public class CommonSmartRefreshFooter extends FrameLayout implements RefreshFoot
 
     @Override
     public int onFinish(@NonNull RefreshLayout refreshLayout, boolean success) {
-        Log.d("footer", "----onFinish");
+//        Log.d("footer", "----onFinish");
         return 0;
     }
 
@@ -115,6 +115,6 @@ public class CommonSmartRefreshFooter extends FrameLayout implements RefreshFoot
             default:
                 break;
         }
-        Log.d("footer", "----onStateChanged ---" + newState.name());
+//        Log.d("footer", "----onStateChanged ---" + newState.name());
     }
 }

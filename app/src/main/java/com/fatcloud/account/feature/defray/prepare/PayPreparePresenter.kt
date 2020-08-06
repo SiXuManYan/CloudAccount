@@ -18,7 +18,6 @@ class PayPreparePresenter @Inject constructor(private var view: PayPrepareView) 
         when (mMold) {
             Constants.P1 -> {
                 database.personalLicenseDraftDao().clear()
-
             }
             Constants.P2 -> {
                 database.enterprisePackageDraftDao().clear()
@@ -40,6 +39,12 @@ class PayPreparePresenter @Inject constructor(private var view: PayPrepareView) 
             }
             Constants.P8 -> {
                 database.bankPersonalDraftDao().clear()
+            }
+            Constants.P9, Constants.P10 -> {
+                database.p9p10PersonalPackageDao().clear()
+            }
+            Constants.P11 -> {
+                // 无表单
             }
             else -> {
             }

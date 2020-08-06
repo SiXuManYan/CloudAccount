@@ -28,14 +28,15 @@ import java.util.*
  * emptyView 会覆盖 headerView
  * 使用 emptyFooter 代替 accidentViewView
  */
-abstract class BaseRefreshListActivity<T, P : BasePresenter> : BaseMVPActivity<P>(),
-    BaseNoJsonListView2<T>, OnRefreshLoadMoreListener {
+abstract class BaseRefreshListActivity<T, P : BasePresenter> : BaseMVPActivity<P>(), BaseNoJsonListView2<T>, OnRefreshLoadMoreListener {
 
 
     @BindView(R.id.parent_container)
     lateinit var parent_container: RelativeLayout
+
     @BindView(R.id.swipe)
     lateinit var swipeLayout: SmartRefreshLayout
+
     @BindView(R.id.recycler)
     lateinit var easyRecyclerView: EasyRecyclerView
 
@@ -49,6 +50,7 @@ abstract class BaseRefreshListActivity<T, P : BasePresenter> : BaseMVPActivity<P
 
 
     private var adapter: RecyclerArrayAdapter<T>? = null
+
     /**
      * 兼容使用PageNumber方式请求列表
      */
@@ -65,7 +67,6 @@ abstract class BaseRefreshListActivity<T, P : BasePresenter> : BaseMVPActivity<P
     var lastItemId: String? = null
 
     protected var disableLoadMoreView = false
-
 
 
     override fun getLayoutId() = R.layout.activity_refresh_list2
@@ -128,7 +129,7 @@ abstract class BaseRefreshListActivity<T, P : BasePresenter> : BaseMVPActivity<P
 
         if (isFirstPage) {
             if (swipeLayout.isRefreshing) {
-                swipeLayout.finishRefresh()
+                swipeLayout.finishRefresh(true)
             }
             adapter?.clear()
             // 第一个，空View
@@ -159,7 +160,6 @@ abstract class BaseRefreshListActivity<T, P : BasePresenter> : BaseMVPActivity<P
                 adapter?.addFooter(noMoreItemView)
             }
         }
-
 
 
     }

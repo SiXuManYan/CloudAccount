@@ -21,6 +21,7 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import com.jude.easyrecyclerview.decoration.DividerDecoration
 import io.reactivex.functions.Consumer
+import java.util.ArrayList
 
 /**
  * Created by Wangsw on 2020/6/3 0003 17:42.
@@ -41,6 +42,9 @@ class OrderListActivity : BaseRefreshListActivity<Order, OrderListPresenter>(), 
         initEvent()
         parent_container.setBackgroundColor(ColorUtils.getColor(R.color.color_list_gray_background))
         recyclerView.setBackgroundColor(ColorUtils.getColor(R.color.color_list_gray_background))
+        presenter.getDraftModule()
+
+
     }
 
     private fun initEvent() {
@@ -52,12 +56,11 @@ class OrderListActivity : BaseRefreshListActivity<Order, OrderListPresenter>(), 
         })
         presenter.subsribeEvent(Consumer {
             when (it.code) {
-                Constants.EVENT_REFRESH_ORDER_LIST_FROM_END_COUNT_DOWN -> {
+                Constants.EVENT_REFRESH_ORDER_LIST_FROM_END_COUNT_DOWN ,
+                Constants.EVENT_NEED_REFRESH-> {
                     loadOnVisible()
                 }
-                Constants.EVENT_NEED_REFRESH -> {
-                    loadOnVisible()
-                }
+
                 else -> {
                 }
             }
@@ -133,6 +136,11 @@ class OrderListActivity : BaseRefreshListActivity<Order, OrderListPresenter>(), 
         )
         itemDecoration.setDrawLastItem(false)
         return itemDecoration
+    }
+
+    override fun bindList(list: ArrayList<Order>, isFirstPage: Boolean, last: Boolean) {
+        // todo 修改
+        super.bindList(list, isFirstPage, last)
     }
 
 

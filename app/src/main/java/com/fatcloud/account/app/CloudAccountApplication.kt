@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.annotation.IdRes
 import androidx.core.app.NotificationCompat
 import androidx.multidex.MultiDex
@@ -20,10 +21,12 @@ import com.baidu.ocr.sdk.OCR
 import com.baidu.ocr.sdk.OnResultListener
 import com.baidu.ocr.sdk.exception.OCRError
 import com.baidu.ocr.sdk.model.AccessToken
+import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
 import com.fatcloud.account.BuildConfig
+import com.fatcloud.account.R
 import com.fatcloud.account.backstage.DataServiceFaker
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.CrashHandler
@@ -118,8 +121,19 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
     private fun initHandle() {
         //工具类初始化
         Utils.init(this)
-        ToastUtils.setBgColor(Color.argb(0xAE, 0, 0, 0))
-        ToastUtils.setMsgColor(Color.WHITE)
+        ToastUtils.setBgColor(ColorUtils.getColor(R.color.font_white))
+        ToastUtils.setMsgColor(ColorUtils.getColor(R.color.color_first_level))
+        ToastUtils.setGravity(Gravity.CENTER, 0, 0)
+
+        if (BuildConfig.DEBUG && BuildConfig.FLAVOR.equals("dev")) {
+            LogUtils.getConfig().isLogSwitch = true
+            LogUtils.getConfig().isSingleTagSwitch = true
+
+        }else{
+            LogUtils.getConfig().isLogSwitch = false
+        }
+
+
         // crash
         RxJavaPlugins.setErrorHandler {
             it.printStackTrace()
@@ -142,7 +156,9 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
      * https://mtj.baidu.com/static/userguide/book/android/adconfig/circle/circle.html
      */
     private fun initBaiduMtj() {
-        if (BuildConfig.DEBUG) {
+
+        /*
+        if (BuildConfig.DEBUG && BuildConfig.FLAVOR.equals("dev")) {
 
             // 打开调试开关，可以查看logcat日志。版本发布前，为避免影响性能，移除此代码
             // 查看方法：adb logcat -s sdkstat
@@ -154,6 +170,7 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
             // 日志输出
             Log.d("BaiduMobStat", "Test DeviceId : $testDeviceId")
         }
+        */
 
         // 开启自动埋点统计，为保证所有页面都能准确统计，建议在Application中调用。
         // 第三个参数：autoTrackWebview：
@@ -199,7 +216,6 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
 
 
     }
-
 
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> =

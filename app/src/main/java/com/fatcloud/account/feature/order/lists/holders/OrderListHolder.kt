@@ -40,22 +40,26 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
 
 
         order_id_tv.text = StringUtils.getString(R.string.order_id_format, data.no)
-        Glide.with(context)
-            .load(data.imgUrl)
-            .apply(
-                RequestOptions().transform(
-                    MultiTransformation(
-                        CenterCrop(),
-                        RoundTransFormation(context, 4)
-                    )
-                )
-            )
-            .error(R.drawable.ic_error_image_load)
-            .into(image_iv)
+
+        if (data.state != Constants.OS_UN_SUBMITTED) {
+            Glide.with(context)
+                .load(data.imgUrl)
+                .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
+                .error(R.drawable.ic_error_image_load)
+                .into(image_iv)
+
+        } else {
+            Glide.with(context)
+                .load(getImageFromMold(data.mold))
+                .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
+                .error(R.drawable.ic_error_image_load)
+                .into(image_iv)
+        }
+
 
 
         content_tv.text = data.productName
-        amount_tv.text = StringUtils.getString(R.string.money_symbol_format, data.money.stripTrailingZeros().toPlainString())
+        amount_tv.text = StringUtils.getString(R.string.money_symbol_format, data.money)
         time_tv.text = data.createDt
         order_status_tv.text = data.stateText
 
@@ -77,7 +81,7 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
             }
             else -> {
                 payment_tv.visibility = View.GONE
-                countdown_tv.visibility =View.GONE
+                countdown_tv.visibility = View.GONE
             }
         }
 
@@ -95,7 +99,7 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
         val millisInFuture: Long = endTime - System.currentTimeMillis()
         if (millisInFuture <= 0) {
             countdown_tv.visibility = View.GONE
-        }else{
+        } else {
             countdown_tv.apply {
                 visibility = View.VISIBLE
                 cancel()
@@ -104,7 +108,7 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
                 setTimeFormat(CountDownTextView.TIME_SHOW_D_H_M_S);
                 setModifierText("订单有效期:");
                 start()
-                addCountDownCallback(object :CountDownTextView.CountDownCallback{
+                addCountDownCallback(object : CountDownTextView.CountDownCallback {
 
 
                     override fun onTick(countDownTextView: CountDownTextView?, millisUntilFinished: Long) = Unit
@@ -122,7 +126,24 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
         }
 
 
+    }
 
+    private fun getImageFromMold(mold: String): Int {
+
+        return when (mold) {
+            Constants.P1 -> R.drawable.ic_image_p1
+            Constants.P2 -> R.drawable.ic_image_p2
+            Constants.P3 -> R.drawable.ic_image_p3
+            Constants.P4 -> R.drawable.ic_image_p4
+            Constants.P5 -> R.drawable.ic_image_p5
+            Constants.P6 -> R.drawable.ic_image_p6
+            Constants.P7 -> R.drawable.ic_image_p7
+            Constants.P8 -> R.drawable.ic_image_p8
+            Constants.P9 -> R.drawable.ic_image_p9
+            Constants.P10 -> R.drawable.ic_image_p10
+            Constants.P11 -> R.drawable.ic_image_p11
+            else -> R.drawable.ic_image_p1
+        }
     }
 
 

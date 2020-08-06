@@ -387,6 +387,9 @@ object Constants {
     /** 已办结 */
     const val OS8 = "OS8"
 
+    /** 未提交 */
+    const val OS_UN_SUBMITTED = "OS_UN_SUBMITTED"
+
     /** 新用户 */
     const val L0 = "L0"
 

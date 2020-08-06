@@ -195,8 +195,9 @@ class CompanyMemberEditView : LinearLayout {
 
     fun initNameTitle(title: CharSequence) {
         ev_00_name_tv.text = title
-        ev_00_name_et.hint = "请输入$title"
     }
+
+
 
 
     /**

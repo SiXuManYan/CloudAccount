@@ -135,7 +135,7 @@
                 android:id="@+id/legal_person_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:visibility="gone" />
+              />
 
 
             <!-- 财务负责人 -->

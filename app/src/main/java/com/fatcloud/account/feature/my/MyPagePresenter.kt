@@ -41,8 +41,7 @@ class MyPagePresenter @Inject constructor(private val view: MyPageView) : BasePr
      */
     fun updateAvatarAndNickname(lifecycleOwner: LifecycleOwner, avatarUrl: String? = null, nickName: String? = null) {
 
-        requestApi(lifecycleOwner, Lifecycle.Event.ON_DESTROY,
-            apiService.updateAvatarAndNickname(avatarUrl, nickName),
+        requestApi(lifecycleOwner, Lifecycle.Event.ON_DESTROY, apiService.updateAvatarAndNickname(avatarUrl, nickName),
             object : BaseHttpSubscriber<JsonElement>(view) {
 
                 override fun onSuccess(data: JsonElement?) {
@@ -70,7 +69,7 @@ class MyPagePresenter @Inject constructor(private val view: MyPageView) : BasePr
         if (!User.isLogon()) {
             return
         }
-        requestApi(lifecycleOwner, Lifecycle.Event.ON_DESTROY, apiService.getNewsUnreadCount(), object : BaseHttpSubscriber<JsonElement>(view) {
+        requestApi(lifecycleOwner, Lifecycle.Event.ON_DESTROY, apiService.getNewsUnreadCount(), object : BaseHttpSubscriber<JsonElement>(view, false) {
             override fun onSuccess(data: JsonElement?) {
                 if (data == null) {
                     return

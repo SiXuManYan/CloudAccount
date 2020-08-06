@@ -334,11 +334,11 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
 
 
         draft.personLegal?.let {
-            legal_person_view.setNameValue(it.name, false)
+            legal_person_view.setNameValue(it.name, true)
 
 
             it.phone?.let { phone ->
-                legal_person_view.setPhoneValue(phone, false)
+                legal_person_view.setPhoneValue(phone, true)
             }
 
         }
@@ -686,7 +686,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             Constants.P9 -> {
                 presenter.addLicenseChangePersonalP9(this, model)
             }
-            Constants.P10->{
+            Constants.P10 -> {
                 presenter.addLicenseChangePersonalP10(this, model)
             }
             else -> {
@@ -706,7 +706,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
                 .putExtra(Constants.PARAM_IMAGE_URL, preparePay.productLogoImgUrl)
                 .putExtra(Constants.PARAM_PRODUCT_NAME, preparePay.productName)
                 .putExtra(Constants.PARAM_DATE, preparePay.createDt)
-                .putExtra(Constants.PARAM_MOLD, Constants.P7)
+                .putExtra(Constants.PARAM_MOLD, mMold)
         )
         finish()
     }

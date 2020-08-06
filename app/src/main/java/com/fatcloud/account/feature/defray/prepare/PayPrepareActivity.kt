@@ -52,6 +52,7 @@ class PayPrepareActivity : BaseMVPActivity<PayPreparePresenter>(), PayPrepareVie
 
     private fun initEvent() {
         presenter.subsribeEventEntity<OrderPaySuccessEvent>(Consumer {
+            // 订单列表
             presenter.deleteDraft(mMold)
             finish()
         })
@@ -75,8 +76,7 @@ class PayPrepareActivity : BaseMVPActivity<PayPreparePresenter>(), PayPrepareVie
             || !intent.extras!!.containsKey(Constants.PARAM_MONEY)
             || !intent.extras!!.containsKey(Constants.PARAM_IMAGE_URL)
             || !intent.extras!!.containsKey(Constants.PARAM_PRODUCT_NAME)
-            || !intent.extras!!.containsKey(Constants.PARAM_DATE)
-        ) {
+            || !intent.extras!!.containsKey(Constants.PARAM_DATE)) {
             finish()
             return
         }
@@ -88,6 +88,7 @@ class PayPrepareActivity : BaseMVPActivity<PayPreparePresenter>(), PayPrepareVie
         createDt = intent.extras!!.getString(Constants.PARAM_DATE, "")
         mMold = intent.extras!!.getString(Constants.PARAM_MOLD, "")
 
+        presenter.deleteDraft(mMold)
         setData()
     }
 

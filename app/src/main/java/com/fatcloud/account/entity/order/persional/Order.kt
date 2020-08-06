@@ -1,14 +1,18 @@
 package com.fatcloud.account.entity.order.persional
 
+import com.fatcloud.account.common.Constants
 import java.math.BigDecimal
 
 /**
  * 订单相关实体
  */
 data class Order(
-    val createDt: String = "",
-    val id: String = "",
-    val imgUrl: String = "",
+
+    var createDt: String = "",
+
+    /** order id  */
+    var id: String = "",
+    var imgUrl: String = "",
 
     /**
      * 产品类型
@@ -20,17 +24,17 @@ data class Order(
      * P6 个体户营业执照注销
      * P7 大师起名
      */
-    val mold: String = "",
-    val money: BigDecimal = BigDecimal.ZERO,
+    var mold: String = "",
+    var money: String? = "",
 
     /**
      * 订单号 order number
      */
-    val no: String = "",
-    val productId: String = "",
-    val productName: String = "",
-    val productPriceId: String = "",
-    val productPriceName: String = "",
+    var no: String? = "",
+    var productId: String? = "",
+    var productName: String? = "",
+    var productPriceId: String? = "",
+    var productPriceName: String? = "",
 
     /**
      * 订单状态类型
@@ -42,14 +46,23 @@ data class Order(
      * OS 6 已受理
      * OS 7 办理中
      * OS 8 已办结
-     * OS unsubmitted 未提交
+     * OS OS_UN_SUBMITTED 未提交
+     * @see Constants.OS1
+     * @see Constants.OS2
+     * @see Constants.OS3
+     * @see Constants.OS4
+     * @see Constants.OS5
+     * @see Constants.OS6
+     * @see Constants.OS7
+     * @see Constants.OS8
+     * @see Constants.OS_UN_SUBMITTED
      */
-    val state: String = "",
+    var state: String = "",
 
     /**
      * 订单状态类型对应的文案
      */
-    val stateText: String = ""
+    var stateText: String = ""
 )
 
 /*
