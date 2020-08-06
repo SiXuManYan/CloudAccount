@@ -7,7 +7,7 @@ import com.fatcloud.account.entity.order.IdentityImg
  */
 data class PersonalLicenseChangeDetail(
     val accountId: String,
-    val businessScope: List<Int>,
+    val businessScope: String,
     val businessScopeNames: String,
     val createDt: String,
     val delFlag: Int,
