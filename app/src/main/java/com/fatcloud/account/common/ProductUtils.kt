@@ -192,17 +192,13 @@ object ProductUtils {
         AlertDialog.Builder(context).setTitle(R.string.hint)
             .setMessage(message)
             .setCancelable(false)
-            .setPositiveButton(
-                R.string.yes,
-                AlertDialog.STANDARD,
-                DialogInterface.OnClickListener { dialog, _ ->
-                    dialog.dismiss()
-                    AppUtils.launchAppDetailsSettings()
-                })
-            .setNegativeButton(
-                R.string.no,
-                AlertDialog.STANDARD,
-                DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
+            .setPositiveButton(R.string.yes, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, _ ->
+                dialog.dismiss()
+                AppUtils.launchAppDetailsSettings()
+            })
+            .setNegativeButton(R.string.no, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, _ ->
+                dialog.dismiss()
+            })
             .create()
             .show()
     }
@@ -365,13 +361,12 @@ object ProductUtils {
      */
     fun is18TaxNumber(string: String): Boolean {
 
-        if (string.length !=18) {
+        if (string.length != 18) {
             ToastUtils.showShort("请输入18位纳税人识别号")
             return false
         }
         return true
     }
-
 
 
     /**

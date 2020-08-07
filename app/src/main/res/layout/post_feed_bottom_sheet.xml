@@ -16,16 +16,7 @@
         android:textColor="@color/color_zero_level"
         android:textSize="@dimen/font_size_16" />
 
-    <TextView
-        android:id="@+id/record"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp50"
-        android:layout_marginTop="@dimen/dp1"
-        android:background="@color/font_white"
-        android:gravity="center"
-        android:text="录制"
-        android:textColor="@color/color_zero_level"
-        android:textSize="@dimen/font_size_16" />
+
 
     <TextView
         android:id="@+id/select_album"

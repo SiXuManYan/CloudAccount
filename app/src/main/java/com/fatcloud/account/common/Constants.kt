@@ -40,7 +40,7 @@ object Constants {
 
     /** 选取附件 */
     const val REQUEST_MEDIA = 1003
-
+    const val REQUEST_CAMERA = 1008
 
     /** 选取经营范围 */
     const val REQUEST_BUSINESS_SCOPE = 1004
