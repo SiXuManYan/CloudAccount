@@ -121,7 +121,7 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
     private fun initHandle() {
         //工具类初始化
         Utils.init(this)
-        ToastUtils.setBgColor(ColorUtils.getColor(R.color.font_white))
+        ToastUtils.setBgColor(ColorUtils.getColor(R.color.color_list_gray_background))
         ToastUtils.setMsgColor(ColorUtils.getColor(R.color.color_first_level))
         ToastUtils.setGravity(Gravity.CENTER, 0, 0)
 

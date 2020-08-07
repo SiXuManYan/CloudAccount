@@ -50,8 +50,6 @@ abstract class BaseMVPActivity<P : BasePresenter> : BaseActivity(), BaseView, Ha
     override fun showError(code: Int, message: String) {
 
         if (code >= 0) {
-
-
             if (code == 401) {
                 AlertDialog.Builder(this)
                     .setTitle("提示")

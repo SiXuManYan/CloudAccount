@@ -181,6 +181,7 @@ object Constants {
 
     const val EVENT_ADD_NEWS_PAGE_VIEWS = 0x104// 增加页面浏览量
     const val EVENT_CHECK_APPLICATION_DEFAULT_DATA = 0x105// 检查application 初始化数据
+    const val EVENT_REFRESH_ORDER_LIST_FROM_DELETE_DRAFT = 0x106// 预订单页删除草稿，刷新订单列表
 
     // 列表数据 key
     const val KEY_DATA = "data"
@@ -308,7 +309,6 @@ object Constants {
      */
     const val I4 = "I4"
     const val I6 = "I6"
-
 
 
     const val I7 = "I7"

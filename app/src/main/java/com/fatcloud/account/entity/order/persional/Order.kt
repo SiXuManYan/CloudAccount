@@ -1,7 +1,6 @@
 package com.fatcloud.account.entity.order.persional
 
 import com.fatcloud.account.common.Constants
-import java.math.BigDecimal
 
 /**
  * 订单相关实体
@@ -62,7 +61,18 @@ data class Order(
     /**
      * 订单状态类型对应的文案
      */
-    var stateText: String = ""
+    var stateText: String = "",
+
+    /**
+     * 用户草稿数据类型
+     */
+    var nativeExtraDraftObject: Any? = null,
+
+    /**
+     * 草稿箱
+     */
+    var nativeProductId: String = ""
+
 )
 
 /*

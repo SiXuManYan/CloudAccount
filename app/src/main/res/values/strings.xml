@@ -135,7 +135,7 @@
     <string name="business_license_name">营业执照名称</string>
     <string name="business_license_name_hint">请输入营业执照名称</string>
 
-    <string name="signature_format">营口市国家税务局：\n营口市地方税务局：\n\u3000\u3000兹有我单位：&#160;%1$s&#160;，\n现委托于于翔红同志（身份证号码:\n210281 19880301 6829）\n前往贵局办理税务登记事宜，望贵局给予办理。\n\n\n\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000承诺人签字</string>
+    <string name="signature_format">营口市国家税务局：\n营口市地方税务局：\n\u3000\u3000兹有我单位：&#160;%1$s&#160;，\n现委托于于翔红同志（身份证号码:\n210281 19880301 6829）\n前往贵局办理税务记账事宜，望贵局给予办理。\n\n\n\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000承诺人签字</string>
 
 
     <string name="album_need_permission">无法访问系统相册，是否打开应用设置授权？</string>

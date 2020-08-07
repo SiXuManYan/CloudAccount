@@ -707,7 +707,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
-                    android:text="省"
+                    android:text="地址"
                     android:textColor="@color/color_first_level" />
 
                 <TextView

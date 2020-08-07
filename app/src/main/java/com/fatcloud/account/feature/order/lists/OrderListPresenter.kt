@@ -5,6 +5,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseJsonArrayHttpSubscriber
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.common.TimeUtil
 import com.fatcloud.account.data.CloudDataBase
 import com.fatcloud.account.entity.form.p9p10.NativeFormPersonalPackageP9P10Draft
 import com.fatcloud.account.entity.local.form.*
@@ -38,42 +39,148 @@ class OrderListPresenter @Inject constructor(private var orderListView: OrderLis
 
     }
 
-    fun getDraftModule() {
+    fun getDraftModule() :ArrayList<Order> {
 
-        var list: ArrayList<Order> = ArrayList()
+        val list: ArrayList<Order> = ArrayList()
 
         // P1
         val p1 = PersonalLicenseDraft.get()
 
         if (!p1.productId.isNullOrBlank()) {
-                Order().apply {
-                    money = p1.finalMoney
-                    productId = p1.productId
-                    productPriceId = p1.productPriceId
-                    productName =  "个体户营业执照"
-                    productPriceName = productName
-                    mold = Constants.P1
-                    state = Constants.OS_UN_SUBMITTED
-                    stateText = "未提交"
-                }
-            }
-
-
+            list.add(Order().apply {
+                money = p1.finalMoney
+                productId = p1.productId
+                productPriceId = p1.productPriceId
+                productPriceName = productName
+                productName = "个体户营业执照"
+                mold = Constants.P1
+                state = Constants.OS_UN_SUBMITTED
+                stateText = "未提交"
+                nativeExtraDraftObject = p1
+                createDt = TimeUtil.getDateTimeFromMillisecond(System.currentTimeMillis())
+            })
+        }
 
         // P2
-        EnterprisePackageDraft.get()
+        val p2 = EnterprisePackageDraft.get()
+        if (!p2.productId.isNullOrBlank()) {
+            list.add(
+                Order().apply {
+                    money = p2.finalMoney
+                    productId = p2.productId
+                    productPriceId = p2.productPriceId
+                    productName = "企业套餐办理"
+                    productPriceName = productName
+                    mold = Constants.P2
+                    state = Constants.OS_UN_SUBMITTED
+                    stateText = "未提交"
+                    nativeExtraDraftObject = p2
+                    createDt = TimeUtil.getDateTimeFromMillisecond(System.currentTimeMillis())
+                }
+            )
+        }
+
 
         //P3
-        PersonalBookkeepingDraft.get()
+        val p3 = PersonalBookkeepingDraft.get()
+        if (!p3.productId.isNullOrBlank()) {
+            list.add(
+                Order().apply {
+                    money = p3.finalMoney
+                    productId = p3.productId
+                    productPriceId = p3.productPriceId
+                    productName = "个体户代理记账"
+                    productPriceName = productName
+                    mold = Constants.P3
+                    state = Constants.OS_UN_SUBMITTED
+                    stateText = "未提交"
+                    nativeExtraDraftObject = p3
+                    createDt = TimeUtil.getDateTimeFromMillisecond(System.currentTimeMillis())
+                }
+            )
+        }
+
 
         // P4
-        PersonalTaxDraft.get()
+        val p4 = PersonalTaxDraft.get()
+        if (!p4.productId.isNullOrBlank()) {
+            list.add(
+                Order().apply {
+                    money = p4.finalMoney
+                    productId = p4.productId
+                    productPriceId = p4.productPriceId
+                    productName = "个体户代理记账"
+                    productPriceName = productName
+                    mold = Constants.P4
+                    state = Constants.OS_UN_SUBMITTED
+                    stateText = "未提交"
+                    nativeExtraDraftObject = p4
+                    createDt = TimeUtil.getDateTimeFromMillisecond(System.currentTimeMillis())
+                }
+            )
+        }
+
 
         // P8
-        BankPersonalDraft.get()
+        val p8 = BankPersonalDraft.get()
+        if (!p8.productId.isNullOrBlank() && p8.mold == Constants.P8) {
+            list.add(
+                Order().apply {
+                    money = p8.finalMoney
+                    productId = p8.productId
+                    productPriceId = p8.productPriceId
+                    productName = "个体户银行对公账户"
+                    productPriceName = productName
+                    mold = Constants.P8
+                    state = Constants.OS_UN_SUBMITTED
+                    stateText = "未提交"
+                    nativeExtraDraftObject = p8
+                    createDt = TimeUtil.getDateTimeFromMillisecond(System.currentTimeMillis())
+                }
+            )
+        }
 
-        // P9 P10
-        NativeFormPersonalPackageP9P10Draft.get()
+
+        // P9
+        val p9 = NativeFormPersonalPackageP9P10Draft.get()
+        if (!p9.productId.isNullOrBlank() && p9.mold == Constants.P9) {
+            list.add(
+                Order().apply {
+                    money = p9.finalMoney
+                    productId = p9.productId
+                    productPriceId = p9.productPriceId
+                    productName = "个体户套餐"
+                    productPriceName = productName
+                    mold = Constants.P9
+                    state = Constants.OS_UN_SUBMITTED
+                    stateText = "未提交"
+                    nativeExtraDraftObject = p9
+                    createDt = TimeUtil.getDateTimeFromMillisecond(System.currentTimeMillis())
+                }
+            )
+        }
+
+        // P10
+        val p10 = NativeFormPersonalPackageP9P10Draft.get()
+        if (!p10.productId.isNullOrBlank() && p9.mold == Constants.P10) {
+            list.add(
+                Order().apply {
+                    money = p10.finalMoney
+                    productId = p10.productId
+                    productPriceId = p10.productPriceId
+                    productName = "个人独资企业套餐"
+                    productPriceName = productName
+                    mold = Constants.P10
+                    state = Constants.OS_UN_SUBMITTED
+                    stateText = "未提交"
+                    nativeExtraDraftObject = p10
+                    createDt = TimeUtil.getDateTimeFromMillisecond(System.currentTimeMillis())
+                }
+            )
+        }
+
+
+        return list
 
 
     }

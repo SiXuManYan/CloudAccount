@@ -191,6 +191,4 @@ class BankPersonalDraft {
     var mold: String? = ""
 
 
-
-
 }

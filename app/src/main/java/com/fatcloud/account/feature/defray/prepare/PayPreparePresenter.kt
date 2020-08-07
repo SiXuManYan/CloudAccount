@@ -3,6 +3,10 @@ package com.fatcloud.account.feature.defray.prepare
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.data.CloudDataBase
+import com.fatcloud.account.entity.form.p9p10.NativeFormPersonalPackageP9P10Draft
+import com.fatcloud.account.entity.local.form.*
+import com.fatcloud.account.event.Event
+import com.fatcloud.account.event.RxBus
 import javax.inject.Inject
 
 /**
@@ -15,18 +19,19 @@ class PayPreparePresenter @Inject constructor(private var view: PayPrepareView) 
     lateinit var database: CloudDataBase @Inject set
 
     fun deleteDraft(mMold: String) {
+
         when (mMold) {
             Constants.P1 -> {
-                database.personalLicenseDraftDao().clear()
+                PersonalLicenseDraft.clearAll()
             }
             Constants.P2 -> {
-                database.enterprisePackageDraftDao().clear()
+                EnterprisePackageDraft.clearAll()
             }
             Constants.P3 -> {
-                database.personalBookkeepingDraftDao().clear()
+                PersonalBookkeepingDraft.clearAll()
             }
             Constants.P4 -> {
-                database.personalTaxDraftDao().clear()
+                PersonalTaxDraft.clearAll()
             }
             Constants.P5 -> {
                 // 不需要保存功能
@@ -38,10 +43,10 @@ class PayPreparePresenter @Inject constructor(private var view: PayPrepareView) 
                 // 不需要保存功能
             }
             Constants.P8 -> {
-                database.bankPersonalDraftDao().clear()
+                BankPersonalDraft.clearAll()
             }
             Constants.P9, Constants.P10 -> {
-                database.p9p10PersonalPackageDao().clear()
+                NativeFormPersonalPackageP9P10Draft.clearAll()
             }
             Constants.P11 -> {
                 // 无表单
@@ -49,6 +54,7 @@ class PayPreparePresenter @Inject constructor(private var view: PayPrepareView) 
             else -> {
             }
         }
+        RxBus.post(Event(Constants.EVENT_REFRESH_ORDER_LIST_FROM_DELETE_DRAFT))
     }
 
 }

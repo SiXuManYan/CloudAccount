@@ -12,6 +12,7 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.event.Event
 import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
+import com.fatcloud.account.feature.MainActivity
 import com.fatcloud.account.feature.defray.PayActivity
 import com.fatcloud.account.feature.order.lists.OrderListActivity
 import com.fatcloud.account.view.dialog.AlertDialog
@@ -137,11 +138,12 @@ class PayPrepareActivity : BaseMVPActivity<PayPreparePresenter>(), PayPrepareVie
             .setCancelable(false)
             .setPositiveButton("返回首页", AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
                 RxBus.post(Event(Constants.EVENT_SWITCH_HOME_TAB))
+                startActivityClearTop(MainActivity::class.java,null)
                 super.onBackPressed()
                 dialog.dismiss()
             })
             .setNegativeButton("查看订单", AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
-                startActivity(OrderListActivity::class.java)
+                startActivityClearTop(OrderListActivity::class.java,null)
                 super.onBackPressed()
                 dialog.dismiss()
             })

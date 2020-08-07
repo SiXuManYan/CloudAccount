@@ -38,24 +38,12 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
         }
 
 
-
-        order_id_tv.text = StringUtils.getString(R.string.order_id_format, data.no)
-
-        if (data.state != Constants.OS_UN_SUBMITTED) {
-            Glide.with(context)
-                .load(data.imgUrl)
-                .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
-                .error(R.drawable.ic_error_image_load)
-                .into(image_iv)
+        if (data.state == Constants.OS_UN_SUBMITTED) {
+            setDraftData(data)
 
         } else {
-            Glide.with(context)
-                .load(getImageFromMold(data.mold))
-                .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
-                .error(R.drawable.ic_error_image_load)
-                .into(image_iv)
+            setServerData(data)
         }
-
 
 
         content_tv.text = data.productName
@@ -63,9 +51,9 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
         time_tv.text = data.createDt
         order_status_tv.text = data.stateText
 
+
         val layoutParams = card_cv.layoutParams as LinearLayout.LayoutParams
         layoutParams.apply {
-
             topMargin = if (adapterPosition == 0) {
                 SizeUtils.dp2px(10f)
             } else {
@@ -74,7 +62,6 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
         }
 
         when (data.state) {
-
             Constants.OS1, Constants.OS4 -> {
                 payment_tv.visibility = View.VISIBLE
                 initCountDown(data)
@@ -84,7 +71,32 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
                 countdown_tv.visibility = View.GONE
             }
         }
+    }
 
+
+    private fun setServerData(data: Order) {
+
+        order_id_tv.apply {
+            visibility = View.VISIBLE
+            text = StringUtils.getString(R.string.order_id_format, data.no)
+        }
+        tag_iv.visibility = View.VISIBLE
+
+        Glide.with(context)
+            .load(data.imgUrl)
+            .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
+            .error(R.drawable.ic_error_image_load)
+            .into(image_iv)
+    }
+
+    private fun setDraftData(data: Order) {
+        order_id_tv.visibility = View.GONE
+        tag_iv.visibility = View.GONE
+        Glide.with(context)
+            .load(getImageFromMold(data.mold))
+            .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
+            .error(R.drawable.ic_error_image_load)
+            .into(image_iv)
 
     }
 

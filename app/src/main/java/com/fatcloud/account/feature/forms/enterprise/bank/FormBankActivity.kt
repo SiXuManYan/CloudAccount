@@ -501,6 +501,14 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
             ToastUtils.showShort("请输入财务负责人股份占比")
             return
         }
+        try {
+            if (shareRatioValue.toFloat() > 100f) {
+                ToastUtils.showShort("股份占比总和不能大于100%")
+                return
+            }
+        } catch (e: Exception) {
+        }
+
 
         if (business_license_url.isBlank()) {
             ToastUtils.showShort("请上传营业执照")
