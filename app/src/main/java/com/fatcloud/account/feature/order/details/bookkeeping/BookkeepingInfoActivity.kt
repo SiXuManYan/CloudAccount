@@ -3,6 +3,7 @@ package com.fatcloud.account.feature.order.details.bookkeeping
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.entity.order.detail.BookkeepingDetail
 import com.fatcloud.account.entity.order.persional.PersonalInfo
 import kotlinx.android.synthetic.main.activity_bookkeeping_info.*
 
@@ -49,7 +50,7 @@ class BookkeepingInfoActivity : BaseMVPActivity<BookkeepingInfoPresenter>(), Boo
         presenter.getRegistrantInfo(this, orderId)
     }
 
-    override fun bindDetailInfo(data: PersonalInfo) {
+    override fun bindDetailInfo(data: BookkeepingDetail) {
 
 
         when (data.state) {

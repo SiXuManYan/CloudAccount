@@ -12,6 +12,7 @@ import com.fatcloud.account.entity.message.Message
 import com.fatcloud.account.entity.news.NewDetail
 import com.fatcloud.account.entity.news.News
 import com.fatcloud.account.entity.news.NewsCategory
+import com.fatcloud.account.entity.order.detail.BookkeepingDetail
 import com.fatcloud.account.entity.order.detail.PersonalLicenseChangeDetail
 import com.fatcloud.account.entity.order.detail.PersonalLicenseLogoutDetail
 import com.fatcloud.account.entity.order.detail.PersonalPackageDetail
@@ -246,6 +247,17 @@ interface ApiService {
     fun getPersonalOrderDetail(
         @Query("id") id: String? = null
     ): Flowable<Response<PersonalInfo>>
+
+
+    /**
+     * 个人业务详情
+     * @param id 订单id
+     */
+    @GET("$ORDER_API/detail")
+    fun getBookkeepingDetail(
+        @Query("id") id: String? = null
+    ): Flowable<Response<BookkeepingDetail>>
+
 
 
     /**

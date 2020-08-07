@@ -4,6 +4,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
+import com.fatcloud.account.entity.order.detail.BookkeepingDetail
 import com.fatcloud.account.entity.order.persional.PersonalInfo
 import javax.inject.Inject
 
@@ -18,11 +19,11 @@ class BookkeepingInfoPresenter @Inject constructor(private var view: Bookkeeping
 
     fun getRegistrantInfo(lifecycle: LifecycleOwner, orderId: String?) {
         requestApi(lifecycle, Lifecycle.Event.ON_DESTROY,
-            apiService.getPersonalOrderDetail(orderId),
+            apiService.getBookkeepingDetail(orderId),
 
-            object : BaseHttpSubscriber<PersonalInfo>(view){
+            object : BaseHttpSubscriber<BookkeepingDetail>(view){
 
-                override fun onSuccess(data: PersonalInfo?) {
+                override fun onSuccess(data: BookkeepingDetail?) {
 
                     data?.let {
                         view.bindDetailInfo(data)

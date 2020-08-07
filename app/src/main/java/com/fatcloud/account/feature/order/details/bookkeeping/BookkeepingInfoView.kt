@@ -1,6 +1,7 @@
 package com.fatcloud.account.feature.order.details.bookkeeping
 
 import com.fatcloud.account.base.common.BaseTaskView
+import com.fatcloud.account.entity.order.detail.BookkeepingDetail
 import com.fatcloud.account.entity.order.persional.PersonalInfo
 
 /**
@@ -9,5 +10,5 @@ import com.fatcloud.account.entity.order.persional.PersonalInfo
  *
  */
 interface BookkeepingInfoView :BaseTaskView{
-    fun bindDetailInfo(data: PersonalInfo)
+    fun bindDetailInfo(data: BookkeepingDetail)
 }
