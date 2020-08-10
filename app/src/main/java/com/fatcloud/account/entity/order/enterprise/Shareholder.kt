@@ -19,10 +19,11 @@ class Shareholder(
      * SH1 	企业法人
      * SH2 	监事
      * SH3  股东
+     * SH4  财务负责人
      * @see Constants.SH1
      * @see Constants.SH2
      * @see Constants.SH3
-     * @see Constants.SH4_N
+     * @see Constants.SH4
      */
     val mold: String,
 

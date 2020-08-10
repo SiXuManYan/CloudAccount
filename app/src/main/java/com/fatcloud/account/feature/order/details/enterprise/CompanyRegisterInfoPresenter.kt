@@ -50,7 +50,7 @@ class CompanyRegisterInfoPresenter @Inject constructor(private var companyRegist
                                     add(IdentityImg(imgUrl = CommonUtils.convertString(it.financeIdnoImgUrlA), mold = Constants.I1))
                                     add(IdentityImg(imgUrl = CommonUtils.convertString(it.financeIdnoImgUrlB), mold = Constants.I2))
                                 },
-                                mold = Constants.SH4_N,
+                                mold = Constants.SH4,
                                 name = CommonUtils.convertString(it.financeName),
                                 phone = CommonUtils.convertString(it.financePhone),
                                 idnoDate = "",

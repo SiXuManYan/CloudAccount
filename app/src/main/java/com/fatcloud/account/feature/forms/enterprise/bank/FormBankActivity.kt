@@ -160,7 +160,7 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
 
         // 财务负责人
         finance_ev.apply {
-            currentMold = Constants.SH4_N
+            currentMold = Constants.SH4
             initHighlightTitle("财务负责人信息")
             initNameTitle("财务负责人姓名")
             hideAddress()
@@ -181,7 +181,7 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
 
             it.forEachIndexed { index, shareholder ->
 
-                if (shareholder.mold == Constants.SH4_N) {
+                if (shareholder.mold == Constants.SH4) {
                     finance_ev.apply {
                         setNameValue(shareholder.name, true)
                         setIdNumberValue(shareholder.idno, true)

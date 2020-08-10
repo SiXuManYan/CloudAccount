@@ -215,10 +215,7 @@ object Constants {
     const val SH3 = "SH3"
 
 
-    /** 财务负责人(本地维护字段) */
-    const val SH4_N = "SH4_N"
-
-    /** 财务负责人*/
+    /** 财务负责人 */
     const val SH4 = "SH4"
 
 
