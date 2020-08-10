@@ -42,7 +42,7 @@ import javax.inject.Inject
  * </br>
  * 个体户银行对公账户表单 P8
  * 个体户套餐银行对公账户表单 P9 (提交接口不同)
- *
+ *个人独资银行对公账户表单 P10 (提交接口不同)
  */
 class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), FormPersonalBankView {
 
@@ -631,8 +631,10 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
                 ToastUtils.showShort("请上传基本存款账户信息")
                 return
             }
-
         }
+
+
+
 
 
         val model = BankPersonal().apply {

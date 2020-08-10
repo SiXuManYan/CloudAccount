@@ -212,6 +212,17 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             initShareRatioHint(getString(R.string.share_ratio_hint_2))
         }
 
+        // 财务负责人
+        financial_manager_ev.apply {
+            currentMold = Constants.SH4
+            initHighlightTitle(getString(R.string.financial_manager_info))
+            initNameTitle(getString(R.string.financial_manager_name))
+            initIdAddressHint("请输入财务负责人身份证地址")
+            initPhoneHint("请输入财务负责人联系电话")
+            initShareRatioHint(getString(R.string.share_ratio_hint_2))
+
+        }
+
         // 默认股东信息
         shareholder_ev.apply {
             currentMold = Constants.SH3
@@ -263,6 +274,18 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
                             setShareRatioValue(shareholder.shareProportion, true)
                         }
                     }
+                    Constants.SH4->{
+
+                        financial_manager_ev.apply {
+                            setNameValue(shareholder.name, true)
+                            setIdNumberValue(shareholder.idno, true)
+                            setIdAddressValue(shareholder.idnoAddr, true)
+                            setPhoneValue(shareholder.phone, true)
+                            setShareRatioValue(shareholder.shareProportion, true)
+                        }
+
+                    }
+
                     Constants.SH3 -> {
 
                         if (shareholder.isExtra != null && shareholder.isExtra) {
@@ -320,6 +343,8 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
                     legalPersonView = legal_person_ev,
                     supervisorView = supervisor_ev,
                     shareholderView = shareholder_ev,
+                    financialManagerView = financial_manager_ev,
+
                     detailAddress = mDetailAddress,
                     areaName = mAreaName,
                     bankNumber = mBankNumber,
@@ -351,6 +376,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             legal_person_ev.getShareHolder(true),
             supervisor_ev.getShareHolder(true),
             shareholder_ev.getShareHolder(true),
+            financial_manager_ev.getShareHolder(true),
             shareholder_more_container
         )
         database.enterprisePackageDraftDao().updateShareHolder(shareHolders, productId = mProductId)

@@ -71,6 +71,8 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
         legalPersonView: CompanyMemberEditView,
         supervisorView: CompanyMemberEditView,
         shareholderView: CompanyMemberEditView,
+        financialManagerView: CompanyMemberEditView,
+
         detailAddress: String,
         areaName: String,
         bankNumber: String,
@@ -172,6 +174,44 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
         if (!ProductUtils.isPhoneNumber(phoneValue1, "监事")) {
             return
         }
+        // 财务负责人
+
+
+        if (!ProductUtils.hasIdCardUrl(financialManagerView.frontImageUrl, true, "财务负责人")) {
+            return
+        }
+        if (!ProductUtils.hasIdCardUrl(financialManagerView.backImageUrl, false, "财务负责人")) {
+            return
+        }
+
+        if (financialManagerView.getNameValue().isBlank()) {
+            ToastUtils.showShort("请输入财务负责人姓名")
+            return
+        }
+        val idStr = financialManagerView.getIdNumberValue()
+        if (idStr.isBlank()) {
+            ToastUtils.showShort("请输入财务负责人身份证号")
+            return
+        }
+
+        if (!ProductUtils.isIdCardNumber(idStr, "财务负责人")) {
+            return
+        }
+
+        if (financialManagerView.getIdAddressValue().isBlank()) {
+            ToastUtils.showShort("请输入财务负责人身份证地址")
+            return
+        }
+        val phoneStr = financialManagerView.getPhoneValue()
+        if (phoneStr.isBlank()) {
+            ToastUtils.showShort("请输入财务负责人联系电话")
+            return
+        }
+
+        if (!ProductUtils.isPhoneNumber(phoneStr, "财务负责人")) {
+            return
+        }
+
 
         // 股东
         if (!ProductUtils.hasIdCardUrl(shareholderView.frontImageUrl, true, "股东")) {
@@ -262,6 +302,8 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
                 legalPersonView.getShareHolder(),
                 supervisorView.getShareHolder(),
                 shareholderView.getShareHolder(),
+                financialManagerView.getShareHolder(),
+
                 shareholderMoreContainer
             )
         }
@@ -297,6 +339,7 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
         shareHolder: Shareholder,
         shareHolder1: Shareholder,
         shareHolder2: Shareholder,
+        shareHolder3: Shareholder,
         shareholderMoreContainer: LinearLayout
     ): List<Shareholder> {
 
@@ -304,6 +347,7 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
         holders.add(shareHolder)
         holders.add(shareHolder1)
         holders.add(shareHolder2)
+        holders.add(shareHolder3)
 
         if (shareholderMoreContainer.childCount > 0) {
             val max = shareholderMoreContainer.childCount

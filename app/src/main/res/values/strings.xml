@@ -110,11 +110,15 @@
     <string name="registered_capital">注册资金(万元)</string>
     <string name="account_nature">账户性质</string>
     <string name="legal_person_info">法人信息</string>
+    <string name="financial_manager_info">财务负责人信息</string>
     <string name="supervisor_info">监事信息</string>
     <string name="shareholder_info">股东信息(法人也需要填写)</string>
     <string name="shareholder_info2">股东信息</string>
     <string name="supervisor_name">监事姓名</string>
     <string name="supervisor_name_hint">请输入监事姓名</string>
+    <string name="financial_manager_name">财务负责人姓名</string>
+    <string name="financial_manager_name_hint">请输入财务负责人姓名</string>
+
     <string name="shareholder_name">股东姓名</string>
     <string name="shareholder_name_hint">请输入股东姓名</string>
     <string name="ratio_format">%1$s\u25</string>

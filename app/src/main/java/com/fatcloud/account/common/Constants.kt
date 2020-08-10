@@ -218,6 +218,9 @@ object Constants {
     /** 财务负责人(本地维护字段) */
     const val SH4_N = "SH4_N"
 
+    /** 财务负责人*/
+    const val SH4 = "SH4"
+
 
     // 产品类型
     /** 个体户营业执照办理 */

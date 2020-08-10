@@ -92,6 +92,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <!-- 财务负责人 -->
+            <com.fatcloud.account.view.CompanyMemberEditView
+                android:id="@+id/financial_manager_ev"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
             <!-- 股东信息 -->
             <com.fatcloud.account.view.CompanyMemberEditView
                 android:id="@+id/shareholder_ev"

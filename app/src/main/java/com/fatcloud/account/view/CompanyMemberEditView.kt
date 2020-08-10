@@ -44,6 +44,7 @@ class CompanyMemberEditView : LinearLayout {
      * @see Constants.SH1
      * @see Constants.SH2
      * @see Constants.SH3
+     * @see Constants.SH4
      */
     var currentMold = ""
 
