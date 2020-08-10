@@ -14,6 +14,7 @@ import com.fatcloud.account.base.ui.BaseBottomSheetDialogFragment
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.entity.product.ProductDetail
+import com.fatcloud.account.extend.LimitInputTextWatcher
 import com.fatcloud.account.extend.RoundTransFormation
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import kotlinx.android.synthetic.main.fragment_product_input.*
@@ -49,6 +50,8 @@ class ProductInputFragment : BaseBottomSheetDialogFragment<ProductInputPresenter
         if (arguments != null) {
             productDetail = arguments!!.getSerializable(Constants.PARAM_DATA) as ProductDetail
         }
+
+        name_et.addTextChangedListener(LimitInputTextWatcher(name_et))
 
         productDetail?.let {
 
