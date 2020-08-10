@@ -161,10 +161,8 @@ class FormPersonalPackageP9P10Activity : BaseMVPActivity<FormPersonalPackageP9P1
             hideBottomSplit()
         }
 
-        zero_choice_name_et.addTextChangedListener(LimitInputTextWatcher(zero_choice_name_et))
-        first_choice_name_et.addTextChangedListener(LimitInputTextWatcher(first_choice_name_et))
-        second_choice_name_et.addTextChangedListener(LimitInputTextWatcher(second_choice_name_et))
 
+        ProductUtils.onlySupportChineseInput(zero_choice_name_et, first_choice_name_et, second_choice_name_et)
         restoreDraft()
 
     }
@@ -403,15 +401,15 @@ class FormPersonalPackageP9P10Activity : BaseMVPActivity<FormPersonalPackageP9P1
 
     private fun handlePost() {
         val zeroName = zero_choice_name_et.text.toString().trim()
-        if (!ProductUtils.isThreeChineseName(zeroName,getString(R.string.zero_choice_name))) {
+        if (!ProductUtils.isThreeChineseName(zeroName, getString(R.string.zero_choice_name))) {
             return
         }
         val firstName = first_choice_name_et.text.toString().trim()
-        if (!ProductUtils.isThreeChineseName(firstName,getString(R.string.first_choice_name))) {
+        if (!ProductUtils.isThreeChineseName(firstName, getString(R.string.first_choice_name))) {
             return
         }
         val secondName = second_choice_name_et.text.toString().trim()
-        if (!ProductUtils.isThreeChineseName(secondName,getString(R.string.second_choise_name))) {
+        if (!ProductUtils.isThreeChineseName(secondName, getString(R.string.second_choise_name))) {
             return
         }
 

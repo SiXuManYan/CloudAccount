@@ -95,6 +95,7 @@ class MasterNamingActivity : BaseMVPActivity<MasterNamingPresenter>(), MasterNam
 
     private fun initView() {
         setMainTitle("法人信息")
+        ProductUtils.onlySupportChineseInput(legal_name_et)
     }
 
     @OnClick(

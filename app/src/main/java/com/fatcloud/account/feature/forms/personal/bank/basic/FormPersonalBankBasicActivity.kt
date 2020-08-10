@@ -150,6 +150,8 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
             }
         }
 
+        ProductUtils.onlySupportChineseInput(name_et)
+
         restoreDraft()
     }
 

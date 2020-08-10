@@ -72,6 +72,7 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
 
     private fun initView() {
         setMainTitle("开立银行对公账户")
+        ProductUtils.onlySupportChineseInput(reconciliation_name_et)
         restoreDraft()
     }
 

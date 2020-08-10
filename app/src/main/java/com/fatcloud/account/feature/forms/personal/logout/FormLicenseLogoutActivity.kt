@@ -154,7 +154,7 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
 
     private fun initView() {
         setMainTitle("办理信息")
-
+        ProductUtils.onlySupportChineseInput(legal_name_et)
         if (mIndex == 0) {
             // 选择第一项 （营业执照注销时，才显示承诺书）
             commitment_container_ll.visibility = View.VISIBLE

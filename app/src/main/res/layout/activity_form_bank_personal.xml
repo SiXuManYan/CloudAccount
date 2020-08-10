@@ -134,8 +134,7 @@
             <com.fatcloud.account.view.CompanyMemberEditView
                 android:id="@+id/legal_person_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-              />
+                android:layout_height="wrap_content" />
 
 
             <!-- 财务负责人 -->

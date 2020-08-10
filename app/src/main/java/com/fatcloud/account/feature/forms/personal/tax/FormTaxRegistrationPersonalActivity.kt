@@ -128,6 +128,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
 
     private fun initView() {
         setMainTitle("办理信息")
+        ProductUtils.onlySupportChineseInput(legal_name_et)
         restoreDraft()
     }
 

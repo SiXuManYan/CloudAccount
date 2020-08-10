@@ -20,13 +20,7 @@
             android:paddingBottom="400dp">
 
 
-
-
             <!-- 民族 -->
-
-
-
-
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -181,8 +175,6 @@
 
 
             </RelativeLayout>
-
-
 
 
             <!-- 经营范围 -->
@@ -552,9 +544,9 @@
             android:layout_weight="1"
             android:background="@color/color_first_level"
             android:gravity="center"
+            android:text="保存"
             android:textColor="@color/font_white"
-            android:textSize="@dimen/font_size_14"
-            android:text="保存" />
+            android:textSize="@dimen/font_size_14" />
 
         <TextView
             android:id="@+id/bottom_right_tv"
@@ -563,9 +555,9 @@
             android:layout_weight="1"
             android:background="@color/color_app_red"
             android:gravity="center"
+            android:text="提交"
             android:textColor="@color/font_white"
-            android:textSize="@dimen/font_size_14"
-            android:text="提交" />
+            android:textSize="@dimen/font_size_14" />
 
     </LinearLayout>
 

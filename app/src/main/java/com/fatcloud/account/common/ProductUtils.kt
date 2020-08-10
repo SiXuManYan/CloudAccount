@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.widget.EditText
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import com.baidu.ocr.sdk.OCR
@@ -19,6 +20,7 @@ import com.blankj.utilcode.util.*
 import com.fatcloud.account.BuildConfig
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
+import com.fatcloud.account.extend.LimitInputTextWatcher
 import com.fatcloud.account.feature.gallery.GalleryActivity
 import com.fatcloud.account.feature.matisse.Glide4Engine
 import com.fatcloud.account.feature.matisse.Matisse
@@ -463,5 +465,13 @@ object ProductUtils {
         context.startActivity(Intent(context, GalleryActivity::class.java).putExtras(bundle))
     }
 
+    /**
+     * edit text  仅支持中文输入
+     */
+    fun onlySupportChineseInput(vararg editTextList: EditText) {
+        editTextList.forEach {
+            it.addTextChangedListener(LimitInputTextWatcher(it))
+        }
+    }
 
 }

@@ -237,6 +237,14 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             setMainTitle("个体户银行对公账户")
         }
 
+        ProductUtils.onlySupportChineseInput(
+            finance_name_et,
+            verification_first_name_et,
+            verification_first_phone_et,
+            verification_second_name_et,
+            reconciliation_name_et
+        )
+
 
         legal_person_view.apply {
             currentMold = Constants.SH1

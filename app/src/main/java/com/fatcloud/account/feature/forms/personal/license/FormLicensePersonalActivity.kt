@@ -155,11 +155,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             hideBottomSplit()
         }
 
-        zero_choice_name_et.addTextChangedListener(LimitInputTextWatcher(zero_choice_name_et))
-        first_choice_name_et.addTextChangedListener(LimitInputTextWatcher(first_choice_name_et))
-        second_choice_name_et.addTextChangedListener(LimitInputTextWatcher(second_choice_name_et))
-
-
+        ProductUtils.onlySupportChineseInput(zero_choice_name_et, first_choice_name_et, second_choice_name_et)
         restoreDraft()
     }
 

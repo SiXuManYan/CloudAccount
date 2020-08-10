@@ -101,8 +101,9 @@ class CompanyMemberEditView : LinearLayout {
      */
     private fun init() {
 
-        val view =
-            LayoutInflater.from(context).inflate(R.layout.view_company_member_edit, this, true)
+        val view = LayoutInflater.from(context).inflate(R.layout.view_company_member_edit, this, true)
+
+        ProductUtils.onlySupportChineseInput(ev_00_name_et, nation_et)
 
         id_card_front_iv.setOnClickListener {
 
@@ -196,8 +197,6 @@ class CompanyMemberEditView : LinearLayout {
     fun initNameTitle(title: CharSequence) {
         ev_00_name_tv.text = title
     }
-
-
 
 
     /**
