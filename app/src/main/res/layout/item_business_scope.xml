@@ -1,25 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/font_white"
     android:orientation="vertical"
     android:paddingLeft="15dp"
-    android:paddingTop="5dp"
-    android:paddingRight="15dp"
-    android:paddingBottom="5dp">
+    android:paddingRight="15dp">
 
     <TextView
         android:id="@+id/spinner_text"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_stock_red_match_18"
-        android:gravity="center"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:textColor="@color/color_app_red"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/sel_iv"
+        android:gravity="center_vertical|left"
+        android:paddingTop="12dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:paddingBottom="12dp"
+        android:textColor="@color/color_first_level"
         android:textSize="@dimen/font_size_14"
         tools:text="Amore Pizza" />
 
+    <ImageView
+        android:id="@+id/sel_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_scope_sel"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
-</LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/spinner_text"
+        android:background="@color/split_line_color" />
+
+</RelativeLayout>

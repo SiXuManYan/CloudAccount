@@ -5,13 +5,9 @@ import android.view.ViewGroup
 import com.blankj.utilcode.util.ColorUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.list.BaseItemViewHolder
-import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.commons.BusinessScope
-import com.fatcloud.account.entity.order.progress.BusinessProgress
-import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_schedule.*
-import kotlinx.android.synthetic.main.item_spinner_view.*
+import kotlinx.android.synthetic.main.item_business_scope.*
 
 class BusinessScopeHolder(parent: ViewGroup?) : BaseItemViewHolder<BusinessScope>(parent, R.layout.item_business_scope), LayoutContainer {
 
@@ -26,11 +22,9 @@ class BusinessScopeHolder(parent: ViewGroup?) : BaseItemViewHolder<BusinessScope
         spinner_text.text = data.name
 
         if (data.nativeIsSelect) {
-            spinner_text.setBackgroundResource(R.drawable.shape_stock_red_match_18)
-            spinner_text.setTextColor(ColorUtils.getColor(R.color.color_app_red))
+            sel_iv.visibility = View.VISIBLE
         } else {
-            spinner_text.setBackgroundResource(R.drawable.shape_stock_gray_match_18)
-            spinner_text.setTextColor(ColorUtils.getColor(R.color.color_third_level))
+            sel_iv.visibility = View.GONE
         }
 
 

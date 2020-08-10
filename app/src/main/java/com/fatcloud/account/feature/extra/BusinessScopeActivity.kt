@@ -50,6 +50,7 @@ class BusinessScopeActivity : BaseMVPActivity<BusinessScopePresenter>(), Busines
 
     private fun initView() {
         setMainTitle("经营范围")
+        setTextActionButton(R.string.confirm, View.OnClickListener { finish() })
         val loudAccountApplication = application as CloudAccountApplication
         val businessScope = loudAccountApplication.commonData?.businessScope
 

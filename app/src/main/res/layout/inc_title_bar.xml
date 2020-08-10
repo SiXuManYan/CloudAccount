@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/title_container_rl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:alpha="0.99"
-    android:id="@+id/title_container_rl"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/shape_title_bar"
     android:paddingBottom="1dp">
 
     <ImageView
         android:id="@+id/iv_back"
         style="@style/TopButton"
+        android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@null"
         android:src="@drawable/ic_back" />
 
@@ -26,10 +27,9 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:lines="1"
-            tools:text="我木兰无敌，马超贼6"
             android:textColor="@color/color_zero_level"
-            android:textSize="16sp" />
-
+            android:textSize="16sp"
+            tools:text="我木兰无敌，马超贼6" />
 
 
     </LinearLayout>
@@ -40,6 +40,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:background="?android:attr/selectableItemBackground"
         android:textColor="@color/color_zero_level"
         android:textSize="12sp"
         android:visibility="gone" />
