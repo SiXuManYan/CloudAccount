@@ -7,5 +7,6 @@ interface MyPageView :BaseTaskView{
     fun updateAvatarAndNicknameSuccess()
     fun updateMessageUnReadNumber(messageUnReadNumber: Long)
     fun onShootingPermissionResult(uri: Uri)
+    fun loginOutSuccess()
 
 }

@@ -25,30 +25,6 @@ class ProductDetailPresenter @Inject constructor(private var productView: Produc
                 override fun onSuccess(data: ProductDetail?) {
 
                     data?.let {
-
-                        val sort0 = Price().apply {
-                            name = "请选择行业类别"
-                        }
-                        it.prices.add(0, sort0)
-
-                        it.prices.forEachIndexed { index, entity ->
-
-                            val taxType = Price().apply {
-                                name = "请选择报税类型"
-                            }
-                            entity.childs.add(0, taxType)
-
-                            entity.childs.forEachIndexed { i, model ->
-                                val incomeType = Price().apply {
-                                    name = "请选择收入情况"
-                                }
-                                model.childs.add(0, incomeType)
-                            }
-
-
-                        }
-
-
                         productView.bindDetailData(it)
                     }
                 }

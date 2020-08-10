@@ -285,8 +285,6 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
                         run {
                             dialog.dismiss()
                             presenter.loginOutRequest(this@MyPageFragment)
-
-                            startActivity(LoginActivity::class.java)
                         }
                     })
                     .setNegativeButton(R.string.cancel, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, _ ->
@@ -397,8 +395,10 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
         // intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
         startActivityForResult(intent, Constants.REQUEST_CAMERA)
+    }
 
-
+    override fun loginOutSuccess() {
+        startActivity(LoginActivity::class.java)
     }
 
 }

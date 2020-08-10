@@ -26,6 +26,7 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.AndroidUtil
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.entity.product.Price
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.event.Event
@@ -185,16 +186,17 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
             .append(money).setFontSize(18, true)
         when (data.mold) {
             Constants.P6 -> {
-                moneySpan.append(getString(R.string.begin)).setVerticalAlign(SpanUtils.ALIGN_BOTTOM).setFontSize(12, true).setBold().setForegroundColor(ColorUtils.getColor(R.color.color_third_level))
+                moneySpan.append(getString(R.string.begin)).setVerticalAlign(SpanUtils.ALIGN_BOTTOM).setFontSize(12, true).setBold()
+                    .setForegroundColor(ColorUtils.getColor(R.color.color_third_level))
             }
             Constants.P11 -> {
-                moneySpan.append(getString(R.string.every_year)).setVerticalAlign(SpanUtils.ALIGN_BOTTOM).setFontSize(12, true).setBold().setForegroundColor(ColorUtils.getColor(R.color.color_third_level))
+                moneySpan.append(getString(R.string.every_year)).setVerticalAlign(SpanUtils.ALIGN_BOTTOM).setFontSize(12, true).setBold()
+                    .setForegroundColor(ColorUtils.getColor(R.color.color_third_level))
             }
             else -> {
             }
         }
         amount_tv.text = moneySpan.create()
-
 
 
         // banner
@@ -352,6 +354,8 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
 
     }
 
+    private var isAddSpinner = false
+
     private fun handleNext(it: ProductDetail) {
         if (!User.isLogon()) {
             startActivity(LoginActivity::class.java)
@@ -375,6 +379,29 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
             Constants.P3,
             Constants.P9,
             Constants.P10 -> {
+
+                if (!isAddSpinner) {
+                    val sort0 = Price().apply {
+                        name = "请选择行业类别"
+                    }
+                    it.prices.add(0, sort0)
+
+                    it.prices.forEachIndexed { index, entity ->
+                        val taxType = Price().apply {
+                            name = "请选择报税类型"
+                        }
+                        entity.childs.add(0, taxType)
+
+                        entity.childs.forEachIndexed { i, model ->
+                            val incomeType = Price().apply {
+                                name = "请选择收入情况"
+                            }
+                            model.childs.add(0, incomeType)
+                        }
+                    }
+                    isAddSpinner = true
+                }
+
                 ProductSpinnerFragment.newInstance(it).apply {
                     show(supportFragmentManager, this.tag)
                 }

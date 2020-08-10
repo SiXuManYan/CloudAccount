@@ -32,15 +32,18 @@ class MyPagePresenter @Inject constructor(private val view: MyPageView) : BasePr
      */
     fun loginOutRequest(lifecycleOwner: LifecycleOwner) {
 
-        requestApi(lifecycleOwner, Lifecycle.Event.ON_DESTROY,
-            apiService.logout(),
-            object : BaseHttpSubscriber<JsonElement>(view) {
-                override fun onComplete() {
-                    super.onComplete()
+        requestApi(lifecycleOwner, Lifecycle.Event.ON_DESTROY, apiService.logout(),
+            object : BaseHttpSubscriber<JsonElement>(view,false) {
+
+
+                override fun onSuccess(data: JsonElement?){
                     removeUserInfo()
                 }
 
-                override fun onSuccess(data: JsonElement?) = Unit
+
+                override fun onError(e: Throwable) {
+                    removeUserInfo()
+                }
             })
     }
 
@@ -105,6 +108,7 @@ class MyPagePresenter @Inject constructor(private val view: MyPageView) : BasePr
         // 刷新页面登录状态
         RxBus.post(Event(Constants.EVENT_NEED_REFRESH))
         RxBus.post(Event(Constants.EVENT_LOGOUT))
+        view.loginOutSuccess()
     }
 
 
