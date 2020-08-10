@@ -27,12 +27,10 @@ public class ProductSpinnerAdapter implements SpinnerAdapter {
     public Context mContext;
 
     public ProductSpinnerAdapter(ArrayList<Price> mList, Context mContext) {
-        this.mList .clear();
+        this.mList.clear();
         this.mList.addAll(mList);
         this.mContext = mContext;
     }
-
-
 
 
     @Override
@@ -47,7 +45,7 @@ public class ProductSpinnerAdapter implements SpinnerAdapter {
 
     @Override
     public int getCount() {
-        return  mList.size();
+        return mList.size();
     }
 
     @Override
@@ -64,7 +62,6 @@ public class ProductSpinnerAdapter implements SpinnerAdapter {
     public boolean hasStableIds() {
         return false;
     }
-
 
 
     @Override
@@ -107,7 +104,6 @@ public class ProductSpinnerAdapter implements SpinnerAdapter {
 
         return convertView;
     }
-
 
 
 }

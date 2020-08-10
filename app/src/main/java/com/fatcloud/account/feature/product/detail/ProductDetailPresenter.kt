@@ -4,6 +4,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
+import com.fatcloud.account.entity.product.Price
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.entity.users.User
 import com.google.gson.JsonElement
@@ -16,7 +17,6 @@ import javax.inject.Inject
  */
 class ProductDetailPresenter @Inject constructor(private var productView: ProductDetailView) : BasePresenter(productView) {
 
-
     fun getDetail(lifecycle: LifecycleOwner, productId: String) {
 
         requestApi(lifecycle, Lifecycle.Event.ON_DESTROY,
@@ -25,8 +25,31 @@ class ProductDetailPresenter @Inject constructor(private var productView: Produc
                 override fun onSuccess(data: ProductDetail?) {
 
                     data?.let {
-                        productView.bindDetailData(it)
 
+                        val sort0 = Price().apply {
+                            name = "请选择行业类别"
+                        }
+                        it.prices.add(0, sort0)
+
+                        it.prices.forEachIndexed { index, entity ->
+
+                            val taxType = Price().apply {
+                                name = "请选择报税类型"
+                            }
+                            entity.childs.add(0, taxType)
+
+                            entity.childs.forEachIndexed { i, model ->
+                                val incomeType = Price().apply {
+                                    name = "请选择收入情况"
+                                }
+                                model.childs.add(0, incomeType)
+                            }
+
+
+                        }
+
+
+                        productView.bindDetailData(it)
                     }
                 }
 
@@ -53,7 +76,6 @@ class ProductDetailPresenter @Inject constructor(private var productView: Produc
             }
         })
     }
-
 
 
 }

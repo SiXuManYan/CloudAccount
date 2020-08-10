@@ -172,15 +172,12 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
     private fun initFirstSpinner(it: ProductDetail) {
 
         val sourceList = it.prices
-        val mList = ArrayList<Price>().apply {
-            clear()
-            add(0, Price().apply {
-                name = "请选择行业类别"
-            })
-            addAll(sourceList)
+        if (sourceList.isEmpty()) {
+            return
         }
 
-        val firstAdapter = ProductSpinnerAdapter(mList, context!!)
+        val firstAdapter = ProductSpinnerAdapter(sourceList, context!!)
+
         industry_category_spinner.apply {
             adapter = firstAdapter
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -193,9 +190,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                     //  填充报税类型
                     val price = firstAdapter.mList[position]
                     val childList = price.childs
-                    childList.add(0, Price().apply {
-                        name = "请选择报税类型"
-                    })
+
                     initSecondSpinner(childList)
                     isFirstSelect = !TextUtils.isEmpty(price.mold)
 
@@ -223,9 +218,6 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                     // 填充收入情况
                     val price = secondAdapter.mList[position]
                     val childList = price.childs
-                    childList.add(0, Price().apply {
-                        name = "请选择收入情况"
-                    })
                     initThirdSpinner(childList)
                     isSecondSelect = !TextUtils.isEmpty(price.mold)
                 }
@@ -336,7 +328,6 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 if (afterText.isBlank()) {
                     multipleBigIncome = multipleBigIncomeMin
 //                    incomeMoney = 0
-
                     serverFinalMoney = BigDecimal(bigAmount)
 
                 } else {
