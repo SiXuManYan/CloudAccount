@@ -690,7 +690,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
         }
 
         if (reconciliationNameValue == financeNameValue) {
-            ToastUtils.showShort(" 财务负责人姓名 和 队长联系人姓名，不能重复，请重新填写！")
+            ToastUtils.showShort(" 财务负责人姓名 和 对账联系人姓名，不能重复，请重新填写！")
             return
         }
         if (legalNameValue == verificationFirstNameValue && legalNameValue == verificationSecondNameValue) {

@@ -10,6 +10,7 @@ import com.fatcloud.account.data.CloudDataBase
 import com.fatcloud.account.entity.form.p9p10.NativeFormPersonalPackageP9P10Draft
 import com.fatcloud.account.entity.local.form.*
 import com.fatcloud.account.entity.order.persional.Order
+import com.fatcloud.account.entity.users.User
 import com.google.gson.JsonArray
 import java.math.BigDecimal
 import java.util.*
@@ -39,14 +40,16 @@ class OrderListPresenter @Inject constructor(private var orderListView: OrderLis
 
     }
 
-    fun getDraftModule() :ArrayList<Order> {
+    fun getDraftModule(): ArrayList<Order> {
 
         val list: ArrayList<Order> = ArrayList()
 
         // P1
         val p1 = PersonalLicenseDraft.get()
 
-        if (!p1.productId.isNullOrBlank()) {
+        val userPhone = User.get().username
+
+        if (!p1.productId.isNullOrBlank() && p1.loginPhone == userPhone) {
             list.add(Order().apply {
                 money = p1.finalMoney
                 productId = p1.productId
@@ -63,7 +66,7 @@ class OrderListPresenter @Inject constructor(private var orderListView: OrderLis
 
         // P2
         val p2 = EnterprisePackageDraft.get()
-        if (!p2.productId.isNullOrBlank()) {
+        if (!p2.productId.isNullOrBlank() && p2.loginPhone == userPhone) {
             list.add(
                 Order().apply {
                     money = p2.finalMoney
@@ -83,7 +86,7 @@ class OrderListPresenter @Inject constructor(private var orderListView: OrderLis
 
         //P3
         val p3 = PersonalBookkeepingDraft.get()
-        if (!p3.productId.isNullOrBlank()) {
+        if (!p3.productId.isNullOrBlank() && p3.loginPhone == userPhone) {
             list.add(
                 Order().apply {
                     money = p3.finalMoney
@@ -103,7 +106,7 @@ class OrderListPresenter @Inject constructor(private var orderListView: OrderLis
 
         // P4
         val p4 = PersonalTaxDraft.get()
-        if (!p4.productId.isNullOrBlank()) {
+        if (!p4.productId.isNullOrBlank() && p4.loginPhone == userPhone) {
             list.add(
                 Order().apply {
                     money = p4.finalMoney
@@ -123,7 +126,7 @@ class OrderListPresenter @Inject constructor(private var orderListView: OrderLis
 
         // P8
         val p8 = BankPersonalDraft.get()
-        if (!p8.productId.isNullOrBlank() && p8.mold == Constants.P8) {
+        if (!p8.productId.isNullOrBlank() && p8.loginPhone == userPhone && p8.mold == Constants.P8) {
             list.add(
                 Order().apply {
                     money = p8.finalMoney
@@ -143,7 +146,7 @@ class OrderListPresenter @Inject constructor(private var orderListView: OrderLis
 
         // P9
         val p9 = NativeFormPersonalPackageP9P10Draft.get()
-        if (!p9.productId.isNullOrBlank() && p9.mold == Constants.P9) {
+        if (!p9.productId.isNullOrBlank() && p9.loginPhone == userPhone && p9.mold == Constants.P9) {
             list.add(
                 Order().apply {
                     money = p9.finalMoney
@@ -162,7 +165,7 @@ class OrderListPresenter @Inject constructor(private var orderListView: OrderLis
 
         // P10
         val p10 = NativeFormPersonalPackageP9P10Draft.get()
-        if (!p10.productId.isNullOrBlank() && p9.mold == Constants.P10) {
+        if (!p10.productId.isNullOrBlank() && p10.loginPhone == userPhone && p10.mold == Constants.P10) {
             list.add(
                 Order().apply {
                     money = p10.finalMoney

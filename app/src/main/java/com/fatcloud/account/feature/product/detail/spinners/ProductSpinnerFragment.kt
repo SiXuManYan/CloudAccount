@@ -116,7 +116,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
 
 
     /**
-     * 最终传给服务器的金额
+     * 最终传给服务器的原始金额
      */
     private var serverFinalMoney: BigDecimal = BigDecimal.ZERO
 
@@ -256,7 +256,6 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                             handleAmountEnterpriseP2P10(price)
                         Constants.P3 ->
                             handleAmountPersonalP3(price)
-
                         Constants.P9 -> {
                             handleAmountPersonalP9(price)
                         }
@@ -516,10 +515,11 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                     BigDecimalUtil.mul(BigDecimal(multipleBigIncome), BigDecimal(10000))
                 )
 
+                mFinalMoney = originalMoney
 
                 // 个人只计算代理记账最终金额即可
                 if (isThirdSelect) {
-                    mFinalMoney = originalMoney
+//                    mFinalMoney = originalMoney
                     amount_tv.text = getString(R.string.money_symbol_format, mFinalMoney.stripTrailingZeros().toPlainString())
                 }
             }
@@ -572,8 +572,8 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 startActivity(
                     Intent(activity, FormEnterpriseBasicActivity::class.java)
                         .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
-                        .putExtra(Constants.PARAM_INCOME_MONEY, serverFinalMoney.toPlainString())
-                        .putExtra(Constants.PARAM_FINAL_MONEY, serverFinalMoney.toPlainString())
+                        .putExtra(Constants.PARAM_INCOME_MONEY, mFinalMoney.toPlainString())
+                        .putExtra(Constants.PARAM_FINAL_MONEY, mFinalMoney.toPlainString())
                         .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, thirdProductPriceId)
                 )
             }
@@ -583,7 +583,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 startActivity(
                     Intent(activity, FormAgentBookkeepingPersonalActivity::class.java)
                         .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
-                        .putExtra(Constants.PARAM_FINAL_MONEY, serverFinalMoney.toPlainString())
+                        .putExtra(Constants.PARAM_FINAL_MONEY, mFinalMoney.toPlainString())
                         .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, thirdProductPriceId)
                 )
             }
@@ -592,7 +592,7 @@ class ProductSpinnerFragment : BaseBottomSheetDialogFragment<ProductSpinnerPrese
                 startActivity(
                     Intent(activity, FormPersonalPackageP9P10Activity::class.java)
                         .putExtra(Constants.PARAM_PRODUCT_ID, productDetail?.id)
-                        .putExtra(Constants.PARAM_FINAL_MONEY, serverFinalMoney.toPlainString())
+                        .putExtra(Constants.PARAM_FINAL_MONEY, mFinalMoney.toPlainString())
                         .putExtra(Constants.PARAM_PRODUCT_PRICE_ID, thirdProductPriceId)
                         .putExtra(Constants.PARAM_MOLD, productMold)
                 )
