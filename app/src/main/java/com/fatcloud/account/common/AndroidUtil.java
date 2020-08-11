@@ -762,7 +762,7 @@ public class AndroidUtil {
     }
 
     /**
-     * 32位小md5加密
+     * 32位小写md5加密
      *
      * @return md5(value) or ""
      */

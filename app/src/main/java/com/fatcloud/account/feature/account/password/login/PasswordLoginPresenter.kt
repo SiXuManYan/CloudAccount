@@ -5,6 +5,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.fatcloud.account.backstage.DataServiceFaker
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
+import com.fatcloud.account.common.AndroidUtil
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.data.CloudDataBase
@@ -25,15 +26,10 @@ class PasswordLoginPresenter @Inject constructor(private var view: PasswordLogin
 
     fun passwordLogin(lifecycleOwner: LifecycleOwner, currentAccount: String, password: String) {
         val deviceId = CommonUtils.getShareDefault().getString(Constants.SP_PUSH_DEVICE_ID)
-        requestApi(lifecycleOwner,
-            Lifecycle.Event.ON_DESTROY,
-            apiService.passwordLogin(currentAccount,
-                password,
-                deviceId
-            ),
-            object : BaseHttpSubscriber<User>(view) {
-                override fun onSuccess(data: User?) {
 
+        requestApi(lifecycleOwner, Lifecycle.Event.ON_DESTROY,
+            apiService.passwordLogin(currentAccount, AndroidUtil.md5(password), deviceId), object : BaseHttpSubscriber<User>(view) {
+                override fun onSuccess(data: User?) {
 
                     data?.let {
                         loginSuccess(it, currentAccount)

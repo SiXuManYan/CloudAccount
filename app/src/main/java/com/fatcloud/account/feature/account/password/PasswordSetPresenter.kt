@@ -2,9 +2,12 @@ package com.fatcloud.account.feature.account.password
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import com.alibaba.sdk.android.ams.common.util.Md5Util
+import com.blankj.utilcode.util.EncryptUtils
 import com.fatcloud.account.backstage.DataServiceFaker
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
+import com.fatcloud.account.common.AndroidUtil
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.data.CloudDataBase
@@ -39,17 +42,13 @@ class PasswordSetPresenter @Inject constructor(private var passwordSetView: Pass
     /**
      * 注册
      */
-    fun register(
-        lifecycleOwner: LifecycleOwner,
-        passWord: String,
-        account: String,
-        captcha: String
-    ) {
+    fun register(lifecycleOwner: LifecycleOwner, passWord: String, account: String, captcha: String) {
+
 
         requestApi(lifecycleOwner, Lifecycle.Event.ON_DESTROY,
             apiService.register(
                 account,
-                passWord,
+                AndroidUtil.md5(passWord),
                 captcha,
                 "Android",
                 CommonUtils.getLocationInfo()[2],
@@ -96,7 +95,7 @@ class PasswordSetPresenter @Inject constructor(private var passwordSetView: Pass
         requestApi(lifecycleOwner, Lifecycle.Event.ON_DESTROY,
             apiService.resetPassword(
                 account,
-                passWord,
+                AndroidUtil.md5(passWord),
                 captcha
             ),
             object : BaseHttpSubscriber<JsonElement>(passwordSetView) {
