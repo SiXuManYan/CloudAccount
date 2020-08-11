@@ -244,7 +244,6 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
         ProductUtils.onlySupportChineseInput(
             finance_name_et,
             verification_first_name_et,
-            verification_first_phone_et,
             verification_second_name_et,
             reconciliation_name_et
         )
