@@ -7,7 +7,7 @@ import com.fatcloud.account.entity.order.IdentityImg
  */
 data class PersonalLicenseLogoutDetail(
     val accountId: String,
-    val businessScope: String,
+//    val businessScope: String,
     val businessScopeNames: String,
     val createDt: String,
     val delFlag: Int,

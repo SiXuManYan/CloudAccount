@@ -3,7 +3,7 @@ package com.fatcloud.account.entity.order.detail
 data class BookkeepingDetail(
     val accountId: String = "",
     val businessLicenseImgUrl: String = "",
-    val businessScope: String = "",
+//    val businessScope: String = "",
     val businessScopeNames: String = "",
     val createDt: String = "",
     val id: String = "",

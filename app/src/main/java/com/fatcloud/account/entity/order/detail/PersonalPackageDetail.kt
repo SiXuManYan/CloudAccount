@@ -8,7 +8,7 @@ data class PersonalPackageDetail(
     val area: String,
     val bankNo: String,
     val bankPhone: String,
-    val businessScope: List<Int>,
+//    val businessScope: List<Int>,
     val businessScopeNames: String,
     val capital: String,
     val createDt: String,
