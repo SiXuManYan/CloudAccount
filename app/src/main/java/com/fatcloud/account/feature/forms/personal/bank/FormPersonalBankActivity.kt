@@ -633,9 +633,26 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             }
         }
 
+        if (legalNameValue == financeNameValue) {
+            ToastUtils.showShort(" 法人姓名 和 财务负责人姓名 不能重复，请重新填写！")
+            return
+        }
 
+        if (verificationFirstNameValue == financeNameValue) {
+            ToastUtils.showShort(" 财务负责人姓名 和 大额业务查证联系人1姓名，不能重复，请重新填写！")
+            return
+        }
+        if (verificationSecondNameValue == financeNameValue) {
+            ToastUtils.showShort(" 财务负责人姓名 和 大额业务查证联系人2姓名，不能重复，请重新填写！")
+            return
+        }
 
-        if (ProductUtils.hasDuplicateName(legalNameValue, financeNameValue, verificationFirstNameValue, verificationSecondNameValue, reconciliationNameValue)) {
+        if (reconciliationNameValue == financeNameValue) {
+            ToastUtils.showShort(" 财务负责人姓名 和 队长联系人姓名，不能重复，请重新填写！")
+            return
+        }
+        if (legalNameValue == verificationFirstNameValue && legalNameValue == verificationSecondNameValue) {
+            ToastUtils.showShort(" 法人 不能同时为 大额业务查证联系人1 和 大额业务查证联系人2 请重新填写！")
             return
         }
 
