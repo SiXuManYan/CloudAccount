@@ -47,9 +47,10 @@
                     android:layout_toRightOf="@+id/tag_iv"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    android:text="订单号："
                     android:textColor="@color/color_first_level"
                     android:textSize="@dimen/font_size_14"
-                    tools:text="订单ID：20200202" />
+                    tools:text="订单号：20200202" />
 
 
                 <TextView

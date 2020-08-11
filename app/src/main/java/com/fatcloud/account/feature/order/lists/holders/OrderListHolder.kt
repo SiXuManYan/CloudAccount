@@ -77,10 +77,8 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
     private fun setServerData(data: Order) {
 
         order_id_tv.apply {
-            visibility = View.VISIBLE
             text = StringUtils.getString(R.string.order_id_format, data.no)
         }
-        tag_iv.visibility = View.VISIBLE
 
         Glide.with(context)
             .load(data.imgUrl)
@@ -90,8 +88,6 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
     }
 
     private fun setDraftData(data: Order) {
-        order_id_tv.visibility = View.GONE
-        tag_iv.visibility = View.GONE
         Glide.with(context)
             .load(getImageFromMold(data.mold))
             .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
