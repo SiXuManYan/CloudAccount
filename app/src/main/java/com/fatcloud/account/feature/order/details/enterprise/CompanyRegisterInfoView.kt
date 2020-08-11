@@ -1,6 +1,7 @@
 package com.fatcloud.account.feature.order.details.enterprise
 
 import com.fatcloud.account.base.common.BaseTaskView
+import com.fatcloud.account.entity.order.detail.CompanyBankRegisterInfo
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.persional.PersonalInfo
 
@@ -17,5 +18,5 @@ interface CompanyRegisterInfoView : BaseTaskView {
      * 需要使用订单id调用  tOrder/detail 接口请求法人股东信息
      * 绑定法人信息
      */
-    fun bindShareholdersInfo(data: PersonalInfo)
+    fun bindShareholdersInfo(data: CompanyBankRegisterInfo)
 }

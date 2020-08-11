@@ -11,6 +11,7 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
+import com.fatcloud.account.entity.order.detail.CompanyBankRegisterInfo
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.persional.PersonalInfo
 import com.fatcloud.account.extend.RoundTransFormation
@@ -291,7 +292,7 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
     /**
      * 银行对公账户额外信息
      */
-    override fun bindShareholdersInfo(data: PersonalInfo) {
+    override fun bindShareholdersInfo(data: CompanyBankRegisterInfo) {
 
         shareholder_container_bank_ll.removeAllViews()
         data.shareholders?.forEach {

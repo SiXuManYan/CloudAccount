@@ -7,9 +7,9 @@ import com.fatcloud.account.base.net.BaseHttpSubscriber
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.order.IdentityImg
+import com.fatcloud.account.entity.order.detail.CompanyBankRegisterInfo
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.enterprise.Shareholder
-import com.fatcloud.account.entity.order.persional.PersonalInfo
 import javax.inject.Inject
 
 /**
@@ -85,11 +85,11 @@ class CompanyRegisterInfoPresenter @Inject constructor(private var companyRegist
         financeShareholder: Shareholder?
     ) {
         requestApi(lifecycle, Lifecycle.Event.ON_DESTROY,
-            apiService.getPersonalOrderDetail(orderId),
+            apiService.getCompanyBankInfo(orderId),
 
-            object : BaseHttpSubscriber<PersonalInfo>(companyRegisterInfoView) {
+            object : BaseHttpSubscriber<CompanyBankRegisterInfo>(companyRegisterInfoView) {
 
-                override fun onSuccess(data: PersonalInfo?) {
+                override fun onSuccess(data: CompanyBankRegisterInfo?) {
 
                     if (data == null) {
                         return

@@ -1,6 +1,5 @@
 package com.fatcloud.account.network
 
-import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.commons.Commons
 import com.fatcloud.account.entity.defray.AliPayInfo
@@ -8,14 +7,10 @@ import com.fatcloud.account.entity.defray.WechatPayInfo
 import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.entity.form.MarketData
 import com.fatcloud.account.entity.home.HomeMix
-import com.fatcloud.account.entity.message.Message
 import com.fatcloud.account.entity.news.NewDetail
 import com.fatcloud.account.entity.news.News
 import com.fatcloud.account.entity.news.NewsCategory
-import com.fatcloud.account.entity.order.detail.BookkeepingDetail
-import com.fatcloud.account.entity.order.detail.PersonalLicenseChangeDetail
-import com.fatcloud.account.entity.order.detail.PersonalLicenseLogoutDetail
-import com.fatcloud.account.entity.order.detail.PersonalPackageDetail
+import com.fatcloud.account.entity.order.detail.*
 import com.fatcloud.account.entity.order.enterprise.BankInfo
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.persional.PersonalInfo
@@ -24,13 +19,11 @@ import com.fatcloud.account.entity.oss.SecurityTokenModel
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.entity.upgrade.Upgrade
 import com.fatcloud.account.entity.users.User
-import com.fatcloud.account.entity.wechat.WechatLogin
 import com.fatcloud.account.entity.wechat.WechatUserInfo
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import io.reactivex.Flowable
-import me.jessyan.retrofiturlmanager.RetrofitUrlManager
 import me.jessyan.retrofiturlmanager.RetrofitUrlManager.DOMAIN_NAME_HEADER
 import retrofit2.http.*
 
@@ -244,9 +237,18 @@ interface ApiService {
      * @param id 订单id
      */
     @GET("$ORDER_API/detail")
-    fun getPersonalOrderDetail(
+    fun getCompanyBankInfo(
         @Query("id") id: String? = null
-    ): Flowable<Response<PersonalInfo>>
+    ): Flowable<Response<CompanyBankRegisterInfo>>
+
+    /**
+     * 个体户营业执照回显
+     * @param id 订单id
+     */
+    @GET("$ORDER_API/detail")
+    fun getPersonalLicenseDetail(
+        @Query("id") id: String? = null
+    ): Flowable<Response<PersonalLicenseHandleDetail>>
 
 
     /**
@@ -257,7 +259,6 @@ interface ApiService {
     fun getBookkeepingDetail(
         @Query("id") id: String? = null
     ): Flowable<Response<BookkeepingDetail>>
-
 
 
     /**

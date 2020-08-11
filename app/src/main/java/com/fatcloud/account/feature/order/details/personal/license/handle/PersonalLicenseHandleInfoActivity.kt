@@ -11,7 +11,7 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
-import com.fatcloud.account.entity.order.persional.PersonalInfo
+import com.fatcloud.account.entity.order.detail.PersonalLicenseHandleDetail
 import com.fatcloud.account.extend.RoundTransFormation
 import kotlinx.android.synthetic.main.activity_order_detail_personal.*
 import kotlinx.android.synthetic.main.layout_detail_personal.*
@@ -67,7 +67,7 @@ class PersonalLicenseHandleInfoActivity : BaseMVPActivity<PersonalLicenseHandleI
     }
 
 
-    override fun bindDetailInfo(data: PersonalInfo) {
+    override fun bindDetailInfo(data: PersonalLicenseHandleDetail) {
         CommonUtils.setPaymentStatus(data.state, payment_status_iv, payment_status_tv)
 
         when (productWorkType) {
@@ -86,7 +86,7 @@ class PersonalLicenseHandleInfoActivity : BaseMVPActivity<PersonalLicenseHandleI
     /**
      * PW1 营业执照办理 ：注册人信息
      */
-    private fun setRegistrantInfo(data: PersonalInfo) {
+    private fun setRegistrantInfo(data: PersonalLicenseHandleDetail) {
         sex_tv.text = if (data.gender == "1") {
             "男"
         } else {
@@ -109,7 +109,7 @@ class PersonalLicenseHandleInfoActivity : BaseMVPActivity<PersonalLicenseHandleI
         alternative_name_02_tv.text = data.name2
         business_scope_tv.text = data.businessScopeNames
         employees_number_tv.text = data.employedNum.toString()
-        employment_amount_tv.text = data.income?.stripTrailingZeros()?.toPlainString()
+        employment_amount_tv.text = data.income
         form_tv.text = data.formName
         identity_number_tv.text = data.idno
         name_tv.text = data.realName
@@ -185,7 +185,7 @@ class PersonalLicenseHandleInfoActivity : BaseMVPActivity<PersonalLicenseHandleI
     /**
      * PW2  税务登记办理 办理信息
      */
-    private fun setTaxRegistration(data: PersonalInfo) {
+    private fun setTaxRegistration(data: PersonalLicenseHandleDetail) {
         taxpayer_id_tv.text = data.taxpayerNo
         id_number_tv.text = data.idno
         bank_card_number_tv.text = data.bankNo

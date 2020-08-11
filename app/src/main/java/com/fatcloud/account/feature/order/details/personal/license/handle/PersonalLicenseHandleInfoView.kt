@@ -1,7 +1,7 @@
 package com.fatcloud.account.feature.order.details.personal.license.handle
 
 import com.fatcloud.account.base.common.BaseTaskView
-import com.fatcloud.account.entity.order.persional.PersonalInfo
+import com.fatcloud.account.entity.order.detail.PersonalLicenseHandleDetail
 
 /**
  * Created by Wangsw on 2020/6/4 0004 14:01.
@@ -9,5 +9,5 @@ import com.fatcloud.account.entity.order.persional.PersonalInfo
  *  注册人信息
  */
 interface PersonalLicenseHandleInfoView : BaseTaskView {
-    fun bindDetailInfo(data: PersonalInfo)
+    fun bindDetailInfo(data: PersonalLicenseHandleDetail)
 }
