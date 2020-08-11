@@ -5,6 +5,8 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
 import butterknife.OnClick
+import com.baidu.ocr.sdk.model.IDCardParams
+import com.baidu.ocr.sdk.model.IDCardResult
 import com.baidu.ocr.ui.camera.CameraActivity
 import com.baidu.ocr.ui.util.FileUtil
 import com.blankj.utilcode.util.ToastUtils
@@ -33,8 +35,10 @@ import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.matisse.Matisse
+import com.fatcloud.account.feature.ocr.RecognizeIDCardResultCallBack
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_bank_personal.*
+import java.lang.StringBuilder
 import javax.inject.Inject
 
 /**
@@ -436,6 +440,47 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             return
         }
 
+
+
+
+        // 上传oss
+        val application = application as CloudAccountApplication
+
+
+
+
+
+        if (contentType.isNotEmpty()) {
+
+            when (contentType) {
+                CameraActivity.CONTENT_TYPE_ID_CARD_FRONT -> {
+                    // 身份证正面
+                    ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_FRONT, filePath,
+                        object : RecognizeIDCardResultCallBack {
+                            override fun onResult(result: IDCardResult) {
+                                loadOcrLocalAndUploadOss(fromViewId, filePath, application)
+
+                                result.name?.let {
+                                    legal_person_view.setNameValue(it.words, true)
+                                }
+                            }
+                        })
+                }
+                CameraActivity.CONTENT_TYPE_ID_CARD_BACK -> {
+                    loadOcrLocalAndUploadOss(fromViewId, filePath, application)
+                }
+                else -> {
+                }
+            }
+
+
+        }
+
+
+
+    }
+
+    private fun loadOcrLocalAndUploadOss(fromViewId: Int, filePath: String, application: CloudAccountApplication) {
         when (fromViewId) {
             R.id.legal_person_view -> {
                 legal_person_view.loadResultImage(filePath)
@@ -444,8 +489,6 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             }
         }
 
-        // 上传oss
-        val application = application as CloudAccountApplication
         application.getOssSecurityToken(
             true,
             isFaceUp = true,
