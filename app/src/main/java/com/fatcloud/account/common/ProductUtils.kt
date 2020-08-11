@@ -36,6 +36,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import java.io.File
 import java.math.BigDecimal
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by Wangsw on 2020/6/12 0012 17:29.
@@ -473,5 +475,43 @@ object ProductUtils {
             it.addTextChangedListener(LimitInputTextWatcher(it))
         }
     }
+
+
+    fun hasDuplicateName(nameArrays: List<String>? = ArrayList(), vararg names: String): Boolean {
+
+
+        val stringList = ArrayList<String>(names.asList())
+        nameArrays?.let {
+            stringList.addAll(it)
+        }
+        val stringSet: Set<String> = HashSet(stringList)
+        return if (stringList.size == stringSet.size) {
+            false
+        } else {
+            ToastUtils.showShort("姓名不能重复")
+            true
+        }
+
+    }
+
+
+    /**
+     * 检查重复姓名
+     */
+    fun hasDuplicateName(vararg names: String): Boolean {
+
+        val stringList = ArrayList<String>(names.asList())
+        val stringSet: Set<String> = HashSet(stringList)
+
+        return if (stringList.size == stringSet.size) {
+            false
+        } else {
+            ToastUtils.showShort("姓名不能重复")
+            true
+        }
+
+
+    }
+
 
 }

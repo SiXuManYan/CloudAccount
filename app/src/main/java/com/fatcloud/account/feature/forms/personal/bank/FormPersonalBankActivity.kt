@@ -635,6 +635,9 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
 
 
 
+        if (ProductUtils.hasDuplicateName(legalNameValue, financeNameValue, verificationFirstNameValue, verificationSecondNameValue, reconciliationNameValue)) {
+            return
+        }
 
 
         val model = BankPersonal().apply {

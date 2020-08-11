@@ -274,7 +274,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
                             setShareRatioValue(shareholder.shareProportion, true)
                         }
                     }
-                    Constants.SH4->{
+                    Constants.SH4 -> {
 
                         financial_manager_ev.apply {
                             setNameValue(shareholder.name, true)

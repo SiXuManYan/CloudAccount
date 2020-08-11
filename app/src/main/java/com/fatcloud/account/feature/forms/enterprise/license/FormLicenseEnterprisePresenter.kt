@@ -282,6 +282,18 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
             return
         }
 
+        val extraNames = getExtraNames(shareholderMoreContainer)
+
+
+        if (ProductUtils.hasDuplicateName(
+                extraNames,
+                legalPersonView.getNameValue(), supervisorView.getNameValue(),
+                shareholderView.getNameValue(), financialManagerView.getNameValue()
+            )
+        ) {
+            return
+        }
+
 
         val enterpriseInfo = EnterpriseInfo().apply {
             addr = detailAddress
@@ -383,10 +395,23 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
 
             }
         }
-
-
         return ratioSum
+    }
 
+
+    private fun getExtraNames(shareholderMoreContainer: LinearLayout): List<String> {
+
+        val names: ArrayList<String> = ArrayList()
+
+        if (shareholderMoreContainer.childCount > 0) {
+            val max = shareholderMoreContainer.childCount
+            for (i in 0 until max) {
+                val companyMemberEditView = shareholderMoreContainer.getChildAt(i) as CompanyMemberEditView
+                names.add(companyMemberEditView.getNameValue())
+            }
+
+        }
+        return names
     }
 
 
