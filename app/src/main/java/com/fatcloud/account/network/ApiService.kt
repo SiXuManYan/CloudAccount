@@ -483,9 +483,7 @@ interface ApiService {
     ): Flowable<Response<AliPayInfo>>
 
     /**
-     * 验证订单是否已支付
-     * @param id 订单id
-     * @param orderNo 订单号
+     * 检查app 版本号
      */
     @GET("$API_URI/common/version")
     fun checkAppVersion(@Query("appFlag") appFlag: String? = "android"): Flowable<Response<Upgrade>>

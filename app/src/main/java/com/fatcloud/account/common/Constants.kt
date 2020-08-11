@@ -24,13 +24,15 @@ object Constants {
     const val SP_NOVICE = "novice"
     const val SP_LAST_LOGIN_USER = "last_login_user"
 
-    const val SP_AES_LOGIN_TIME = "SP_AES_LOGIN_TIME"// 上次登录时间
-    const val SP_AES_LOGIN_SERVICE_TIME = "SP_AES_LOGIN_SERVICE_TIME"// 上次登录成功时的服务器时间
+    const val SP_AES_LOGIN_TIME = "sp_aes_login_time"// 上次登录时间
+    const val SP_AES_LOGIN_SERVICE_TIME = "sp_aes_login_service_time"// 上次登录成功时的服务器时间
     const val SP_SHOW_CITY = "sp_show_city"// 上次获取的城市首页信息
     const val SP_AUTO_PLAY_VIDEO = "sp_auto_play_video"// 是否自动播放视频
     const val SP_IS_SHOW_USER_AGREEMENT = "sp_is_show_user_agreement"// 是否展示过用户协议
     const val SP_OCR_ACCESS_TOKEN = "sp_ocr_access_token"// ocr access token
     const val SP_PUSH_DEVICE_ID = "sp_push_device_id"
+    const val SP_AUTH_PERSON_NAME = "sp_auth_person_name"
+    const val SP_AUTH_PERSON_ID_NUMBER = "sp_auth_person_id_number"
 
     const val PARAM_INDEX = "param_index"
     const val PARAM_LIST = "param_list"

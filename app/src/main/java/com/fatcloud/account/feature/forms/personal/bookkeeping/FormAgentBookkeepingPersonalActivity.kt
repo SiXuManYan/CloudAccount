@@ -135,7 +135,7 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
 
     private fun initView() {
         setMainTitle("法人信息")
-        ProductUtils.onlySupportChineseInput(legal_name_et)
+        ProductUtils.onlySupportChineseInput(legal_name_et, store_name_et)
         restoreDraft()
     }
 

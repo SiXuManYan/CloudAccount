@@ -73,10 +73,13 @@ class SignatureActivity : BaseMVPActivity<SignaturePresenter>(), SignatureView {
     }
 
     private fun initView() {
+        val shareDefault = CommonUtils.getShareDefault()
         nativeBookkeeping?.let {
             content_tv.text = getString(
-                R.string.signature_format,
-                it.storeName
+                R.string.signature_format2,
+                it.storeName,
+                shareDefault.getString(Constants.SP_AUTH_PERSON_NAME, ""),
+                shareDefault.getString(Constants.SP_AUTH_PERSON_ID_NUMBER, "")
             )
         }
 

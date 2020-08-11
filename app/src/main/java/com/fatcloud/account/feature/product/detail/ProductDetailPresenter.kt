@@ -4,7 +4,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
-import com.fatcloud.account.entity.product.Price
+import com.fatcloud.account.common.CommonUtils
+import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.product.ProductDetail
 import com.fatcloud.account.entity.users.User
 import com.google.gson.JsonElement
@@ -26,6 +27,17 @@ class ProductDetailPresenter @Inject constructor(private var productView: Produc
 
                     data?.let {
                         productView.bindDetailData(it)
+
+                        // 代理记账人姓名
+                        val authorizePersonName = it.authorizePersonName
+                        if (authorizePersonName.isNotBlank()) {
+                            CommonUtils.getShareDefault().put(Constants.SP_AUTH_PERSON_NAME, authorizePersonName)
+                        }
+
+                        val authorizePersonIdno = it.authorizePersonIdno
+                        if (authorizePersonIdno.isNotBlank()) {
+                            CommonUtils.getShareDefault().put(Constants.SP_AUTH_PERSON_ID_NUMBER, authorizePersonIdno)
+                        }
                     }
                 }
 
