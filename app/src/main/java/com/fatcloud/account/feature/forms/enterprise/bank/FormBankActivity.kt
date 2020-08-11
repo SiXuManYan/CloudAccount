@@ -375,18 +375,9 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
             return
         }
 
-        fromView.loadResultImage(filePath)
 
         // 上传oss
         val application = application as CloudAccountApplication
-        application.getOssSecurityToken(
-            true,
-            true,
-            filePath,
-            fromViewId,
-            this@FormBankActivity.javaClass
-        )
-
 
         if (contentType.isNotEmpty()) {
 
@@ -396,6 +387,7 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
                     ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_FRONT, filePath,
                         object : RecognizeIDCardResultCallBack {
                             override fun onResult(result: IDCardResult) {
+                                loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)
 
                                 result.name?.let {
                                     fromView.setNameValue(it.words, true)
@@ -409,6 +401,7 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
                 }
                 CameraActivity.CONTENT_TYPE_ID_CARD_BACK -> {
                     // 身份证背面
+                    loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)
                 }
                 else -> {
                 }
@@ -416,6 +409,22 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
 
 
         }
+    }
+
+    private fun loadOcrLocalAndUploadOss(
+        fromView: CompanyMemberEditView,
+        filePath: String,
+        application: CloudAccountApplication,
+        fromViewId: Int
+    ) {
+        fromView.loadResultImage(filePath)
+        application.getOssSecurityToken(
+            true,
+            true,
+            filePath,
+            fromViewId,
+            this@FormBankActivity.javaClass
+        )
     }
 
 

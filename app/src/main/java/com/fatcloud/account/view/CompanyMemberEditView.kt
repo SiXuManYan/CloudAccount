@@ -168,7 +168,8 @@ class CompanyMemberEditView : LinearLayout {
         val intent = Intent(context as Activity, CameraActivity::class.java)
             .putExtra(KEY_OUTPUT_FILE_PATH, FileUtil.getSaveFile(context).absolutePath)
             .putExtra(
-                KEY_CONTENT_TYPE, if (isFaceUp) {
+                KEY_CONTENT_TYPE,
+                if (faceUp) {
                     CONTENT_TYPE_ID_CARD_FRONT
                 } else {
                     CONTENT_TYPE_ID_CARD_BACK

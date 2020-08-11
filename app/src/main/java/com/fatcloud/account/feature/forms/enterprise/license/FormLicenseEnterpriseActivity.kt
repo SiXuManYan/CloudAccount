@@ -458,17 +458,8 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             return
         }
 
-        fromView.loadResultImage(filePath)
-
         // 上传oss
         val application = application as CloudAccountApplication
-        application.getOssSecurityToken(
-            true,
-            isFaceUp,
-            filePath,
-            fromViewId,
-            this@FormLicenseEnterpriseActivity.javaClass
-        )
 
         if (contentType.isNotEmpty()) {
 
@@ -478,6 +469,7 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
                     ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_FRONT, filePath,
                         object : RecognizeIDCardResultCallBack {
                             override fun onResult(result: IDCardResult) {
+                                loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)
 
                                 result.name?.let {
                                     fromView.setNameValue(it.words, true)
@@ -488,6 +480,8 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
                                 result.address?.let {
                                     fromView.setIdAddressValue(it.words, true)
                                 }
+
+
                             }
                         })
                 }
@@ -498,6 +492,8 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
                         ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_BACK, filePath,
                             object : RecognizeIDCardResultCallBack {
                                 override fun onResult(result: IDCardResult) {
+                                    loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)
+
                                     val builder = StringBuilder()
 
                                     result.signDate?.let {
@@ -522,6 +518,14 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
 
 
         }
+    }
+
+    /**
+     * 加载 身份证本地图片，并上传阿里云
+     */
+    private fun loadOcrLocalAndUploadOss(fromView: CompanyMemberEditView, filePath: String, application: CloudAccountApplication, fromViewId: Int) {
+        fromView.loadResultImage(filePath)
+        application.getOssSecurityToken(true, isFaceUp, filePath, fromViewId, this@FormLicenseEnterpriseActivity.javaClass)
     }
 
 

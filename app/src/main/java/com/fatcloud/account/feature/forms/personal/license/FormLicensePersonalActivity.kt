@@ -496,24 +496,21 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         if (fromView == null) {
             return
         }
-        fromView.loadResultImage(filePath)
+
         // 上传oss
         val application = application as CloudAccountApplication
-        application.getOssSecurityToken(
-            true,
-            isFaceUp,
-            filePath,
-            fromViewId,
-            this@FormLicensePersonalActivity.javaClass
-        )
+
         if (contentType.isEmpty()) {
             return
         }
+
+
         when (contentType) {
             CameraActivity.CONTENT_TYPE_ID_CARD_FRONT -> {
                 // 身份证正面
                 ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_FRONT, filePath, object : RecognizeIDCardResultCallBack {
                     override fun onResult(result: IDCardResult) {
+                        loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)
 
                         result.name?.let {
                             fromView.setNameValue(it.words, true)
@@ -531,11 +528,31 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
                     }
                 })
             }
+            CameraActivity.CONTENT_TYPE_ID_CARD_BACK->{
+                loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)
+            }
+
             else -> {
             }
         }
 
 
+    }
+
+    private fun loadOcrLocalAndUploadOss(
+        fromView: CompanyMemberEditView,
+        filePath: String,
+        application: CloudAccountApplication,
+        fromViewId: Int
+    ) {
+        fromView.loadResultImage(filePath)
+        application.getOssSecurityToken(
+            true,
+            isFaceUp,
+            filePath,
+            fromViewId,
+            this@FormLicensePersonalActivity.javaClass
+        )
     }
 
     override fun addLicensePersonalSuccess(preparePay: PreparePay) {

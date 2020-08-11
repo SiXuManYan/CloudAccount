@@ -413,15 +413,10 @@ object ProductUtils {
     /**
      * @param idCardSide 身份证正反面
      * @param filePath 存储路径
-     *
+     *  根据 imageStatus 判断识别结果合法性
      * @see <a href="https://cloud.baidu.com/doc/OCR/s/rk3h7xzck">OCR 身份证识别</a>
      */
-    fun recIDCard(
-        context: Context,
-        idCardSide: String,
-        filePath: String,
-        callBack: RecognizeIDCardResultCallBack
-    ) {
+    fun recIDCard(context: Context, idCardSide: String, filePath: String, callBack: RecognizeIDCardResultCallBack) {
 
         val param = IDCardParams().apply {
 
@@ -434,12 +429,29 @@ object ProductUtils {
         OCR.getInstance(context).recognizeIDCard(param, object : OnResultListener<IDCardResult?> {
             override fun onResult(result: IDCardResult?) {
 
-                result?.let {
-                    callBack.onResult(it)
+                if (result == null) {
+                    return
                 }
+                if (result.imageStatus == "normal") {
+                    callBack.onResult(result)
+                } else {
+                    ToastUtils.showShort("扫描错误，请重新扫描！")
+                }
+
+//                result.imageStatus
+//                normal-识别正常
+//                reversed_side-身份证正反面颠倒
+//                non_idcard-上传的图片中不包含身份证
+//                blurred-身份证模糊
+//                other_type_card-其他类型证照
+//                over_exposure-身份证关键字段反光或过曝
+//                over_dark-身份证欠曝（亮度过低）
+//                unknown-未知状态
             }
 
-            override fun onError(error: OCRError) = Unit
+            override fun onError(error: OCRError) {
+                ToastUtils.showShort("扫描错误，请重新扫描！")
+            }
         })
 
 

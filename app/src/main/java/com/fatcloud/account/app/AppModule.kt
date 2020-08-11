@@ -79,7 +79,6 @@ class AppModule {
             e.printStackTrace()
         }
 
-/*
         if (BuildConfig.DEBUG) {
 
             // 日志拦截器
@@ -98,7 +97,6 @@ class AppModule {
             builder.addInterceptor(loggingInterceptor)
             builder.addInterceptor(bodyInterceptor)
         }
-*/
 
 
         builder.protocols(Collections.singletonList(Protocol.HTTP_1_1))
