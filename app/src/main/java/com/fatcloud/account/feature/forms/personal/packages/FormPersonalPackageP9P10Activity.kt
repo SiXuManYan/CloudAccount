@@ -340,8 +340,8 @@ class FormPersonalPackageP9P10Activity : BaseMVPActivity<FormPersonalPackageP9P1
                         result.idNumber?.let {
                             fromView.setIdNumberValue(it.words, true)
                         }
-                        result.address?.let {
-                            fromView.setIdAddressValue(it.words, true)
+                        result.gender?.let {
+                            fromView.setGenderValue(it.words)
                         }
                         result.ethnic?.let {
                             fromView.setEthnicValue(it.words, true)
@@ -351,7 +351,7 @@ class FormPersonalPackageP9P10Activity : BaseMVPActivity<FormPersonalPackageP9P1
                 })
             }
 
-            CameraActivity.CONTENT_TYPE_ID_CARD_BACK->{
+            CameraActivity.CONTENT_TYPE_ID_CARD_BACK -> {
 
                 loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)
             }

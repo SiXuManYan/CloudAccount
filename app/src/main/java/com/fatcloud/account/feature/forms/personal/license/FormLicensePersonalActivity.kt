@@ -528,7 +528,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
                     }
                 })
             }
-            CameraActivity.CONTENT_TYPE_ID_CARD_BACK->{
+            CameraActivity.CONTENT_TYPE_ID_CARD_BACK -> {
                 loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)
             }
 

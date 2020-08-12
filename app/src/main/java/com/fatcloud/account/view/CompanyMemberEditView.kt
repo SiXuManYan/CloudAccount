@@ -643,6 +643,17 @@ class CompanyMemberEditView : LinearLayout {
             gender_spinner.setSelection(2, true)
         }
         genderIndex = it
+    }
+
+    fun setGenderValue(it: String) {
+        if (it == "男") {
+            gender_spinner.setSelection(1, true)
+            genderIndex = 1
+
+        } else {
+            gender_spinner.setSelection(2, true)
+            genderIndex = 2
+        }
 
     }
 
