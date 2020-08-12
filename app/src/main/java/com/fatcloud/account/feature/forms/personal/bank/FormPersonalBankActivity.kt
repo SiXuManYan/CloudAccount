@@ -588,6 +588,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             return
         }
 
+
         val legalNameValue = legal_person_view.getNameValue()
         if (legalNameValue.isBlank()) {
             ToastUtils.showShort("请输入法人姓名")
@@ -675,6 +676,9 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             }
         }
 
+
+        // 姓名重复检验
+
         if (legalNameValue == financeNameValue) {
             ToastUtils.showShort(" 法人姓名 和 财务负责人姓名 不能重复，请重新填写！")
             return
@@ -697,6 +701,33 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             ToastUtils.showShort(" 法人 不能同时为 大额业务查证联系人1 和 大额业务查证联系人2 请重新填写！")
             return
         }
+
+        // 手机号重复检验
+
+        if (legalPhoneValue == financePhoneValue) {
+            ToastUtils.showShort(" 法人联系方式 和 财务负责人联系方式 不能重复，请重新填写！")
+            return
+        }
+
+        if (verificationFirstPhoneValue == financePhoneValue) {
+            ToastUtils.showShort(" 财务负责人联系方式 和 大额业务查证联系人1联系方式，不能重复，请重新填写！")
+            return
+        }
+        if (verificationSecondPhoneValue == financePhoneValue) {
+            ToastUtils.showShort(" 财务负责人联系方式 和 大额业务查证联系人2联系方式，不能重复，请重新填写！")
+            return
+        }
+
+        if (reconciliationPhoneValue == financePhoneValue) {
+            ToastUtils.showShort(" 财务负责人联系方式 和 对账联系人联系方式，不能重复，请重新填写！")
+            return
+        }
+        if (legalPhoneValue == verificationFirstPhoneValue && legalPhoneValue == verificationSecondPhoneValue) {
+            ToastUtils.showShort(" 法人联系方式 不能同时为 大额业务查证联系人1联系方式 和 大额业务查证联系人2联系方式 请重新填写！")
+            return
+        }
+
+
 
 
         val model = BankPersonal().apply {
