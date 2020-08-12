@@ -480,8 +480,6 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
                                 result.address?.let {
                                     fromView.setIdAddressValue(it.words, true)
                                 }
-
-
                             }
                         })
                 }
@@ -509,6 +507,8 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
 
                                 }
                             })
+                    } else {
+                        loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)
                     }
 
                 }
