@@ -145,9 +145,7 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
 
     private fun loginInit() {
 
-        if (User.isLogon()) {
 
-        }
 
 
     }

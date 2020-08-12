@@ -1,5 +1,6 @@
 package com.fatcloud.account.feature.order.lists
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.blankj.utilcode.util.SizeUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.list.BaseRefreshListActivity
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.form.p9p10.NativeFormPersonalPackageP9P10Draft
 import com.fatcloud.account.entity.local.form.*
 import com.fatcloud.account.entity.order.persional.Order
@@ -25,10 +27,12 @@ import com.fatcloud.account.feature.forms.personal.packages.FormPersonalPackageP
 import com.fatcloud.account.feature.forms.personal.tax.FormTaxRegistrationPersonalActivity
 import com.fatcloud.account.feature.order.lists.holders.OrderListHolder
 import com.fatcloud.account.feature.order.progress.ScheduleActivity
+import com.fatcloud.account.view.dialog.AlertDialog
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import com.jude.easyrecyclerview.decoration.DividerDecoration
 import io.reactivex.functions.Consumer
+import kotlinx.android.synthetic.main.item_order.*
 import java.util.ArrayList
 
 /**
@@ -117,7 +121,43 @@ class OrderListActivity : BaseRefreshListActivity<Order, OrderListPresenter>(), 
                     }
 
                 }
+
+                orderListHolder.itemView.findViewById<TextView>(R.id.delete_draft_tv).setOnClickListener {
+
+                    AlertDialog.Builder(this@OrderListActivity)
+                        .setTitle(getString(R.string.prompt))
+                        .setMessage(getString(R.string.delete_draft_confirm))
+                        .setCancelable(true)
+                        .setPositiveButton(R.string.confirm, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
+                            doItemRemove(orderListHolder)
+                            dialog.dismiss()
+                        })
+                        .setNegativeButton(R.string.cancel, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
+                            dialog.dismiss()
+                        })
+                        .create()
+                        .show()
+
+                }
+
+
+
                 return orderListHolder
+            }
+
+            private fun doItemRemove(orderListHolder: OrderListHolder) {
+                getAdapter()?.let {
+                    val adapterPosition = orderListHolder.adapterPosition - it.headerCount
+                    if (adapterPosition < 0 || adapterPosition >= it.allData.size) return@let
+                    val model = it.allData[adapterPosition]
+
+                    if (model.state != Constants.OS_UN_SUBMITTED) {
+                        return@let
+                    }
+                    it.remove(adapterPosition)
+                    ProductUtils.deleteDraft(model.mold)
+
+                }
             }
 
         }

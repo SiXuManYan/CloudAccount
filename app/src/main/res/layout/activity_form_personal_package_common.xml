@@ -20,6 +20,57 @@
             android:paddingBottom="300dp">
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:background="@color/font_white">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="0dp"
+                    android:paddingBottom="10dp">
+
+                    <ImageView
+                        android:id="@+id/tag_iv"
+                        android:layout_width="3dp"
+                        android:layout_height="13dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/shape_vertical_line_red" />
+
+                    <TextView
+                        android:id="@+id/highlight_title_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/highlight_title_action_tv"
+                        android:layout_toRightOf="@+id/tag_iv"
+                        android:ellipsize="end"
+                        android:lineSpacingMultiplier="1.2"
+                        android:maxLines="2"
+                        android:text="注册信息"
+                        android:textColor="@color/color_first_level"
+                        android:textSize="@dimen/font_size_14"
+                        android:textStyle="bold" />
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="@color/split_line_color" />
+            </LinearLayout>
+
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"

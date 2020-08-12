@@ -106,7 +106,7 @@ class ProductInputFragment : BaseBottomSheetDialogFragment<ProductInputPresenter
                 .putExtra(Constants.PARAM_IMAGE_URL, preparePay.productLogoImgUrl)
                 .putExtra(Constants.PARAM_PRODUCT_NAME, preparePay.productName)
                 .putExtra(Constants.PARAM_DATE, preparePay.createDt)
-                .putExtra(Constants.PARAM_MOLD, Constants.P1)
+                .putExtra(Constants.PARAM_MOLD, Constants.P11)
         )
        dismissAllowingStateLoss()
     }

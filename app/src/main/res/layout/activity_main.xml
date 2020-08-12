@@ -19,7 +19,7 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/shape_navigation_bar"
         app:tl_textSelectColor="@color/color_app_red"
-        app:tl_textUnselectColor="@color/color_third_level"
+        app:tl_textUnselectColor="@color/color_second_level"
         app:tl_textsize="10sp" />
 
 </RelativeLayout>

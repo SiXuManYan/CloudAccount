@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/color_list_gray_background"
+            android:background="@color/font_white"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="5"
             tools:listitem="@layout/item_business_scope" />
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginLeft="1px"
-            android:background="@color/color_list_gray_background"
+            android:background="@color/font_white"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="20"
             tools:listitem="@layout/item_business_scope" />

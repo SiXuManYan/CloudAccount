@@ -20,6 +20,8 @@ import com.blankj.utilcode.util.*
 import com.fatcloud.account.BuildConfig
 import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
+import com.fatcloud.account.entity.form.p9p10.NativeFormPersonalPackageP9P10Draft
+import com.fatcloud.account.entity.local.form.*
 import com.fatcloud.account.extend.LimitInputTextWatcher
 import com.fatcloud.account.feature.gallery.GalleryActivity
 import com.fatcloud.account.feature.matisse.Glide4Engine
@@ -521,9 +523,48 @@ object ProductUtils {
             ToastUtils.showShort("姓名不能重复")
             true
         }
-
-
     }
 
+
+    /**
+     * 删除草稿
+     */
+    fun deleteDraft(productMold: String) {
+
+        when (productMold) {
+            Constants.P1 -> {
+                PersonalLicenseDraft.clearAll()
+            }
+            Constants.P2 -> {
+                EnterprisePackageDraft.clearAll()
+            }
+            Constants.P3 -> {
+                PersonalBookkeepingDraft.clearAll()
+            }
+            Constants.P4 -> {
+                PersonalTaxDraft.clearAll()
+            }
+            Constants.P5 -> {
+                // 不需要保存功能
+            }
+            Constants.P6 -> {
+                // 不需要保存功能
+            }
+            Constants.P7 -> {
+                // 不需要保存功能
+            }
+            Constants.P8 -> {
+                BankPersonalDraft.clearAll()
+            }
+            Constants.P9, Constants.P10 -> {
+                NativeFormPersonalPackageP9P10Draft.clearAll()
+            }
+            Constants.P11 -> {
+                // 无表单
+            }
+            else -> {
+            }
+        }
+    }
 
 }

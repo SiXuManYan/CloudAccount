@@ -75,7 +75,7 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
 
 
     private fun setServerData(data: Order) {
-
+        delete_draft_tv.visibility = View.GONE
         order_id_tv.apply {
             text = StringUtils.getString(R.string.order_id_format, data.no)
         }
@@ -88,6 +88,7 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
     }
 
     private fun setDraftData(data: Order) {
+        delete_draft_tv.visibility = View.VISIBLE
         Glide.with(context)
             .load(getImageFromMold(data.mold))
             .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))

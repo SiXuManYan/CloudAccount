@@ -16,7 +16,6 @@
         android:layout_toLeftOf="@+id/sel_iv"
         android:gravity="center_vertical|left"
         android:paddingTop="12dp"
-        android:background="?android:attr/selectableItemBackground"
         android:paddingBottom="12dp"
         android:textColor="@color/color_first_level"
         android:textSize="@dimen/font_size_14"

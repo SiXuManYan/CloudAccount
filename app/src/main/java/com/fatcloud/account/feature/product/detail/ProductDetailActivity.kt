@@ -185,6 +185,7 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
             .append(getString(R.string.money_symbol_with_blank)).setFontSize(12, true)
             .append(money).setFontSize(18, true)
         when (data.mold) {
+            Constants.P5,
             Constants.P6 -> {
                 moneySpan.append(getString(R.string.begin)).setVerticalAlign(SpanUtils.ALIGN_BOTTOM).setFontSize(12, true).setBold()
                     .setForegroundColor(ColorUtils.getColor(R.color.color_third_level))
