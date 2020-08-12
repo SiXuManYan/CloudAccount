@@ -11,7 +11,6 @@ import androidx.core.app.ActivityCompat.startActivityForResult
 import com.baidu.ocr.ui.camera.CameraActivity
 import com.baidu.ocr.ui.camera.CameraActivity.*
 import com.baidu.ocr.ui.util.FileUtil
-import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.engine.DiskCacheStrategy

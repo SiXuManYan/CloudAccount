@@ -222,5 +222,6 @@
     <string name="delete">删除</string>
     <string name="prompt">提示</string>
     <string name="delete_draft_confirm">确认删除未提交订单吗？</string>
+    <string name="commitment_download_success_hint">承诺书下载成功，请在相册中查看！</string>
 
 </resources>

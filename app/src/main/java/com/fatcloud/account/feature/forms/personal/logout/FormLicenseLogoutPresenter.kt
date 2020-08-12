@@ -9,6 +9,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.blankj.utilcode.util.FileUtils
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
@@ -98,7 +99,7 @@ class FormLicenseLogoutPresenter @Inject constructor(private var view: FormLicen
                                 Uri.fromFile(dest)
                             )
                         )
-                        ToastUtils.showShort(R.string.image_save_success)
+                        ToastUtils.showShort(StringUtils.getString(R.string.commitment_download_success_hint))
                     }, {
                         LogUtils.e(it.message)
                     })

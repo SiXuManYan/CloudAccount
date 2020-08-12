@@ -43,7 +43,7 @@ class CloudPayResultActivity : BaseMVPActivity<CloudPayResultPresenter>(), Cloud
 
         switchView()
 
-        presenter.countdown(countdown_hint_tv)
+
     }
 
     private fun switchView() {
@@ -52,6 +52,7 @@ class CloudPayResultActivity : BaseMVPActivity<CloudPayResultPresenter>(), Cloud
                 countdown_hint_tv.visibility = View.VISIBLE
                 common_hint_tv.visibility = View.GONE
                 common_next_tv.visibility = View.GONE
+                presenter.countdown(countdown_hint_tv)
             }
             else -> {
                 countdown_hint_tv.visibility = View.GONE
@@ -72,7 +73,7 @@ class CloudPayResultActivity : BaseMVPActivity<CloudPayResultPresenter>(), Cloud
                     dialog.dismiss()
                 })
                 .setNegativeButton("查看订单", AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
-                    startActivity(OrderListActivity::class.java)
+                    startActivityClearTop(OrderListActivity::class.java, null)
                     super.onBackPressed()
                     dialog.dismiss()
                 })
@@ -92,15 +93,15 @@ class CloudPayResultActivity : BaseMVPActivity<CloudPayResultPresenter>(), Cloud
     }
 
     @OnClick(
-        R.id.next_tv
+        R.id.common_next_tv
     )
     fun onClick(view: View) {
         if (CommonUtils.isDoubleClick(view)) {
             return
         }
         when (view.id) {
-            R.id.next_tv -> {
-                startActivity(OrderListActivity::class.java)
+            R.id.common_next_tv -> {
+                startActivityClearTop(OrderListActivity::class.java, null)
                 finish()
             }
             else -> {

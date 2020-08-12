@@ -94,8 +94,6 @@ class PayActivity : BaseMVPActivity<PayPresenter>(), PayView {
                 ToastUtils.showShort("您已取消支付")
             } else {
                 presenter.checkOrderRealPaymentStatus(this, orderId, orderNumber)
-
-//                orderPaySuccess()
             }
         })
     }
