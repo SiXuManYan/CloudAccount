@@ -381,6 +381,7 @@
             android:imeOptions="actionNext"
             android:lineSpacingMultiplier="1.2"
             android:maxLength="50"
+            android:maxLines="1"
             android:minHeight="45dp"
             android:paddingLeft="10dp"
             android:paddingRight="0dp"

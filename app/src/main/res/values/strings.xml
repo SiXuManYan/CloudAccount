@@ -219,5 +219,6 @@
     <string name="second_change_name">变更备选名称2</string>
     <string name="tax_number">纳税人识别号（社会统一代码）</string>
     <string name="information">办理信息</string>
+    <string name="delete">删除</string>
 
 </resources>
