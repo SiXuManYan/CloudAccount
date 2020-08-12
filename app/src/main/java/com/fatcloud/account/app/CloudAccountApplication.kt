@@ -133,9 +133,9 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
 
 
         // crash
-//        RxJavaPlugins.setErrorHandler {
-//            it.printStackTrace()
-//        }
+        RxJavaPlugins.setErrorHandler {
+            it.printStackTrace()
+        }
         // crash 日志收集
         CrashHandler.instance.init(this)
 

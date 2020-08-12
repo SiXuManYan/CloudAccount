@@ -28,7 +28,7 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
 
         versionCode 3
-        versionName "1.1.0 beta"
+        versionName "1.1.0"
 
         multiDexEnabled true
 
@@ -67,7 +67,7 @@ android {
             signingConfig signingConfigs.release
         }
         release {
-            debuggable true
+            debuggable false
             minifyEnabled false // 是否运行混淆
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
