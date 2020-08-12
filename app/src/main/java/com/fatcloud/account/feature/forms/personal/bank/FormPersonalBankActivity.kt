@@ -253,7 +253,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             currentMold = Constants.SH1
             initHighlightTitle("法人信息")
             initNameTitle("姓名")
-            initPhoneHint("联系方式")
+            initPhoneHint("请输入法人联系方式")
             showGenderView(false)
             showNation(false)
             showIdNumber(false)

@@ -153,16 +153,28 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="1dp"
                     android:layout_marginLeft="1dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_toLeftOf="@+id/birthday_sp"
                     android:layout_toRightOf="@+id/birthday_title_tv"
                     android:gravity="center_vertical|right"
                     android:hint="请选择生日"
                     android:paddingLeft="10dp"
-                    android:paddingRight="0dp"
+                    android:paddingRight="10dp"
                     android:singleLine="true"
                     android:textColor="@color/color_first_level"
                     android:textColorHint="@color/color_cccccc"
                     android:textSize="14sp" />
 
+
+                <TextView
+                    android:id="@+id/birthday_sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text=">"
+                    android:textColor="@color/color_cccccc"
+                    android:textSize="@dimen/font_size_12" />
 
                 <View
                     android:layout_width="match_parent"
@@ -253,7 +265,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginRight="10dp"
                     android:text="业务范围"
                     android:textColor="@color/color_first_level" />
 
@@ -262,7 +274,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/scope_sp"
                     android:layout_toRightOf="@+id/business_scope"
                     android:ellipsize="end"

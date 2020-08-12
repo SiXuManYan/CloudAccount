@@ -712,7 +712,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_upload_default" />
+                        android:src="@drawable/ic_upload_default_original" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -737,7 +737,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_upload_default" />
+                        android:src="@drawable/ic_upload_duplicate" />
 
                     <ImageView
                         android:layout_width="wrap_content"

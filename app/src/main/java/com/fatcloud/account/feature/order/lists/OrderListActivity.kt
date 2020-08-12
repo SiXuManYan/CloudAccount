@@ -1,6 +1,5 @@
 package com.fatcloud.account.feature.order.lists
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
 import android.view.ViewGroup
@@ -27,13 +26,11 @@ import com.fatcloud.account.feature.forms.personal.packages.FormPersonalPackageP
 import com.fatcloud.account.feature.forms.personal.tax.FormTaxRegistrationPersonalActivity
 import com.fatcloud.account.feature.order.lists.holders.OrderListHolder
 import com.fatcloud.account.feature.order.progress.ScheduleActivity
-import com.fatcloud.account.view.dialog.AlertDialog
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import com.jude.easyrecyclerview.decoration.DividerDecoration
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.item_order.*
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by Wangsw on 2020/6/3 0003 17:42.
@@ -124,12 +121,14 @@ class OrderListActivity : BaseRefreshListActivity<Order, OrderListPresenter>(), 
 
                 orderListHolder.itemView.findViewById<TextView>(R.id.delete_draft_tv).setOnClickListener {
 
+                    doItemRemove(orderListHolder)
+                    /*
                     AlertDialog.Builder(this@OrderListActivity)
                         .setTitle(getString(R.string.prompt))
                         .setMessage(getString(R.string.delete_draft_confirm))
                         .setCancelable(true)
                         .setPositiveButton(R.string.confirm, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
-                            doItemRemove(orderListHolder)
+
                             dialog.dismiss()
                         })
                         .setNegativeButton(R.string.cancel, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
@@ -137,6 +136,7 @@ class OrderListActivity : BaseRefreshListActivity<Order, OrderListPresenter>(), 
                         })
                         .create()
                         .show()
+                    */
 
                 }
 

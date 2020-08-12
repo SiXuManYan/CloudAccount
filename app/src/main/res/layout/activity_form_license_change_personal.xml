@@ -553,14 +553,7 @@
             </RelativeLayout>
 
 
-            <TextView
 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:text="@string/support_format_name"
-                android:textColor="@color/color_FFAF00"
-                android:textSize="@dimen/font_size_10" />
 
             <!---->
 
@@ -629,7 +622,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_upload_default" />
+                        android:src="@drawable/ic_upload_default_original"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -654,7 +647,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_upload_default" />
+                        android:src="@drawable/ic_upload_duplicate" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -669,13 +662,7 @@
             </RelativeLayout>
 
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:text="@string/support_format_name"
-                android:textColor="@color/color_FFAF00"
-                android:textSize="@dimen/font_size_10" />
+
 
 
             <ImageView

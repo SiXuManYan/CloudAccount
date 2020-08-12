@@ -173,13 +173,6 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
         title_tv.text = data.name
         content_tv.text = data.introduce
         val money = data.money.stripTrailingZeros().toPlainString()
-//        CommonUtils.setFormatText(
-//            amount_tv,
-//            getString(R.string.money_symbol),
-//            money,
-//            12,
-//            18
-//        )
 
         val moneySpan = SpanUtils()
             .append(getString(R.string.money_symbol_with_blank)).setFontSize(12, true)
