@@ -130,7 +130,7 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
 
     private fun initView() {
         setMainTitle("注册信息")
-        ProductUtils.onlySupportChineseInput(zero_choice_name_et,first_choice_name_et,second_choice_name_et)
+        ProductUtils.onlySupportChineseInput(zero_choice_name_et, first_choice_name_et, second_choice_name_et)
 
         restoreDraft()
     }
@@ -323,18 +323,13 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
             ToastUtils.showShort("请输入资金数额")
             return
         }
+
         try {
             val investMoneyInt = investMoney.toInt()
-            if (investMoneyInt < 50) {
-                ToastUtils.showShort("资金数额不能少于50万")
+            if (investMoneyInt < 50 || investMoneyInt > 10000) {
+                ToastUtils.showShort(getString(R.string.invest_money_hint_50_10000))
                 return
             }
-
-            if (investMoneyInt >= 10000) {
-                ToastUtils.showShort("资金数额不能大于10000万")
-                return
-            }
-
 
         } catch (e: Exception) {
         }

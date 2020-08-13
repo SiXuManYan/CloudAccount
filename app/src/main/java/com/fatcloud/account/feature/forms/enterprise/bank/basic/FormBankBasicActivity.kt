@@ -207,6 +207,17 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
             return
         }
 
+        try {
+            val investMoneyInt = registeredCapital.toInt()
+            if (investMoneyInt < 50 || investMoneyInt > 10000) {
+                ToastUtils.showShort(getString(R.string.invest_money_hint_50_10000))
+                return
+            }
+
+        } catch (e: Exception) {
+        }
+
+
         val accountNatureValue = account_nature_value.text.toString().trim()
         if (accountNatureValue.isBlank()) {
             ToastUtils.showShort("请选择账户性质")
