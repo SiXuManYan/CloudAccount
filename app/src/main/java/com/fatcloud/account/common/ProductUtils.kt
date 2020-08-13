@@ -290,28 +290,18 @@ object ProductUtils {
      * 验证 银行卡号
      */
     fun isBankCardNumber(cardString: String, typeString: String? = ""): Boolean {
-        // 银行卡号（10到30位, 覆盖对公/私账户, 参考微信支付）9  29
-        // 16 17 19
-//        val match = RegexUtils.isMatch("^[1-9]\\d{15,18}\$", cardString)
 
+
+        // 16,17, 19 位数
         val match = AndroidUtil.checkBankCardNumber(cardString)
 
-        val lengthEighteen = (cardString.length == 18)
 
-        if (!match || lengthEighteen) {
-            ToastUtils.showShort(
-                StringUtils.getString(
-                    R.string.bank_number_wrong_format,
-                    typeString
-                )
-            )
+        if (!match) {
+            ToastUtils.showShort(StringUtils.getString(R.string.bank_number_wrong_format, typeString))
         }
 
-        return match && !lengthEighteen
+        return match
     }
-
-
-
 
 
     /**
@@ -321,12 +311,7 @@ object ProductUtils {
 
         val match = AndroidUtil.isMobileNumber(string)
         if (!match) {
-            ToastUtils.showShort(
-                StringUtils.getString(
-                    R.string.phone_number_wrong_format,
-                    typeString
-                )
-            )
+            ToastUtils.showShort(StringUtils.getString(R.string.phone_number_wrong_format, typeString))
         }
         return match
     }
@@ -341,12 +326,7 @@ object ProductUtils {
             string
         )
         if (!match) {
-            ToastUtils.showShort(
-                StringUtils.getString(
-                    R.string.id_card_number_wrong_format,
-                    typeString
-                )
-            )
+            ToastUtils.showShort(StringUtils.getString(R.string.id_card_number_wrong_format, typeString))
         }
         return match
     }

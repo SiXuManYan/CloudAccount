@@ -37,6 +37,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.fatcloud.account.BuildConfig;
@@ -45,7 +46,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -1799,10 +1799,21 @@ public class AndroidUtil {
         if (TextUtils.isEmpty(cardNo)) {
             return false;
         }
+        int length = cardNo.length();
+        if (length == 18) {
+            return false;
+        }
 
-        int[] cardNoArr = new int[cardNo.length()];
-        for (int i = 0; i < cardNo.length(); i++) {
-            cardNoArr[i] = Integer.valueOf(String.valueOf(cardNo.charAt(i)));
+        // 16 17 19 位数
+        if (!RegexUtils.isMatch("^[1-9]\\d{15,18}$", cardNo)) {
+            return false;
+        }
+
+
+        // 匹配Luhn算法
+        int[] cardNoArr = new int[length];
+        for (int i = 0; i < length; i++) {
+            cardNoArr[i] = Integer.parseInt(String.valueOf(cardNo.charAt(i)));
         }
         for (int i = cardNoArr.length - 2; i >= 0; i -= 2) {
             cardNoArr[i] <<= 1;

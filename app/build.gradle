@@ -6,7 +6,6 @@ apply plugin: 'kotlin-noarg'
 apply plugin: "kotlin-allopen"
 apply plugin: 'com.jakewharton.butterknife'
 apply from: './mob.gradle'
-//apply plugin: 'com.aliyun.ams.emas-services'
 
 static def releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
@@ -67,7 +66,7 @@ android {
             signingConfig signingConfigs.release
         }
         release {
-            debuggable false
+            debuggable true
             minifyEnabled false // 是否运行混淆
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
