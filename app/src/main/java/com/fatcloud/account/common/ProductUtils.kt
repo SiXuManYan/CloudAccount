@@ -292,7 +292,10 @@ object ProductUtils {
     fun isBankCardNumber(cardString: String, typeString: String? = ""): Boolean {
         // 银行卡号（10到30位, 覆盖对公/私账户, 参考微信支付）9  29
         // 16 17 19
-        val match = RegexUtils.isMatch("^[1-9]\\d{15,18}\$", cardString)
+//        val match = RegexUtils.isMatch("^[1-9]\\d{15,18}\$", cardString)
+
+        val match = AndroidUtil.checkBankCardNumber(cardString)
+
         val lengthEighteen = (cardString.length == 18)
 
         if (!match || lengthEighteen) {
@@ -306,6 +309,10 @@ object ProductUtils {
 
         return match && !lengthEighteen
     }
+
+
+
+
 
     /**
      * 验证 手机号

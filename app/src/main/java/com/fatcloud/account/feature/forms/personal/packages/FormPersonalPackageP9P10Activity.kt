@@ -452,12 +452,22 @@ class FormPersonalPackageP9P10Activity : BaseMVPActivity<FormPersonalPackageP9P1
             ToastUtils.showShort("请输入银行预留手机号")
             return
         }
+        if (!ProductUtils.isPhoneNumber(bankPhoneValue)) {
+            return
+        }
 
         val bankNumberValue = bank_number_et.text.toString()
         if (bankNumberValue.trim().isBlank()) {
             ToastUtils.showShort("请输入银行卡号")
             return
         }
+
+        if (!ProductUtils.isBankCardNumber(bankNumberValue)) {
+            return
+        }
+
+
+
 
         if (mAreaName.isBlank()) {
             ToastUtils.showShort("请选择地址")
