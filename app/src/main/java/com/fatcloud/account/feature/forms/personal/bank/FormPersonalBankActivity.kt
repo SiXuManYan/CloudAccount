@@ -702,6 +702,13 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             return
         }
 
+        if (verificationFirstNameValue == verificationSecondNameValue){
+            ToastUtils.showShort(" 大额业务查证联系人1 和 大额业务查证联系人2 姓名不能重复请重新填写！")
+            return
+        }
+
+
+
         // 手机号重复检验
 
         if (legalPhoneValue == financePhoneValue) {
@@ -727,6 +734,10 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             return
         }
 
+        if (verificationFirstPhoneValue == verificationSecondPhoneValue){
+            ToastUtils.showShort(" 大额业务查证联系人1 和 大额业务查证联系人2 联系方式不能重复请重新填写！")
+            return
+        }
 
 
 
