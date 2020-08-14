@@ -27,7 +27,7 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
 
         versionCode 3
-        versionName "1.1.0"
+        versionName "1.1.0_beta"
 
         multiDexEnabled true
 
@@ -88,8 +88,8 @@ android {
             buildConfigField "String", "OSS_PRIVATE_BUCKET_NAME", OSS_PRIVATE_BUCKET_NAME
 
             buildConfigField "String", "OSS_END_POINT", OSS_END_POINT
-            buildConfigField "String", "BUGLY_APP_ID", '"1"'
-            buildConfigField "boolean", "BUGLY_ENABLE_DEBUG", 'false'
+            buildConfigField "String", "BUGLY_APP_ID", BUGLY_APP_ID
+            buildConfigField "String", "BUGLY_APP_CHANNNEL", BUGLY_APP_CHANNNEL_DEV
 
             buildConfigField "String", "OCR_API_KEY", OCR_API_KEY
             buildConfigField "String", "OCR_SECRET_KEY", OCR_SECRET_KEY
@@ -106,8 +106,8 @@ android {
             buildConfigField "String", "OSS_PRIVATE_BUCKET_NAME", OSS_PRIVATE_BUCKET_NAME
 
             buildConfigField "String", "OSS_END_POINT", OSS_END_POINT
-            buildConfigField "String", "BUGLY_APP_ID", '"1"'
-            buildConfigField "boolean", "BUGLY_ENABLE_DEBUG", 'false'
+            buildConfigField "String", "BUGLY_APP_ID", BUGLY_APP_ID
+            buildConfigField "String", "BUGLY_APP_CHANNNEL", BUGLY_APP_CHANNNEL_FORMAL
 
             buildConfigField "String", "OCR_API_KEY", OCR_API_KEY
             buildConfigField "String", "OCR_SECRET_KEY", OCR_SECRET_KEY
@@ -315,6 +315,9 @@ dependencies {
         exclude(module: 'alicloud-android-utdid')
         exclude module: 'jetified-alicloud-android-utdid-2.5.1'
     }
+
+    // 腾讯 Bugly
+    implementation 'com.tencent.bugly:crashreport:3.1.0'
 
 }
 noArg {

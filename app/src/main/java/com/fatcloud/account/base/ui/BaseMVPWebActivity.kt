@@ -29,6 +29,8 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.scwang.smart.refresh.layout.listener.ScrollBoundaryDecider
+import com.tencent.bugly.crashreport.CrashReport
+import com.tencent.bugly.crashreport.crash.h5.H5JavaScriptInterface
 import com.tencent.smtt.export.external.interfaces.SslError
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler
 import com.tencent.smtt.export.external.interfaces.WebResourceError
@@ -233,6 +235,37 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
         } catch (e: InvocationTargetException) {
 
         }
+
+        //bugly  Javascript的异常捕获
+        val buglyWebView = object : CrashReport.WebViewInterface {
+
+            override fun getUrl(): String {
+                return x5_web.url
+            }
+
+            override fun loadUrl(url: String) {
+                x5_web.loadUrl(url)
+            }
+
+            override fun setJavaScriptEnabled(flag: Boolean) {
+
+                x5_web.settings.javaScriptEnabled = flag
+
+            }
+
+            override fun addJavascriptInterface(jsInterface: H5JavaScriptInterface?, name: String?) {
+                x5_web.addJavascriptInterface(jsInterface, name)
+            }
+
+            /**
+             * 获取WebView的内容描述.
+             */
+            override fun getContentDescription(): CharSequence {
+              return x5_web.contentDescription
+            }
+
+        }
+        CrashReport.setJavascriptMonitor(buglyWebView, true)
 
 
         x5_web.clearCache(true)

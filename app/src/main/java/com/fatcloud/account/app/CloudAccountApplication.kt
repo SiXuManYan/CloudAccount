@@ -1,37 +1,30 @@
 package com.fatcloud.account.app
 
-import android.annotation.TargetApi
-import android.app.*
+import android.app.Activity
+import android.app.Application
 import android.content.Context
-import android.content.Intent
-import android.graphics.BitmapFactory
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.os.Process
 import android.view.Gravity
 import androidx.annotation.IdRes
-import androidx.core.app.NotificationCompat
 import androidx.multidex.MultiDex
-import com.alibaba.sdk.android.push.CloudPushService
-import com.alibaba.sdk.android.push.CommonCallback
-import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory
 import com.baidu.mobstat.StatService
 import com.baidu.ocr.sdk.OCR
 import com.baidu.ocr.sdk.OnResultListener
 import com.baidu.ocr.sdk.exception.OCRError
 import com.baidu.ocr.sdk.model.AccessToken
-import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
 import com.fatcloud.account.BuildConfig
-import com.fatcloud.account.R
 import com.fatcloud.account.backstage.DataServiceFaker
+import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.CrashHandler
 import com.fatcloud.account.data.CloudDataBase
 import com.fatcloud.account.entity.commons.Commons
+import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.network.ApiService
 import com.fatcloud.account.pushs.NotificationUtil
 import com.fatcloud.account.view.dialog.LoadingDialog
@@ -39,6 +32,7 @@ import com.fatcloud.account.view.swipe.smart.CommonSmartAnimRefreshHeaderView
 import com.fatcloud.account.view.swipe.smart.CommonSmartRefreshFooter
 import com.mob.MobSDK
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.smtt.sdk.QbSdk
 import dagger.android.AndroidInjector
 import dagger.android.HasActivityInjector
@@ -119,36 +113,38 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
     }
 
     private fun initHandle() {
-        //工具类初始化
+
+        // 工具类初始化
         Utils.init(this)
         ToastUtils.setGravity(Gravity.CENTER, 0, 0)
 
-        if (BuildConfig.DEBUG && BuildConfig.FLAVOR.equals("dev")) {
+        if (BuildConfig.DEBUG || BuildConfig.FLAVOR.equals("dev")) {
             LogUtils.getConfig().isLogSwitch = true
             LogUtils.getConfig().isSingleTagSwitch = true
-
-        }else{
+        } else {
             LogUtils.getConfig().isLogSwitch = false
         }
 
-
-        // crash
+        // rx crash
         RxJavaPlugins.setErrorHandler {
             it.printStackTrace()
         }
+
         // crash 日志收集
         CrashHandler.instance.init(this)
 
         // shareSdk
         MobSDK.init(this)
 
-//        initX5WebView()
+        // initX5WebView()
 
         initBaiduOcr()
 
         initBaiduMtj()
 
+        initBugly()
     }
+
 
     /**
      * https://mtj.baidu.com/static/userguide/book/android/adconfig/circle/circle.html
@@ -177,8 +173,79 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
         // 重要：如果有对webview设置过webchromeclient，则需要调用trackWebView() 接口将WebChromeClient对象传入，
         // 否则开发者自定义的回调无法收到。
         StatService.autoTrace(this, true, false)
+    }
 
 
+    private fun initBugly() {
+
+
+        // UserStrategy类作为Bugly的初始化扩展，在这里修改本次初始化Bugly数据的版本、渠道及部分初始化行为
+        val strategy = CrashReport.UserStrategy(applicationContext).apply {
+
+            // 设置App版本、渠道、包名
+            appChannel = BuildConfig.BUGLY_APP_CHANNNEL
+            appVersion = BuildConfig.VERSION_NAME
+            appPackageName = BuildConfig.APPLICATION_ID
+
+            // 设置Bugly初始化延迟 (Bugly会在启动10s后联网同步数据。若您有特别需求，可以修改这个时间。)
+            appReportDelay = 20000
+
+            // 只在主进程下上报数据：判断是否是主进程（通过进程名是否为包名来判断），并在初始化Bugly时增加一个上报进程的策略配置。
+            // 获取当前包名
+            val packageName = applicationContext.packageName
+
+            // 获取当前进程名
+            val processName = CommonUtils.getProcessName(Process.myPid())
+
+            // 设置是否为上报进程
+            isUploadProcess = processName == null || processName == packageName
+
+
+            // 设置Crash回调
+            setCrashHandleCallback(object : CrashReport.CrashHandleCallback() {
+                /**
+                 * Crash处理.
+                 *
+                 * @param crashType 错误类型：CRASHTYPE_JAVA，CRASHTYPE_NATIVE，CRASHTYPE_U3D ,CRASHTYPE_ANR
+                 * @param errorType 错误的类型名
+                 * @param errorMessage 错误的消息
+                 * @param errorStack 错误的堆栈
+                 * @return 返回额外的自定义信息上报
+                 */
+                override fun onCrashHandleStart(crashType: Int, errorType: String, errorMessage: String, errorStack: String): MutableMap<String, String> {
+                    val map = LinkedHashMap<String, String>()
+                    map["crashType"] = crashType.toString()
+                    map["errorType"] = errorType
+                    map["errorMessage"] = errorMessage
+                    map["errorStack"] = errorStack
+                    return map
+                }
+            })
+
+        }
+
+        // 开发环境
+        val isDevEnvironment = BuildConfig.DEBUG || BuildConfig.FLAVOR == "dev"
+
+        // 将测试环境下运行的设备，设置成开发设备
+        CrashReport.setIsDevelopmentDevice(applicationContext, isDevEnvironment);
+
+        // 设置用户ID
+        // 您可能会希望能精确定位到某个用户的异常，我们提供了用户ID记录接口。
+        // 例：网游用户登录后，通过该接口记录用户ID，在页面上可以精确定位到每个用户发生Crash的情况
+        if (User.isLogon()) {
+            val username = User.get().username
+            CrashReport.setUserId(username)
+            CrashReport.putUserData(applicationContext, "userId", username)
+        }
+
+
+        //        第三个参数为SDK调试模式开关，调试模式的行为特性如下：
+        //        输出详细的Bugly SDK的Log；
+        //        每一条Crash都会被立即上报；
+        //        自定义日志将会在Logcat中输出。
+        //        建议在测试阶段建议设置成true，发布时设置为false。
+        CrashReport.initCrashReport(applicationContext, BuildConfig.BUGLY_APP_ID, isDevEnvironment, strategy)
     }
 
 
@@ -198,16 +265,19 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
         })
     }
 
+    /**
+     * 百度ocr 证件识别
+     */
     private fun initBaiduOcr() {
 
         OCR.getInstance(this).initAccessToken(object : OnResultListener<AccessToken> {
             override fun onResult(result: AccessToken?) {
                 val token: String? = result?.accessToken
-//                LogUtils.d("ocr 初始化 onResult ", "token = " + token)
+                LogUtils.d("ocr 初始化 onResult ", "token = " + token)
             }
 
             override fun onError(error: OCRError?) {
-//                LogUtils.d("ocr 初始化 onError ", "message = " + error?.message)
+                LogUtils.d("ocr 初始化 onError ", "message = " + error?.message)
             }
 
         }, this)
@@ -216,8 +286,7 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
     }
 
 
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
-        DaggerAppComponent.builder().application(this).build()
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> = DaggerAppComponent.builder().application(this).build()
 
 
     override fun attachBaseContext(base: Context?) {
@@ -321,13 +390,7 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
      * @param clx 请求发起位置
      *
      */
-    fun getOssSecurityToken(
-        isEncryptFile: Boolean,
-        isFaceUp: Boolean,
-        localFilePatch: String,
-        @IdRes fromViewId: Int,
-        clx: Class<*>
-    ) {
+    fun getOssSecurityToken(isEncryptFile: Boolean, isFaceUp: Boolean, localFilePatch: String, @IdRes fromViewId: Int, clx: Class<*>) {
         presenter.getOssSecurityToken(
             this,
             isEncryptFile,
@@ -340,9 +403,12 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
 
     var ossCallBack: OssSignCallBack? = null
 
+
+    /**
+     * 签名 阿里云 private image url
+     */
     interface OssSignCallBack {
         fun ossUrlSignEnd(url: String)
-
     }
 
     /**
@@ -364,7 +430,6 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
 
     fun downLoadOssImage(objectKey: String?) {
         presenter.getOssSecurityTokenForDownload(this, objectKey)
-
     }
 
 
