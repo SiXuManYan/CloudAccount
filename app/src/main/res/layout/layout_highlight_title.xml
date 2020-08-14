@@ -36,7 +36,7 @@
             android:textColor="@color/color_first_level"
             android:textSize="@dimen/font_size_14"
             android:textStyle="bold"
-            tools:text="强调标题名称强名题名称强调标题名称" />
+            tools:text="标题" />
 
 
         <TextView

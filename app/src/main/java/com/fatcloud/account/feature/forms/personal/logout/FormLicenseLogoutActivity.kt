@@ -1,10 +1,13 @@
 package com.fatcloud.account.feature.forms.personal.logout
 
-import android.Manifest
 import android.content.Intent
 import android.view.View
 import android.widget.ImageView
 import butterknife.OnClick
+import com.baidu.ocr.sdk.model.IDCardParams
+import com.baidu.ocr.sdk.model.IDCardResult
+import com.baidu.ocr.ui.camera.CameraActivity
+import com.baidu.ocr.ui.util.FileUtil
 import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.fatcloud.account.R
@@ -13,16 +16,15 @@ import com.fatcloud.account.app.Glide
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
-import com.fatcloud.account.common.PermissionUtils
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.defray.prepare.PreparePay
 import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.persional.PersonalLicenseLogout
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
-import com.fatcloud.account.feature.matisse.Glide4Engine
 import com.fatcloud.account.feature.matisse.Matisse
-import com.zhihu.matisse.MimeType
+import com.fatcloud.account.feature.ocr.RecognizeIDCardResultCallBack
+import com.fatcloud.account.view.CompanyMemberEditView
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_form_license_logout_personal.*
 
@@ -69,11 +71,11 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
      */
     var mCommitmentImagesUrlList: ArrayList<IdentityImg> = ArrayList()
 
-
-    private var idImageFrontPath: String = ""
-    private var idImageFrontUrl: String = ""
-    private var idImageBackPath: String = ""
-    private var idImageBackUrl: String = ""
+//
+//    private var idImageFrontPath: String = ""
+//    private var idImageFrontUrl: String = ""
+//    private var idImageBackPath: String = ""
+//    private var idImageBackUrl: String = ""
 
     private var licenseImageFrontPath: String = ""
     private var licenseImageFrontUrl: String = ""
@@ -129,21 +131,10 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
             }
             val finalUrl = it.finalUrl
             when (it.fromViewId) {
-                R.id.id_card_front_iv -> {
-                    idImageFrontUrl = finalUrl
-                }
-                R.id.id_card_back_iv -> {
-                    idImageBackUrl = finalUrl
-                }
-                R.id.id_license_front_iv -> {
-                    licenseImageFrontUrl = finalUrl
-                }
-                R.id.id_license_back_iv -> {
-                    licenseImageBackUrl = finalUrl
-                }
-                R.id.commitment_upload_iv -> {
-                    commitmentImageUrl = finalUrl
-                }
+                R.id.id_license_front_iv -> licenseImageFrontUrl = finalUrl
+                R.id.id_license_back_iv -> licenseImageBackUrl = finalUrl
+                R.id.commitment_upload_iv -> commitmentImageUrl = finalUrl
+                R.id.legal_person_view -> legal_person_view.setImageUrl(finalUrl)
                 else -> {
                 }
             }
@@ -154,20 +145,32 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
 
     private fun initView() {
         setMainTitle("办理信息")
-        ProductUtils.onlySupportChineseInput(legal_name_et, organization_name_et)
         if (mIndex == 0) {
             // 选择第一项 （营业执照注销时，才显示承诺书）
             commitment_container_ll.visibility = View.VISIBLE
         } else {
             commitment_container_ll.visibility = View.GONE
         }
+
+
+        legal_person_view.apply {
+            currentMold = Constants.SH1
+            initHighlightTitle("上传白底身份证照片")
+            initNameTitle("姓名")
+            initPhoneHint("请输入法人联系方式")
+            showIdNumber(true)
+            showGenderView(false)
+            showNation(false)
+            showIdExpirationDate(false)
+            hideAddress()
+            hideShareRatio()
+        }
+
     }
 
 
     @OnClick(
         R.id.commit_tv,
-        R.id.id_card_front_iv,
-        R.id.id_card_back_iv,
         R.id.id_license_front_iv,
         R.id.id_license_back_iv,
         R.id.commitment_upload_iv,
@@ -180,10 +183,9 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
         when (view.id) {
 
             R.id.commit_tv -> {
+                ProductUtils.handleDoubleClick(view)
                 handleCommit()
             }
-            R.id.id_card_front_iv,
-            R.id.id_card_back_iv,
             R.id.id_license_front_iv,
             R.id.id_license_back_iv,
             R.id.commitment_upload_iv -> ProductUtils.handleMediaSelect(this, Matisse.IMG, view.id)
@@ -220,8 +222,6 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
                     }
 
                     when (fromViewId) {
-                        R.id.id_card_front_iv -> idImageFrontPath = fileDirPath
-                        R.id.id_card_back_iv -> idImageBackPath = fileDirPath
                         R.id.id_license_front_iv -> licenseImageFrontPath = fileDirPath
                         R.id.id_license_back_iv -> licenseImageBackPath = fileDirPath
                         R.id.commitment_upload_iv -> commitmentImagePath = fileDirPath
@@ -235,11 +235,62 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
                     }
 
                     Glide.with(this).load(fileDirPath).diskCacheStrategy(DiskCacheStrategy.NONE).into(fromView)
-
                     val application = application as CloudAccountApplication
                     application.getOssSecurityToken(true, true, fileDirPath, fromViewId, this@FormLicenseLogoutActivity.javaClass)
 
                 }
+            }
+            Constants.REQUEST_CODE_CAMERA -> receiveOcrCamera(data)
+            else -> {
+            }
+        }
+
+
+    }
+
+    private fun receiveOcrCamera(data: Intent) {
+        val contentType = data.getStringExtra(CameraActivity.KEY_CONTENT_TYPE)
+        val realPath = data.getStringExtra(CameraActivity.KEY_CROP_VIEW_IMAGE_REAL_PATH)
+        val fromViewId = data.getIntExtra(CameraActivity.KEY_FROM_VIEW_ID, 0)
+        val filePath: String = FileUtil.getSaveFile(applicationContext).absolutePath
+
+        if (filePath.isEmpty() || fromViewId == 0) {
+            return
+        }
+        // OCR 操作来源
+        val fromView = findViewById<CompanyMemberEditView>(fromViewId)
+        if (fromView == null) {
+            return
+        }
+
+        // 上传oss
+        val application = application as CloudAccountApplication
+
+        if (contentType.isEmpty()) {
+            return
+        }
+
+        when (contentType) {
+            CameraActivity.CONTENT_TYPE_ID_CARD_FRONT -> {
+                // 身份证正面
+                ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_FRONT, filePath, object : RecognizeIDCardResultCallBack {
+                    override fun onResult(result: IDCardResult) {
+
+                        loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)
+
+                        result.name?.let {
+                            fromView.setNameValue(it.words, true)
+                        }
+                        result.idNumber?.let {
+                            fromView.setIdNumberValue(it.words, true)
+                        }
+                    }
+                })
+            }
+
+            CameraActivity.CONTENT_TYPE_ID_CARD_BACK -> {
+
+                loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)
             }
             else -> {
             }
@@ -248,9 +299,31 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
 
     }
 
+    private fun loadOcrLocalAndUploadOss(
+        fromView: CompanyMemberEditView,
+        filePath: String,
+        application: CloudAccountApplication,
+        fromViewId: Int
+    ) {
+        fromView.loadResultImage(filePath)
+        application.getOssSecurityToken(true, false, filePath, fromViewId, this@FormLicenseLogoutActivity.javaClass)
+    }
+
 
     private fun handleCommit() {
-        val nameValue = legal_name_et.text.toString().trim()
+
+
+        val legalFrontImageUrl = legal_person_view.frontImageUrl
+        if (!ProductUtils.hasIdCardUrl(legalFrontImageUrl, true, "法人")) {
+            return
+        }
+        val legalBackNameUrl = legal_person_view.backImageUrl
+        if (!ProductUtils.hasIdCardUrl(legalBackNameUrl, false, "法人")) {
+            return
+        }
+
+
+        val nameValue = legal_person_view.getNameValue()
         if (nameValue.isBlank()) {
             ToastUtils.showShort("请输入法人姓名")
             return
@@ -260,7 +333,8 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
             return
         }
 
-        val idNumberValue = id_number_tv_et.text.toString().trim()
+
+        val idNumberValue = legal_person_view.getIdNumberValue()
         if (idNumberValue.isBlank()) {
             ToastUtils.showShort("身份证号")
             return
@@ -270,7 +344,7 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
         }
 
 
-        val phoneStr = legal_phone_et.text.toString().trim()
+        val phoneStr = legal_person_view.getPhoneValue()
         if (phoneStr.isBlank()) {
             ToastUtils.showShort("请输入联系方式")
             return
@@ -307,14 +381,6 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
         }
 
 
-        if (idImageFrontPath.isBlank()) {
-            ToastUtils.showShort("请上传身份证人像面")
-            return
-        }
-        if (idImageBackPath.isBlank()) {
-            ToastUtils.showShort("请上传身份证国徽面")
-            return
-        }
         if (licenseImageFrontPath.isBlank()) {
             ToastUtils.showShort("请上传营业执照正本")
             return
@@ -328,8 +394,8 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
             idno = idNumberValue
             imgsIdno = mIdImageUrlList.apply {
                 clear()
-                add(IdentityImg(imgUrl = idImageFrontUrl, mold = Constants.I1))
-                add(IdentityImg(imgUrl = idImageBackUrl, mold = Constants.I2))
+                add(IdentityImg(imgUrl = legal_person_view.frontImageUrl, mold = Constants.I1))
+                add(IdentityImg(imgUrl = legal_person_view.backImageUrl, mold = Constants.I2))
             }
             imgsLicense = mLicenseImagesUrlList.apply {
                 clear()

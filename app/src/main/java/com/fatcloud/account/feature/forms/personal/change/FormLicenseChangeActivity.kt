@@ -158,10 +158,11 @@ class FormLicenseChangeActivity : BaseMVPActivity<FormLicenseChangePresenter>(),
             if (it.formWhichClass != this.javaClass) {
                 return@Consumer
             }
+            val finalUrl = it.finalUrl
             when (it.fromViewId) {
-                R.id.id_license_front_iv -> licenseImageFrontUrl = it.finalUrl
-                R.id.id_license_back_iv -> licenseImageBackUrl = it.finalUrl
-                R.id.legal_person_view -> legal_person_view.setImageUrl(it.finalUrl)
+                R.id.id_license_front_iv -> licenseImageFrontUrl = finalUrl
+                R.id.id_license_back_iv -> licenseImageBackUrl = finalUrl
+                R.id.legal_person_view -> legal_person_view.setImageUrl(finalUrl)
                 else -> {
                 }
             }
@@ -366,15 +367,7 @@ class FormLicenseChangeActivity : BaseMVPActivity<FormLicenseChangePresenter>(),
             return
         }
 
-        val phoneStr = legal_person_view.getPhoneValue()
-        if (phoneStr.isBlank()) {
-            ToastUtils.showShort("请输入联系方式")
-            return
-        }
 
-        if (!ProductUtils.isPhoneNumber(phoneStr)) {
-            return
-        }
 
         val idNumberValue = legal_person_view.getIdNumberValue()
         if (idNumberValue.isBlank()) {
@@ -386,6 +379,15 @@ class FormLicenseChangeActivity : BaseMVPActivity<FormLicenseChangePresenter>(),
         }
 
 
+        val phoneStr = legal_person_view.getPhoneValue()
+        if (phoneStr.isBlank()) {
+            ToastUtils.showShort("请输入联系方式")
+            return
+        }
+
+        if (!ProductUtils.isPhoneNumber(phoneStr)) {
+            return
+        }
         var zeroName = ""
         var firstName = ""
         var secondName = ""
