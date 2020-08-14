@@ -152,6 +152,7 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
             commitment_container_ll.visibility = View.GONE
         }
 
+        ProductUtils.onlySupportChineseInput(organization_name_et)
 
         legal_person_view.apply {
             currentMold = Constants.SH1
