@@ -63,7 +63,7 @@ class PersonalLicenseChangeInfoActivity : BaseMVPActivity<PersonalLicenseChangeI
     }
 
     override fun bindDetailInfo(data: PersonalLicenseChangeDetail) {
-        CommonUtils.setPaymentStatus(data.state, payment_status_iv, payment_status_tv)
+        ProductUtils.setPaymentStatus(data.state, data.stateText, payment_status_iv, payment_status_tv)
         data.enterpriseName0.apply {
             if (isNullOrBlank()) {
                 name0_ll.visibility = View.GONE
@@ -252,7 +252,7 @@ class PersonalLicenseChangeInfoActivity : BaseMVPActivity<PersonalLicenseChangeI
                 ProductUtils.lookGallery(this, mLicenseFrontUrl)
             }
 
-             R.id.license_back_iv -> {
+            R.id.license_back_iv -> {
                 ProductUtils.lookGallery(this, mLicenseBackUrl)
             }
 
@@ -261,8 +261,6 @@ class PersonalLicenseChangeInfoActivity : BaseMVPActivity<PersonalLicenseChangeI
             }
         }
     }
-
-
 
 
 }

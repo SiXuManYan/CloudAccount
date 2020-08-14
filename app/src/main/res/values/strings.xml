@@ -224,5 +224,6 @@
     <string name="delete_draft_confirm">确认删除未提交订单吗？</string>
     <string name="commitment_download_success_hint">承诺书下载成功，请在相册中查看！</string>
     <string name="invest_money_hint_50_10000">资金数额在 50 ～ 10000 万元之间</string>
+    <string name="edit">编辑</string>
 
 </resources>

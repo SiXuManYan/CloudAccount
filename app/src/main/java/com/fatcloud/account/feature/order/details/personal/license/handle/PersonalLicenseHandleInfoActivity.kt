@@ -68,7 +68,7 @@ class PersonalLicenseHandleInfoActivity : BaseMVPActivity<PersonalLicenseHandleI
 
 
     override fun bindDetailInfo(data: PersonalLicenseHandleDetail) {
-        CommonUtils.setPaymentStatus(data.state, payment_status_iv, payment_status_tv)
+        ProductUtils.setPaymentStatus(data.state, data.stateText, payment_status_iv, payment_status_tv)
 
         when (productWorkType) {
             Constants.PW1 -> {

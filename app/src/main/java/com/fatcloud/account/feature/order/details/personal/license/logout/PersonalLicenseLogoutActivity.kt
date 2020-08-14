@@ -58,7 +58,7 @@ class PersonalLicenseLogoutActivity : BaseMVPActivity<PersonalLicenseLogoutPrese
     }
 
     override fun bindDetailInfo(data: PersonalLicenseLogoutDetail) {
-        CommonUtils.setPaymentStatus(data.state, payment_status_iv, payment_status_tv)
+        ProductUtils.setPaymentStatus(data.state, data.stateText, payment_status_iv, payment_status_tv)
         enterpriseName_tv.text = data.enterpriseName
         enterpriseCode_tv.text = data.enterpriseCode
         reason_tv.text = data.reason

@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import com.baidu.ocr.sdk.OCR
@@ -553,5 +555,57 @@ object ProductUtils {
             }
         }
     }
+
+
+    /**
+     * 订单支付状态
+     */
+    fun setPaymentStatus(payState: String?, payStateText: String?,statusImage: ImageView, statusTextView: TextView) {
+        statusTextView.text = payStateText
+
+        when (payState) {
+            Constants.OS1 -> {
+                statusImage.setImageResource(R.drawable.ic_status_daizhifu)
+            }
+            Constants.OS2 -> {
+                statusImage.setImageResource(R.drawable.ic_status_dingdanshixiao)
+            }
+            Constants.OS3 -> {
+                statusImage.setImageResource(R.drawable.ic_status_dingdanshixiao)
+            }
+            Constants.OS4 -> {
+                statusImage.setImageResource(R.drawable.ic_status_zhifuzhong)
+            }
+            Constants.OS5 -> {
+                statusImage.setImageResource(R.drawable.ic_status_yibanjie)
+            }
+
+            Constants.OS6 -> {
+                statusImage.setImageResource(R.drawable.ic_status_banlizhong)
+            }
+            Constants.OS7 -> {
+                statusImage.setImageResource(R.drawable.ic_status_banlizhong)
+            }
+            Constants.OS8 -> {
+                statusImage.setImageResource(R.drawable.ic_status_yibanjie)
+            }
+            Constants.OW1 -> {
+                statusImage.setImageResource(R.drawable.ic_status_banlizhong)
+            }
+            Constants.OW2 -> {
+                statusImage.setImageResource(R.drawable.ic_status_banlizhong)
+            }
+            Constants.OW3 -> {
+                statusImage.setImageResource(R.drawable.ic_status_yibanjie)
+            }
+            Constants.OW4 -> {
+                statusImage.setImageResource(R.drawable.ic_status_weijihuo)
+            }
+            else -> {
+                statusImage.visibility = View.INVISIBLE
+            }
+        }
+    }
+
 
 }

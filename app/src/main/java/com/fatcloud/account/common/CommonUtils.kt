@@ -807,8 +807,6 @@ object CommonUtils {
     }
 
 
-
-
     /**
      * 晃动动画
      *
@@ -820,70 +818,6 @@ object CommonUtils {
         translateAnimation.interpolator = CycleInterpolator(counts.toFloat())
         translateAnimation.duration = 500
         return translateAnimation
-    }
-
-
-    /**
-     * 订单支付状态
-     */
-    fun setPaymentStatus(payState: String?, statusImage: ImageView, statusTextView: TextView) {
-        when (payState) {
-            "OS1" -> {
-                statusImage.setImageResource(R.drawable.ic_status_daizhifu)
-                statusTextView.text = "待支付"
-            }
-            "OS2" -> {
-                statusImage.setImageResource(R.drawable.ic_status_dingdanshixiao)
-                statusTextView.text = "取消订单"
-            }
-            "OS3" -> {
-                statusImage.setImageResource(R.drawable.ic_status_dingdanshixiao)
-                statusTextView.text = "订单失效"
-            }
-            "OS4" -> {
-                statusImage.setImageResource(R.drawable.ic_status_zhifuzhong)
-                statusTextView.text = "支付中"
-            }
-            "OS5" -> {
-                statusImage.setImageResource(R.drawable.ic_status_yibanjie)
-                statusTextView.text = "已支付"
-            }
-
-            "OS6" -> {
-                statusImage.setImageResource(R.drawable.ic_status_banlizhong)
-                statusTextView.text = "已受理"
-            }
-            "OS7" -> {
-                statusImage.setImageResource(R.drawable.ic_status_banlizhong)
-                statusTextView.text = "办理中"
-            }
-            "OS8" -> {
-                statusImage.setImageResource(R.drawable.ic_status_yibanjie)
-                statusTextView.text = "已办结"
-            }
-            "OW1" -> {
-                statusImage.setImageResource(R.drawable.ic_status_banlizhong)
-                statusTextView.text = "已激活"
-            }
-            "OW2" -> {
-                statusImage.setImageResource(R.drawable.ic_status_banlizhong)
-                statusTextView.text = "办理中"
-            }
-            "OW3" -> {
-                statusImage.setImageResource(R.drawable.ic_status_yibanjie)
-                statusTextView.text = "已办结"
-            }
-            "OW4" -> {
-                statusImage.setImageResource(R.drawable.ic_status_weijihuo)
-                statusTextView.text = "未激活"
-            }
-
-
-            else -> {
-                statusImage.visibility = View.INVISIBLE
-                statusTextView.visibility = View.INVISIBLE
-            }
-        }
     }
 
 
@@ -918,10 +852,10 @@ object CommonUtils {
         return fileName
     }
 
-    fun convertString(oldString:String?):String {
+    fun convertString(oldString: String?): String {
         return if (oldString.isNullOrBlank()) {
             ""
-        }else{
+        } else {
             oldString
         }
     }

@@ -88,7 +88,8 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
 
     override fun bindDetailInfo(data: EnterpriseInfo) {
         registered_capital_tv.text = data.capital
-        CommonUtils.setPaymentStatus(data.state, payment_status_iv, payment_status_tv)
+
+        ProductUtils.setPaymentStatus(data.state, data.stateText, payment_status_iv, payment_status_tv)
 
 
         when (productWorkType) {

@@ -26,7 +26,6 @@ import kotlinx.android.synthetic.main.activity_personal_bank_info.*
 class PersonalBankInfoActivity : BaseMVPActivity<PersonalBankInfoPresenter>(), PersonalBankInfoView {
 
 
-
     private var orderId: String? = ""
 
 
@@ -58,7 +57,7 @@ class PersonalBankInfoActivity : BaseMVPActivity<PersonalBankInfoPresenter>(), P
 
     override fun bindDetail(data: PersonalBankDetail) {
 
-        CommonUtils.setPaymentStatus(data.state, payment_status_iv, payment_status_tv)
+        ProductUtils.setPaymentStatus(data.state, data.stateText, payment_status_iv, payment_status_tv)
         bank_name_tv.text = data.bank
         depositorName_tv.text = data.depositorName
         enterpriseCode_tv.text = data.enterpriseCode

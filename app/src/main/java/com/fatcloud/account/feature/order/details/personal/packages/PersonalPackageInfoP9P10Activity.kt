@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_personal_package_info.*
  * </br>
  *  P9 P10 回显信息页
  */
-class PersonalPackageInfoP9P10Activity : BaseMVPActivity<PersonalPackageInfoP9P10Presenter>(), PersonalPackageInfoP9P10View{
+class PersonalPackageInfoP9P10Activity : BaseMVPActivity<PersonalPackageInfoP9P10Presenter>(), PersonalPackageInfoP9P10View {
 
 
     private var mOrderId: String? = ""
@@ -43,6 +43,7 @@ class PersonalPackageInfoP9P10Activity : BaseMVPActivity<PersonalPackageInfoP9P1
 
         setMainTitle("企业基本信息")
     }
+
     private fun initExtra() {
         if (intent.extras == null || !intent.extras!!.containsKey(Constants.PARAM_ORDER_ID)) {
             finish()
@@ -53,14 +54,16 @@ class PersonalPackageInfoP9P10Activity : BaseMVPActivity<PersonalPackageInfoP9P1
     }
 
     override fun bindDetailInfo(data: PersonalPackageDetail) {
-        CommonUtils.setPaymentStatus(data.state, payment_status_iv, payment_status_tv)
+        ProductUtils.setPaymentStatus(data.state, data.stateText, payment_status_iv, payment_status_tv)
+
+
         name_tv.text = data.nickName
         id_number_tv.text = data.idno
         gender_tv.text = when (data.gender) {
             "1" -> {
                 "男"
             }
-            "2"->{
+            "2" -> {
                 "女"
             }
             else -> {
@@ -168,7 +171,6 @@ class PersonalPackageInfoP9P10Activity : BaseMVPActivity<PersonalPackageInfoP9P1
             }
         }
     }
-
 
 
 }
