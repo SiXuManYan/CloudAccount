@@ -11,7 +11,8 @@ data class Product2(
     val introduce: String = "",
     val money: BigDecimal = BigDecimal.ZERO,
     val name: String = "",
-    val orderCount: Int = 0
+    val orderCount: Int = 0,
+    val mold: String = ""
 )
 
 /*

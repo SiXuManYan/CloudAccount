@@ -1,6 +1,7 @@
 package com.fatcloud.account.feature.home.header
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.StringUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -25,6 +27,7 @@ import com.fatcloud.account.feature.news.detail.NewsDetailActivity
 import com.fatcloud.account.feature.product.detail.ProductDetailActivity
 import com.fatcloud.account.feature.webs.WebCommonActivity
 import com.fatcloud.account.view.banner.BannerSupport
+import com.fatcloud.account.view.dialog.AlertDialog
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import com.youth.banner.BannerConfig
 import com.youth.banner.loader.ImageLoader
@@ -147,10 +150,7 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
 
                     Glide.with(context!!)
                         .load(obj)
-                        .apply(
-                            RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                                .dontAnimate()
-                        )
+                        .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE).dontAnimate())
                         .error(R.drawable.ic_error_image_load)
                         .into(imageView!!)
                 }
@@ -202,10 +202,7 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
                     }
                     Constants.B3 -> {
                         context.startActivity(
-                            Intent(
-                                context,
-                                NewsDetailActivity::class.java
-                            ).putExtra(Constants.PARAM_ID, banners.link)
+                            Intent(context, NewsDetailActivity::class.java).putExtra(Constants.PARAM_ID, banners.link)
                         )
                     }
 
@@ -254,12 +251,21 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
             getIndexText(index).text = product.name
 
             getIndexCard(index).setOnClickListener {
-                context.startActivity(
-                    Intent(context, ProductDetailActivity::class.java).putExtra(
-                        Constants.PARAM_PRODUCT_ID,
-                        product.id
-                    )
-                )
+
+                if (product.name.contains(StringUtils.getString(R.string.bookkeeping))) {
+                    AlertDialog.Builder(context)
+                        .setTitle(R.string.hint)
+                        .setMessage(R.string.coming_soon)
+                        .setCancelable(true)
+                        .setPositiveButton(R.string.confirm, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
+                            dialog.dismiss()
+                        })
+                        .create()
+                        .show()
+                } else {
+                    context.startActivity(Intent(context, ProductDetailActivity::class.java).putExtra(Constants.PARAM_PRODUCT_ID, product.id))
+                }
+
             }
 
         }

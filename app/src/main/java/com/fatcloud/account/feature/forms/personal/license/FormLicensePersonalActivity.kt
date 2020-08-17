@@ -590,7 +590,13 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
                 })
             }
             CameraActivity.CONTENT_TYPE_ID_CARD_BACK -> {
-                loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)
+
+                ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_BACK, filePath, object : RecognizeIDCardResultCallBack {
+                    override fun onResult(result: IDCardResult) {
+                        loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)
+                    }
+                })
+
             }
 
             else -> {

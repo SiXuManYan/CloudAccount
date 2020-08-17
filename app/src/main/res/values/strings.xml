@@ -228,5 +228,7 @@
     <string name="fta_account_wechat">FTAcloud0215</string>
     <string name="fta_account_qq">2159530097</string>
     <string name="fta_account_email">yunzhanghu@126.com</string>
+    <string name="coming_soon">产品即将上线，请耐心等待。</string>
+    <string name="bookkeeping">个体户代理记账</string>
 
 </resources>

@@ -353,7 +353,15 @@ class FormPersonalPackageP9P10Activity : BaseMVPActivity<FormPersonalPackageP9P1
 
             CameraActivity.CONTENT_TYPE_ID_CARD_BACK -> {
 
-                loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)
+                // 身份证正面
+                ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_BACK, filePath, object : RecognizeIDCardResultCallBack {
+                    override fun onResult(result: IDCardResult) {
+
+                        loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)
+
+                    }
+                })
+
             }
             else -> {
             }

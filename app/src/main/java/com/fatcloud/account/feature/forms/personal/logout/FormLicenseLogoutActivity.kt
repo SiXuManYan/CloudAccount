@@ -291,7 +291,22 @@ class FormLicenseLogoutActivity : BaseMVPActivity<FormLicenseLogoutPresenter>(),
 
             CameraActivity.CONTENT_TYPE_ID_CARD_BACK -> {
 
-                loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)
+
+
+                ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_BACK, filePath, object : RecognizeIDCardResultCallBack {
+                    override fun onResult(result: IDCardResult) {
+
+                        loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)
+
+                        result.name?.let {
+                            fromView.setNameValue(it.words, true)
+                        }
+                        result.idNumber?.let {
+                            fromView.setIdNumberValue(it.words, true)
+                        }
+                    }
+                })
+
             }
             else -> {
             }

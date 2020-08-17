@@ -454,8 +454,7 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
             when (contentType) {
                 CameraActivity.CONTENT_TYPE_ID_CARD_FRONT -> {
                     // 身份证正面
-                    ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_FRONT, filePath,
-                        object : RecognizeIDCardResultCallBack {
+                    ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_FRONT, filePath, object : RecognizeIDCardResultCallBack {
                             override fun onResult(result: IDCardResult) {
                                 loadOcrLocalAndUploadOss(fromViewId, filePath, application)
 
@@ -466,7 +465,14 @@ class FormPersonalBankActivity : BaseMVPActivity<FormPersonalBankPresenter>(), F
                         })
                 }
                 CameraActivity.CONTENT_TYPE_ID_CARD_BACK -> {
-                    loadOcrLocalAndUploadOss(fromViewId, filePath, application)
+
+                    ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_BACK, filePath, object : RecognizeIDCardResultCallBack {
+                        override fun onResult(result: IDCardResult) {
+                            loadOcrLocalAndUploadOss(fromViewId, filePath, application)
+                        }
+                    })
+
+
                 }
                 else -> {
                 }

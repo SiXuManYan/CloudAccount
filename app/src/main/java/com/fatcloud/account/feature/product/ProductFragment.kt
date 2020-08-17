@@ -1,5 +1,6 @@
 package com.fatcloud.account.feature.product
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
 import android.view.View
@@ -18,6 +19,7 @@ import com.fatcloud.account.feature.product.detail.ProductDetailActivity
 import com.fatcloud.account.feature.product.holder.ProductHolder
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.fatcloud.account.view.dialog.AlertDialog
 import com.jude.easyrecyclerview.adapter.BaseViewHolder
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
 import com.jude.easyrecyclerview.decoration.DividerDecoration
@@ -92,18 +94,23 @@ class ProductFragment : BaseRefreshListFragment<Product2, ProductPresenter>(), P
                 return@setOnItemClickListener
             }
             clickAble = false
-            handler.postDelayed({
-                clickAble = true
-            }, 1000)
+            handler.postDelayed({ clickAble = true }, 1000)
 
             val data = adapter.allData[it]
 
-            startActivity(
-                Intent(activity, ProductDetailActivity::class.java).putExtra(
-                    Constants.PARAM_PRODUCT_ID,
-                    data.id
-                )
-            )
+            if (data.mold == Constants.P3 || data.name ==getString(R.string.bookkeeping) ) {
+                AlertDialog.Builder(context)
+                    .setTitle(R.string.hint)
+                    .setMessage(R.string.coming_soon)
+                    .setCancelable(true)
+                    .setPositiveButton(R.string.confirm, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
+                        dialog.dismiss()
+                    })
+                    .create()
+                    .show()
+            }else{
+                startActivity(Intent(activity, ProductDetailActivity::class.java).putExtra(Constants.PARAM_PRODUCT_ID, data.id))
+            }
         }
         return adapter
     }

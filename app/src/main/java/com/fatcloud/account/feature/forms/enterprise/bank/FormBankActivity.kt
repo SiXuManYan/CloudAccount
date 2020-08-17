@@ -384,24 +384,30 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
             when (contentType) {
                 CameraActivity.CONTENT_TYPE_ID_CARD_FRONT -> {
                     // 身份证正面
-                    ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_FRONT, filePath,
-                        object : RecognizeIDCardResultCallBack {
-                            override fun onResult(result: IDCardResult) {
-                                loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)
+                    ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_FRONT, filePath, object : RecognizeIDCardResultCallBack {
+                        override fun onResult(result: IDCardResult) {
+                            loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)
 
-                                result.name?.let {
-                                    fromView.setNameValue(it.words, true)
-                                }
-                                result.idNumber?.let {
-                                    fromView.setIdNumberValue(it.words, true)
-                                }
-
+                            result.name?.let {
+                                fromView.setNameValue(it.words, true)
                             }
-                        })
+                            result.idNumber?.let {
+                                fromView.setIdNumberValue(it.words, true)
+                            }
+
+                        }
+                    })
                 }
                 CameraActivity.CONTENT_TYPE_ID_CARD_BACK -> {
                     // 身份证背面
-                    loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)
+
+
+                    ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_BACK, filePath, object : RecognizeIDCardResultCallBack {
+                        override fun onResult(result: IDCardResult) {
+                            loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)
+                        }
+                    })
+
                 }
                 else -> {
                 }
