@@ -13,6 +13,12 @@ class PersonalLicenseHandleDetail {
     var area: String = ""
     var bankNo: String = ""
 
+    /** P1 营业执照回显，银行预留手机号 */
+    var bankPhone: String = ""
+
+    /** P4 税务登记回显，银行预留手机号 */
+    var phoneOfBank: String = ""
+
     /**
      * 营业执照地址
      */
@@ -49,7 +55,7 @@ class PersonalLicenseHandleDetail {
      */
     var payState: String = ""
     var payStateText: String = ""
-    var phoneOfBank: String = ""
+
     var productId: String = ""
     var productName: String = ""
     var productPriceId: String = ""

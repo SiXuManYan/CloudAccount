@@ -1,6 +1,8 @@
 package com.fatcloud.account.feature.forms.personal.license
 
 import android.content.Intent
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import butterknife.OnClick
 import com.baidu.ocr.sdk.model.IDCardParams
@@ -23,7 +25,6 @@ import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.persional.PersonalInfo
 import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.event.entity.ImageUploadEvent
-import com.fatcloud.account.extend.LimitInputTextWatcher
 import com.fatcloud.account.feature.defray.prepare.PayPrepareActivity
 import com.fatcloud.account.feature.extra.BusinessScopeActivity
 import com.fatcloud.account.feature.ocr.RecognizeIDCardResultCallBack
@@ -156,6 +157,22 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         }
 
         ProductUtils.onlySupportChineseInput(zero_choice_name_et, first_choice_name_et, second_choice_name_et)
+
+        // 法人联系方式，需要与银行预留手机号一致，自动填充
+        bank_phone_et.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
+
+            override fun afterTextChanged(s: Editable?) {
+
+                val phone = s.toString()
+                if (phone.length == 11) {
+                    legal_person_ev.setPhoneValue(phone, true)
+                }
+            }
+
+        })
         restoreDraft()
     }
 
@@ -207,6 +224,15 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         draft.detailAddress?.let {
             detail_addr_et.setText(it)
         }
+
+        draft.bankNumber?.let {
+            bank_number_et.setText(it)
+        }
+
+        draft.bankPhone?.let {
+            bank_phone_et.setText(it)
+        }
+
 
         draft.realName?.let {
             legal_person_ev.setNameValue(it, false)
@@ -309,6 +335,9 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
 
             area = mAreaName
             detailAddress = detail_addr_et.text.toString().trim()
+            bankNumber = bank_number_et.text.toString().trim()
+            bankPhone = bank_phone_et.text.toString().trim()
+
             // 法人信息
             realName = legal_person_ev.getNameValue()
             gender = legal_person_ev.genderIndex
@@ -316,6 +345,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             idno = legal_person_ev.getIdNumberValue()
             phone = legal_person_ev.getPhoneValue()
             identityImg = mIdEntityImg
+
         }
         database.personalLicenseDraftDao().add(draft)
         PersonalLicenseDraft.update()
@@ -372,6 +402,28 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             return
         }
 
+
+        val bankNumberValue = bank_number_et.text.toString()
+        if (bankNumberValue.isBlank()) {
+            ToastUtils.showShort("请输入银行卡号")
+            return
+        }
+        if (!ProductUtils.isBankCardNumber(bankNumberValue)) {
+            return
+        }
+
+        val bankPhoneValue = bank_phone_et.text.toString()
+        if (bankPhoneValue.isBlank()) {
+            ToastUtils.showShort("请输入银行预留手机号 ")
+            return
+        }
+        if (!ProductUtils.isPhoneNumber(bankPhoneValue, "银行预留")) {
+            return
+        }
+
+
+
+
         try {
             val amountInt = amountOfFundsStr.toInt()
             if (amountInt < 10000 || amountInt > 1000000) {
@@ -423,13 +475,16 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             return
         }
 
-
         val phoneStr = legal_person_ev.getPhoneValue()
         if (phoneStr.isBlank()) {
             ToastUtils.showShort("请输入联系方式")
             return
         }
 
+        if (bankPhoneValue != phoneStr) {
+            ToastUtils.showShort("法人联系方式需要与银行预留手机号一致")
+            return
+        }
 
 
         mIdEntityImg.apply {
@@ -457,6 +512,8 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             productPriceId = mProductPriceId
             realName = nameValue
             tel = phoneStr
+            bankNo = bankNumberValue
+            bankPhone = bankPhoneValue
         }
         presenter.addLicensePersonal(this, enterpriseInfo)
     }
@@ -524,6 +581,9 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
                         }
                         result.ethnic?.let {
                             fromView.setEthnicValue(it.words, true)
+                        }
+                        result.gender?.let {
+                            fromView.setGenderValue(it.words)
                         }
 
                     }

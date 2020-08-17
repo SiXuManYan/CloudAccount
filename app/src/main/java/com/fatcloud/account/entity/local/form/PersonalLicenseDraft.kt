@@ -197,6 +197,19 @@ class PersonalLicenseDraft {
     var createTime: String = ""
 
 
+    /**
+     * 银行卡号
+     */
+    @ColumnInfo(name = "bank_number")
+    var bankNumber: String? = ""
+
+    /**
+     * 银行卡预留手机号
+     */
+    @ColumnInfo(name = "bank_phone")
+    var bankPhone: String? = ""
+
+
 }
 
 

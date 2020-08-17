@@ -448,7 +448,78 @@
     </LinearLayout>
 
 
+    <LinearLayout
+        android:id="@+id/license_bank_number_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingTop="3dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="3dp"
+        android:visibility="gone"
+        tools:visibility="visible">
 
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="15dp"
+            android:lineSpacingMultiplier="1.2"
+            android:text="银行卡号"
+            android:textColor="@color/color_third_level"
+            android:textSize="@dimen/font_size_14" />
+
+
+        <TextView
+            android:id="@+id/license_bank_number_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/color_zero_level"
+            android:textSize="@dimen/font_size_14"
+            tools:text="0000000000000000" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/license_bank_phone_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingTop="3dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="3dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="15dp"
+            android:lineSpacingMultiplier="1.2"
+            android:text="银行预留手机号"
+            android:textColor="@color/color_third_level"
+            android:textSize="@dimen/font_size_14" />
+
+
+        <TextView
+            android:id="@+id/license_bank_phone_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/color_zero_level"
+            android:textSize="@dimen/font_size_14"
+            tools:text="00000000000" />
+
+    </LinearLayout>
 
 
     <RelativeLayout

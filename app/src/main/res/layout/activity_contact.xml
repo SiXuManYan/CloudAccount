@@ -113,7 +113,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="FTAcloud0215"
+                        android:text="@string/fta_account_wechat"
                         android:textColor="@color/color_first_level"
                         android:textSize="@dimen/font_size_14" />
 
@@ -165,7 +165,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2159530097"
+                        android:text="@string/fta_account_qq"
                         android:textColor="@color/color_first_level"
                         android:textSize="@dimen/font_size_14" />
 
@@ -217,7 +217,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="yunzhanghu@126.com"
+                        android:text="@string/fta_account_email"
                         android:textColor="@color/color_first_level"
                         android:textSize="@dimen/font_size_14" />
 

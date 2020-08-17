@@ -19,6 +19,56 @@
             android:paddingTop="50dp"
             android:paddingBottom="400dp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:background="@color/font_white">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="0dp"
+                    android:paddingBottom="10dp">
+
+                    <ImageView
+                        android:id="@+id/tag_iv"
+                        android:layout_width="3dp"
+                        android:layout_height="13dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/shape_vertical_line_red" />
+
+                    <TextView
+                        android:id="@+id/highlight_title_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/highlight_title_action_tv"
+                        android:layout_toRightOf="@+id/tag_iv"
+                        android:ellipsize="end"
+                        android:lineSpacingMultiplier="1.2"
+                        android:maxLines="2"
+                        android:text="注册信息"
+                        android:textColor="@color/color_first_level"
+                        android:textSize="@dimen/font_size_14"
+                        android:textStyle="bold" />
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="@color/split_line_color" />
+            </LinearLayout>
+
 
             <!-- 民族 -->
 
@@ -512,7 +562,109 @@
             </RelativeLayout>
 
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                tools:background="@color/font_white">
+
+                <TextView
+                    android:id="@+id/bank_card_number_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.1"
+                    android:maxWidth="150dp"
+                    android:maxLines="2"
+                    android:text="@string/bank_card_number"
+                    android:textColor="@color/color_first_level" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/bank_number_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="@string/bank_card_number_hint"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="19"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="0dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_first_level"
+                    android:textColorHint="@color/color_cccccc"
+                    android:textSize="14sp" />
+
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/split_line_color" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                tools:background="@color/font_white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.1"
+                    android:maxWidth="150dp"
+                    android:maxLines="2"
+                    android:text="银行预留手机号"
+                    android:textColor="@color/color_first_level" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/bank_phone_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入银行预留手机号"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="0dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_first_level"
+                    android:textColorHint="@color/color_cccccc"
+                    android:textSize="14sp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/split_line_color" />
+
+
+            </RelativeLayout>
+
+
             <include layout="@layout/layout_view_split_10" />
+
             <!-- 法人信息 -->
             <com.fatcloud.account.view.CompanyMemberEditView
                 android:id="@+id/legal_person_ev"

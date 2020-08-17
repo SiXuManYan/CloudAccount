@@ -319,6 +319,12 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
             ToastUtils.showShort("请输入出资年限")
             return
         }
+
+
+        if (!ProductUtils.checkInvestmentYearLong(investmentYear)) {
+            return
+        }
+
         val investMoney = amount_of_funds_et.text.toString()
         if (investMoney.isBlank()) {
             ToastUtils.showShort("请输入资金数额")

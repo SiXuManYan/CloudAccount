@@ -77,7 +77,7 @@ class FormMarketActivity : BaseMVPActivity<FormMarketPresenter>(), FormMarketVie
             R.id.copy_tv -> {
                 if (mUrl.isNotBlank()) {
                     val cmb: ClipboardManager = context!!.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                    cmb.primaryClip = ClipData.newPlainText(null, "")
+                    cmb.primaryClip = ClipData.newPlainText("辽宁市场主体登记全程电子化平台注册地址", mUrl)
                     ToastUtils.showShort("复制成功")
                 }
             }

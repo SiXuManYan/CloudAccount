@@ -1,6 +1,7 @@
 package com.fatcloud.account.feature.order.details.personal.license.handle
 
 import android.view.View
+import butterknife.OnClick
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
@@ -33,6 +34,11 @@ class PersonalLicenseHandleInfoActivity : BaseMVPActivity<PersonalLicenseHandleI
      * PW2  税务登记办理
      */
     private var productWorkType: String? = ""
+
+
+    private var idCardFrontUrl: String = ""
+    private var idCardBackUrl: String = ""
+    private var licenseUrl: String = ""
 
     override fun showLoading() = showLoadingDialog()
 
@@ -114,6 +120,26 @@ class PersonalLicenseHandleInfoActivity : BaseMVPActivity<PersonalLicenseHandleI
         identity_number_tv.text = data.idno
         name_tv.text = data.realName
 
+        if (data.bankNo.isNotBlank()) {
+            license_bank_number_ll.visibility = View.VISIBLE
+            license_bank_number_tv.text = data.bankNo
+        } else {
+            // 旧版P1表单没有银行卡号输入项
+            license_bank_number_ll.visibility = View.GONE
+        }
+
+        if (data.bankPhone.isNotBlank()) {
+            license_bank_phone_ll.visibility = View.VISIBLE
+            license_bank_phone_tv.text = data.bankPhone
+        } else {
+            // 旧版P1表单没有银行预留手机号输入项
+            license_bank_phone_ll.visibility = View.GONE
+        }
+
+
+
+
+
 
         data.imgs?.forEachIndexed { index, identityImg ->
 
@@ -129,14 +155,7 @@ class PersonalLicenseHandleInfoActivity : BaseMVPActivity<PersonalLicenseHandleI
 
                             Glide.with(this@PersonalLicenseHandleInfoActivity)
                                 .load(url)
-                                .apply(
-                                    RequestOptions().transform(
-                                        MultiTransformation(
-                                            CenterCrop(),
-                                            RoundTransFormation(context, 4)
-                                        )
-                                    )
-                                )
+                                .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                                 .error(R.drawable.ic_error_image_load)
                                 .into(
                                     if (index == 0) {
@@ -146,6 +165,12 @@ class PersonalLicenseHandleInfoActivity : BaseMVPActivity<PersonalLicenseHandleI
                                     }
                                 )
 
+                            if (index == 0) {
+                                this@PersonalLicenseHandleInfoActivity.idCardFrontUrl = url
+                            } else {
+                                this@PersonalLicenseHandleInfoActivity.idCardBackUrl = url
+                            }
+
                         }
 
                     })
@@ -154,14 +179,7 @@ class PersonalLicenseHandleInfoActivity : BaseMVPActivity<PersonalLicenseHandleI
                 } else {
                     Glide.with(this)
                         .load(imgUrl)
-                        .apply(
-                            RequestOptions().transform(
-                                MultiTransformation(
-                                    CenterCrop(),
-                                    RoundTransFormation(context, 4)
-                                )
-                            )
-                        )
+                        .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                         .error(R.drawable.ic_error_image_load)
                         .into(
                             if (index == 0) {
@@ -170,6 +188,11 @@ class PersonalLicenseHandleInfoActivity : BaseMVPActivity<PersonalLicenseHandleI
                                 id_card_obverse_iv
                             }
                         )
+                    if (index == 0) {
+                        this@PersonalLicenseHandleInfoActivity.idCardFrontUrl = imgUrl
+                    } else {
+                        this@PersonalLicenseHandleInfoActivity.idCardBackUrl = imgUrl
+                    }
 
                 }
 
@@ -198,43 +221,50 @@ class PersonalLicenseHandleInfoActivity : BaseMVPActivity<PersonalLicenseHandleI
             if (ProductUtils.isOssSignUrl(businessLicenseImgUrl)) {
                 ProductUtils.getRealOssUrl(this, businessLicenseImgUrl, object : CloudAccountApplication.OssSignCallBack {
                     override fun ossUrlSignEnd(url: String) {
-
-
                         Glide.with(this@PersonalLicenseHandleInfoActivity)
                             .load(url)
-                            .apply(
-                                RequestOptions().transform(
-                                    MultiTransformation(
-                                        CenterCrop(),
-                                        RoundTransFormation(context, 4)
-                                    )
-                                )
-                            )
+                            .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                             .error(R.drawable.ic_error_image_load)
                             .into(business_license_iv)
-
+                        this@PersonalLicenseHandleInfoActivity.licenseUrl = url
                     }
 
                 })
             } else {
                 Glide.with(this)
                     .load(businessLicenseImgUrl)
-                    .apply(
-                        RequestOptions().transform(
-                            MultiTransformation(
-                                CenterCrop(),
-                                RoundTransFormation(context, 4)
-                            )
-                        )
-                    )
+                    .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                     .error(R.drawable.ic_error_image_load)
                     .into(business_license_iv)
+                this@PersonalLicenseHandleInfoActivity.licenseUrl = businessLicenseImgUrl
+            }
+        }
+    }
+
+
+    @OnClick(
+        R.id.id_card_front_iv,
+        R.id.id_card_obverse_iv,
+        R.id.business_license_iv
+    )
+    fun onClick(view: View) {
+        if (CommonUtils.isDoubleClick(view)) {
+            return
+        }
+        when (view.id) {
+            R.id.id_card_front_iv -> {
+                ProductUtils.lookGallery(this, idCardFrontUrl)
+            }
+            R.id.id_card_obverse_iv -> {
+                ProductUtils.lookGallery(this, idCardBackUrl)
+            }
+            R.id.business_license_iv -> {
+                ProductUtils.lookGallery(this, licenseUrl)
             }
 
-
+            else -> {
+            }
         }
-
-
     }
 
 

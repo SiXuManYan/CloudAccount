@@ -343,7 +343,7 @@ object ProductUtils {
             return false
         }
 
-        if (RegexUtils.isMatch("^[a-zA-Z]+\$", string) || string.length < 2 || string.length > 30) {
+        if (RegexUtils.isMatch("^[a-zA-Z]+\$", string) || string.length < 3 || string.length > 30) {
             ToastUtils.showShort(typeString + "请输入3~30个中文")
             return false
         }
@@ -560,7 +560,7 @@ object ProductUtils {
     /**
      * 订单支付状态
      */
-    fun setPaymentStatus(payState: String?, payStateText: String?,statusImage: ImageView, statusTextView: TextView) {
+    fun setPaymentStatus(payState: String?, payStateText: String?, statusImage: ImageView, statusTextView: TextView) {
         statusTextView.text = payStateText
 
         when (payState) {
@@ -605,6 +605,23 @@ object ProductUtils {
                 statusImage.visibility = View.INVISIBLE
             }
         }
+    }
+
+    fun checkInvestmentYearLong(investmentYear: String): Boolean {
+        if (investmentYear.isNullOrBlank()) {
+            return false
+        }
+
+        try {
+            if (investmentYear.toLong() < 1L || investmentYear.toLong() > 50) {
+                ToastUtils.showShort("请输入出资年限1~50之间")
+                return false
+            }
+        } catch (e: Exception) {
+            return false
+        }
+        return true
+
     }
 
 

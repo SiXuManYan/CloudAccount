@@ -176,7 +176,7 @@
     <string name="use_agreement_content_2">和</string>
     <string name="use_agreement_content_3">《隐私声明》</string>
     <string name="use_agreement_content_4">\n
-1.在仅浏览时,为保障服务所需，我们会申请系统权限收集设备信息、日志信息，用于信息推送。并申请存储权限,用于浏览过程中缓存相关文件。\n
+1.在仅浏览时，为保障服务所需，我们会申请系统权限收集设备信息、日志信息，用于信息推送。并申请存储权限,用于浏览过程中缓存相关文件。\n
 2.为了基于你的所在位置向你推荐内容、展示信息，我们可能会申请位置权限。\n
 3.为帮助你在APP中拨打投诉电话或其他咨询热线，我们可能会申请拨打电话权限，该权限不会收集隐私信息，且仅在你使用前述功能时使用。\n
 4.GPS、相机、相册等敏感权限均不会默认开启，只有经过明示授权才会为实现功能或服务时使用，你均可以拒绝且不影响你继续使用自贸区云账户APP。</string>
@@ -225,5 +225,8 @@
     <string name="commitment_download_success_hint">承诺书下载成功，请在相册中查看！</string>
     <string name="invest_money_hint_50_10000">资金数额在 50 ～ 10000 万元之间</string>
     <string name="edit">编辑</string>
+    <string name="fta_account_wechat">FTAcloud0215</string>
+    <string name="fta_account_qq">2159530097</string>
+    <string name="fta_account_email">yunzhanghu@126.com</string>
 
 </resources>
