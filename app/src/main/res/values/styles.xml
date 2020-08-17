@@ -16,9 +16,16 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="AppTheme.Base">
+
+
         <!-- Customize your theme here. -->
+        <!--Appbar背景色-->
         <item name="colorPrimary">@color/colorPrimary</item>
+
+        <!--状态栏颜色-->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+
+        <!--控制各个控件被选中时的颜色-->
         <item name="colorAccent">@color/colorAccent</item>
 
         <!-- customize -->
@@ -44,7 +51,7 @@
     </style>
 
 
-    <style name="upgrade"  parent="Theme.AppCompat.Light.NoActionBar" >
+    <style name="upgrade" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:background">#00000000</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
@@ -158,5 +165,9 @@
     <!-- spinner end-->
 
 
+    <!-- 更改日历选择器背景颜色 -->
+    <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">@color/color_app_red</item>
+    </style>
 
 </resources>
