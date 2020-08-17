@@ -3,7 +3,9 @@ package com.fatcloud.account.feature.home.holder
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import com.alibaba.sdk.android.oss.common.utils.DateUtil
+import android.widget.LinearLayout
+import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
@@ -19,7 +21,6 @@ import kotlinx.android.synthetic.main.item_news_pural.date_tv
 import kotlinx.android.synthetic.main.item_news_pural.page_views_tv
 import kotlinx.android.synthetic.main.item_news_pural.title_tv
 import kotlinx.android.synthetic.main.item_news_pural.top_tv
-import kotlinx.android.synthetic.main.item_news_single.*
 import java.util.*
 
 /**
@@ -28,6 +29,9 @@ import java.util.*
 class NewsHolderPlural(parent: ViewGroup?) : BaseItemViewHolder<News>(parent, R.layout.item_news_pural), LayoutContainer {
 
     override val containerView: View? get() = itemView
+
+    private val mWidth = (ScreenUtils.getScreenWidth() - SizeUtils.px2dp(30f)) / 3
+    private val mHeight = (mWidth / 1.3f).toInt()  // x:y = 1.3f
 
     override fun setData(data: News?) {
 
@@ -63,26 +67,32 @@ class NewsHolderPlural(parent: ViewGroup?) : BaseItemViewHolder<News>(parent, R.
     private fun setImageContainer(imgUrls: ArrayList<String>) {
 
         image_container_ll.removeAllViews()
+
+
+
+
         for ((index, discount) in imgUrls.withIndex()) {
             if (index > 2) {
                 break
             }
-            val itemView = View.inflate(context, R.layout.item_news_pural_image, null)
-            val image_iv = itemView.findViewById<ImageView>(R.id.image_iv)
+
+            val imageView = ImageView(context)
+
+            imageView.layoutParams = LinearLayout.LayoutParams(mWidth, mHeight).apply {
+                weight = 1.0f
+                when (index) {
+                    0, 1 -> {
+                        rightMargin = SizeUtils.dp2px(15f)
+                    }
+                }
+            }
+
             Glide.with(context)
                 .load(imgUrls[index])
-                .apply(
-                    RequestOptions().transform(
-                        MultiTransformation(
-                            CenterCrop(),
-                            RoundTransFormation(context, 4)
-                        )
-                    )
-                )
+                .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                 .error(R.drawable.ic_error_image_load)
-                .into(image_iv)
-            image_container_ll.addView(itemView)
-
+                .into(imageView)
+            image_container_ll.addView(imageView)
 
         }
 

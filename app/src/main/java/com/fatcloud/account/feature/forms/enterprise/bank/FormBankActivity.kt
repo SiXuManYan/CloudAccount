@@ -400,8 +400,6 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
                 }
                 CameraActivity.CONTENT_TYPE_ID_CARD_BACK -> {
                     // 身份证背面
-
-
                     ProductUtils.recIDCard(this, IDCardParams.ID_CARD_SIDE_BACK, filePath, object : RecognizeIDCardResultCallBack {
                         override fun onResult(result: IDCardResult) {
                             loadOcrLocalAndUploadOss(fromView, filePath, application, fromViewId)

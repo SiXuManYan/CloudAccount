@@ -2,6 +2,8 @@ package com.fatcloud.account.feature.home.holder
 
 import android.view.View
 import android.view.ViewGroup
+import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.app.Glide
 import com.fatcloud.account.base.ui.list.BaseItemViewHolder
@@ -26,6 +28,10 @@ class NewsHolderSingle(parent: ViewGroup?) : BaseItemViewHolder<News>(parent, R.
 
     override val containerView: View? get() = itemView
 
+
+    private val mWidth = (ScreenUtils.getScreenWidth() - SizeUtils.px2dp(45f)) / 3
+    private val mHeight = (mWidth / 1.3f).toInt()  // x:y = 1.3f
+
     override fun setData(data: News?) {
 
         if (data == null) {
@@ -49,19 +55,13 @@ class NewsHolderSingle(parent: ViewGroup?) : BaseItemViewHolder<News>(parent, R.
 
         val imgUrls = data.imgUrls
         if (!imgUrls.isNullOrEmpty()) {
-            //  TODO url请求
+
             Glide.with(context)
                 .load(imgUrls[0])
-                .apply(
-                    RequestOptions().transform(
-                        MultiTransformation(
-                            CenterCrop(),
-                            RoundTransFormation(context, 4)
-                        )
-                    )
-                )
+                .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                 .error(R.drawable.ic_error_image_load)
                 .into(image_iv)
+
             image_iv.visibility = View.VISIBLE
         } else {
             image_iv.visibility = View.GONE

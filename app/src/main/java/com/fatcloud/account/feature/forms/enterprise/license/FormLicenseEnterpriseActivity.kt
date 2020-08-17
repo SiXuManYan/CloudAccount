@@ -196,7 +196,6 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             currentMold = Constants.SH1
             initHighlightTitle(getString(R.string.legal_person_info))
             initNameTitle(getString(R.string.legal_person_name))
-            initIdAddressHint("请输入法人身份证地址")
             initPhoneHint("请输入法人联系电话")
             initShareRatioHint(getString(R.string.share_ratio_hint))
             showIdExpirationDate()
@@ -207,7 +206,6 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             currentMold = Constants.SH2
             initHighlightTitle(getString(R.string.supervisor_info))
             initNameTitle(getString(R.string.supervisor_name))
-            initIdAddressHint("请输入监事身份证地址")
             initPhoneHint("请输入监事联系电话")
             initShareRatioHint(getString(R.string.share_ratio_hint_2))
         }
@@ -217,7 +215,6 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             currentMold = Constants.SH4
             initHighlightTitle(getString(R.string.financial_manager_info))
             initNameTitle(getString(R.string.financial_manager_name))
-            initIdAddressHint("请输入财务负责人身份证地址")
             initPhoneHint("请输入财务负责人联系电话")
             initShareRatioHint(getString(R.string.share_ratio_hint_2))
 
@@ -229,7 +226,6 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
             initHighlightTitle(getString(R.string.shareholder_info2))
             initNameTitle(getString(R.string.shareholder_name))
 
-            initIdAddressHint("请输入股东身份证地址")
             initPhoneHint("请输入股东联系电话")
             initShareRatioHint(getString(R.string.share_ratio_hint))
             showAddActionView().setOnClickListener {

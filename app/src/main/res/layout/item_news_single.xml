@@ -106,7 +106,7 @@
         android:layout_height="84dp"
         android:layout_below="@+id/top_tv"
         android:layout_alignParentRight="true"
-        android:layout_marginLeft="22dp"
+        android:layout_marginLeft="15dp"
         android:scaleType="centerCrop"
         android:visibility="gone"
         tools:src="@tools:sample/avatars"
