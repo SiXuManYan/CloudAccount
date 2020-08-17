@@ -227,44 +227,7 @@ public class TimeUtil {
     }
 
 
-    /**
-     * 消息中心格式化时间
-     *
-     * @param millisecond
-     * @return
-     */
-    public static String getSpaceTime4Message(Long millisecond) {
 
-        long currentMillisecond = System.currentTimeMillis();
-
-        //间隔秒
-        long spaceSecond = (currentMillisecond - millisecond) / 1000;
-
-        //一分钟之内
-        if (spaceSecond < 60) {
-            return "刚刚";
-        }
-        // 一小时之内
-        else if (spaceSecond / 60 < 60) {
-            return spaceSecond / 60 + "分钟前";
-        }
-        // 一天之内
-        else if (spaceSecond / (60 * 60) > 0 && spaceSecond / (60 * 60) < 24) {
-            return spaceSecond / (60 * 60) + "小时前";
-        }
-
-        // 两天之内
-        else if (spaceSecond / (60 * 60) > 0 && spaceSecond / (60 * 60) < 24 * 2) {
-            return "昨天";
-        }
-        // 两天之外
-        else {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = new Date(millisecond);
-            return format.format(date);
-        }
-
-    }
 
     /**
      * 比较时间

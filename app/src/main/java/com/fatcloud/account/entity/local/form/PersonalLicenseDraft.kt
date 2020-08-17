@@ -136,7 +136,7 @@ class PersonalLicenseDraft {
     @ColumnInfo(name = "form_id")
     var formId: String? = "0"
 
-   /**
+    /**
      * 组成形式的 名称
      * @see Form.name
      */
@@ -191,6 +191,10 @@ class PersonalLicenseDraft {
 
     @ColumnInfo(name = "phone")
     var phone: String? = ""
+
+
+    @ColumnInfo(name = "create_time")
+    var createTime: String = ""
 
 
 }

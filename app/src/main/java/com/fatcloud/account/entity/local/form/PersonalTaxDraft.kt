@@ -41,8 +41,6 @@ class PersonalTaxDraft {
     }
 
 
-
-
     @PrimaryKey
     @ColumnInfo(name = "id")
     var primaryId: Int = 0
@@ -90,7 +88,6 @@ class PersonalTaxDraft {
     var idNumber: String? = ""
 
 
-
     /**
      * 银行卡号
      */
@@ -104,33 +101,33 @@ class PersonalTaxDraft {
     var bankPhone: String? = ""
 
 
-
     /**
      * 详细地址
      */
-    @ColumnInfo(name =  "detail_address")
+    @ColumnInfo(name = "detail_address")
     var detailAddress: String? = ""
 
     /**
      * 用户选中的区域地址
      */
-    @ColumnInfo(name =  "area")
+    @ColumnInfo(name = "area")
     var area: String? = ""
 
 
     /**
      * 营业执照图片地址
      */
-    @ColumnInfo(name =  "business_license_image_url")
+    @ColumnInfo(name = "business_license_image_url")
     var businessLicenseImgUrl: String? = ""
 
     /**
      * 营业执照图片路径
      */
-    @ColumnInfo(name =  "business_license_image_file_path")
+    @ColumnInfo(name = "business_license_image_file_path")
     var businessLicenseImgFilePath: String? = ""
 
-
+    @ColumnInfo(name = "create_time")
+    var createTime: String = ""
 
 
 }

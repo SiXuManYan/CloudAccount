@@ -12,8 +12,6 @@ import com.fatcloud.account.entity.local.form.*
 import com.fatcloud.account.entity.order.persional.Order
 import com.fatcloud.account.entity.users.User
 import com.google.gson.JsonArray
-import java.math.BigDecimal
-import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
@@ -60,7 +58,7 @@ class OrderListPresenter @Inject constructor(private var orderListView: OrderLis
                 state = Constants.OS_UN_SUBMITTED
                 stateText = "未提交"
                 nativeExtraDraftObject = p1
-                createDt = TimeUtil.getDateTimeFromMillisecond(System.currentTimeMillis())
+                createDt = getCreateDate(p1.createTime)
             })
         }
 
@@ -78,7 +76,7 @@ class OrderListPresenter @Inject constructor(private var orderListView: OrderLis
                     state = Constants.OS_UN_SUBMITTED
                     stateText = "未提交"
                     nativeExtraDraftObject = p2
-                    createDt = TimeUtil.getDateTimeFromMillisecond(System.currentTimeMillis())
+                    createDt = getCreateDate(p2.createTime)
                 }
             )
         }
@@ -98,7 +96,7 @@ class OrderListPresenter @Inject constructor(private var orderListView: OrderLis
                     state = Constants.OS_UN_SUBMITTED
                     stateText = "未提交"
                     nativeExtraDraftObject = p3
-                    createDt = TimeUtil.getDateTimeFromMillisecond(System.currentTimeMillis())
+                    createDt = getCreateDate(p3.createTime)
                 }
             )
         }
@@ -118,7 +116,7 @@ class OrderListPresenter @Inject constructor(private var orderListView: OrderLis
                     state = Constants.OS_UN_SUBMITTED
                     stateText = "未提交"
                     nativeExtraDraftObject = p4
-                    createDt = TimeUtil.getDateTimeFromMillisecond(System.currentTimeMillis())
+                    createDt = getCreateDate(p4.createTime)
                 }
             )
         }
@@ -138,7 +136,7 @@ class OrderListPresenter @Inject constructor(private var orderListView: OrderLis
                     state = Constants.OS_UN_SUBMITTED
                     stateText = "未提交"
                     nativeExtraDraftObject = p8
-                    createDt = TimeUtil.getDateTimeFromMillisecond(System.currentTimeMillis())
+                    createDt = getCreateDate(p8.createTime)
                 }
             )
         }
@@ -158,7 +156,7 @@ class OrderListPresenter @Inject constructor(private var orderListView: OrderLis
                     state = Constants.OS_UN_SUBMITTED
                     stateText = "未提交"
                     nativeExtraDraftObject = p9
-                    createDt = TimeUtil.getDateTimeFromMillisecond(System.currentTimeMillis())
+                    createDt = getCreateDate(p9.createTime)
                 }
             )
         }
@@ -177,7 +175,7 @@ class OrderListPresenter @Inject constructor(private var orderListView: OrderLis
                     state = Constants.OS_UN_SUBMITTED
                     stateText = "未提交"
                     nativeExtraDraftObject = p10
-                    createDt = TimeUtil.getDateTimeFromMillisecond(System.currentTimeMillis())
+                    createDt = getCreateDate(p10.createTime)
                 }
             )
         }
@@ -185,6 +183,21 @@ class OrderListPresenter @Inject constructor(private var orderListView: OrderLis
 
         return list
 
+
+    }
+
+    private fun getCreateDate(createTime: String): String {
+
+        val currentTimeString = TimeUtil.getDateTimeFromMillisecond(System.currentTimeMillis())
+        if (createTime.isBlank()) {
+            return currentTimeString
+        }
+
+        return try {
+            TimeUtil.getDateTimeFromMillisecond(createTime.toLong())
+        } catch (e: Exception) {
+            currentTimeString
+        }
 
     }
 

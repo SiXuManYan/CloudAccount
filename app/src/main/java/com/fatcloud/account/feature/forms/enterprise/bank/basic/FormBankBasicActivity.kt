@@ -160,6 +160,7 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
 
     private fun saveDraft() {
         val draft = BankPublicDraft().apply {
+            createTime = System.currentTimeMillis().toString()
             loginPhone = User.get().username
             orderWorkId = mOrderWorkId
 

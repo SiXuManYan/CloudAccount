@@ -290,6 +290,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
 
     private fun saveDraft() {
         val draft = PersonalLicenseDraft().apply {
+            createTime = System.currentTimeMillis().toString()
             loginPhone = User.get().username
             finalMoney = mFinalMoney
             productId = mProductId

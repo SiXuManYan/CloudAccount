@@ -347,6 +347,7 @@ class FormTaxRegistrationPersonalActivity : BaseMVPActivity<FormTaxRegistrationP
     private fun saveDraft() {
 
         val personalTaxDraft = PersonalTaxDraft().apply {
+            createTime = System.currentTimeMillis().toString()
             loginPhone = User.get().username
             taxpayerNo = trn_et.text.toString().trim()
             legalPersonName = legal_name_et.text.toString().trim()

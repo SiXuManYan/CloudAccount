@@ -274,6 +274,7 @@ class FormEnterpriseBasicActivity : BaseMVPActivity<FormEnterpriseBasicPresenter
     private fun saveDraft() {
 
         val draft = EnterprisePackageDraft().apply {
+            createTime = System.currentTimeMillis().toString()
             loginPhone = User.get().username
             productId = mProductId
             productPriceId = mProductPriceId

@@ -260,6 +260,7 @@ class FormAgentBookkeepingPersonalActivity : BaseMVPActivity<FormAgentBookkeepin
     private fun saveDraft() {
 
         val draft = PersonalBookkeepingDraft().apply {
+            createTime = System.currentTimeMillis().toString()
             loginPhone = User.get().username
             finalMoney = mFinalMoney
             productId = mProductId

@@ -115,10 +115,8 @@ class PersonalBookkeepingDraft {
     /**
      * 营业执照图片路径
      */
-    @ColumnInfo(name =  "business_license_image_file_path")
+    @ColumnInfo(name = "business_license_image_file_path")
     var businessLicenseImgFilePath: String? = ""
-
-
 
 
     /**
@@ -148,6 +146,8 @@ class PersonalBookkeepingDraft {
     var area: String? = ""
 
 
+    @ColumnInfo(name = "create_time")
+    var createTime: String = ""
 
 
 }

@@ -376,6 +376,7 @@ class FormPersonalPackageP9P10Activity : BaseMVPActivity<FormPersonalPackageP9P1
     private fun saveDraft() {
 
         val draft = NativeFormPersonalPackageP9P10Draft().apply {
+            createTime = System.currentTimeMillis().toString()
             loginPhone = User.get().username
             productId = mProductId
             productPriceId = mProductPriceId

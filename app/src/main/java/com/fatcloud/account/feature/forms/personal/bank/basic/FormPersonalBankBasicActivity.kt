@@ -254,6 +254,7 @@ class FormPersonalBankBasicActivity : BaseMVPActivity<FormPersonalBankBasicPrese
 
     private fun saveDraft() {
         val draft = BankPersonalDraft().apply {
+            createTime = System.currentTimeMillis().toString()
             loginPhone = User.get().username
 
             productId = mProductId

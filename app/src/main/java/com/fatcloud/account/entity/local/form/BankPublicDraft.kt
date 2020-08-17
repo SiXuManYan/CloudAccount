@@ -122,8 +122,6 @@ class BankPublicDraft {
     var areaId: String? = ""
 
 
-
-
     /**
      * 财务负责人
      */
@@ -175,5 +173,8 @@ class BankPublicDraft {
     @ColumnInfo(name = "postcode")
     var postcode: String? = ""
 
+
+    @ColumnInfo(name = "create_time")
+    var createTime: String = ""
 
 }

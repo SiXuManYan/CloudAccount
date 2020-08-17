@@ -45,10 +45,10 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
             setServerData(data)
         }
 
-
+        time_tv.text = data.createDt
         content_tv.text = data.productName
         amount_tv.text = StringUtils.getString(R.string.money_symbol_format, data.money)
-        time_tv.text = data.createDt
+
         order_status_tv.text = data.stateText
 
 
@@ -75,6 +75,7 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
 
 
     private fun setServerData(data: Order) {
+
         look_detail_tv.setText(R.string.view)
         delete_draft_tv.visibility = View.GONE
         order_id_tv.apply {
@@ -91,6 +92,7 @@ class OrderListHolder(parent: ViewGroup?) : BaseItemViewHolder<Order>(parent, R.
     private fun setDraftData(data: Order) {
         look_detail_tv.setText(R.string.edit)
         delete_draft_tv.visibility = View.VISIBLE
+        time_tv.text = data.createDt
         Glide.with(context)
             .load(getImageFromMold(data.mold))
             .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))

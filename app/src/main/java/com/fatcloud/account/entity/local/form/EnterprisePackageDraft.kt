@@ -41,8 +41,6 @@ class EnterprisePackageDraft {
     }
 
 
-
-
     @PrimaryKey
     @ColumnInfo(name = "id")
     var primaryId: Int = 0
@@ -104,15 +102,11 @@ class EnterprisePackageDraft {
     var area: String? = ""
 
 
-
     /**
      * 用户选中的区域地址 id
      */
     @ColumnInfo(name = "area_id")
     var areaId: String? = ""
-
-
-
 
 
     /**
@@ -160,6 +154,10 @@ class EnterprisePackageDraft {
 
 
     @ColumnInfo(name = "share_holders")
-    var shareholders: List<Shareholder> ? = ArrayList()
+    var shareholders: List<Shareholder>? = ArrayList()
+
+    @ColumnInfo(name = "create_time")
+    var createTime: String = ""
+
 
 }

@@ -41,7 +41,6 @@ class NativeFormPersonalPackageP9P10Draft {
     }
 
 
-
     @PrimaryKey
     @ColumnInfo(name = "id")
     var primaryId: Int = 0
@@ -91,8 +90,6 @@ class NativeFormPersonalPackageP9P10Draft {
 
     @ColumnInfo(name = "business_scope_name")
     var businessScopeName: ArrayList<String>? = ArrayList()
-
-
 
 
     /** 资金数额，注册资本 */
@@ -154,5 +151,11 @@ class NativeFormPersonalPackageP9P10Draft {
     /** 区分P9和P10 */
     @ColumnInfo(name = "product_mold")
     var mold: String = ""
+
+    /**
+     * 创建时间，long 时间戳形式
+     */
+    @ColumnInfo(name = "create_time")
+    var createTime: String = ""
 
 }
