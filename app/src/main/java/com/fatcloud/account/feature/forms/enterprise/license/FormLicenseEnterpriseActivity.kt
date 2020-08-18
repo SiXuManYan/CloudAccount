@@ -222,6 +222,9 @@ class FormLicenseEnterpriseActivity : BaseMVPActivity<FormLicenseEnterprisePrese
 
         // 默认股东信息
         shareholder_ev.apply {
+            frontImageUrl = ""
+            backImageUrl = ""
+
             currentMold = Constants.SH3
             initHighlightTitle(getString(R.string.shareholder_info2))
             initNameTitle(getString(R.string.shareholder_name))

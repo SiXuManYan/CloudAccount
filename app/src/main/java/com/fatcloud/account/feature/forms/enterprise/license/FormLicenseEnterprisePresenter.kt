@@ -226,9 +226,22 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
         val defaultHolderRatioValue = shareholderView.getShareRatioValue()
 
 
-        if (checkDefaultHolderValue(defaultHolderImageUrlFront, defaultHolderImageUrlBack, defaultHolderNameValue, defaultHolderIdNumber, defaultIdAddressValue, defaultHolderPhone, defaultHolderRatioValue)) {
+        val defaultHolderValueAccess = defaultHolderValueAccess(
+            defaultHolderImageUrlFront,
+            defaultHolderImageUrlBack,
+            defaultHolderNameValue,
+            defaultHolderIdNumber,
+            defaultIdAddressValue,
+            defaultHolderPhone,
+            defaultHolderRatioValue
+        )
+        if (!defaultHolderValueAccess) {
             return
         }
+
+        val defaultHolderNotBlank = (defaultHolderImageUrlFront.isNotBlank() && defaultHolderImageUrlBack.isNotBlank() && defaultHolderNameValue.isNotBlank()
+                && defaultHolderIdNumber.isNotBlank() && defaultIdAddressValue.isNotBlank() && defaultIdAddressValue.isNotBlank()
+                && defaultHolderPhone.isNotBlank() && defaultHolderRatioValue.isNotBlank())
 
 
         if (shareholderMoreContainer.childCount > 0) {
@@ -236,23 +249,23 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
             for (i in 0 until max) {
                 val moreHolder = shareholderMoreContainer.getChildAt(i) as CompanyMemberEditView
 
-                if (checkDefaultHolderValue(moreHolder.frontImageUrl,
+                if (!defaultHolderValueAccess(
+                        moreHolder.frontImageUrl,
                         moreHolder.backImageUrl,
                         moreHolder.getNameValue(),
                         moreHolder.getIdNumberValue(),
                         moreHolder.getIdAddressValue(),
                         moreHolder.getPhoneValue(),
-                        moreHolder. getShareRatioValue())) {
+                        moreHolder.getShareRatioValue()
+                    )
+                ) {
                     return
                 }
-
 
 
             }
 
         }
-
-
 
 
         // 计算股份占比
@@ -287,7 +300,14 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
 
 
 
-        if (ProductUtils.hasDuplicateName(getExtraNames(shareholderMoreContainer), legalPersonView.getNameValue(), supervisorView.getNameValue(), defaultHolderNameValue, financialManagerView.getNameValue())) {
+        if (ProductUtils.hasDuplicateName(
+                getExtraNames(shareholderMoreContainer),
+                legalPersonView.getNameValue(),
+                supervisorView.getNameValue(),
+                defaultHolderNameValue,
+                financialManagerView.getNameValue()
+            )
+        ) {
             return
         }
 
@@ -308,18 +328,22 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
             this.productId = productId
             this.productPriceId = productPriceId.toInt()
             shareholders = getShareHolders(
-                legalPersonView.getShareHolder(),
-                supervisorView.getShareHolder(),
-                shareholderView.getShareHolder(),
-                financialManagerView.getShareHolder(),
-                shareholderMoreContainer
+                legalPersonViewHolder = legalPersonView.getShareHolder(),
+                supervisorHolder = supervisorView.getShareHolder(),
+                financialManagerHolder = financialManagerView.getShareHolder(),
+                defaultHolder = if (defaultHolderNotBlank) {
+                    shareholderView.getShareHolder()
+                } else {
+                    null
+                },
+                shareholderMoreContainer = shareholderMoreContainer
             )
         }
         addEnterprise(lifecycle, enterpriseInfo)
 
     }
 
-    private fun checkDefaultHolderValue(
+    private fun defaultHolderValueAccess(
         defaultHolderImageUrlFront: String,
         defaultHolderImageUrlBack: String,
         defaultHolderNameValue: String,
@@ -328,60 +352,57 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
         defaultHolderPhone: String,
         defaultHolderRatioValue: String
     ): Boolean {
-        if (defaultHolderImageUrlFront.isNotBlank()
-            || defaultHolderImageUrlBack.isNotBlank()
-            || defaultHolderNameValue.isNotBlank()
-            || defaultHolderIdNumber.isNotBlank()
-            || defaultIdAddressValue.isNotBlank()
-            || defaultIdAddressValue.isNotBlank()
-            || defaultHolderPhone.isNotBlank()
-            || defaultHolderRatioValue.isNotBlank()
+
+        // 有值才校验
+        if (defaultHolderImageUrlFront.isNotBlank() || defaultHolderImageUrlBack.isNotBlank() || defaultHolderNameValue.isNotBlank()
+            || defaultHolderIdNumber.isNotBlank() || defaultIdAddressValue.isNotBlank() || defaultIdAddressValue.isNotBlank()
+            || defaultHolderPhone.isNotBlank() || defaultHolderRatioValue.isNotBlank()
         ) {
 
             if (!ProductUtils.hasIdCardUrl(defaultHolderImageUrlFront, true, "股东")) {
-                return true
+                return false
             }
 
             if (!ProductUtils.hasIdCardUrl(defaultHolderImageUrlBack, false, "股东")) {
-                return true
+                return false
             }
 
             if (defaultHolderNameValue.isBlank()) {
                 ToastUtils.showShort("请输入股东姓名")
-                return true
+                return false
             }
 
             if (defaultHolderIdNumber.isBlank()) {
                 ToastUtils.showShort("请输入股东身份证号")
-                return true
+                return false
             }
             if (!ProductUtils.isIdCardNumber(defaultHolderIdNumber, "股东")) {
-                return true
+                return false
             }
 
 
             if (defaultIdAddressValue.isBlank()) {
                 ToastUtils.showShort("请输入股东身份证地址")
-                return true
+                return false
             }
 
             if (defaultHolderPhone.isBlank()) {
                 ToastUtils.showShort("请输入股东联系电话")
-                return true
+                return false
             }
 
             if (!ProductUtils.isPhoneNumber(defaultHolderPhone, "股东")) {
-                return true
+                return false
             }
 
 
             if (defaultHolderRatioValue.isBlank()) {
                 ToastUtils.showShort("请输入股东股份占比")
-                return true
+                return false
             }
 
         }
-        return false
+        return true
     }
 
     /**
@@ -409,18 +430,18 @@ class FormLicenseEnterprisePresenter @Inject constructor(private var view: FormL
      * 获取企业股东类型 集合信息
      */
     fun getShareHolders(
-        shareHolder: Shareholder,
-        shareHolder1: Shareholder,
-        shareHolder2: Shareholder,
-        shareHolder3: Shareholder,
-        shareholderMoreContainer: LinearLayout
+        legalPersonViewHolder: Shareholder, supervisorHolder: Shareholder, financialManagerHolder: Shareholder,
+        defaultHolder: Shareholder?, shareholderMoreContainer: LinearLayout
     ): List<Shareholder> {
 
         val holders: ArrayList<Shareholder> = ArrayList()
-        holders.add(shareHolder)
-        holders.add(shareHolder1)
-        holders.add(shareHolder2)
-        holders.add(shareHolder3)
+        holders.add(legalPersonViewHolder)
+        holders.add(supervisorHolder)
+        holders.add(financialManagerHolder)
+
+        defaultHolder?.let {
+            holders.add(it)
+        }
 
         if (shareholderMoreContainer.childCount > 0) {
             val max = shareholderMoreContainer.childCount
