@@ -134,7 +134,7 @@ class FormMarketActivity : BaseMVPActivity<FormMarketPresenter>(), FormMarketVie
                 }
                 presenter.addMarket(this, orderId, account, password)
             }
-            R.id.ic_tips->{
+            R.id.ic_tips -> {
 
                 mHighLight?.let {
                     if (!it.isShowing) {
