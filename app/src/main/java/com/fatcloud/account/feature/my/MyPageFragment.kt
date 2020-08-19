@@ -3,6 +3,7 @@ package com.fatcloud.account.feature.my
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -29,6 +30,7 @@ import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.extend.RoundTransFormation
 import com.fatcloud.account.feature.about.AboutActivity
 import com.fatcloud.account.feature.account.login.LoginActivity
+import com.fatcloud.account.feature.forms.market.FormMarketActivity
 import com.fatcloud.account.feature.matisse.Glide4Engine
 import com.fatcloud.account.feature.matisse.Matisse
 import com.fatcloud.account.feature.message.MessageActivity
@@ -294,9 +296,7 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
 
             }
             R.id.ic_avatar_civ -> {
-
                 avatarClick(view)
-
             }
 
             R.id.order_rl -> {

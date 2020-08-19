@@ -18,6 +18,9 @@ import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.form.MarketData
 import kotlinx.android.synthetic.main.activity_form_market.*
+import zhy.com.highlight.HighLight
+import zhy.com.highlight.position.OnLeftPosCallback
+import zhy.com.highlight.shape.RectLightShape
 
 
 /**
@@ -30,10 +33,13 @@ class FormMarketActivity : BaseMVPActivity<FormMarketPresenter>(), FormMarketVie
 
     var orderId: String? = ""
     var mUrl: String = ""
+    private var mHighLight: HighLight? = null
+
 
     override fun getLayoutId() = R.layout.activity_form_market
 
     override fun initViews() {
+
         setMainTitle(R.string.information)
         if (intent.extras == null || !intent.extras!!.containsKey(Constants.PARAM_ORDER_ID)) {
             finish()
@@ -41,6 +47,32 @@ class FormMarketActivity : BaseMVPActivity<FormMarketPresenter>(), FormMarketVie
         }
         orderId = intent.extras!!.getString(Constants.PARAM_ORDER_ID)
         presenter.getMarketInfo(this, orderId)
+
+
+        mHighLight = HighLight(this)
+            .autoRemove(false)
+            .intercept(true)
+            .enableNext()
+            .anchor(findViewById<View>(android.R.id.content))
+            .setOnLayoutCallback {
+
+                mHighLight?.addHighLight(R.id.ic_tips, R.layout.view_market_tips_02, OnLeftPosCallback(45f), RectLightShape(0f, 0f, 15f, 10f, 10f))
+                mHighLight?.show()
+            }
+            .setOnShowCallback {
+
+            }
+
+            .setOnRemoveCallback {
+
+            }
+            .setClickCallback {
+                mHighLight?.let {
+                    if (it.hightLightView != null) {
+                        it.next()
+                    }
+                }
+            }
 
     }
 
@@ -65,9 +97,16 @@ class FormMarketActivity : BaseMVPActivity<FormMarketPresenter>(), FormMarketVie
         finish()
     }
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mHighLight?.remove()
+    }
+
     @OnClick(
         R.id.copy_tv,
-        R.id.commit_tv
+        R.id.commit_tv,
+        R.id.ic_tips
     )
     fun onClick(view: View) {
         if (CommonUtils.isDoubleClick(view)) {
@@ -94,6 +133,15 @@ class FormMarketActivity : BaseMVPActivity<FormMarketPresenter>(), FormMarketVie
                     return
                 }
                 presenter.addMarket(this, orderId, account, password)
+            }
+            R.id.ic_tips->{
+
+                mHighLight?.let {
+                    if (!it.isShowing) {
+                        it.show()
+                    }
+
+                }
             }
             else -> {
             }

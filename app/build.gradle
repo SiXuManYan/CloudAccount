@@ -319,6 +319,9 @@ dependencies {
     // 腾讯 Bugly
     implementation 'com.tencent.bugly:crashreport:3.1.0'
 
+    // 高亮引导
+    implementation 'com.isanwenyu.highlight:highlight:1.8.0'
+
 }
 noArg {
     annotation("com.jz.cloud.activity.entity.kotlin.NoArg")
