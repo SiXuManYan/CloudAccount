@@ -527,7 +527,6 @@
                     android:layout_gravity="center_vertical"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="17600000000"
                     android:textColor="@color/color_first_level"
                     android:textSize="@dimen/font_size_14" />
 
@@ -641,7 +640,6 @@
                     android:layout_gravity="center_vertical"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="17600000000"
                     android:textColor="@color/color_first_level"
                     android:textSize="@dimen/font_size_14" />
 
@@ -755,7 +753,6 @@
                     android:layout_gravity="center_vertical"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="17600000000"
                     android:textColor="@color/color_first_level"
                     android:textSize="@dimen/font_size_14" />
 
@@ -1042,7 +1039,7 @@
                 android:padding="15dp"
                 android:text="法人身份证"
                 android:textColor="@color/color_first_level"
-                android:textSize="@dimen/font_size_16" />
+                android:textSize="@dimen/font_size_14" />
 
             <RelativeLayout
                 android:id="@+id/image_rl"
@@ -1096,7 +1093,7 @@
                 android:padding="15dp"
                 android:text="营业执照（正本）"
                 android:textColor="@color/color_first_level"
-                android:textSize="@dimen/font_size_16" />
+                android:textSize="@dimen/font_size_14" />
 
 
             <RelativeLayout
@@ -1133,7 +1130,7 @@
                     android:padding="15dp"
                     android:text="基本存款账户信息"
                     android:textColor="@color/color_first_level"
-                    android:textSize="@dimen/font_size_16" />
+                    android:textSize="@dimen/font_size_14" />
 
                 <RelativeLayout
                     android:layout_width="150dp"

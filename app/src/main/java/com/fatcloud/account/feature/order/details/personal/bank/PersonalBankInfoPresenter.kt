@@ -4,8 +4,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
-import com.fatcloud.account.entity.order.persional.PersonalInfo
-import com.fatcloud.account.entity.order.persional.bank.PersonalBankDetail
+import com.fatcloud.account.entity.order.persional.bank.PersonalBankDetailP8
+import com.fatcloud.account.entity.order.persional.bank.PersonalBankDetailP9P10
 import javax.inject.Inject
 
 /**
@@ -16,15 +16,14 @@ import javax.inject.Inject
 class PersonalBankInfoPresenter @Inject constructor(private var view: PersonalBankInfoView) : BasePresenter(view) {
 
 
-    fun getDetailInfo(lifecycle: LifecycleOwner, orderId: String?) {
+    fun getDetailInfoP8(lifecycle: LifecycleOwner, orderId: String?) {
 
 
-        requestApi(lifecycle, Lifecycle.Event.ON_DESTROY,
-            apiService.getPersonalBankInfo(orderId),
+        requestApi(lifecycle, Lifecycle.Event.ON_DESTROY, apiService.getPersonalBankInfoP8(orderId),
 
-            object : BaseHttpSubscriber<PersonalBankDetail>(view) {
+            object : BaseHttpSubscriber<PersonalBankDetailP8>(view) {
 
-                override fun onSuccess(data: PersonalBankDetail?) {
+                override fun onSuccess(data: PersonalBankDetailP8?) {
                    data?.let {
 
                        view.bindDetail(it)
@@ -36,6 +35,28 @@ class PersonalBankInfoPresenter @Inject constructor(private var view: PersonalBa
 
 
     }
+
+
+    fun getDetailInfoP9P10(lifecycle: LifecycleOwner, orderWorkId: String?) {
+
+
+        requestApi(lifecycle, Lifecycle.Event.ON_DESTROY, apiService.getPersonalBankInfoP9P10(orderWorkId),
+
+            object : BaseHttpSubscriber<PersonalBankDetailP9P10>(view) {
+
+                override fun onSuccess(data: PersonalBankDetailP9P10?) {
+                    data?.let {
+
+                        view.bindDetailP9P10(it)
+                    }
+
+                }
+            }
+        )
+
+
+    }
+
 
 
 }

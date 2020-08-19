@@ -12,7 +12,8 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
-import com.fatcloud.account.entity.order.persional.bank.PersonalBankDetail
+import com.fatcloud.account.entity.order.persional.bank.PersonalBankDetailP8
+import com.fatcloud.account.entity.order.persional.bank.PersonalBankDetailP9P10
 import com.fatcloud.account.extend.RoundTransFormation
 import kotlinx.android.synthetic.main.activity_personal_bank_info.*
 
@@ -20,13 +21,27 @@ import kotlinx.android.synthetic.main.activity_personal_bank_info.*
  * Created by Wangsw on 2020/7/21 0021 14:52.
  * </br>
  *  个体户银行对公账户回显
- *  单独产品P8回显，以及P9个体户套餐的银行对公账户回显
+ *  单独产品P8回显，tOrder/detail
+ *  以及P9个体户套餐的银行对公账户回显 /tOrderWork/detail
  */
 
 class PersonalBankInfoActivity : BaseMVPActivity<PersonalBankInfoPresenter>(), PersonalBankInfoView {
 
 
     private var orderId: String? = ""
+
+
+
+    /**
+     * 订单流程ID
+     */
+    private var mOrderWorkId: String? = ""
+
+
+    /**
+     * 产品类型
+     */
+    private var mMold: String = ""
 
 
     override fun showLoading() = showLoadingDialog()
@@ -41,13 +56,31 @@ class PersonalBankInfoActivity : BaseMVPActivity<PersonalBankInfoPresenter>(), P
             return
         }
         orderId = intent.extras!!.getString(Constants.PARAM_ORDER_ID)
+
+        mOrderWorkId = intent.extras!!.getString(Constants.PARAM_ORDER_WORK_ID)
+
+        intent.extras!!.getString(Constants.PARAM_MOLD)?.let {
+            mMold = it
+        }
+
     }
 
     override fun initViews() {
         initExtra()
 
         setMainTitle("订单详情")
-        presenter.getDetailInfo(this, orderId)
+
+        when (mMold) {
+            Constants.P8 -> {
+                presenter.getDetailInfoP8(this, orderId)
+            }
+            Constants.P9,Constants.P10->{
+                presenter.getDetailInfoP9P10(this, mOrderWorkId)
+            }
+            else -> {
+            }
+        }
+
     }
 
     var mIdFrontUrl: String = ""
@@ -55,16 +88,16 @@ class PersonalBankInfoActivity : BaseMVPActivity<PersonalBankInfoPresenter>(), P
     var mLicenseUrl: String = ""
     var mBasicImageUrl: String = ""
 
-    override fun bindDetail(data: PersonalBankDetail) {
+    override fun bindDetail(data: PersonalBankDetailP8) {
 
         ProductUtils.setPaymentStatus(data.state, data.stateText, payment_status_iv, payment_status_tv)
-        bank_name_tv.text = data.bank
         depositorName_tv.text = data.depositorName
         enterpriseCode_tv.text = data.enterpriseCode
         addressRegistered_tv.text = data.addressRegistered
         accountType_tv.text = data.accountType
         currency_tv.text = data.currency
         addressPost_tv.text = data.addressPost
+
         personLegalName_tv.text = data.personLegal.name
         personLegalPhone_tv.text = data.personLegal.phone
 
@@ -214,6 +247,30 @@ class PersonalBankInfoActivity : BaseMVPActivity<PersonalBankInfoPresenter>(), P
             }
         }
 
+    }
+
+    override fun bindDetailP9P10(it: PersonalBankDetailP9P10) {
+
+        val p8Model = PersonalBankDetailP8().apply {
+            state = it.state
+            stateText = it.stateText
+            depositorName = it.depositorName
+            enterpriseCode = it.enterpriseCode
+            addressRegistered = it.addressRegistered
+            accountType = it.accountType
+            currency = it.currency
+            addressPost = it.addressPost
+            personLegal = it.personLegal
+            personFinance = it.personFinance
+            personVerification1 = it.personVerification1
+            personVerification2 = it.personVerification2
+            personReconciliation = it.personReconciliation
+            imgsIdno = it.imgsIdno
+            imgsLicense = it.imgsLicense
+            imgsDepositAccount = it.imgsDepositAccount
+        }
+
+        bindDetail(p8Model)
     }
 
 

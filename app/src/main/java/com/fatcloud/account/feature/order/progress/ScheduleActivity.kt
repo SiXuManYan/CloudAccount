@@ -177,6 +177,8 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
                             startActivity(
                                 Intent(this@ScheduleActivity, PersonalBankInfoActivity::class.java)
                                     .putExtra(Constants.PARAM_ORDER_ID, orderId)
+                                    .putExtra(Constants.PARAM_ORDER_WORK_ID, it.id)
+                                    .putExtra(Constants.PARAM_MOLD, it.mold)
                             )
                         }
 
