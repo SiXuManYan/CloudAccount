@@ -47,13 +47,13 @@ class ContactActivity : BaseMVPActivity<ContactPresenter>(), ContactView {
                 startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Constants.CONSUMER_HOT_LINE)))
             }
             R.id.wechat_rl -> {
-                saveToClipboard("自贸区云账户服务微信号", getString(R.string.fta_account_wechat))
+                saveToClipboard("微信号", getString(R.string.fta_account_wechat))
             }
             R.id.qq_rl -> {
-                saveToClipboard("自贸区云账户服务QQ", getString(R.string.fta_account_qq))
+                saveToClipboard("服务QQ", getString(R.string.fta_account_qq))
             }
             R.id.email_rl -> {
-                saveToClipboard("自贸区云账户电子邮箱", getString(R.string.fta_account_email))
+                saveToClipboard("电子邮箱", getString(R.string.fta_account_email))
             }
 
 

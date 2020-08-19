@@ -23,7 +23,10 @@ data class Commons(
 
     val ocrCount: Int = 0,
 
-    val commitmentUrl: String = "",
+    /**
+     * 营业执照注销承诺书
+     */
+    var commitmentUrl: String = "",
 
     val accountNatuesPerson: List<BusinessScopeInd> = ArrayList()
 

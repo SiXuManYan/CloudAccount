@@ -63,6 +63,7 @@ class CompanyMemberEditView : LinearLayout {
      */
     var backImageUrl = Html5Url.P1_IMAGE_URL
 
+
     /**
      * 证件正面
      */

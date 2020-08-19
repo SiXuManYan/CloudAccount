@@ -280,12 +280,11 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
             R.id.login_out_tv -> {
                 VibrateUtils.vibrate(10)
                 AlertDialog.Builder(context)
+                    .setTitle(R.string.hint)
                     .setMessage(getString(R.string.login_out_hint))
                     .setPositiveButton(R.string.confirm, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, _ ->
-                        run {
-                            dialog.dismiss()
-                            presenter.loginOutRequest(this@MyPageFragment)
-                        }
+                        dialog.dismiss()
+                        presenter.loginOutRequest(this@MyPageFragment)
                     })
                     .setNegativeButton(R.string.cancel, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, _ ->
                         dialog.dismiss()

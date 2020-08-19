@@ -1,8 +1,6 @@
 package com.fatcloud.account.feature.forms.personal.license
 
 import android.content.Intent
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import butterknife.OnClick
 import com.baidu.ocr.sdk.model.IDCardParams
@@ -159,7 +157,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
         ProductUtils.onlySupportChineseInput(zero_choice_name_et, first_choice_name_et, second_choice_name_et)
 
         // 法人联系方式，需要与银行预留手机号一致，自动填充
-        bank_phone_et.addTextChangedListener(object : TextWatcher {
+        /*bank_phone_et.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
@@ -172,7 +170,8 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
                 }
             }
 
-        })
+        })*/
+
         restoreDraft()
     }
 
@@ -481,10 +480,10 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             return
         }
 
-        if (bankPhoneValue != phoneStr) {
-            ToastUtils.showShort("法人联系方式需要与银行预留手机号一致")
-            return
-        }
+//        if (bankPhoneValue != phoneStr) {
+//            ToastUtils.showShort("法人联系方式需要与银行预留手机号一致")
+//            return
+//        }
 
 
         mIdEntityImg.apply {

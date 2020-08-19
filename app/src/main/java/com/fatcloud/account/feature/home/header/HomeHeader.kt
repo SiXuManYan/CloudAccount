@@ -252,19 +252,19 @@ open class HomeHeader constructor(private var context: Context) : RecyclerArrayA
 
             getIndexCard(index).setOnClickListener {
 
-                if (product.name.contains(StringUtils.getString(R.string.bookkeeping))) {
-                    AlertDialog.Builder(context)
-                        .setTitle(R.string.hint)
-                        .setMessage(R.string.coming_soon)
-                        .setCancelable(true)
-                        .setPositiveButton(R.string.confirm, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
-                            dialog.dismiss()
-                        })
-                        .create()
-                        .show()
-                } else {
-                    context.startActivity(Intent(context, ProductDetailActivity::class.java).putExtra(Constants.PARAM_PRODUCT_ID, product.id))
-                }
+             /*
+                AlertDialog.Builder(context)
+                    .setTitle(R.string.hint)
+                    .setMessage(R.string.coming_soon)
+                    .setCancelable(true)
+                    .setPositiveButton(R.string.confirm, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
+                        dialog.dismiss()
+                    })
+                    .create()
+                    .show()
+                */
+
+                context.startActivity(Intent(context, ProductDetailActivity::class.java).putExtra(Constants.PARAM_PRODUCT_ID, product.id))
 
             }
 

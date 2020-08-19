@@ -107,7 +107,12 @@ class CloudAccountPresenter(val view: CloudAccountView) {
                     override fun onSuccess(data: Commons?) {
                         data?.let {
 
-                            view.receiveCommonData(data)
+                            /**
+                             * 营业执照注销承诺书
+                             */
+                            it.commitmentUrl = "/api"+ it.commitmentUrl
+
+                            view.receiveCommonData(it)
 
                         }
                     }
@@ -360,7 +365,7 @@ class CloudAccountPresenter(val view: CloudAccountView) {
                             //objectKey等同于objectname，表示从OSS下载文件时需要指定包含文件后缀在内的完整路径，例如abc/efg/123.jpg。
                             val get = GetObjectRequest(data.AccessBucketName, objectKey)
 
-                             oss.asyncGetObject(get, object : OSSCompletedCallback<GetObjectRequest?, GetObjectResult> {
+                            oss.asyncGetObject(get, object : OSSCompletedCallback<GetObjectRequest?, GetObjectResult> {
 
                                 override fun onSuccess(request: GetObjectRequest?, result: GetObjectResult) {
 

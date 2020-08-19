@@ -98,7 +98,10 @@ class ProductFragment : BaseRefreshListFragment<Product2, ProductPresenter>(), P
 
             val data = adapter.allData[it]
 
-            if (data.mold == Constants.P3 || data.name ==getString(R.string.bookkeeping) ) {
+            if (data.mold == Constants.P9 || data.name ==getString(R.string.product_p9) ||
+                data.mold == Constants.P10 ||data.name ==getString(R.string.product_p10)
+
+            ) {
                 AlertDialog.Builder(context)
                     .setTitle(R.string.hint)
                     .setMessage(R.string.coming_soon)

@@ -237,9 +237,11 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
         }
 
         //bugly  Javascript的异常捕获
+        /*
         val buglyWebView = object : CrashReport.WebViewInterface {
 
             override fun getUrl(): String {
+                // x5_web.url must not be null
                 return x5_web.url
             }
 
@@ -257,16 +259,16 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
                 x5_web.addJavascriptInterface(jsInterface, name)
             }
 
-            /**
+            *//**
              * 获取WebView的内容描述.
-             */
+             *//*
             override fun getContentDescription(): CharSequence {
               return x5_web.contentDescription
             }
 
         }
         CrashReport.setJavascriptMonitor(buglyWebView, true)
-
+        */
 
         x5_web.clearCache(true)
         showLoadingDialog()

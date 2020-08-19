@@ -21,7 +21,7 @@
         android:layout_marginTop="10dp"
         tools:text="默认文本"
         android:gravity="center"
-        android:textColor="@color/color_second_level"
+        android:textColor="@color/color_third_level"
         android:textSize="@dimen/font_size_14" />
 
 </LinearLayout>

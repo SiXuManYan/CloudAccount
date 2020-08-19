@@ -51,6 +51,7 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/mScrollView"
         android:layout_width="match_parent"
+        android:scrollbars="vertical"
         android:layout_height="match_parent"
         android:layout_below="@+id/title_rl">
 
