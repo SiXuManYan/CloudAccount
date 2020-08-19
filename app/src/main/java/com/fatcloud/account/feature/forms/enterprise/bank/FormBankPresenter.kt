@@ -140,7 +140,11 @@ class FormBankPresenter @Inject constructor(private var view: FormBankView) : Ba
         reconciliatArea: String?,
         reconciliatContact: String?,
         reconciliatPhone: String?,
-        postcodeValue: String?
+        postcodeValue: String?,
+        addressPost: String?,
+        addressDetailed: String?
+
+
     ) {
 
         requestApi(lifecycleOwner, Lifecycle.Event.ON_DESTROY,
@@ -163,7 +167,10 @@ class FormBankPresenter @Inject constructor(private var view: FormBankView) : Ba
                 reconciliatArea = reconciliatArea,
                 reconciliatContact = reconciliatContact,
                 reconciliatPhone = reconciliatPhone,
-                postcode = postcodeValue
+                postcode = postcodeValue,
+                addressPost = addressPost,
+                addressDetailed = addressDetailed
+
             ),
 
             object : BaseHttpSubscriber<JsonElement>(view) {

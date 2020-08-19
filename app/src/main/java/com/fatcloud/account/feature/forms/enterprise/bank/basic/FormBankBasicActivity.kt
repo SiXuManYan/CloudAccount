@@ -45,6 +45,9 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
     var mAreaId: String? = ""
 
 
+    var mMailingAddress = ""
+
+
     override fun getLayoutId() = R.layout.activity_form_bank_basic
 
     override fun initViews() {
@@ -101,10 +104,20 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
         }
         draft.area?.let {
             mAreaName = it
+            province_title_tv.text = it
         }
+
         draft.areaId?.let {
             mAreaId = it
         }
+        draft.mailingAddress?.let {
+            mMailingAddress = it
+            mailing_tv.text = it
+        }
+        draft.mailingDetailAddress?.let {
+            mailing_detail_address_et.setText(it)
+        }
+
         draft.postcode?.let {
             postcode_et.setText(it)
         }
@@ -116,7 +129,9 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
         R.id.bottom_left_tv,
         R.id.bottom_right_tv,
         R.id.account_nature_rl,
-        R.id.recipient_address_rl
+        R.id.recipient_address_rl,
+        R.id.mailing_address_rl
+
     )
     fun onClick(view: View) {
         if (CommonUtils.isDoubleClick(view)) {
@@ -153,6 +168,19 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
                     override fun onCancel() = Unit
                 })
             }
+
+
+            R.id.mailing_address_rl -> {
+                ProductUtils.showLocationPicker(this, object : OnCityItemClickListener() {
+                    override fun onSelected(province: ProvinceBean, city: CityBean, district: DistrictBean) {
+                        mMailingAddress = StringUtils.getString(R.string.location_information_format, province.name, city.name, district.name)
+                        mailing_tv.text = mMailingAddress
+                    }
+
+                    override fun onCancel() = Unit
+                })
+            }
+
             else -> {
             }
         }
@@ -172,6 +200,11 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
             area = mAreaName
             areaId = mAreaId
             postcode = postcode_et.text.toString().trim()
+            detailAddress = detail_addr_et.text.toString().trim()
+
+            mailingAddress = mMailingAddress
+            mailingDetailAddress = mailing_detail_address_et.text.toString().trim()
+
         }
         database.bankPublicDraftDao().add(draft)
         BankPublicDraft.update()
@@ -225,6 +258,20 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
             return
         }
 
+
+        val mailingAddressValue = mailing_tv.text.toString().trim()
+        if (mailingAddressValue.isBlank()) {
+            ToastUtils.showShort("请选择邮寄地址")
+            return
+        }
+
+        val mailingDetailAddressValue = mailing_detail_address_et.text.toString().trim()
+        if (mailingDetailAddressValue.isBlank()) {
+            ToastUtils.showShort("请填写邮寄详细地址")
+            return
+        }
+
+
         val reconciliationName = reconciliation_name_et.text.toString().trim()
         if (reconciliationName.isBlank()) {
             ToastUtils.showShort("请输入对账联系人")
@@ -264,6 +311,11 @@ class FormBankBasicActivity : BaseMVPActivity<FormBankBasicPresenter>(), FormBan
             putString(Constants.PARAM_AREA_NAME, areaName)
             putString(Constants.PARAM_DETAIL_ADDRESS, detailAddr)
             putString(Constants.PARAM_POST_CODE, postcodeValue)
+
+            putString(Constants.PARAM_MAILING_ADDRESS, mailingAddressValue)
+            putString(Constants.PARAM_MAILING_DETAIL_ADDRESS, mailingDetailAddressValue)
+
+
         }
         startActivity(Intent(this, FormBankActivity::class.java).putExtras(bundle))
 

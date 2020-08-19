@@ -62,6 +62,11 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
     var areaName: String? = ""
     var detailAddr: String? = ""
     var mPostCode: String? = ""
+    /** 邮寄地址 */
+    private var mMailingAddressValue: String = ""
+
+    /** 邮寄详细地址 */
+    private var mailingDetailAddressValue: String = ""
 
     /**
      * 营业执照url
@@ -111,6 +116,16 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
         areaName = intent.extras!!.getString(Constants.PARAM_AREA_NAME)
         detailAddr = intent.extras!!.getString(Constants.PARAM_DETAIL_ADDRESS)
         mPostCode = intent.extras!!.getString(Constants.PARAM_POST_CODE)
+
+        intent.extras!!.getString(Constants.PARAM_MAILING_ADDRESS)?.let {
+            mMailingAddressValue = it
+        }
+
+        intent.extras!!.getString(Constants.PARAM_MAILING_DETAIL_ADDRESS)?.let {
+            mailingDetailAddressValue = it
+        }
+
+
 
         presenter.getBankInfo(this, orderWorkId)
 
@@ -251,7 +266,7 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
                         signed_authorization_url = ""
-                        electronic_seal_iv.setImageResource(R.drawable.ic_upload_default)
+                        signed_authorization_iv.setImageResource(R.drawable.ic_upload_default)
                         return true
                     }
 
@@ -559,7 +574,10 @@ class FormBankActivity : BaseMVPActivity<FormBankPresenter>(), FormBankView {
             reconciliatArea = areaName,
             reconciliatContact = reconciliationName,
             reconciliatPhone = reconciliationPhone,
-            postcodeValue = mPostCode
+            postcodeValue = mPostCode,
+
+            addressPost =  mMailingAddressValue,
+            addressDetailed =  mailingDetailAddressValue
         )
     }
 

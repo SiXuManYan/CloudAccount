@@ -125,6 +125,7 @@
             android:singleLine="true"
             android:textColor="@color/color_first_level"
             android:textColorHint="@color/color_cccccc"
+            android:text="全都是泡馍"
             android:textSize="14sp" />
 
 
@@ -225,6 +226,7 @@
             android:singleLine="true"
             android:textColor="@color/color_first_level"
             android:textColorHint="@color/color_cccccc"
+            android:text="扶桑"
             android:textSize="14sp" />
 
 
@@ -276,6 +278,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="0dp"
             android:singleLine="true"
+            android:text="232321199410073515"
             android:textColor="@color/color_first_level"
             android:textColorHint="@color/color_cccccc"
             android:textSize="14sp" />
@@ -332,6 +335,7 @@
             android:singleLine="true"
             android:textColor="@color/color_first_level"
             android:textColorHint="@color/color_cccccc"
+            android:text="5020-01-01"
             android:textSize="14sp" />
 
 
@@ -381,6 +385,7 @@
             android:imeOptions="actionNext"
             android:lineSpacingMultiplier="1.2"
             android:maxLength="50"
+            android:text="王者峡谷"
             android:maxLines="1"
             android:minHeight="45dp"
             android:paddingLeft="10dp"
@@ -439,6 +444,7 @@
             android:singleLine="true"
             android:textColor="@color/color_first_level"
             android:textColorHint="@color/color_cccccc"
+            android:text="17699996666"
             android:textSize="14sp" />
 
 
@@ -492,6 +498,7 @@
             android:paddingRight="0dp"
             android:singleLine="true"
             android:textColor="@color/color_first_level"
+            android:text="5"
             android:textColorHint="@color/color_cccccc"
             android:textSize="14sp" />
 

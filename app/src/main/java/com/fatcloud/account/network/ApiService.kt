@@ -12,6 +12,7 @@ import com.fatcloud.account.entity.news.News
 import com.fatcloud.account.entity.news.NewsCategory
 import com.fatcloud.account.entity.order.detail.*
 import com.fatcloud.account.entity.order.enterprise.BankInfo
+import com.fatcloud.account.entity.order.enterprise.EnterpriseDetail
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.persional.PersonalInfo
 import com.fatcloud.account.entity.order.persional.bank.PersonalBankDetail
@@ -308,7 +309,7 @@ interface ApiService {
     @GET("$API_ACCOUNT_URI/tOrderWork/detail")
     fun getEnterpriseOrderDetail(
         @Query("orderWorkId") orderWorkId: String? = null
-    ): Flowable<Response<EnterpriseInfo>>
+    ): Flowable<Response<EnterpriseDetail>>
 
 
     @GET("api/common/list")
@@ -439,7 +440,9 @@ interface ApiService {
         @Field("reconciliatArea") reconciliatArea: String?,
         @Field("reconciliatContact") reconciliatContact: String?,
         @Field("reconciliatPhone") reconciliatPhone: String?,
-        @Field("postcode") postcode: String?
+        @Field("postcode") postcode: String?,
+        @Field("addressPost") addressPost: String?,
+        @Field("addressDetailed") addressDetailed: String?
     ): Flowable<Response<JsonElement>>
 
 

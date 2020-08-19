@@ -173,6 +173,20 @@ class BankPublicDraft {
     @ColumnInfo(name = "postcode")
     var postcode: String? = ""
 
+    /**
+     * 邮寄地址
+     */
+    @ColumnInfo(name = "mailing_address")
+    var mailingAddress: String? = ""
+
+    /**
+     * 邮寄详细地址
+     */
+    @ColumnInfo(name = "mailing_detail_address")
+    var mailingDetailAddress: String? = ""
+
+
+
 
     @ColumnInfo(name = "create_time")
     var createTime: String = ""

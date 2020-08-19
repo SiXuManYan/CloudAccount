@@ -3,9 +3,9 @@ package com.fatcloud.account.entity.order.enterprise
 import java.math.BigDecimal
 
 /**
- * 企业信息 表单
+ * 企业信息  回显
  */
-class EnterpriseInfo {
+class EnterpriseDetail {
     var accountId: String? = null
     var addr: String ? = null
     var area: String ? = null
@@ -112,5 +112,14 @@ class EnterpriseInfo {
 
     /** 邮编 （银行对公账户回显时用）*/
     var postcode: String ? = null
+
+    /** 邮寄地址 */
+    var addressPost: String ? = null
+
+    /** 邮寄详细地址 */
+    var addressDetailed: String ? = null
+
+
+
 
 }

@@ -8,6 +8,7 @@ import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.detail.CompanyBankRegisterInfo
+import com.fatcloud.account.entity.order.enterprise.EnterpriseDetail
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.enterprise.Shareholder
 import javax.inject.Inject
@@ -21,19 +22,12 @@ class CompanyRegisterInfoPresenter @Inject constructor(private var companyRegist
     BasePresenter(companyRegisterInfoView) {
 
 
-    fun getEnterpriseInfo(
-        lifecycleOwner: LifecycleOwner,
-        orderWorkId: String?,
-        productWorkType: String?,
-        orderId: String?
-    ) {
+    fun getEnterpriseInfo(lifecycleOwner: LifecycleOwner, orderWorkId: String?, productWorkType: String?, orderId: String?) {
         requestApi(lifecycleOwner, Lifecycle.Event.ON_DESTROY,
-            apiService.getEnterpriseOrderDetail(orderWorkId),
-
-            object : BaseHttpSubscriber<EnterpriseInfo>(companyRegisterInfoView) {
+            apiService.getEnterpriseOrderDetail(orderWorkId), object : BaseHttpSubscriber<EnterpriseDetail>(companyRegisterInfoView) {
 
 
-                override fun onSuccess(data: EnterpriseInfo?) {
+                override fun onSuccess(data: EnterpriseDetail?) {
 
                     var financeShareholder: Shareholder? = null
 
@@ -79,15 +73,9 @@ class CompanyRegisterInfoPresenter @Inject constructor(private var companyRegist
     /**
      * 银行对公账户时，获取额外信息
      */
-    fun getRegistrantInfo(
-        lifecycle: LifecycleOwner,
-        orderId: String?,
-        financeShareholder: Shareholder?
-    ) {
+    fun getRegistrantInfo(lifecycle: LifecycleOwner, orderId: String?, financeShareholder: Shareholder?) {
         requestApi(lifecycle, Lifecycle.Event.ON_DESTROY,
-            apiService.getCompanyBankInfo(orderId),
-
-            object : BaseHttpSubscriber<CompanyBankRegisterInfo>(companyRegisterInfoView) {
+            apiService.getCompanyBankInfo(orderId), object : BaseHttpSubscriber<CompanyBankRegisterInfo>(companyRegisterInfoView) {
 
                 override fun onSuccess(data: CompanyBankRegisterInfo?) {
 

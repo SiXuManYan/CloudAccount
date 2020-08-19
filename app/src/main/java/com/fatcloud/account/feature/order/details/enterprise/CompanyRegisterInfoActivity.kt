@@ -1,6 +1,7 @@
 package com.fatcloud.account.feature.order.details.enterprise
 
 import android.view.View
+import butterknife.OnClick
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
@@ -12,6 +13,7 @@ import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.order.detail.CompanyBankRegisterInfo
+import com.fatcloud.account.entity.order.enterprise.EnterpriseDetail
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.persional.PersonalInfo
 import com.fatcloud.account.extend.RoundTransFormation
@@ -27,6 +29,10 @@ import kotlinx.android.synthetic.main.layout_company_info.*
  * P2 回显信息页
  */
 class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter>(), CompanyRegisterInfoView {
+
+    private var mBusinessLicenseUrl: String = ""
+    private var mElectronicSealImgUrl: String = ""
+    private var mLegalPersonWarrantImgUrl: String = ""
 
     /**
      * 订单流程id
@@ -86,7 +92,7 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
     }
 
 
-    override fun bindDetailInfo(data: EnterpriseInfo) {
+    override fun bindDetailInfo(data: EnterpriseDetail) {
         registered_capital_tv.text = data.capital
 
         ProductUtils.setPaymentStatus(data.state, data.stateText, payment_status_iv, payment_status_tv)
@@ -110,7 +116,7 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
     /**
      * 财务负责人在详情接口获取
      */
-    private fun setCompanyInfo(data: EnterpriseInfo) {
+    private fun setCompanyInfo(data: EnterpriseDetail) {
         zero_company_name_tv.text = data.enterpriseName0
         first_company_name_tv.text = data.enterpriseName1
         second_company_name_tv.text = data.enterpriseName2
@@ -138,7 +144,7 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
     }
 
 
-    private fun setBankInfo(data: EnterpriseInfo) {
+    private fun setBankInfo(data: EnterpriseDetail) {
 
         company_name_tv.text = data.enterpriseName
         company_address_tv.text = data.enterpriseAddr
@@ -160,6 +166,13 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
         reconciliation_address_tv.text = data.reconciliatAddr
 
 
+        // 邮寄地址
+        mailing_address_tv.text = data.addressPost
+        mailing_detail_address_tv.text = data.addressDetailed
+
+
+        // 邮寄详细地址
+
         // 营业执照
         if (data.businessLicenseImgUrl.isNullOrBlank()) {
             business_license_ll.visibility = View.GONE
@@ -168,11 +181,11 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
                 if (ProductUtils.isOssSignUrl(it)) {
                     ProductUtils.getRealOssUrl(this, it, object : CloudAccountApplication.OssSignCallBack {
                         override fun ossUrlSignEnd(url: String) {
+
+                            mBusinessLicenseUrl = url
                             Glide.with(this@CompanyRegisterInfoActivity)
                                 .load(url)
-                                .apply(
-                                    RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4)))
-                                )
+                                .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                                 .error(R.drawable.ic_error_image_load)
                                 .into(business_license_iv)
 
@@ -180,6 +193,7 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
 
                     })
                 } else {
+                    mBusinessLicenseUrl = it
                     Glide.with(this)
                         .load(it)
                         .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
@@ -196,37 +210,23 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
         val electronicSealImgUrl = data.electronicSealImgUrl
         if (!electronicSealImgUrl.isNullOrBlank()) {
             if (ProductUtils.isOssSignUrl(electronicSealImgUrl)) {
-                ProductUtils.getRealOssUrl(
-                    this,
-                    electronicSealImgUrl,
-                    object : CloudAccountApplication.OssSignCallBack {
-                        override fun ossUrlSignEnd(url: String) {
-                            Glide.with(this@CompanyRegisterInfoActivity)
-                                .load(url)
-                                .apply(
-                                    RequestOptions().transform(
-                                        MultiTransformation(
-                                            CenterCrop(),
-                                            RoundTransFormation(context, 4)
-                                        )
-                                    )
-                                )
-                                .error(R.drawable.ic_error_image_load)
-                                .into(electronic_seal_iv)
-                        }
+                ProductUtils.getRealOssUrl(this, electronicSealImgUrl, object : CloudAccountApplication.OssSignCallBack {
+                    override fun ossUrlSignEnd(url: String) {
+                        mElectronicSealImgUrl = url
 
-                    })
+                        Glide.with(this@CompanyRegisterInfoActivity)
+                            .load(url)
+                            .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
+                            .error(R.drawable.ic_error_image_load)
+                            .into(electronic_seal_iv)
+                    }
+
+                })
             } else {
+                mElectronicSealImgUrl = electronicSealImgUrl
                 Glide.with(this)
                     .load(electronicSealImgUrl)
-                    .apply(
-                        RequestOptions().transform(
-                            MultiTransformation(
-                                CenterCrop(),
-                                RoundTransFormation(context, 4)
-                            )
-                        )
-                    )
+                    .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                     .error(R.drawable.ic_error_image_load)
                     .into(electronic_seal_iv)
             }
@@ -241,42 +241,26 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
         if (!legalPersonWarrantImgUrl.isNullOrBlank()) {
             if (ProductUtils.isOssSignUrl(legalPersonWarrantImgUrl)) {
 
-                ProductUtils.getRealOssUrl(
-                    this,
-                    legalPersonWarrantImgUrl,
-                    object : CloudAccountApplication.OssSignCallBack {
-                        override fun ossUrlSignEnd(url: String) {
-
-                            Glide.with(this@CompanyRegisterInfoActivity)
-                                .load(url)
-                                .apply(
-                                    RequestOptions().transform(
-                                        MultiTransformation(
-                                            CenterCrop(),
-                                            RoundTransFormation(context, 4)
-                                        )
-                                    )
-                                )
-                                .error(R.drawable.ic_error_image_load)
-                                .into(Legal_signature_authorization_iv)
+                ProductUtils.getRealOssUrl(this, legalPersonWarrantImgUrl, object : CloudAccountApplication.OssSignCallBack {
+                    override fun ossUrlSignEnd(url: String) {
+                        mLegalPersonWarrantImgUrl = url
+                        Glide.with(this@CompanyRegisterInfoActivity)
+                            .load(url)
+                            .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
+                            .error(R.drawable.ic_error_image_load)
+                            .into(Legal_signature_authorization_iv)
 
 
-                        }
+                    }
 
-                    })
+                })
 
 
             } else {
+                mLegalPersonWarrantImgUrl = legalPersonWarrantImgUrl
                 Glide.with(this)
                     .load(legalPersonWarrantImgUrl)
-                    .apply(
-                        RequestOptions().transform(
-                            MultiTransformation(
-                                CenterCrop(),
-                                RoundTransFormation(context, 4)
-                            )
-                        )
-                    )
+                    .apply(RequestOptions().transform(MultiTransformation(CenterCrop(), RoundTransFormation(context, 4))))
                     .error(R.drawable.ic_error_image_load)
                     .into(Legal_signature_authorization_iv)
             }
@@ -310,5 +294,31 @@ class CompanyRegisterInfoActivity : BaseMVPActivity<CompanyRegisterInfoPresenter
         }
     }
 
+
+    @OnClick(
+        R.id.business_license_iv,
+        R.id.electronic_seal_iv,
+        R.id.Legal_signature_authorization_iv
+    )
+    fun onClick(view: View) {
+        if (CommonUtils.isDoubleClick(view)) {
+            return
+        }
+        when (view.id) {
+            R.id.business_license_iv -> {
+
+                ProductUtils.lookGallery(this, mBusinessLicenseUrl)
+            }
+            R.id.electronic_seal_iv -> {
+                ProductUtils.lookGallery(this, mElectronicSealImgUrl)
+            }
+            R.id.Legal_signature_authorization_iv -> {
+                ProductUtils.lookGallery(this, mLegalPersonWarrantImgUrl)
+            }
+
+            else -> {
+            }
+        }
+    }
 
 }

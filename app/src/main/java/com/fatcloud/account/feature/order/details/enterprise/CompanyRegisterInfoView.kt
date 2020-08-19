@@ -2,6 +2,7 @@ package com.fatcloud.account.feature.order.details.enterprise
 
 import com.fatcloud.account.base.common.BaseTaskView
 import com.fatcloud.account.entity.order.detail.CompanyBankRegisterInfo
+import com.fatcloud.account.entity.order.enterprise.EnterpriseDetail
 import com.fatcloud.account.entity.order.enterprise.EnterpriseInfo
 import com.fatcloud.account.entity.order.persional.PersonalInfo
 
@@ -11,7 +12,7 @@ import com.fatcloud.account.entity.order.persional.PersonalInfo
  *  公司信息
  */
 interface CompanyRegisterInfoView : BaseTaskView {
-    fun bindDetailInfo(data: EnterpriseInfo)
+    fun bindDetailInfo(data: EnterpriseDetail)
 
     /**
      * 当为 产品流程类型为：PW3银行账户办理时，tOrderWork/detail 接口不返回相关法人信息

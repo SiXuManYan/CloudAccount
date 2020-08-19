@@ -20,6 +20,7 @@ import com.fatcloud.account.R
 import com.fatcloud.account.app.CloudAccountApplication
 import com.fatcloud.account.app.Glide
 import com.fatcloud.account.common.Constants
+import com.fatcloud.account.common.Html5Url
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.order.IdentityImg
 import com.fatcloud.account.entity.order.enterprise.Shareholder
@@ -55,12 +56,12 @@ class CompanyMemberEditView : LinearLayout {
     /**
      * 身份证正面url
      */
-    var frontImageUrl = ""
+    var frontImageUrl = Html5Url.P1_IMAGE_URL
 
     /**
      * 身份证背面面url
      */
-    var backImageUrl = ""
+    var backImageUrl = Html5Url.P1_IMAGE_URL
 
     /**
      * 证件正面
@@ -85,12 +86,7 @@ class CompanyMemberEditView : LinearLayout {
         init()
     }
 
-    constructor(
-        context: Context?,
-        attrs: AttributeSet?,
-        defStyleAttr: Int,
-        defStyleRes: Int
-    ) : super(context, attrs, defStyleAttr, defStyleRes) {
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
         init()
     }
 
