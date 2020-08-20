@@ -8,13 +8,13 @@ import com.blankj.utilcode.util.ColorUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.list.BaseRefreshListActivity
 import com.fatcloud.account.common.Constants
-import com.fatcloud.account.entity.order.persional.Order
 import com.fatcloud.account.entity.order.progress.BusinessProgress
 import com.fatcloud.account.event.entity.BankFormCommitSuccessEvent
 import com.fatcloud.account.feature.forms.enterprise.bank.basic.FormBankBasicActivity
 import com.fatcloud.account.feature.forms.personal.bank.basic.FormPersonalBankBasicActivity
 import com.fatcloud.account.feature.order.details.bookkeeping.BookkeepingInfoActivity
 import com.fatcloud.account.feature.order.details.enterprise.CompanyRegisterInfoActivity
+import com.fatcloud.account.feature.order.details.master.MasterNamingInfoActivity
 import com.fatcloud.account.feature.order.details.personal.bank.PersonalBankInfoActivity
 import com.fatcloud.account.feature.order.details.personal.license.change.PersonalLicenseChangeInfoActivity
 import com.fatcloud.account.feature.order.details.personal.license.handle.PersonalLicenseHandleInfoActivity
@@ -90,6 +90,7 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
                     model?.let {
                         when (it.mold) {
                             Constants.P2 -> handleEnterpriseProduct(it)
+                            Constants.P7 -> handleMasterNamingProduct(it)
                             else -> handlePersonalProduct(it)
                         }
                     }
@@ -101,6 +102,14 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
 
 
         return adapter
+    }
+
+    private fun handleMasterNamingProduct(it: BusinessProgress) {
+        startActivity(
+            Intent(this@ScheduleActivity, MasterNamingInfoActivity::class.java)
+                .putExtra(Constants.PARAM_ORDER_ID, orderId)
+                .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
+        )
     }
 
 
@@ -181,14 +190,20 @@ class ScheduleActivity : BaseRefreshListActivity<BusinessProgress, SchedulePrese
                                     .putExtra(Constants.PARAM_MOLD, it.mold)
                             )
                         }
-
-
                     }
                 }
             }
             Constants.PW4 -> {
                 startActivity(
                     Intent(this@ScheduleActivity, BookkeepingInfoActivity::class.java)
+                        .putExtra(Constants.PARAM_ORDER_ID, orderId)
+                        .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
+                )
+            }
+
+            Constants.PW99 -> {
+                startActivity(
+                    Intent(this@ScheduleActivity, PersonalLicenseHandleInfoActivity::class.java)
                         .putExtra(Constants.PARAM_ORDER_ID, orderId)
                         .putExtra(Constants.PARAM_PRODUCT_WORK_TYPE, it.code)
                 )

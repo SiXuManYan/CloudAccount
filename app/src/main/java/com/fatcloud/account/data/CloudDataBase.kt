@@ -30,7 +30,7 @@ import com.fatcloud.account.entity.users.User
         NativeFormPersonalPackageP9P10Draft::class
     ],
     version = 2,
-    exportSchema = true
+    exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class CloudDataBase : RoomDatabase() {

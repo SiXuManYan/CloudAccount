@@ -64,6 +64,8 @@ import com.fatcloud.account.feature.order.details.bookkeeping.BookkeepingInfoAct
 import com.fatcloud.account.feature.order.details.bookkeeping.BookkeepingInfoModule
 import com.fatcloud.account.feature.order.details.enterprise.CompanyRegisterInfoActivity
 import com.fatcloud.account.feature.order.details.enterprise.CompanyRegisterInfoModule
+import com.fatcloud.account.feature.order.details.master.MasterNamingInfoActivity
+import com.fatcloud.account.feature.order.details.master.MasterNamingInfoModule
 import com.fatcloud.account.feature.order.details.personal.license.handle.PersonalLicenseHandleInfoActivity
 import com.fatcloud.account.feature.order.details.personal.license.handle.PersonalLicenseHandleInfoModule
 import com.fatcloud.account.feature.order.details.personal.bank.PersonalBankInfoActivity
@@ -288,6 +290,10 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [FormMarketModule::class])
     abstract fun formMarketActivityInjector(): FormMarketActivity
+
+    @ActivityScore
+    @ContributesAndroidInjector(modules = [MasterNamingInfoModule::class])
+    abstract fun masterNamingInfoActivityInjector(): MasterNamingInfoActivity
 
 
 }

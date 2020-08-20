@@ -76,13 +76,37 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
                 Constants.EVENT_NEED_REFRESH -> {
                     loginInit()
                 }
-                Constants.EVENT_SWITCH_HOME_TAB->{
+                Constants.EVENT_SWITCH_HOME_TAB -> {
                     selectFirstTab()
+                }
+                Constants.EVENT_UPDATE_MESSAGE_NUMBER -> {
+                    showMessage(it.content)
                 }
                 else -> {
                 }
             }
         })
+
+    }
+
+    private fun showMessage(content: String?) {
+        if (content.isNullOrBlank()) {
+            return
+        }
+        try {
+            val number = content.toInt()
+            if (number > 0) {
+                tabs_navigator.showMsg(3, number)
+            } else {
+                tabs_navigator.hideMsg(3)
+            }
+
+        } catch (e: Exception) {
+
+            tabs_navigator.hideMsg(3)
+
+        }
+
 
     }
 
@@ -144,8 +168,6 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
 
 
     private fun loginInit() {
-
-
 
 
     }

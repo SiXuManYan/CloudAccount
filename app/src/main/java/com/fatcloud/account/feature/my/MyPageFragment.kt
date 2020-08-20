@@ -25,6 +25,8 @@ import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.entity.users.User
+import com.fatcloud.account.event.Event
+import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.event.entity.ImageUploadEvent
 import com.fatcloud.account.extend.RoundTransFormation
 import com.fatcloud.account.feature.about.AboutActivity
@@ -378,10 +380,12 @@ class MyPageFragment : BaseFragment<MyPagePresenter>(), MyPageView {
     override fun updateMessageUnReadNumber(messageUnReadNumber: Long) {
         if (messageUnReadNumber > 0) {
             message_unread_fl.visibility = View.VISIBLE
+
         } else {
             message_unread_fl.visibility = View.GONE
         }
         message_unread_number_tv.text = messageUnReadNumber.toString()
+        RxBus.post(Event(Constants.EVENT_UPDATE_MESSAGE_NUMBER, messageUnReadNumber.toString()))
     }
 
 

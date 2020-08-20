@@ -291,6 +291,20 @@ interface ApiService {
     ): Flowable<Response<PersonalLicenseChangeDetail>>
 
 
+
+
+
+    /**
+     * 个体户营业执照变更 回显页
+     * @param id 订单id
+     */
+    @GET("$ORDER_API/detail")
+    fun getMasterNamingInfo(
+        @Query("id") id: String? = null
+    ): Flowable<Response<MasterNamingDetail>>
+
+
+
     /**
      * 个体户营业执照注销 回显页
      * @param id 订单id

@@ -102,23 +102,8 @@ class ScheduleHolder(parent: ViewGroup?) : BaseItemViewHolder<BusinessProgress>(
      * 个人业务
      */
     private fun handlePersonalProduct(data: BusinessProgress) {
-        when (data.code) {
-            Constants.PW1 -> {
-                look_detail_tv.visibility = View.VISIBLE
-                look_detail_tv.text = "查看"
-            }
-            Constants.PW2 -> {
-                look_detail_tv.visibility = View.VISIBLE
-            }
-            Constants.PW3 -> {
-                look_detail_tv.visibility = View.VISIBLE
-            }
-            Constants.PW4 -> {
-                look_detail_tv.visibility = View.VISIBLE
-                look_detail_tv.text = "查看"
-            }
-
-        }
+        look_detail_tv.visibility = View.VISIBLE
+        look_detail_tv.text = "查看"
     }
 
     /**

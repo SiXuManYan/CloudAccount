@@ -184,6 +184,7 @@ object Constants {
     const val EVENT_ADD_NEWS_PAGE_VIEWS = 0x104// 增加页面浏览量
     const val EVENT_CHECK_APPLICATION_DEFAULT_DATA = 0x105// 检查application 初始化数据
     const val EVENT_REFRESH_ORDER_LIST_FROM_DELETE_DRAFT = 0x106// 预订单页删除草稿，刷新订单列表
+    const val EVENT_UPDATE_MESSAGE_NUMBER = 0x107// 消息数量
 
     // 列表数据 key
     const val KEY_DATA = "data"
@@ -272,6 +273,9 @@ object Constants {
 
     /** 代理记账办理 */
     const val PW4 = "PW4"
+
+    /** 大师起名 */
+    const val PW99 = "PW99"
 
 
     /**

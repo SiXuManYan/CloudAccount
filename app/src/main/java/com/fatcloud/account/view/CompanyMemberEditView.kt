@@ -150,8 +150,8 @@ class CompanyMemberEditView : LinearLayout {
                     genderIndex = position
                 }
             }
-
         }
+
 
     }
 

@@ -363,8 +363,15 @@
         <activity
             android:name=".feature.order.details.personal.packages.PersonalPackageInfoP9P10Activity"
             android:screenOrientation="portrait" />
-        <activity android:name=".feature.message.MessageActivity" />
-        <activity android:name=".feature.forms.market.FormMarketActivity" />
+        <activity
+            android:name=".feature.message.MessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".feature.forms.market.FormMarketActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".feature.order.details.master.MasterNamingInfoActivity"
+            android:screenOrientation="portrait" />
 
         <!--        &lt;!&ndash; 消息接收监听器 （用户可自主扩展） &ndash;&gt;
                 &lt;!&ndash; 为保证receiver安全，建议设置不可导出，如需对其他应用开放可通过android：permission进行限制 &ndash;&gt;
@@ -383,21 +390,21 @@
                 </receiver>-->
 
 
-<!--        <service
-            android:name=".pushs.PushIntentService"
-            android:exported="false">
-            <intent-filter> 
-                <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED" />
-            </intent-filter>
-            <intent-filter>     
-                <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
-            </intent-filter>
+        <!--        <service
+                    android:name=".pushs.PushIntentService"
+                    android:exported="false">
+                    <intent-filter> 
+                        <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED" />
+                    </intent-filter>
+                    <intent-filter>     
+                        <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED" />
+                    </intent-filter>
+                    <intent-filter>
+                        <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
+                    </intent-filter>
 
 
-        </service>-->
+                </service>-->
 
 
         <receiver
