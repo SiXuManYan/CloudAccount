@@ -3,6 +3,8 @@ package com.fatcloud.account.feature.forms.market
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
@@ -19,7 +21,7 @@ import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.form.MarketData
 import kotlinx.android.synthetic.main.activity_form_market.*
 import zhy.com.highlight.HighLight
-import zhy.com.highlight.position.OnLeftPosCallback
+import zhy.com.highlight.position.OnBottomPosCallback
 import zhy.com.highlight.shape.RectLightShape
 
 
@@ -27,12 +29,13 @@ import zhy.com.highlight.shape.RectLightShape
  * Created by Wangsw on 2020/8/5 0005 13:48.
  * </br>
  * 辽宁市场主体登记全程电子化平台
+ *
  */
 class FormMarketActivity : BaseMVPActivity<FormMarketPresenter>(), FormMarketView {
 
 
     var orderId: String? = ""
-    var mUrl: String = ""
+    var mUrl: String = getString(R.string.liaoning_market_registration_platform_url)
     private var mHighLight: HighLight? = null
 
 
@@ -50,13 +53,12 @@ class FormMarketActivity : BaseMVPActivity<FormMarketPresenter>(), FormMarketVie
 
 
         mHighLight = HighLight(this)
-            .autoRemove(false)
+            .autoRemove(true)
             .intercept(true)
             .enableNext()
             .anchor(findViewById<View>(android.R.id.content))
             .setOnLayoutCallback {
-
-                mHighLight?.addHighLight(R.id.ic_tips, R.layout.view_market_tips_02, OnLeftPosCallback(45f), RectLightShape(0f, 0f, 15f, 10f, 10f))
+                mHighLight?.addHighLight(R.id.register_url_rl, R.layout.view_market_tips_02, OnBottomPosCallback(10f), RectLightShape(0f, 0f, 0f, 0f, 0f))
                 mHighLight?.show()
             }
             .setOnShowCallback {
@@ -114,11 +116,12 @@ class FormMarketActivity : BaseMVPActivity<FormMarketPresenter>(), FormMarketVie
         }
         when (view.id) {
             R.id.copy_tv -> {
-                if (mUrl.isNotBlank()) {
-                    val cmb: ClipboardManager = context!!.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                    cmb.primaryClip = ClipData.newPlainText("辽宁市场主体登记全程电子化平台注册地址", mUrl)
-                    ToastUtils.showShort("复制成功")
+                if (mUrl.isBlank()) {
+                    return
                 }
+                val cmb: ClipboardManager = context!!.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                cmb.primaryClip = ClipData.newPlainText("辽宁市场主体登记全程电子化平台注册地址", mUrl)
+              CommonUtils.openUrlWithNativeWebApp(mUrl,this)
             }
             R.id.commit_tv -> {
                 val account = account_et.text.toString().trim()

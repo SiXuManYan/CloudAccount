@@ -69,12 +69,12 @@
 
 
             <RelativeLayout
+                android:id="@+id/register_url_rl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
                 android:minHeight="45dp"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp"
                 tools:background="@color/font_white">
 
                 <TextView
@@ -96,27 +96,52 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/copy_tv"
+                    android:layout_toLeftOf="@+id/right_ll"
                     android:layout_toRightOf="@+id/url_title"
                     android:textColor="@color/color_blue_foreground"
                     android:textIsSelectable="true"
                     android:textSize="@dimen/font_size_12"
-                    tools:text="https://www.github.com" />
+                    android:text="@string/liaoning_market_registration_platform_url" />
 
-                <TextView
-                    android:id="@+id/copy_tv"
+
+
+                <LinearLayout
+                    android:id="@+id/right_ll"
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/shape_stock_blue_match_4"
-                    android:paddingLeft="4dp"
-                    android:paddingTop="2dp"
-                    android:paddingRight="4dp"
-                    android:paddingBottom="2dp"
-                    android:text="复制链接"
-                    android:textColor="@color/color_blue_foreground"
-                    android:textSize="@dimen/font_size_12" />
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:id="@+id/copy_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_stock_blue_match_4"
+                        android:paddingLeft="4dp"
+                        android:paddingTop="2dp"
+                        android:paddingRight="4dp"
+                        android:paddingBottom="2dp"
+                        android:text="复制并前往"
+                        android:textColor="@color/color_blue_foreground"
+                        android:textSize="@dimen/font_size_12" />
+
+
+                    <ImageView
+                        android:id="@+id/ic_tips"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_tips" />
+
+
+
+                </LinearLayout>
+
 
 
                 <View
@@ -143,7 +168,7 @@
                 android:layout_height="45dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:paddingLeft="15dp"
-
+                android:paddingRight="15dp"
                 tools:background="@color/font_white">
 
                 <TextView
@@ -166,7 +191,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="1dp"
                     android:layout_marginLeft="1dp"
-                    android:layout_toLeftOf="@+id/ic_tips"
+
                     android:layout_toRightOf="@+id/account_tv"
                     android:background="@null"
                     android:gravity="center_vertical|right"
@@ -179,17 +204,6 @@
                     android:textColor="@color/color_first_level"
                     android:textColorHint="@color/color_cccccc"
                     android:textSize="14sp" />
-
-                <ImageView
-                    android:id="@+id/ic_tips"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_tips" />
 
 
                 <View
@@ -206,7 +220,7 @@
                 android:layout_height="45dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:paddingLeft="15dp"
-                android:paddingRight="45dp"
+                android:paddingRight="15dp"
                 tools:background="@color/font_white">
 
                 <TextView

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
+    android:gravity="center_horizontal"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
@@ -8,7 +9,7 @@
     <ImageView
         android:id="@+id/market_tip_iv"
         android:src="@drawable/ic_guide_account"
-        android:layout_width="338dp"
-        android:layout_height="312dp"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

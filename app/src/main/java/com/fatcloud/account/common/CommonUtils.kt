@@ -886,4 +886,16 @@ object CommonUtils {
         return null
     }
 
+
+    /**
+     * 调用手机浏览器 打开url
+     */
+    fun openUrlWithNativeWebApp(url:String , activity: Activity){
+        val intent = Intent().apply {
+            action = Intent.ACTION_VIEW
+            data = Uri.parse(url)
+        }
+        activity.startActivity(Intent.createChooser(intent, "请选择浏览器"))
+    }
+
 }

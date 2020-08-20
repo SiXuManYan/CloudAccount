@@ -232,5 +232,6 @@
     <string name="bookkeeping">个体户代理记账</string>
     <string name="product_p9">个体户套餐</string>
     <string name="product_p10">个人独资企业套餐</string>
+    <string name="liaoning_market_registration_platform_url">http://wsdj.lngs.gov.cn</string>
 
 </resources>
