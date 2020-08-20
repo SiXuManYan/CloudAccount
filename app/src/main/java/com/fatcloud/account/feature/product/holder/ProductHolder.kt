@@ -37,7 +37,7 @@ class ProductHolder(parent: ViewGroup?) : BaseItemViewHolder<Product2>(parent, R
         content_tv.text = data.introduce
 
 
-        if (data.mold == Constants.P9 || data.mold == Constants.P10) {
+        if (data.mold == Constants.P8 || data.mold == Constants.P10) {
             amount_tv.text = "即将上线"
             amount_tv.setTextColor(ColorUtils.getColor(R.color.color_third_level))
             sales_tv.text = ""

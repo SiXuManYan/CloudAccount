@@ -161,7 +161,6 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
 
         RxBus.post(Event(Constants.EVENT_CHECK_APPLICATION_DEFAULT_DATA))
 
-
         presenter.getDetail(this, mProductId)
         presenter.getNewsUnreadCount(this)
     }
@@ -176,21 +175,24 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
 
         val moneySpan = SpanUtils()
             .append(getString(R.string.money_symbol_with_blank)).setFontSize(12, true)
-            .append(money).setFontSize(18, true)
+            .append(money).setFontSize(22, true)
+        amount_tv.text = moneySpan.create()
+
         when (data.mold) {
             Constants.P5,
             Constants.P6 -> {
-                moneySpan.append(getString(R.string.begin)).setVerticalAlign(SpanUtils.ALIGN_BOTTOM).setFontSize(12, true).setBold()
-                    .setForegroundColor(ColorUtils.getColor(R.color.color_third_level))
+
+                amount_hint_tv.text = getString(R.string.begin)
+                amount_hint_tv.visibility = View.VISIBLE
             }
             Constants.P11 -> {
-                moneySpan.append(getString(R.string.every_year)).setVerticalAlign(SpanUtils.ALIGN_BOTTOM).setFontSize(12, true).setBold()
-                    .setForegroundColor(ColorUtils.getColor(R.color.color_third_level))
+                amount_hint_tv.text = getString(R.string.every_year)
+                amount_hint_tv.visibility = View.VISIBLE
             }
             else -> {
+                amount_hint_tv.visibility = View.GONE
             }
         }
-        amount_tv.text = moneySpan.create()
 
 
         // banner
@@ -301,7 +303,6 @@ class ProductDetailActivity : BaseMVPActivity<ProductDetailPresenter>(), Product
                 }
 
                 override fun updateDrawState(ds: TextPaint) {
-                    ds.color = ColorUtils.getColor(R.color.color_red_foreground)
                     ds.isUnderlineText = false
                 }
             }).create()

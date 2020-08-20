@@ -43,7 +43,7 @@
     <string name="sales_format">月销量：%1$s</string>
     <string name="money_symbol">&#165;</string>
     <string name="money_symbol_with_blank">&#165;&#160;</string>
-    <string name="money_symbol_format">&#165;%1$s</string>
+    <string name="money_symbol_format">&#165;&#160;%1$s</string>
     <string name="money_symbol_negative_format">-&#165;%1$s</string>
     <string name="un_login_name">登录/注册</string>
     <string name="about_us">关于我们</string>
@@ -230,6 +230,7 @@
     <string name="fta_account_email">yunzhanghu@126.com</string>
     <string name="coming_soon">产品即将上线，请耐心等待。</string>
     <string name="bookkeeping">个体户代理记账</string>
+    <string name="product_p8">个体户银行对公账户</string>
     <string name="product_p9">个体户套餐</string>
     <string name="product_p10">个人独资企业套餐</string>
     <string name="liaoning_market_registration_platform_url">http://wsdj.lngs.gov.cn</string>

@@ -368,7 +368,6 @@
                     android:layout_marginRight="15dp"
                     android:layout_toLeftOf="@+id/addr_spinner"
                     android:ellipsize="end"
-                    android:hint="省"
                     android:maxLines="1"
                     android:textColor="@color/color_second_level"
                     android:textColorHint="@color/color_cccccc"

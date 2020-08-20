@@ -32,8 +32,9 @@
                 android:background="@color/font_white"
                 android:gravity="center"
                 android:text="资讯"
+                android:textStyle="bold"
                 android:textColor="@color/color_first_level"
-                android:textSize="@dimen/font_size_14" />
+                android:textSize="@dimen/font_size_16" />
 
             <View
                 android:layout_width="match_parent"

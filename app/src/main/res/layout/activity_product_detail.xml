@@ -45,20 +45,45 @@
                 android:textStyle="bold"
                 tools:text="足不出户办理个体户营业执照" />
 
-            <TextView
-                android:id="@+id/amount_tv"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:orientation="horizontal"
                 android:background="@color/color_list_gray_background"
-                android:gravity="left|center_vertical"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:textColor="@color/color_app_red"
-                android:textSize="@dimen/font_size_18"
-                android:textStyle="bold"
-                tools:text="￥298" />
+                android:layout_height="40dp">
+
+
+                <TextView
+                    android:id="@+id/amount_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_list_gray_background"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/color_app_red"
+                    android:textSize="@dimen/font_size_18"
+                    android:textStyle="bold"
+                    tools:text="￥298" />
+
+
+                <TextView
+                    android:id="@+id/amount_hint_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="2dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_list_gray_background"
+                    android:textColor="@color/color_515151"
+                    android:textSize="@dimen/font_size_12"
+                    android:textStyle="bold"
+                    tools:text="起" />
+
+            </LinearLayout>
+
+
 
 
             <androidx.appcompat.widget.AppCompatCheckBox

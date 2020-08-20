@@ -15,7 +15,8 @@
         android:gravity="center"
         android:text="产品"
         android:textColor="@color/color_first_level"
-        android:textSize="@dimen/font_size_14" />
+        android:textSize="@dimen/font_size_16"
+        android:textStyle="bold" />
 
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/swipe"

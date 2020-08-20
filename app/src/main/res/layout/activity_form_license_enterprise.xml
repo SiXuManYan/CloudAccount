@@ -147,7 +147,7 @@
             android:layout_weight="1"
             android:background="@color/color_app_red"
             android:gravity="center"
-            android:text="下一步"
+            android:text="提交"
             android:textColor="@color/font_white"
             android:textSize="@dimen/font_size_14" />
 

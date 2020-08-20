@@ -98,7 +98,8 @@ class ProductFragment : BaseRefreshListFragment<Product2, ProductPresenter>(), P
 
             val data = adapter.allData[it]
 
-            if (data.mold == Constants.P9 || data.name ==getString(R.string.product_p9) ||
+            if (
+                data.mold == Constants.P8 || data.name ==getString(R.string.product_p8) ||
                 data.mold == Constants.P10 ||data.name ==getString(R.string.product_p10)
 
             ) {

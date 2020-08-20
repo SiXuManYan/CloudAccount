@@ -75,11 +75,28 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
             adapter?.addAll(it.prices)
             content_rv.adapter = adapter
 
+
+            if (adapter != null) {
+                performClick(0, adapter!!)
+            }
+
+
+            hint_tv.visibility = View.VISIBLE
+            amount_hint_tv.visibility = View.VISIBLE
+
             when (it.mold) {
+
+                Constants.P1,
+                Constants.P4 -> {
+                    hint_tv.visibility = View.VISIBLE
+                    amount_hint_tv.visibility = View.GONE
+                }
+
                 Constants.P6 -> {
                     hint_tv.visibility = View.VISIBLE
                     amount_hint_tv.visibility = View.VISIBLE
                 }
+
                 else -> {
                     hint_tv.visibility = View.GONE
                     amount_hint_tv.visibility = View.GONE
@@ -103,17 +120,31 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
 
         adapter.setOnItemClickListener {
             VibrateUtils.vibrate(10)
-            clearSelect()
 
-            val allData = adapter.allData
-            val model = allData[it]
-            finalMoney = model.money
-            amount_tv.text = getString(R.string.money_symbol_format, finalMoney.stripTrailingZeros().toPlainString())
-            model.nativeIsSelect = true
-            adapter.notifyDataSetChanged()
+//            clearSelect()
+//            val allData = adapter.allData
+//            val model = allData[it]
+//            finalMoney = model.money
+//            amount_tv.text = getString(R.string.money_symbol_format, finalMoney.stripTrailingZeros().toPlainString())
+//            model.nativeIsSelect = true
+//            adapter.notifyDataSetChanged()
+
+            performClick(it, adapter)
 
         }
         return adapter
+    }
+
+
+    private fun performClick(position: Int, adapter: RecyclerArrayAdapter<Price>) {
+
+        clearSelect()
+        val allData = adapter.allData
+        val model = allData[position]
+        finalMoney = model.money
+        amount_tv.text = getString(R.string.money_symbol_format, finalMoney.stripTrailingZeros().toPlainString())
+        model.nativeIsSelect = true
+        adapter.notifyDataSetChanged()
     }
 
 
@@ -142,7 +173,7 @@ class ProductSheetFragment : BaseBottomSheetDialogFragment<ProductSheetPresenter
 
             if (price.nativeIsSelect) {
 
-                handleNext(price, index == 1,index)
+                handleNext(price, index == 1, index)
                 return@forEachIndexed
             } else {
                 // 遍历到最后一条发现，用户一条都没选

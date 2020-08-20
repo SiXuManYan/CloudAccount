@@ -2,23 +2,37 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/load_more_loading_view"
     android:layout_width="match_parent"
+    android:background="@color/color_f3f3f3"
     android:layout_height="50dp">
 
 
+
+    
     <View
-        android:layout_width="183dp"
-        android:layout_height="1px"
-        android:layout_centerInParent="true"
-        android:background="@color/split_line_color" />
+        android:layout_width="50dp"
+        android:layout_toLeftOf="@+id/center_tv"
+        android:layout_centerVertical="true"
+        android:background="@color/color_cccccc"
+        android:layout_height="1px"/>
+    
+    
 
     <TextView
+        android:id="@+id/center_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:text="@string/no_more_footer"
-        android:textColor="#AAAAAA"
+        android:textColor="@color/color_third_level"
         android:textSize="12sp" />
+
+    <View
+        android:layout_width="50dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/center_tv"
+        android:background="@color/color_cccccc"
+        android:layout_height="1px"/>
 
 </RelativeLayout>

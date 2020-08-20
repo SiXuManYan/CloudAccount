@@ -560,7 +560,6 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
                     android:layout_toLeftOf="@+id/addr_spinner"
-                    android:hint="省"
                     android:textColor="@color/color_first_level"
                     android:textColorHint="@color/color_cccccc" />
 
