@@ -7,6 +7,11 @@ class Message {
     var businessId: String = ""
     var content: String = ""
     var id: String = ""
+
+    /**
+     *    READ1 已读
+     *    READ2 未读
+     */
     var readFlag: String = ""
     var title: String = ""
 
@@ -25,13 +30,13 @@ class Message {
 /*
 
 {
-    "id": "1288663418709999616",
-    "accountId": "1267626363628552192",
-    "mold": "NOTICE2",
-    "businessId": "1288032308292485120",
-    "title": "业务办理状态通知",
-    "content": "您办理的大师起名业务已办结，请注意查验！",
-    "readFlag": "READ1"
-}
-
+        "id" : "1296372278556098560",
+        "accountId" : "1267626363628552192",
+        "mold" : "NOTICE2",
+        "businessId" : "1291194918403833856",
+        "title" : "业务办理状态通知",
+        "content" : "您办理的个体户银行对公账户业务正在办理中，请耐心等待！",
+        "readFlag" : "READ1",
+        "img" : "product/web-2020710925369952208-app-p8-00-logo.png"
+      }
 */
