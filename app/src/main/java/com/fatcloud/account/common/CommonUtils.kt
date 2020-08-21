@@ -882,6 +882,7 @@ object CommonUtils {
             }
             AlertDialog.Builder(context)
                 .setTitle("提示")
+                .setCancelable(true)
                 .setMessage("您还没有打开通知提醒哦，是否去打开？")
                 .setPositiveButton("去打开", AlertDialog.SPECIAL, DialogInterface.OnClickListener { dialog, which ->
                     AppUtils.launchAppDetailsSettings()

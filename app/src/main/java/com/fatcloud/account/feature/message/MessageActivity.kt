@@ -31,7 +31,7 @@ class MessageActivity : BaseRefreshListActivity<Message, MessagePresenter>(), Me
         parent_container.setBackgroundColor(ColorUtils.getColor(R.color.color_list_gray_background))
         recyclerView.setBackgroundColor(ColorUtils.getColor(R.color.color_list_gray_background))
 
-        CommonUtils.hasNotificationPermission(this,true)
+        CommonUtils.hasNotificationPermission(this, false)
     }
 
     override fun emptyMessage() = ""
