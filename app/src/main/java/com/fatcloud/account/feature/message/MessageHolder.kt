@@ -44,6 +44,17 @@ class MessageHolder(parent: ViewGroup?) : BaseItemViewHolder<Message>(parent, R.
             }
         }
 
+        when (data.readFlag) {
+            Constants.READ0 -> {
+                new_flag_tv.visibility = View.VISIBLE
+            }
+            Constants.READ1 -> {
+                new_flag_tv.visibility = View.GONE
+            }
+            else -> {
+            }
+        }
+
 
     }
 

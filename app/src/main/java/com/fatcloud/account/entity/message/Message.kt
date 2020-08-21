@@ -3,14 +3,17 @@ package com.fatcloud.account.entity.message
 import com.fatcloud.account.common.Constants
 
 class Message {
+
+
+
     var accountId: String = ""
     var businessId: String = ""
     var content: String = ""
     var id: String = ""
 
     /**
+     *    READ0 未读读
      *    READ1 已读
-     *    READ2 未读
      */
     var readFlag: String = ""
     var title: String = ""

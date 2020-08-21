@@ -411,6 +411,12 @@ object Constants {
     /** 分销推送 */
     const val NOTICE3 = "NOTICE3"
 
+    /** 未读 */
+    const val READ0 = "READ0"
+
+    /** 已读 */
+    const val READ1 = "READ1"
+
     const val REQUEST_CODE_CAMERA = 102
 
 
