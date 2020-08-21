@@ -105,6 +105,9 @@ class MyPagePresenter @Inject constructor(private val view: MyPageView) : BasePr
         CommonUtils.getShareDefault().put(Constants.SP_LOGIN, false)
         CommonUtils.getShareDefault().put(Constants.SP_TOKEN, "")
 
+        // 更新应用内开关设置
+        CommonUtils.getShareDefault().put(Constants.SP_OPERATING_NOTIFICATION_SWITCH, false)
+
         // 刷新页面登录状态
         RxBus.post(Event(Constants.EVENT_NEED_REFRESH))
         RxBus.post(Event(Constants.EVENT_LOGOUT))
@@ -116,8 +119,6 @@ class MyPagePresenter @Inject constructor(private val view: MyPageView) : BasePr
      * 拍摄和录制权限申请
      */
     fun requestShootingPermissions(context: Context,file_path:String) {
-
-
 
         PermissionUtils.permissionAny(
             context, PermissionUtils.OnPermissionCallBack { granted ->

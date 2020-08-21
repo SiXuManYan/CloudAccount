@@ -9,6 +9,7 @@ import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -27,12 +28,13 @@ import android.view.animation.Animation
 import android.view.animation.CycleInterpolator
 import android.view.animation.Interpolator
 import android.view.animation.TranslateAnimation
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.NotificationManagerCompat
 import com.blankj.utilcode.constant.TimeConstants
 import com.blankj.utilcode.util.*
 import com.fatcloud.account.R
+import com.fatcloud.account.view.dialog.AlertDialog
 import java.io.*
 import java.math.BigDecimal
 import java.text.SimpleDateFormat
@@ -105,46 +107,6 @@ object CommonUtils {
         }
     }
 
-    /**
-     * 获取设备ID
-     * @param context 上下文
-     */
-//    @SuppressLint("HardwareIds")
-//    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
-//    fun deviceId(context: Context): String {
-//        val shortDevId = ("35" +
-//                Build.BOARD.length % 10
-//                + Build.BRAND.length % 10
-//                + Build.CPU_ABI.length % 10
-//                + Build.DEVICE.length % 10
-//                + Build.DISPLAY.length % 10
-//                + Build.HOST.length % 10
-//                + Build.ID.length % 10
-//                + Build.MANUFACTURER.length % 10
-//                + Build.MODEL.length % 10
-//                + Build.PRODUCT.length % 10
-//                + Build.TAGS.length % 10 +
-//                +Build.TYPE.length % 10
-//                + Build.USER.length % 10)
-//        val androidId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
-//                ?: ""
-//        val longId = shortDevId.plus(androidId).plus(
-//                (context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager)
-//                        .connectionInfo.macAddress) + BluetoothAdapter.getDefaultAdapter()?.address
-//        val uniqueId = StringBuilder()
-//        val mdBytes = EncryptUtils.encryptMD5(longId.toByteArray())
-//        for (i in mdBytes.indices) {
-//            val b = 0xFF and mdBytes[i].toInt()
-//            // if it is a single digit, make sure it have 0 in front (proper  padding)
-//            if (b <= 0xF) {
-//                uniqueId.append("0")
-//            }
-//            // add number to string
-//            uniqueId.append(Integer.toHexString(b))
-//        } // hex string to uppercase
-//
-//        return uniqueId.toString().toUpperCase()
-//    }
 
     /**
      * 获取默认的SharePreference
@@ -890,12 +852,51 @@ object CommonUtils {
     /**
      * 调用手机浏览器 打开url
      */
-    fun openUrlWithNativeWebApp(url:String , activity: Activity){
+    fun openUrlWithNativeWebApp(url: String, activity: Activity) {
         val intent = Intent().apply {
             action = Intent.ACTION_VIEW
             data = Uri.parse(url)
         }
         activity.startActivity(Intent.createChooser(intent, "请选择浏览器"))
+    }
+
+
+    /**
+     * 检测通知开关
+     * @param context
+     * @param checkCustomerHabit 检测用户习惯
+     */
+    fun hasNotificationPermission(context: Context?, checkCustomerHabit: Boolean = false): Boolean {
+        val manager = NotificationManagerCompat.from(context!!)
+        val isOpened = manager.areNotificationsEnabled()
+
+        // 是否已经操作过
+        val ignoreNotificationSwitch = getShareDefault().getBoolean(Constants.SP_OPERATING_NOTIFICATION_SWITCH)
+
+        if (isOpened) {
+            return true
+        } else {
+
+            if (checkCustomerHabit && ignoreNotificationSwitch) {
+                return false
+            }
+            AlertDialog.Builder(context)
+                .setTitle("提示")
+                .setMessage("您还没有打开通知提醒哦，是否去打开？")
+                .setPositiveButton("去打开", AlertDialog.SPECIAL, DialogInterface.OnClickListener { dialog, which ->
+                    AppUtils.launchAppDetailsSettings()
+                    dialog.dismiss()
+                })
+                .setNegativeButton("暂不打开", AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
+                    getShareDefault().put(Constants.SP_OPERATING_NOTIFICATION_SWITCH, true)
+                    dialog.dismiss()
+                })
+                .create()
+                .show()
+
+
+        }
+        return false
     }
 
 }

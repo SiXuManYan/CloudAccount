@@ -33,6 +33,7 @@ object Constants {
     const val SP_PUSH_DEVICE_ID = "sp_push_device_id"
     const val SP_AUTH_PERSON_NAME = "sp_auth_person_name"
     const val SP_AUTH_PERSON_ID_NUMBER = "sp_auth_person_id_number"
+    const val SP_OPERATING_NOTIFICATION_SWITCH = "sp_check_notification_switch"// 用户是否忽略检查通知权限开关
 
     const val PARAM_INDEX = "param_index"
     const val PARAM_LIST = "param_list"

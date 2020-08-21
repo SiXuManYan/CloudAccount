@@ -6,12 +6,13 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.blankj.utilcode.util.ToastUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.TabItem
-import com.fatcloud.account.entity.users.User
+import com.fatcloud.account.entity.upgrade.Upgrade
 import com.fatcloud.account.event.RxBus
 import com.fatcloud.account.event.entity.SetMainSelectNewsTabEvent
 import com.fatcloud.account.event.entity.TabRefreshEvent
@@ -19,8 +20,6 @@ import com.fatcloud.account.feature.home.HomeFragment
 import com.fatcloud.account.feature.my.MyPageFragment
 import com.fatcloud.account.feature.news.NewsFragment
 import com.fatcloud.account.feature.product.ProductFragment
-import com.blankj.utilcode.util.ToastUtils
-import com.fatcloud.account.entity.upgrade.Upgrade
 import com.fatcloud.account.feature.upgrade.UpgradeActivity
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
@@ -71,7 +70,7 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
         presenter.subsribeEvent(Consumer {
             when (it.code) {
                 Constants.EVENT_LOGIN -> {
-//                    selectFirstTab()
+                    //  selectFirstTab()
                 }
                 Constants.EVENT_NEED_REFRESH -> {
                     loginInit()
@@ -118,38 +117,10 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
 
     private fun initTabs(firstIndexTabType: Int) {
 
-        tabs.add(
-            TabItem(
-                getString(R.string.home),
-                R.drawable.ic_tab_home_normal,
-                R.drawable.ic_tab_home_selected,
-                HomeFragment::class.java
-            )
-        )
-        tabs.add(
-            TabItem(
-                getString(R.string.product),
-                R.drawable.ic_tab_service_normal,
-                R.drawable.ic_tab_service_selected,
-                ProductFragment::class.java
-            )
-        )
-        tabs.add(
-            TabItem(
-                getString(R.string.tab_news),
-                R.drawable.ic_tab_news_normal,
-                R.drawable.ic_tab_news_selected,
-                NewsFragment::class.java
-            )
-        )
-        tabs.add(
-            TabItem(
-                getString(R.string.my),
-                R.drawable.ic_tab_my_normal,
-                R.drawable.ic_tab_my_selected,
-                MyPageFragment::class.java
-            )
-        )
+        tabs.add(TabItem(getString(R.string.home), R.drawable.ic_tab_home_normal, R.drawable.ic_tab_home_selected, HomeFragment::class.java))
+        tabs.add(TabItem(getString(R.string.product), R.drawable.ic_tab_service_normal, R.drawable.ic_tab_service_selected, ProductFragment::class.java))
+        tabs.add(TabItem(getString(R.string.tab_news), R.drawable.ic_tab_news_normal, R.drawable.ic_tab_news_selected, NewsFragment::class.java))
+        tabs.add(TabItem(getString(R.string.my), R.drawable.ic_tab_my_normal, R.drawable.ic_tab_my_selected, MyPageFragment::class.java))
 
         tabs_navigator.setTabData(tabs)
         tabs_navigator.setOnTabSelectListener(object : OnTabSelectListener {
@@ -181,9 +152,11 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
             ToastUtils.showShort("再按一次退出")
             tapTime = System.currentTimeMillis()
         } else {
+            // 保留应用状态
             moveTaskToBack(false);
-//            finish()
-//            System.exit(0)
+            // 退出应用
+            // finish()
+            // System.exit(0)
         }
     }
 

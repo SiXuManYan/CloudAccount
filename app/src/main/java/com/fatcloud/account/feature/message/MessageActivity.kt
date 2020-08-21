@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.list.BaseRefreshListActivity
+import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.message.Message
 import com.fatcloud.account.feature.order.progress.ScheduleActivity
@@ -29,8 +30,11 @@ class MessageActivity : BaseRefreshListActivity<Message, MessagePresenter>(), Me
         super.initViews()
         parent_container.setBackgroundColor(ColorUtils.getColor(R.color.color_list_gray_background))
         recyclerView.setBackgroundColor(ColorUtils.getColor(R.color.color_list_gray_background))
+
+        CommonUtils.hasNotificationPermission(this,true)
     }
 
+    override fun emptyMessage() = ""
 
     override fun getRecyclerAdapter(): RecyclerArrayAdapter<Message> {
 
