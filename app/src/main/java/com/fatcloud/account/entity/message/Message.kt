@@ -27,6 +27,9 @@ class Message {
      * @see Constants.NOTICE3
      */
     var mold: String = ""
+
+    var img:String = ""
+
 }
 
 

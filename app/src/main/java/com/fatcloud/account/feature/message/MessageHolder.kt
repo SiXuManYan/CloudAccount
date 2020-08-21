@@ -31,18 +31,8 @@ class MessageHolder(parent: ViewGroup?) : BaseItemViewHolder<Message>(parent, R.
         title_tv.text = data.title
         content_tv.text = data.content
 
-        when (data.mold) {
-            Constants.NOTICE1 -> {
-            }
-            Constants.NOTICE2 -> {
-                image_iv.setImageResource(R.drawable.ic_image_p1)
-            }
-            Constants.NOTICE3 -> {
-            }
-            else -> {
-                image_iv.setImageResource(R.drawable.ic_message_product)
-            }
-        }
+        Glide.with(context).load(image_iv).error(R.drawable.ic_image_p1).into(image_iv)
+
 
         when (data.readFlag) {
             Constants.READ0 -> {
