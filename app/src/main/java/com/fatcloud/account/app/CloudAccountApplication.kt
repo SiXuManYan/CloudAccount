@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.os.Process
+import android.util.Log
 import android.view.Gravity
 import androidx.annotation.IdRes
 import androidx.multidex.MultiDex
@@ -151,7 +152,6 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
      */
     private fun initBaiduMtj() {
 
-        /*
         if (BuildConfig.DEBUG && BuildConfig.FLAVOR.equals("dev")) {
 
             // 打开调试开关，可以查看logcat日志。版本发布前，为避免影响性能，移除此代码
@@ -164,7 +164,6 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
             // 日志输出
             Log.d("BaiduMobStat", "Test DeviceId : $testDeviceId")
         }
-        */
 
         // 开启自动埋点统计，为保证所有页面都能准确统计，建议在Application中调用。
         // 第三个参数：autoTrackWebview：

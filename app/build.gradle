@@ -280,7 +280,7 @@ dependencies {
     //    implementation 'com.github.wenchaosong:OCR_identify:3.0.9'
 
     // 百度统计
-    implementation 'com.baidu.mobstat:mtj-sdk-circle:latest.integration'
+    implementation 'com.baidu.mobstat:mtj-sdk-circle:4.0.3.1'
 
     // 阿里云推送
 
