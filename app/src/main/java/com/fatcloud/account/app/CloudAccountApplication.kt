@@ -188,7 +188,7 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
             appPackageName = BuildConfig.APPLICATION_ID
 
             // 设置Bugly初始化延迟 (Bugly会在启动10s后联网同步数据。若您有特别需求，可以修改这个时间。)
-            appReportDelay = 20000
+            appReportDelay = 10000
 
             // 只在主进程下上报数据：判断是否是主进程（通过进程名是否为包名来判断），并在初始化Bugly时增加一个上报进程的策略配置。
             // 获取当前包名
