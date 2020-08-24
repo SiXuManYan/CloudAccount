@@ -12,8 +12,6 @@ import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.common.PermissionUtils
-import com.fatcloud.account.common.ProductUtils
-import com.fatcloud.account.entity.upgrade.Upgrade
 import com.fatcloud.account.view.dialog.AlertDialog
 
 /**
@@ -149,12 +147,11 @@ class UpgradeActivity : BaseMVPActivity<UpgradePresenter>(), UpgradeView {
      */
     private fun showUpgradeDialog() {
 
-        upgradeDialog = AlertDialog.Builder(this)
+        val builder = AlertDialog.Builder(this)
             .setTitle(getString(R.string.app_up))
             .setCancelable(false)
             .setMessage(appExplain)
-            .setPositiveButton(R.string.confirm, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
-
+            .setPositiveButton(R.string.downloadStart, AlertDialog.SPECIAL, DialogInterface.OnClickListener { dialog, which ->
                 if (!isDownload) {
                     downUtil.startDownload(appUrl, getString(R.string.app_name), R.mipmap.ic_logo_round)
                     isDownload = true
@@ -166,10 +163,13 @@ class UpgradeActivity : BaseMVPActivity<UpgradePresenter>(), UpgradeView {
                     finish()
                 }
             })
-            .setNegativeButton(R.string.cancel, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
+        if (appForce == UN_INHIBITED) {
+            builder.setNegativeButton(R.string.cancel, AlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
                 dialog.dismiss()
                 finish()
-            }).create()
+            })
+        }
+        upgradeDialog = builder.create()
         upgradeDialog?.show()
     }
 

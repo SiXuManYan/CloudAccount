@@ -63,11 +63,16 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:text="取消"
             android:textColor="@color/color_third_level"
             android:textSize="@dimen/font_size_16" />
 
         <View
+            android:id="@+id/split_v"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="@color/color_EEEEEE" />
@@ -77,6 +82,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:gravity="center"
             android:text="确定"
             android:textColor="@color/color_F74B31"

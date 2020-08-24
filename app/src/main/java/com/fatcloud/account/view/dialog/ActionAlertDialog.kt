@@ -25,12 +25,19 @@ class ActionAlertDialog private constructor(context: Context) : BaseDialog(conte
 
     @BindView(R.id.tv_title)
     lateinit var titleText: TextView
+
     @BindView(R.id.tv_positive)
     lateinit var positiveText: TextView
+
     @BindView(R.id.tv_negative)
     lateinit var negativeText: TextView
+
     @BindView(R.id.tv_message)
     lateinit var messageText: TextView
+
+    @BindView(R.id.split_v)
+    lateinit var splitView: View
+
 
     @BindView(R.id.message_scroll_view)
     lateinit var message_scroll_view: NestedScrollView
@@ -92,44 +99,59 @@ class ActionAlertDialog private constructor(context: Context) : BaseDialog(conte
 
         fun setPositiveButton(text: Int, textColor: Int, listener: DialogInterface.OnClickListener): Builder {
             dialog!!.positiveText.setText(text)
-            dialog!!.positiveText.setTextColor(if (textColor == AlertDialog.STANDARD) {
-                ColorUtils.getColor(R.color.color_third_level)
-            } else {
-                ColorUtils.getColor(R.color.color_118EEA)
-            })
+            dialog!!.positiveText.visibility = View.VISIBLE
+            dialog!!.positiveText.setTextColor(
+                if (textColor == AlertDialog.STANDARD) {
+                    ColorUtils.getColor(R.color.color_third_level)
+                } else {
+                    ColorUtils.getColor(R.color.color_118EEA)
+                }
+            )
             dialog!!.positiveText.setOnClickListener { listener.onClick(dialog, 0) }
             return this
         }
 
         fun setPositiveButton(text: String, textColor: Int, listener: DialogInterface.OnClickListener): Builder {
             dialog!!.positiveText.text = text
-            dialog!!.positiveText.setTextColor(if (textColor == AlertDialog.STANDARD) {
-                ColorUtils.getColor(R.color.color_third_level)
-            } else {
-                ColorUtils.getColor(R.color.color_118EEA)
-            })
+            dialog!!.positiveText.visibility = View.VISIBLE
+            dialog!!.positiveText.setTextColor(
+                if (textColor == AlertDialog.STANDARD) {
+                    ColorUtils.getColor(R.color.color_third_level)
+                } else {
+                    ColorUtils.getColor(R.color.color_118EEA)
+                }
+            )
             dialog!!.positiveText.setOnClickListener { listener.onClick(dialog, 0) }
             return this
         }
 
         fun setNegativeButton(text: Int, textColor: Int, listener: DialogInterface.OnClickListener): Builder {
             dialog!!.negativeText.setText(text)
-            dialog!!.negativeText.setTextColor(if (textColor == AlertDialog.STANDARD) {
-                ColorUtils.getColor(R.color.color_third_level)
-            } else {
-                ColorUtils.getColor(R.color.color_118EEA)
-            })
+            dialog!!.negativeText.visibility = View.VISIBLE
+            dialog!!.splitView.visibility = View.VISIBLE
+
+            dialog!!.negativeText.setTextColor(
+                if (textColor == AlertDialog.STANDARD) {
+                    ColorUtils.getColor(R.color.color_third_level)
+                } else {
+                    ColorUtils.getColor(R.color.color_118EEA)
+                }
+            )
             dialog!!.negativeText.setOnClickListener { listener.onClick(dialog, 0) }
             return this
         }
 
         fun setNegativeButton(text: String, textColor: Int, listener: DialogInterface.OnClickListener): Builder {
             dialog!!.negativeText.text = text
-            dialog!!.negativeText.setTextColor(if (textColor == AlertDialog.STANDARD) {
-                ColorUtils.getColor(R.color.color_third_level)
-            } else {
-                ColorUtils.getColor(R.color.color_118EEA)
-            })
+            dialog!!.negativeText.visibility = View.VISIBLE
+            dialog!!.splitView.visibility = View.VISIBLE
+            dialog!!.negativeText.setTextColor(
+                if (textColor == AlertDialog.STANDARD) {
+                    ColorUtils.getColor(R.color.color_third_level)
+                } else {
+                    ColorUtils.getColor(R.color.color_118EEA)
+                }
+            )
             dialog!!.negativeText.setOnClickListener { listener.onClick(dialog, 0) }
             return this
         }
