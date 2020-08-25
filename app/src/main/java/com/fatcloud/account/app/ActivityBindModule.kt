@@ -66,12 +66,12 @@ import com.fatcloud.account.feature.order.details.enterprise.CompanyRegisterInfo
 import com.fatcloud.account.feature.order.details.enterprise.CompanyRegisterInfoModule
 import com.fatcloud.account.feature.order.details.master.MasterNamingInfoActivity
 import com.fatcloud.account.feature.order.details.master.MasterNamingInfoModule
-import com.fatcloud.account.feature.order.details.personal.license.handle.PersonalLicenseHandleInfoActivity
-import com.fatcloud.account.feature.order.details.personal.license.handle.PersonalLicenseHandleInfoModule
 import com.fatcloud.account.feature.order.details.personal.bank.PersonalBankInfoActivity
 import com.fatcloud.account.feature.order.details.personal.bank.PersonalBankInfoModule
 import com.fatcloud.account.feature.order.details.personal.license.change.PersonalLicenseChangeInfoActivity
 import com.fatcloud.account.feature.order.details.personal.license.change.PersonalLicenseChangeInfoModule
+import com.fatcloud.account.feature.order.details.personal.license.handle.PersonalLicenseHandleInfoActivity
+import com.fatcloud.account.feature.order.details.personal.license.handle.PersonalLicenseHandleInfoModule
 import com.fatcloud.account.feature.order.details.personal.license.logout.PersonalLicenseLogoutActivity
 import com.fatcloud.account.feature.order.details.personal.license.logout.PersonalLicenseLogoutModule
 import com.fatcloud.account.feature.order.details.personal.packages.PersonalPackageInfoP9P10Activity
@@ -87,10 +87,8 @@ import com.fatcloud.account.feature.upgrade.UpgradeModule
 import com.fatcloud.account.feature.webs.WebCommonActivity
 import com.fatcloud.account.feature.webs.WebCommonModule
 import com.fatcloud.account.scope.ActivityScore
-import com.fatcloud.account.wxapi.WXEntryActivity
 import com.fatcloud.account.wxapi.WXPayEntryActivity
 import com.fatcloud.account.wxapi.pay.WXPayEntryModule
-import com.fatcloud.account.wxapi.entry.WXEntryModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -206,11 +204,6 @@ abstract class ActivityBindModule {
     @ActivityScore
     @ContributesAndroidInjector(modules = [UpgradeModule::class])
     abstract fun upgradeActivityInjector(): UpgradeActivity
-
-    @ActivityScore
-    @ContributesAndroidInjector(modules = [WXEntryModule::class])
-    abstract fun wXEntryActivityInjector(): WXEntryActivity
-
 
     @ActivityScore
     @ContributesAndroidInjector(modules = [PayPrepareModule::class])

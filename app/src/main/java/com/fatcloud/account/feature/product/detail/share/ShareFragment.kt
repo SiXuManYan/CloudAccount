@@ -40,11 +40,11 @@ class ShareFragment : BaseBottomSheetDialogFragment<SharePresenter>(), ShareView
         dismissAllowingStateLoss()
         when (view.id) {
             R.id.wechat_ll -> {
-                ShareUtil.shareWechat4WebPage("https://www.github.com",
+                ShareUtil.shareWechat4WebPage(
+                    "https://www.github.com",
                     "测试标题",
                     "金哥美滋滋",
-                    "https://ftacloud-bucket-public.oss-cn-qingdao.aliyuncs.com/product/web-2020710925369952208-app-p8-00-logo.png"
-                    ,
+                    "https://ftacloud-bucket-public.oss-cn-qingdao.aliyuncs.com/product/web-2020710925369952208-app-p8-00-logo.png",
                     null,
                     object : PlatformActionListener {
                         override fun onComplete(p0: Platform?, p1: Int, p2: HashMap<String, Any>?) {
@@ -56,7 +56,7 @@ class ShareFragment : BaseBottomSheetDialogFragment<SharePresenter>(), ShareView
                         }
 
                         override fun onError(p0: Platform?, p1: Int, p2: Throwable?) {
-                           ToastUtils.showShort("分享失败")
+                            ToastUtils.showShort("分享失败")
                         }
 
                     })
@@ -65,11 +65,11 @@ class ShareFragment : BaseBottomSheetDialogFragment<SharePresenter>(), ShareView
             }
             R.id.moment_ll -> {
                 ShareUtil.shareWebpagerMoment(
-                    "测试标题",
-                    "https://ftacloud-bucket-public.oss-cn-qingdao.aliyuncs.com/product/web-2020710925369952208-app-p8-00-logo.png",
+                    " Share test ......",
+                    "https://developer.android.google.cn/images/meetups/hero.png",
                     null,
                     null,
-                    "https://www.github.com",
+                    "https://developer.android.google.cn/studio",
 
                     object : PlatformActionListener {
                         override fun onComplete(p0: Platform?, p1: Int, p2: HashMap<String, Any>?) {
@@ -92,7 +92,7 @@ class ShareFragment : BaseBottomSheetDialogFragment<SharePresenter>(), ShareView
             R.id.qzone_ll -> {
 
             }
-            R.id.next_tv->{
+            R.id.next_tv -> {
 
             }
             else -> {

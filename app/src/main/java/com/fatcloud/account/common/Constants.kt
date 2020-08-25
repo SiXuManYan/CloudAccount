@@ -168,6 +168,7 @@ object Constants {
     const val EVENT_AUTH_CANCEL = 0x81 // 微信授权取消
     const val EVENT_AUTH_FAIL = 0x82 // 微信授权取消
     const val EVENT_WECHAT_REGISTER = 0x83 // 微信注册成功
+    const val EVENT_SHARE_SUCCESS = 0x84 // 微信注册成功
 
 
     const val EVENT_MORE_TRANSPARENT = 0x94
