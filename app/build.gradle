@@ -322,6 +322,9 @@ dependencies {
     // 高亮引导
     implementation 'com.isanwenyu.highlight:highlight:1.8.0'
 
+    // popup window
+//    implementation 'com.github.razerdp:BasePopup:2.2.7'
+
 }
 noArg {
     annotation("com.jz.cloud.activity.entity.kotlin.NoArg")

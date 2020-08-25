@@ -1,26 +1,24 @@
 package com.fatcloud.account.base.ui.list
 
 import android.text.TextUtils
-import androidx.core.content.ContextCompat
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import butterknife.BindView
 import com.blankj.utilcode.util.SizeUtils
 import com.fatcloud.account.R
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.ui.BaseFragment
-import com.jude.easyrecyclerview.EasyRecyclerView
-import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
-import com.jude.easyrecyclerview.decoration.DividerDecoration
+import com.fatcloud.account.view.swipe.NoMoreItemView
 import com.fatcloud.account.view.swipe.footer.EmptyImageFooter
 import com.fatcloud.account.view.swipe.footer.EmptyLoadingFooter
 import com.fatcloud.account.view.swipe.footer.EmptyRetryFooter
-import com.fatcloud.account.view.swipe.NoMoreItemView
-
+import com.jude.easyrecyclerview.EasyRecyclerView
+import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter
+import com.jude.easyrecyclerview.decoration.DividerDecoration
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
-import kotlin.collections.ArrayList
 
 /**
  * 列表Fragment基类
@@ -49,7 +47,7 @@ abstract class BaseRefreshListFragment<T, P : BasePresenter> : BaseFragment<P>()
     protected var disableLoadMoreView = false
 
 
-    private var adapter: RecyclerArrayAdapter<T>? = null
+    private var mAdapter: RecyclerArrayAdapter<T>? = null
 
     /**
      * 兼容使用PageNumber方式请求列表
@@ -74,33 +72,42 @@ abstract class BaseRefreshListFragment<T, P : BasePresenter> : BaseFragment<P>()
     override fun initViews(parent: View) {
 
         // 刷新和加载
-        swipeLayout.setOnRefreshLoadMoreListener(this)
-        swipeLayout.setEnableLoadMore(false)
-        swipeLayout.setEnableAutoLoadMore(true)
+        swipeLayout.apply {
+            setOnRefreshLoadMoreListener(this@BaseRefreshListFragment)
+            setEnableLoadMore(false)
+            setEnableAutoLoadMore(true)
+        }
 
         // header 、 footer 空view (footer 代替 emptyView)
         noMoreItemView = NoMoreItemView()
-        emptyImageFooter = EmptyImageFooter(context!!)
-        emptyImageFooter?.emptyImageResId = emptyImage()
-        emptyImageFooter?.emptyText = emptyMessage()
+        emptyImageFooter = EmptyImageFooter(context!!).apply {
+            emptyImageResId = emptyImage()
+            emptyText = emptyMessage()
+        }
 
         emptyLoadingFooter = EmptyLoadingFooter(context!!)
-        emptyRetryFooter = EmptyRetryFooter(context!!)
-        emptyRetryFooter?.accentListener = object : EmptyRetryFooter.AccentRetryClickListener {
-            override fun onRetryClick() {
-                onRefresh(swipeLayout)
+        emptyRetryFooter = EmptyRetryFooter(context!!).apply {
+            accentListener = object : EmptyRetryFooter.AccentRetryClickListener {
+                override fun onRetryClick() {
+                    onRefresh(swipeLayout)
+                }
             }
         }
 
+
         // 列表
-        adapter = getRecyclerAdapter()
+        mAdapter = getRecyclerAdapter()
         recyclerView = easyRecyclerView.recyclerView
-        easyRecyclerView.setLayoutManager(androidx.recyclerview.widget.LinearLayoutManager(context))
-        easyRecyclerView.setAdapterWithProgress(adapter)
-        easyRecyclerView.showRecycler()
+        easyRecyclerView.apply {
+            setLayoutManager(androidx.recyclerview.widget.LinearLayoutManager(context))
+            setAdapterWithProgress(mAdapter)
+            showRecycler()
+        }
+
         getItemDecoration()?.let {
             easyRecyclerView.addItemDecoration(it)
         }
+
     }
 
     override fun bindList(list: ArrayList<T>, lastItemId: String?) {
@@ -114,13 +121,13 @@ abstract class BaseRefreshListFragment<T, P : BasePresenter> : BaseFragment<P>()
             if (swipeLayout.isRefreshing) {
                 swipeLayout.finishRefresh()
             }
-            adapter?.clear()
+            mAdapter?.clear()
             // 第一个，空View
-            if (adapter?.footerCount!! > 0) {
-                adapter?.removeAllFooter()
+            if (mAdapter?.footerCount!! > 0) {
+                mAdapter?.removeAllFooter()
             }
             if (list.isEmpty()) {
-                adapter?.addFooter(emptyImageFooter)
+                mAdapter?.addFooter(emptyImageFooter)
             }
         } else {
             if (swipeLayout.isLoading) {
@@ -134,15 +141,15 @@ abstract class BaseRefreshListFragment<T, P : BasePresenter> : BaseFragment<P>()
             }
         }
 
-        adapter?.addAll(list)
+        mAdapter?.addAll(list)
 
         // 是否可以上拉加载
         swipeLayout.setEnableLoadMore(!last)
 
         if (!disableLoadMoreView) {
-            if (last && adapter?.allData!!.size > 0) {
-                if (adapter?.footerCount!! > 0) adapter?.removeAllFooter()
-                adapter?.addFooter(noMoreItemView)
+            if (last && mAdapter?.allData!!.size > 0) {
+                if (mAdapter?.footerCount!! > 0) mAdapter?.removeAllFooter()
+                mAdapter?.addFooter(noMoreItemView)
             }
         }
 
@@ -150,10 +157,10 @@ abstract class BaseRefreshListFragment<T, P : BasePresenter> : BaseFragment<P>()
     }
 
     override fun loadOnVisible() {
-        if (adapter?.footerCount!! > 0) {
-            adapter?.removeAllFooter()
+        if (mAdapter?.footerCount!! > 0) {
+            mAdapter?.removeAllFooter()
         }
-        adapter?.addFooter(emptyLoadingFooter)
+        mAdapter?.addFooter(emptyLoadingFooter)
         onRefresh()
     }
 
@@ -172,7 +179,7 @@ abstract class BaseRefreshListFragment<T, P : BasePresenter> : BaseFragment<P>()
         }
     }
 
-    protected fun getAdapter() = adapter
+    protected fun getAdapter() = mAdapter
 
     abstract fun getRecyclerAdapter(): RecyclerArrayAdapter<T>
 

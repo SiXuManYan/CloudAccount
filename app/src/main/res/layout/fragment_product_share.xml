@@ -99,13 +99,13 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:scaleType="centerInside"
-                android:src="@mipmap/ic_logo_round_app" />
+                android:src="@drawable/ic_share_qq" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="微信好友"
+                android:text="qq 空间"
                 android:textColor="@color/color_first_level"
                 android:textSize="@dimen/font_size_12" />
         </LinearLayout>
