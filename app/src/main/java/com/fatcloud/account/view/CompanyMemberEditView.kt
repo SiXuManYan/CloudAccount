@@ -379,10 +379,7 @@ class CompanyMemberEditView : LinearLayout {
      */
     fun getNationValue() = nation_et.text.toString().trim()
 
-//    /**
-//     * 性别
-//     */
-//    fun getGenderValue() = gender_et.text.toString().trim()
+
 
     fun showGenderView(show: Boolean) {
         gender_rl.visibility = if (show) {
@@ -652,6 +649,9 @@ class CompanyMemberEditView : LinearLayout {
 
     }
 
+    /**
+     * 获取姓名 值
+     */
     fun getGenderValue(): String {
         return if (genderIndex == 1) {
             "男"

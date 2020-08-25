@@ -499,7 +499,7 @@ class FormLicensePersonalActivity : BaseMVPActivity<FormLicensePersonalPresenter
             income = capital
             employedNum = employeesNumberStr
             form = selectFormId.toInt()
-            gender = legal_person_ev.genderIndex.toString()
+            gender = legal_person_ev.getGenderValue()
             idno = idNumberValue
             imgs = mIdEntityImg
             money = ProductUtils.getEditValueToBigDecimal(mFinalMoney)

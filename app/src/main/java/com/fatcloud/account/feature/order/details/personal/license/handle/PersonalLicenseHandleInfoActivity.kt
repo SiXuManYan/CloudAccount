@@ -93,11 +93,28 @@ class PersonalLicenseHandleInfoActivity : BaseMVPActivity<PersonalLicenseHandleI
      * PW1 营业执照办理 ：注册人信息
      */
     private fun setRegistrantInfo(data: PersonalLicenseHandleDetail) {
-        sex_tv.text = if (data.gender == "1") {
-            "男"
-        } else {
-            "女"
+
+//        sex_tv.text = if (data.gender == "1") {
+//            "男"
+//        } else {
+//            "女"
+//        }
+//
+
+        sex_tv.text = when (data.gender) {
+            "1" -> {
+                "男"
+            }
+            "2" -> {
+                "女"
+            }
+            else -> {
+                data.gender
+            }
         }
+
+
+
         nation_tv.text = data.nation
 
 

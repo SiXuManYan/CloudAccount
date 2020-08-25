@@ -155,7 +155,7 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
 
             // 打开调试开关，可以查看logcat日志。版本发布前，为避免影响性能，移除此代码
             // 查看方法：adb logcat -s sdkstat
-            StatService.setDebugOn(true)
+//            StatService.setDebugOn(true)
 
 
             // 获取测试设备ID

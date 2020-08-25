@@ -81,7 +81,7 @@ class AppModule {
 
         if (BuildConfig.DEBUG) {
 
-            // 日志拦截器
+     /*       // 日志拦截器
             val loggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
                 LogUtils.v(it)
             }).apply {
@@ -95,7 +95,7 @@ class AppModule {
             }
 
             builder.addInterceptor(loggingInterceptor)
-            builder.addInterceptor(bodyInterceptor)
+            builder.addInterceptor(bodyInterceptor)*/
         }
 
 
