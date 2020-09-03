@@ -12,96 +12,104 @@
         android:layout_height="10dp" />
 
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/font_white"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:id="@+id/privacy_statement_rl"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+            android:layout_height="wrap_content"
+            android:background="@color/font_white"
+            android:orientation="vertical">
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="隐私声明"
-                android:textColor="@color/color_first_level"
-                android:textSize="@dimen/font_size_14" />
-
-
-            <View
+            <RelativeLayout
+                android:id="@+id/privacy_statement_rl"
                 android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_alignParentBottom="true"
-                android:background="@color/color_list_gray_background" />
+                android:layout_height="50dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
 
 
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/copyright_rl"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="隐私声明"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_14" />
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="版权保护"
-                android:textColor="@color/color_first_level"
-                android:textSize="@dimen/font_size_14" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/color_list_gray_background" />
 
 
-            <View
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/copyright_rl"
                 android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_alignParentBottom="true"
-
-                android:background="@color/color_list_gray_background" />
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/contact_us_rl"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+                android:layout_height="50dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="联系我们"
-                android:textColor="@color/color_first_level"
-                android:textSize="@dimen/font_size_14" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="版权保护"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_14" />
 
 
-            <View
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/color_list_gray_background" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/contact_us_rl"
                 android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_alignParentBottom="true"
+                android:layout_height="50dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
 
-                android:background="@color/color_list_gray_background" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="联系我们"
+                    android:textColor="@color/color_first_level"
+                    android:textSize="@dimen/font_size_14" />
 
 
-        </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
 
-    </LinearLayout>
+                    android:background="@color/color_list_gray_background" />
+
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 
 </LinearLayout>

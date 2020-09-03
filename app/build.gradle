@@ -167,8 +167,6 @@ dependencies {
     implementation project(':SwipeToLoadLayout')
     implementation project(':ocr_ui')
 
-    //    implementation project(':ocr_ui')
-
     // Dagger 2 支持
     implementation "com.google.dagger:dagger:$rootProject.dagger2"
     implementation "com.google.dagger:dagger-android:$rootProject.dagger2"
@@ -196,9 +194,9 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofit2"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofit2"
     implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.retrofitLogger"
-    implementation "me.jessyan:retrofit-url-manager:$rootProject.retrofitManager"
 
     // 可在 App 运行时,随时切换 BaseUrl
+    implementation "me.jessyan:retrofit-url-manager:$rootProject.retrofitManager"
 
     //工具类
     implementation 'com.blankj:utilcodex:1.29.0'
@@ -239,8 +237,6 @@ dependencies {
 
     // 刷新
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'
-    implementation 'com.github.MZCretin:ExpandableTextView:v1.6.1'
-    implementation 'com.isanwenyu.highlight:highlight:1.8.0'
 
     // 图片大图
     implementation 'com.github.chrisbanes:PhotoView:2.1.4'
