@@ -120,17 +120,15 @@ object CommonUtils {
 
     /**
      * 获取定位信息
-     * @return 0 选择城市代码, 1 选择城市名，2 定位城市代码, 3 定位城市名，4 经度，5 纬度，6 地址
+     * @return ，0 经度，1 纬度，2定位城市代码, 3 定位城市名，4 地址
      */
     fun getLocationInfo(): Array<String> {
         val location = getShareLocation()
         return arrayOf(
-            location.getString(Constants.SP_SELECT_LOCAL_CODE),
-            location.getString(Constants.SP_SELECT_LOCAL_NAME),
-            location.getString(Constants.SP_LOCAL_CODE),
-            location.getString(Constants.SP_LOCAL_NAME),
             location.getString(Constants.SP_LONGITUDE, "0"),
             location.getString(Constants.SP_LATITUDE, "0"),
+            location.getString(Constants.SP_LOCAL_CODE),
+            location.getString(Constants.SP_LOCAL_NAME),
             location.getString(Constants.SP_ADDRESS)
         )
     }

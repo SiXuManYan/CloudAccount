@@ -3,7 +3,10 @@ package com.fatcloud.account.backstage
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.amap.api.location.AMapLocation
+import com.amap.api.location.AMapLocationClient
 import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.Utils
 import com.fatcloud.account.common.Constants
 
 
@@ -12,8 +15,7 @@ class DataWork(context: Context, workerParams: WorkerParameters) : Worker(contex
     val presenter = DataWorkPresenter(this)
 
 
-    override fun showError(code: Int, message: String) {
-    }
+    override fun showError(code: Int, message: String) = Unit
 
 
     override fun doWork(): Result {
@@ -26,7 +28,7 @@ class DataWork(context: Context, workerParams: WorkerParameters) : Worker(contex
             }
 
             Constants.ACTION_START_LOCATION -> {
-                ToastUtils.showShort("高德")
+                presenter.startLocation()
             }
 
             else -> {
@@ -35,6 +37,13 @@ class DataWork(context: Context, workerParams: WorkerParameters) : Worker(contex
 
         }
         return Result.success()
+    }
+
+
+    override fun onLocationChanged(location: AMapLocation?) {
+        if (location != null && location.errorCode == 0) {
+            presenter.savePosition(location)
+        }
     }
 
 

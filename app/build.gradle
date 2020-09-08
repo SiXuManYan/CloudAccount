@@ -42,7 +42,7 @@ android {
 
         ndk {
             //选择要添加的对应cpu类型的.so库。
-            abiFilters 'armeabi', 'x86'
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","arm64-v8a","x86_64"
         }
 
     }
@@ -320,6 +320,9 @@ dependencies {
 
     // popup window
 //    implementation 'com.github.razerdp:BasePopup:2.2.7'
+
+    // 高德定位
+    implementation 'com.amap.api:location:latest.integration'
 
 }
 noArg {

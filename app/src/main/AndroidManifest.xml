@@ -5,11 +5,12 @@
 
     <!-- 震动 -->
     <uses-permission android:name="android.permission.VIBRATE" />
-    <!-- 网络 -->
+    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <!--用于获取运营商信息，用于支持提供运营商信息相关的接口-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -52,8 +53,10 @@
     <!-- 用于进行网络定位 -->
     <uses-permission-sdk-23 android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission-sdk-23 android:name="android.permission.CAMERA" />
+    <!--用于读取手机当前的状态-->
     <uses-permission-sdk-23 android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission-sdk-23 android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--用于写入缓存数据到扩展存储卡-->
     <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 
@@ -140,6 +143,14 @@
         <meta-data
             android:name="com.alibaba.app.appsecret"
             android:value="e36353e26dbc25f5fd9e01650eb854b0" />
+
+        <!-- 高德 -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="4c79dea0e33b67bb54b3a7954477c7f1" />
+
+
+
 
         <activity
             android:name=".feature.splash.SplashActivity"
