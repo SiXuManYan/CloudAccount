@@ -1,11 +1,14 @@
 package com.fatcloud.account.feature
 
+import android.Manifest
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.fatcloud.account.BuildConfig
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.net.BaseHttpSubscriber
+import com.fatcloud.account.common.PermissionUtils
 import com.fatcloud.account.entity.upgrade.Upgrade
+import com.tbruyelle.rxpermissions2.RxPermissions
 import java.math.BigDecimal
 import javax.inject.Inject
 
@@ -15,6 +18,24 @@ import javax.inject.Inject
  *
  */
 class MainPresenter @Inject constructor(private var mainView: MainView) : BasePresenter(mainView) {
+
+
+    /**
+     * 检测系统权限
+     * @param activity 授权
+     */
+    fun checkPermissions(activity: MainActivity) {
+        PermissionUtils.permissionAny(
+            activity,
+            PermissionUtils.OnPermissionCallBack { granted -> mainView.locationPermission(granted) },
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+    }
+
 
     /**
      * 检查app版本号

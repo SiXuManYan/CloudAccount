@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.ToastUtils
 import com.fatcloud.account.R
+import com.fatcloud.account.backstage.DataServiceFaker
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
@@ -54,9 +55,7 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
         initTabs(1)
         initEvent()
 
-        //  权限检测
-        //  presenter.checkPermissions(this)
-
+        presenter.checkPermissions(this)
         presenter.checkAppVersion(this)
         loginInit()
     }
@@ -143,9 +142,7 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) = super.onActivityResult(requestCode, resultCode, data)
 
     override fun onBackPressed() {
         if (System.currentTimeMillis() - tapTime > 2000) {
@@ -154,9 +151,6 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
         } else {
             // 保留应用状态
             moveTaskToBack(false);
-            // 退出应用
-            // finish()
-            // System.exit(0)
         }
     }
 
@@ -211,23 +205,18 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
 
         }
 
-        override fun getCount(): Int {
-            return tabs.size
-        }
+        override fun getCount(): Int = tabs.size
 
-        override fun isViewFromObject(view: View, obj: Any): Boolean {
-            return (obj as Fragment).view === view
-        }
+        override fun isViewFromObject(view: View, obj: Any): Boolean = (obj as Fragment).view === view
 
         override fun getItem(position: Int): Fragment {
-            return fm.fragmentFactory.instantiate(classLoader, (tabs[position] as TabItem).clx.name)
-                .apply {
-                    if (position == 0) {
-                        arguments = Bundle().apply {
-                            putBoolean(Constants.SP_SHOW_CITY, true)
-                        }
+            return fm.fragmentFactory.instantiate(classLoader, (tabs[position] as TabItem).clx.name).apply {
+                if (position == 0) {
+                    arguments = Bundle().apply {
+                        putBoolean(Constants.SP_SHOW_CITY, true)
                     }
                 }
+            }
 
         }
     }
@@ -238,7 +227,6 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
     }
 
     override fun doAppUpgrade(data: Upgrade) {
-
         startActivity(
             Intent(this, UpgradeActivity::class.java)
                 .putExtra(Constants.PARAM_APP_FORCE, data.appForce)
@@ -249,5 +237,9 @@ class MainActivity : BaseMVPActivity<MainPresenter>(), MainView {
         )
     }
 
-
+    override fun locationPermission(granted: Boolean) {
+        if (granted) {
+            DataServiceFaker.startService(this, Constants.ACTION_START_LOCATION)
+        }
+    }
 }

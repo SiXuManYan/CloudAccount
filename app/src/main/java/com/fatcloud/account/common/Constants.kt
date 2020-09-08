@@ -197,7 +197,9 @@ object Constants {
      */
     const val ACTION_SYNC = 1
     const val ACTION_SYNC_OTHER = 2
+    const val ACTION_START_LOCATION = 3
     const val ACTION_DATA_WORK = "action"
+
 
     /**
      * 客服热线

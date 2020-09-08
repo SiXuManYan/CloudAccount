@@ -12,9 +12,7 @@ class DataServiceFaker {
     companion object {
 
         fun startService(context: Context, action: Int) {
-
             try {
-
                 startService(context, action, null)
             } catch (e: Exception) {
                 LogUtils.d("DataServiceFaker初始化", "crash == " + e.printStackTrace());

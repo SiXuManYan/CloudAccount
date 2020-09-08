@@ -2,12 +2,12 @@ package com.fatcloud.account.feature.splash
 
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
 import android.text.TextPaint
 import android.text.style.ClickableSpan
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
+import com.baidu.mobstat.StatService
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SpanUtils
@@ -32,8 +32,8 @@ class SplashActivity : BaseActivity() {
 
     override fun initViews() {
         if (!isTaskRoot) {
-            finish();
-            return;
+            finish()
+            return
         }
         CommonUtils.setStatusBarTransparent(this)
         BarUtils.setNavBarVisibility(this, false)
@@ -101,7 +101,7 @@ class SplashActivity : BaseActivity() {
 
         val ishowUserAgreement = CommonUtils.getShareDefault().getBoolean(Constants.SP_IS_SHOW_USER_AGREEMENT, false)
         if (ishowUserAgreement) {
-            afterAnimation()
+            afterAnimation(true)
         } else {
 
             ActionAlertDialog.Builder(this)
@@ -113,23 +113,24 @@ class SplashActivity : BaseActivity() {
                 .setMovementMethod()
                 .setPositiveButton(R.string.agree_and_continue, ActionAlertDialog.SPECIAL, DialogInterface.OnClickListener { dialog, which ->
                     CommonUtils.getShareDefault().put(Constants.SP_IS_SHOW_USER_AGREEMENT, true)
-                    afterAnimation()
+                    afterAnimation(true)
                     dialog.dismiss()
                 })
                 .setNegativeButton(R.string.disagree, ActionAlertDialog.STANDARD, DialogInterface.OnClickListener { dialog, which ->
                     CommonUtils.getShareDefault().put(Constants.SP_IS_SHOW_USER_AGREEMENT, true)
-                    afterAnimation()
+                    afterAnimation(false)
                     dialog.dismiss()
                 })
                 .create()
                 .show()
 
-            // mob sdk 用户隐私
-            MobSDK.submitPolicyGrantResult(true, null)
+
         }
     }
 
-    private fun afterAnimation() {
+    private fun afterAnimation(isAgree: Boolean) {
+        MobSDK.submitPolicyGrantResult(isAgree, null) // mob 用户隐私协议
+        StatService.setAuthorizedState(this, isAgree)// 百度统计用户隐私策略
         startActivityClearTop(MainActivity::class.java, null)
         finish()
     }

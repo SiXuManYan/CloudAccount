@@ -179,7 +179,6 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
             }
         }
         x5_web.webChromeClient = webChromeClient
-//        StatService.trackWebView(this, x5_web, webChromeClient)
 
         x5_web.webViewClient = object : WebViewClient() {
 
@@ -235,40 +234,6 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
         } catch (e: InvocationTargetException) {
 
         }
-
-        //bugly  Javascript的异常捕获
-        /*
-        val buglyWebView = object : CrashReport.WebViewInterface {
-
-            override fun getUrl(): String {
-                // x5_web.url must not be null
-                return x5_web.url
-            }
-
-            override fun loadUrl(url: String) {
-                x5_web.loadUrl(url)
-            }
-
-            override fun setJavaScriptEnabled(flag: Boolean) {
-
-                x5_web.settings.javaScriptEnabled = flag
-
-            }
-
-            override fun addJavascriptInterface(jsInterface: H5JavaScriptInterface?, name: String?) {
-                x5_web.addJavascriptInterface(jsInterface, name)
-            }
-
-            *//**
-             * 获取WebView的内容描述.
-             *//*
-            override fun getContentDescription(): CharSequence {
-              return x5_web.contentDescription
-            }
-
-        }
-        CrashReport.setJavascriptMonitor(buglyWebView, true)
-        */
 
         x5_web.clearCache(true)
         showLoadingDialog()

@@ -3,6 +3,7 @@ package com.fatcloud.account.backstage
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.blankj.utilcode.util.ToastUtils
 import com.fatcloud.account.common.Constants
 
 
@@ -24,6 +25,9 @@ class DataWork(context: Context, workerParams: WorkerParameters) : Worker(contex
 
             }
 
+            Constants.ACTION_START_LOCATION -> {
+                ToastUtils.showShort("高德")
+            }
 
             else -> {
 

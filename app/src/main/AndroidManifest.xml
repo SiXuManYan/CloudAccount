@@ -68,6 +68,8 @@
     <uses-feature android:name="android.hardware.camera2.full" />
 
 
+
+
     <!-- -->
     <application
         android:name=".app.CloudAccountApplication"
@@ -114,7 +116,7 @@
         <!-- 日志仅在wifi网络下发送，默认为false -->
         <meta-data
             android:name="BaiduMobAd_ONLY_WIFI"
-            android:value="true" />
+            android:value="false" />
 
         <!-- 是否获取基站位置信息 ,默认为true -->
         <meta-data
@@ -162,9 +164,13 @@
                 <data
                     android:host="splash_h5"
                     android:scheme="cloud" />
+
+                <data android:scheme="mtj5976a52011" />
+
             </intent-filter>
 
             <!-- 用于通过二维码扫描方式连接圈选时，跳转进入App。 -->
+<!--
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -174,6 +180,7 @@
 
                 <data android:scheme="mtj5976a52011" />
             </intent-filter>
+-->
 
 
         </activity>
