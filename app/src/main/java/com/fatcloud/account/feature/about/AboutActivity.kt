@@ -6,7 +6,6 @@ import butterknife.OnClick
 import com.fatcloud.account.R
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.Constants
-import com.fatcloud.account.common.Html5Url
 import com.fatcloud.account.common.ProductUtils
 import com.fatcloud.account.feature.about.contacts.ContactActivity
 import com.fatcloud.account.feature.webs.WebCommonActivity
@@ -61,6 +60,7 @@ class AboutActivity : BaseMVPActivity<AboutPresenter>(), AboutView {
             else -> {
             }
         }
+
 
     }
 

@@ -8,14 +8,14 @@ import android.content.res.TypedArray
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AppCompatActivity
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.blankj.utilcode.util.BarUtils
@@ -42,6 +42,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        ScreenAdaptationUtil.setDensityByHeight(this, application)
         setContentView(getLayoutId())
 
         context = this
