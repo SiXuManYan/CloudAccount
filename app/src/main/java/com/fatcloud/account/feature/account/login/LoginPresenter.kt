@@ -32,8 +32,6 @@ class LoginPresenter @Inject constructor(private var loginView: LoginView) : Bas
         requestApi(lifecycleOwner, Lifecycle.Event.ON_DESTROY,
             apiService.checkAccountIsExisted(account), object : BaseHttpSubscriber<JsonObject>(loginView) {
                 override fun onSuccess(data: JsonObject?) {
-
-
                     data?.let {
                         if (it.has("existed")) {
                             loginView.accountExistedTag(it.get("existed").asBoolean, account)

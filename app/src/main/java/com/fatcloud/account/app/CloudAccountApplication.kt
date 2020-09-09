@@ -243,7 +243,7 @@ class CloudAccountApplication : DaggerApplication(), HasActivityInjector, Applic
         //        每一条Crash都会被立即上报；
         //        自定义日志将会在Logcat中输出。
         //        建议在测试阶段建议设置成true，发布时设置为false。
-        CrashReport.initCrashReport(applicationContext, BuildConfig.BUGLY_APP_ID, isDevEnvironment, strategy)
+        CrashReport.initCrashReport(applicationContext, BuildConfig.BUGLY_APP_ID, false, strategy)
     }
 
 

@@ -98,22 +98,21 @@ class DataWorkPresenter constructor(private var serviceView: ServiceView) : Base
      */
     fun savePosition(location: AMapLocation) {
         if (!location.city.isNullOrEmpty()) {
-            addSubscribe(
-                Flowable.just(location)
-                    .compose(flowableCompose())
-                    .subscribe {
-                        val spUtils = CommonUtils.getShareLocation()
-                        if (it != null) {
+            addSubscribe(Flowable.just(location)
+                .compose(flowableCompose())
+                .subscribe {
+                    val spUtils = CommonUtils.getShareLocation()
+                    if (it != null) {
 
-                            spUtils.put(Constants.SP_LOCAL_CODE, it.cityCode)
-                            spUtils.put(Constants.SP_LOCAL_NAME, it.city)
-                            spUtils.put(Constants.SP_LONGITUDE, location.longitude.toString())
-                            spUtils.put(Constants.SP_LATITUDE, location.latitude.toString())
-                            spUtils.put(Constants.SP_ADDRESS, location.address)
+                        spUtils.put(Constants.SP_LOCAL_CODE, it.cityCode)
+                        spUtils.put(Constants.SP_LOCAL_NAME, it.city)
+                        spUtils.put(Constants.SP_LONGITUDE, location.longitude.toString())
+                        spUtils.put(Constants.SP_LATITUDE, location.latitude.toString())
+                        spUtils.put(Constants.SP_ADDRESS, location.address)
 
-                            RxBus.post(location)
-                        }
-                    })
+                        RxBus.post(location)
+                    }
+                })
         }
     }
 

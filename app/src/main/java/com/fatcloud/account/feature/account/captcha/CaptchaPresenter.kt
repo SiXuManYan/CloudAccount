@@ -125,9 +125,9 @@ class CaptchaPresenter @Inject constructor(private var captchaView: CaptchaView)
                 wechatUserInfo.nickname,
                 wechatUserInfo.openid,
                 account,
-                "1000",
-                "0",
-                "0",
+                CommonUtils.getLocationInfo()[2],
+                CommonUtils.getLocationInfo()[0],
+                CommonUtils.getLocationInfo()[1],
                 captcha,
                 CommonUtils.getShareDefault().getString(Constants.SP_PUSH_DEVICE_ID)
             ),

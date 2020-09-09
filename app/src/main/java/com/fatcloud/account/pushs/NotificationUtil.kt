@@ -15,6 +15,7 @@ import com.alibaba.sdk.android.push.CloudPushService
 import com.alibaba.sdk.android.push.CommonCallback
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory
 import com.blankj.utilcode.util.LogUtils
+import com.fatcloud.account.BuildConfig
 import com.fatcloud.account.R
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
@@ -65,6 +66,10 @@ object NotificationUtil {
 
     fun initCloudChannel(applicationContext: Context) {
 
+        if (BuildConfig.FLAVOR == "dev") {
+            return
+        }
+
         try {
 
             PushServiceFactory.init(applicationContext) // crash
@@ -72,18 +77,18 @@ object NotificationUtil {
             pushService.register(applicationContext, object : CommonCallback {
                 override fun onSuccess(p0: String?) {
                     val deviceId = pushService.deviceId
-                    LogUtils.d("阿里云推送初始化", "init cloudchannel success ，deviceId ==>" + deviceId)
+//                    LogUtils.d("阿里云推送初始化", "init cloudchannel success ，deviceId ==>" + deviceId)
                     CommonUtils.getShareDefault().put(Constants.SP_PUSH_DEVICE_ID, deviceId)
                 }
 
                 override fun onFailed(errorCode: String?, errorMessage: String?) {
-                    LogUtils.d("阿里云推送初始化", "init cloudchannel failed -- errorcode:$errorCode -- errorMessage:$errorMessage");
+//                    LogUtils.d("阿里云推送初始化", "init cloudchannel failed -- errorcode:$errorCode -- errorMessage:$errorMessage");
                 }
             })
 
         } catch (e: Exception) {
 
-            LogUtils.d("阿里云推送初始化", "crash == " + e.printStackTrace());
+//            LogUtils.d("阿里云推送初始化", "crash == " + e.printStackTrace());
 
         }
 
@@ -176,7 +181,7 @@ object NotificationUtil {
             }
 
         } catch (e: Exception) {
-            Log.e("getui", "json 解析失败 exception :$e")
+            Log.e("阿里云推送", "json 解析失败 exception :$e")
         }
     }
 
@@ -194,13 +199,8 @@ object NotificationUtil {
      * @param notifyId    通知类型
      */
     private fun showNotification(
-        context: Context,
-        intent: Intent,
-        channelId: String,
-        channelName: String,
-        title: String?,
-        contentText: String?,
-        notifyId: Long
+        context: Context, intent: Intent, channelId: String,
+        channelName: String, title: String?, contentText: String?, notifyId: Long
     ) {
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
