@@ -20,11 +20,11 @@ import java.util.*
  * 上拉加载
  *
  */
-abstract class BaseNoRefreshListFragment<T, P : BasePresenter> : BaseFragment<P>(),
-    BaseNoJsonListView<T> {
+abstract class BaseNoRefreshListFragment<T, P : BasePresenter> : BaseFragment<P>(), BaseNoJsonListView<T> {
 
     @BindView(R.id.recycler)
     lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
+
     @BindView(R.id.accident)
     lateinit var accidentView: AccidentView
 
@@ -104,7 +104,6 @@ abstract class BaseNoRefreshListFragment<T, P : BasePresenter> : BaseFragment<P>
 
         onRefresh()
     }
-
 
 
     fun showEmptyView() {

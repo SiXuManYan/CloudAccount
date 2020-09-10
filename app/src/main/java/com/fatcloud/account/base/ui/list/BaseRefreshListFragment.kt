@@ -26,8 +26,7 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
  * emptyView 会覆盖 headerView
  * 使用 emptyFooter 代替 accidentViewView
  */
-abstract class BaseRefreshListFragment<T, P : BasePresenter> : BaseFragment<P>(), BaseNoJsonListView2<T>,
-    OnRefreshLoadMoreListener {
+abstract class BaseRefreshListFragment<T, P : BasePresenter> : BaseFragment<P>(), BaseNoJsonListView2<T>, OnRefreshLoadMoreListener {
 
 
     @BindView(R.id.parent_container)

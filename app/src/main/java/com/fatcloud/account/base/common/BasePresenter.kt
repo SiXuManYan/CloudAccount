@@ -1,38 +1,17 @@
 package com.fatcloud.account.base.common
 
-import android.Manifest
-import android.app.Activity
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.widget.TextView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import com.alibaba.sdk.android.oss.ClientConfiguration
-import com.alibaba.sdk.android.oss.OSS
-import com.alibaba.sdk.android.oss.OSSClient
-import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider
-import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider
 import com.blankj.utilcode.util.LogUtils
 import com.fatcloud.account.BuildConfig
-import com.fatcloud.account.R
 import com.fatcloud.account.base.net.BaseHttpSubscriber
-import com.fatcloud.account.common.CommonUtils
-import com.fatcloud.account.common.Constants
-import com.fatcloud.account.data.CloudDataBase
-import com.fatcloud.account.entity.oss.SecurityTokenModel
-import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.event.Event
 import com.fatcloud.account.event.RxBus
-import com.fatcloud.account.feature.matisse.Glide4Engine
-import com.fatcloud.account.feature.matisse.Matisse
 import com.fatcloud.account.network.ApiService
 import com.fatcloud.account.network.Response
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonObject
-import com.tbruyelle.rxpermissions2.RxPermissions
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
-import com.zhihu.matisse.MimeType
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -49,7 +28,6 @@ import javax.inject.Inject
  * 数据提供器基类
  */
 open class BasePresenter constructor(private var view: BaseView?) {
-
 
 
     //Reactive收集
@@ -224,132 +202,6 @@ open class BasePresenter constructor(private var view: BaseView?) {
         view = null
         unSubscribe()
     }
-
-
-    lateinit var dialog: BottomSheetDialog
-
-
-    /**
-     * @param mediaType
-     * @see Matisse.IMG
-     * @see Matisse.GIF
-     * @see Matisse.VIDEO
-     */
-    fun selectImage(activity: Activity, mediaType: Int) {
-        if (!this::dialog.isInitialized) {
-            dialog = BottomSheetDialog(activity)
-            val view = LayoutInflater.from(activity).inflate(R.layout.post_feed_bottom_sheet, null)
-            dialog.setContentView(view)
-            try {
-                // hack bg color of the BottomSheetDialog
-                val parent = view.parent as ViewGroup
-                parent.setBackgroundResource(android.R.color.transparent)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-            view.findViewById<TextView>(R.id.shooting).setOnClickListener {
-                // 拍摄
-//                presenter.requestShootingPermissions(this@PostFeedActivity, filePath, 0)
-                dialog.dismiss()
-            }
-
-
-            view.findViewById<TextView>(R.id.select_album).setOnClickListener {
-                // 相册选择
-                if (requestAlbumPermissions(activity)) {
-                    Matisse.from(activity)
-                        .choose(
-                            if (mediaType == 0)
-                                MimeType.ofAll()
-                            else
-                                MimeType.ofImage().apply {
-                                    remove(MimeType.GIF)
-                                }, true
-                        )
-                        .countable(true)
-                        .originalEnable(false)
-                        .maxSelectable(1)
-                        .theme(R.style.Matisse_Dracula)
-                        .thumbnailScale(0.87f)
-                        .imageEngine(Glide4Engine())
-                        .forResult(Constants.REQUEST_MEDIA, mediaType)
-                } else {
-
-                }
-                dialog.dismiss()
-            }
-            view.findViewById<TextView>(R.id.cancel_tv).setOnClickListener {
-                dialog.dismiss()
-            }
-
-
-        }
-        dialog.show()
-
-    }
-
-
-    /**
-     * 相册权限申请
-     */
-    fun requestAlbumPermissions(activity: Activity): Boolean {
-        var isGranted = false
-        addSubscribe(RxPermissions(activity)
-            .request(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-            .subscribe {
-                isGranted = true
-            })
-        return isGranted
-    }
-
-
-    /**
-     * 获取 token
-     * @param objectName 文件路径
-     * @param isEncryptFile 是否为加密文件
-     */
-    fun getOssSecurityTokenForSignUrl(context: Context, objectKey: String): String {
-
-        var finalUrl:String = ""
-        addSubscribe(
-            apiService.getOssSecurityToken().compose(flowableUICompose())
-                .subscribeWith(object : BaseHttpSubscriber<SecurityTokenModel>(view!!) {
-                    override fun onSuccess(data: SecurityTokenModel?) {
-                        data?.let {
-                            val runnable = Runnable {
-                                // 节点
-                                val endpoint = BuildConfig.OSS_END_POINT
-
-                                val credentialProvider: OSSCredentialProvider =
-                                    OSSStsTokenCredentialProvider(it.AccessKeyId, it.AccessKeySecret, it.SecurityToken)
-
-                                val conf = ClientConfiguration().apply {
-                                    connectionTimeout = 15 * 1000   // 连接超时，默认15秒
-                                    socketTimeout = 15 * 1000       // socket超时，默认15秒
-                                    maxConcurrentRequest = 5        // 最大并发请求数，默认5个
-                                    maxErrorRetry = 2               // 失败后最大重试次数，默认2次
-                                }
-
-                                val oss: OSS = OSSClient(context, "https://$endpoint", credentialProvider, conf)
-
-                                val url: String = oss.presignConstrainedObjectURL(it.AccessBucketName, objectKey, 30 * 60)
-                                finalUrl = url
-
-                            }
-                            Thread(runnable).start()
-                        }
-                    }
-                })
-        )
-
-        return finalUrl
-    }
-
-
-
 
 
 }

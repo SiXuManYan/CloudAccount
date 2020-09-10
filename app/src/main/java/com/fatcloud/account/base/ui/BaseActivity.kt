@@ -282,12 +282,10 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-//        StatService.onResume(this) // "baidu统计"：基本统计，统计一次页面访问的开始
     }
 
     override fun onPause() {
         super.onPause()
-//        StatService.onPause(this)// "baidu统计"： 基本统计，统计一次页面访问的结束。
     }
 
 

@@ -42,6 +42,7 @@ abstract class BaseFragment<P : BasePresenter> : DaggerFragment(), BaseView {
 
     fun presenterIsInitialized() = this::presenter.isInitialized
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
