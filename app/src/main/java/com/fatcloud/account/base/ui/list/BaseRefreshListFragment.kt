@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import butterknife.BindView
 import com.blankj.utilcode.util.SizeUtils
 import com.fatcloud.account.R
+import com.fatcloud.account.R2
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.ui.BaseFragment
 import com.fatcloud.account.view.swipe.NoMoreItemView
@@ -29,13 +30,13 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 abstract class BaseRefreshListFragment<T, P : BasePresenter> : BaseFragment<P>(), BaseNoJsonListView2<T>, OnRefreshLoadMoreListener {
 
 
-    @BindView(R.id.parent_container)
+    @BindView(R2.id.parent_container)
     lateinit var parent_container: ViewGroup
 
-    @BindView(R.id.swipe)
+    @BindView(R2.id.swipe)
     lateinit var swipeLayout: SmartRefreshLayout
 
-    @BindView(R.id.recycler)
+    @BindView(R2.id.recycler)
     lateinit var easyRecyclerView: EasyRecyclerView
     lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
 

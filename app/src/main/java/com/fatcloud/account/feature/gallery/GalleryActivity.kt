@@ -19,6 +19,7 @@ import com.blankj.utilcode.util.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
 import com.fatcloud.account.R
+import com.fatcloud.account.R2
 import com.fatcloud.account.app.OnProgressListener
 import com.fatcloud.account.app.ProgressImageViewTarget
 import com.fatcloud.account.base.ui.BaseActivity
@@ -42,13 +43,13 @@ import java.io.File
  */
 class GalleryActivity : BaseActivity() {
 
-    @BindView(R.id.tv_title)
+    @BindView(R2.id.tv_title)
     lateinit var titleText: TextView
-    @BindView(R.id.pager)
+    @BindView(R2.id.pager)
     lateinit var pager: ViewPager
-    @BindView(R.id.iv_save)
+    @BindView(R2.id.iv_save)
     lateinit var iv_save: ImageView
-    @BindView(R.id.title_rl)
+    @BindView(R2.id.title_rl)
     lateinit var title_rl: RelativeLayout
 
     private var imageCount = 0

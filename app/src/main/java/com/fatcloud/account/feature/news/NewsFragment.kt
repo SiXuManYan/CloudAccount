@@ -10,6 +10,7 @@ import butterknife.BindView
 import butterknife.OnClick
 import com.blankj.utilcode.util.BarUtils
 import com.fatcloud.account.R
+import com.fatcloud.account.R2
 import com.fatcloud.account.base.ui.BaseFragment
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.entity.news.NewsCategory
@@ -31,13 +32,13 @@ class NewsFragment : BaseFragment<NewsPresenter>(), NewsView {
         needMenuControl = true
     }
 
-    @BindView(R.id.appbar_layout)
+    @BindView(R2.id.appbar_layout)
     lateinit var appBarLayout: AppBarLayout
 
-    @BindView(R.id.tabs)
+    @BindView(R2.id.tabs)
     lateinit var tabLayout: SlidingTabLayout
 
-    @BindView(R.id.pager)
+    @BindView(R2.id.pager)
     lateinit var pager: ViewPager
 
     private var typeList: List<NewsCategory> = ArrayList()

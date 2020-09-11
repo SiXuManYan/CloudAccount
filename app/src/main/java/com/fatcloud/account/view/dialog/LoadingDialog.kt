@@ -5,13 +5,14 @@ import android.view.Gravity
 import android.view.KeyEvent
 import butterknife.BindView
 import com.fatcloud.account.R
+import com.fatcloud.account.R2
 import com.fatcloud.account.base.ui.BaseDialog
 import com.fatcloud.account.view.loading.CommonProgressBar
 
 
 class LoadingDialog private constructor(context: Context) : BaseDialog(context, R.style.Dialog) {
 
-    @BindView(R.id.progress_cpb)
+    @BindView(R2.id.progress_cpb)
     lateinit var animView: CommonProgressBar
 
     init {

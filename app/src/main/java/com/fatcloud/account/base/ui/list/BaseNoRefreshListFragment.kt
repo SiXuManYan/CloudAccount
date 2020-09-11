@@ -5,6 +5,7 @@ import android.view.View
 import butterknife.BindView
 import com.blankj.utilcode.util.SizeUtils
 import com.fatcloud.account.R
+import com.fatcloud.account.R2
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.base.ui.BaseFragment
 import com.fatcloud.account.view.error.AccidentView
@@ -22,10 +23,10 @@ import java.util.*
  */
 abstract class BaseNoRefreshListFragment<T, P : BasePresenter> : BaseFragment<P>(), BaseNoJsonListView<T> {
 
-    @BindView(R.id.recycler)
+    @BindView(R2.id.recycler)
     lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
 
-    @BindView(R.id.accident)
+    @BindView(R2.id.accident)
     lateinit var accidentView: AccidentView
 
     private var adapter: RecyclerArrayAdapter<T>? = null
