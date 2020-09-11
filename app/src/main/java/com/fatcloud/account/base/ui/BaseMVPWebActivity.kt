@@ -1,27 +1,15 @@
 package com.fatcloud.account.base.ui
 
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.os.Build
 import android.text.TextUtils
 import android.view.View
-import android.webkit.JavascriptInterface
 import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
-import cn.sharesdk.framework.Platform
-import cn.sharesdk.framework.PlatformActionListener
-import com.baidu.mobstat.StatService
-import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.RegexUtils
-import com.blankj.utilcode.util.ToastUtils
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.transition.Transition
 import com.fatcloud.account.R
 import com.fatcloud.account.base.common.BasePresenter
-import com.fatcloud.account.common.*
+import com.fatcloud.account.common.CommonUtils
+import com.fatcloud.account.common.Constants
 import com.fatcloud.account.view.error.AccidentView
 import com.fatcloud.account.view.web.JsWebViewX5
 import com.google.gson.JsonParser
@@ -29,8 +17,6 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.scwang.smart.refresh.layout.listener.ScrollBoundaryDecider
-import com.tencent.bugly.crashreport.CrashReport
-import com.tencent.bugly.crashreport.crash.h5.H5JavaScriptInterface
 import com.tencent.smtt.export.external.interfaces.SslError
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler
 import com.tencent.smtt.export.external.interfaces.WebResourceError
@@ -280,151 +266,7 @@ abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnR
     }
 
 
-    /**
-     * 打开新网页
-     * pageUrl
-     * pageTitle
-     */
-    @JavascriptInterface
-    open fun openNewWebPage(json: String?) {
-        if (AndroidUtil.isDoubleClick(iv_back)) {
-            return
-        }
-        if (TextUtils.isEmpty(json)) {
-            return
-        }
-        val jsonStr = jsonParser.parse(json).asJsonObject
-        val pageUrl = if (jsonStr.has("pageUrl")) jsonStr.get("pageUrl").asString else ""
-        val pageTitle = if (jsonStr.has("pageTitle")) jsonStr.get("pageTitle").asString else ""
-        if (jsonStr.has("closeCurrentPage") && jsonStr.get("closeCurrentPage").asBoolean) {
-            finish()
-        }
-        if (!TextUtils.isEmpty(pageUrl)) {
-
-
-        }
-
-
-    }
-
-
-    /**
-     * 分享微信小程序至好友
-     */
-    @JavascriptInterface
-    fun shareToWeChatFriend(json: String?) {
-
-        LogUtils.d(json)
-        if (TextUtils.isEmpty(json)) {
-            return
-        }
-        val jsonStr = jsonParser.parse(json).asJsonObject
-        val sharePath = if (jsonStr.has("sharePath")) jsonStr.get("sharePath").asString else ""
-        val shareTitle = if (jsonStr.has("shareTitle")) jsonStr.get("shareTitle").asString else ""
-        val shareImageUrl = if (jsonStr.has("shareImageUrl")) jsonStr.get("shareImageUrl").asString else ""
-        val shareUrl = if (jsonStr.has("shareUrl")) jsonStr.get("shareUrl").asString else ""
-
-        ShareUtil.shareMiniWechat(shareTitle, shareUrl, shareImageUrl, "", null, sharePath, object :
-            PlatformActionListener {
-
-            override fun onCancel(p0: Platform?, p1: Int) {
-                ToastUtils.showShort(R.string.share_cancle)
-            }
-
-            override fun onError(p0: Platform?, p1: Int, p2: Throwable?) {
-                ToastUtils.showShort(R.string.share_fail)
-            }
-
-            override fun onComplete(p0: Platform?, p1: Int, p2: HashMap<String, Any>?) {
-                ToastUtils.showShort(R.string.share_success)
-            }
-
-        })
-
-    }
-
-    /**
-     * 关闭原生页面
-     */
-    @JavascriptInterface
-    fun closePage(json: String?) {
-        finish()
-    }
-
-    /**
-     * 发送event
-     */
-    @JavascriptInterface
-    fun addEventLog(json: String) {
-    }
-
-
-    /**
-     * 分享内容至朋友圈
-     */
-    @JavascriptInterface
-    open fun shareToWeChatCircle(json: String?) {
-        LogUtils.d(json)
-        if (json.isNullOrEmpty()) return
-        showLoadingDialog()
-        val jsonStr = jsonParser.parse(json).asJsonObject
-        val photoUrl = if (jsonStr.has("photoUrl")) jsonStr.get("photoUrl") else ""
-        Glide.with(this).asBitmap().load(photoUrl).apply(RequestOptions.overrideOf(300, 300))
-            .into(object : SimpleTarget<Bitmap>() {
-                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                    shareMoment("店铺提名", resource)
-                }
-
-                override fun onLoadFailed(errorDrawable: Drawable?) {
-                    shareMoment("店铺提名", null)
-                }
-            })
-    }
-
-    private fun shareMoment(title: String, resource: Bitmap?) {
-        dismissLoadingDialog()
-        ShareUtil.shareImageMoment(title, if (resource == null) Common.LOGO_URL else null, null, resource,
-            object : PlatformActionListener {
-                override fun onComplete(p0: Platform?, p1: Int, p2: java.util.HashMap<String, Any>?) {
-                    ToastUtils.showShort(R.string.share_success)
-                }
-
-                override fun onCancel(p0: Platform?, p1: Int) {
-                    ToastUtils.showShort(R.string.share_cancle)
-                }
-
-                override fun onError(p0: Platform?, p1: Int, p2: Throwable?) {
-                    ToastUtils.showShort(R.string.share_fail)
-                }
-            })
-    }
-
     override fun onRefresh(refreshLayout: RefreshLayout) = onRefresh()
-
-    /**
-     * 分享文本至微信好友
-     * shareTitle
-     * shareText
-     *
-     */
-    @JavascriptInterface
-    open fun shareTextWechat(json: String) {
-        if (TextUtils.isEmpty(json)) {
-            return
-        }
-
-        val jsonStr = jsonParser.parse(json).asJsonObject
-        val shareTitle = if (jsonStr.has("shareTitle")) jsonStr.get("shareTitle").asString else ""
-        val shareText = if (jsonStr.has("shareText")) jsonStr.get("shareText").asString else ""
-        ShareUtil.shareTextWechat(shareTitle, shareText, object : PlatformActionListener {
-
-            override fun onCancel(p0: Platform?, p1: Int) = Unit
-
-            override fun onError(p0: Platform?, p1: Int, p2: Throwable?) = Unit
-
-            override fun onComplete(p0: Platform?, p1: Int, p2: HashMap<String, Any>?) = Unit
-        })
-    }
 
 
 }
