@@ -1800,11 +1800,11 @@ public class AndroidUtil {
             return false;
         }
         int length = cardNo.length();
-        if (length == 18) {
-            return false;
-        }
+//        if (length == 18) {
+//            return false;
+//        }
 
-        // 16 17 19 位数
+        // 16 17 18 19 位数
         if (!RegexUtils.isMatch("^[1-9]\\d{15,18}$", cardNo)) {
             return false;
         }

@@ -23,6 +23,7 @@ import com.fatcloud.account.R
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.users.User
 import com.fatcloud.account.feature.account.login.LoginActivity
+import com.fatcloud.account.feature.webs.WebCommonActivity
 import com.fatcloud.account.view.dialog.LoadingDialog
 
 
@@ -195,7 +196,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     protected fun startWebActivity(bundle: Bundle) {
-//        startActivity(Intent(applicationContext, WebActivity::class.java).putExtras(bundle))
+        startActivity(Intent(applicationContext, WebCommonActivity::class.java).putExtras(bundle))
     }
 
     protected fun startWebActivity(title: String, url: String) {
