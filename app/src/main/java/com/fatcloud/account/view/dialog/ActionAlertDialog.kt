@@ -11,7 +11,6 @@ import butterknife.BindView
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.fatcloud.account.R
-import com.fatcloud.account.R2
 import com.fatcloud.account.base.ui.BaseDialog
 
 /**
@@ -24,23 +23,23 @@ class ActionAlertDialog private constructor(context: Context) : BaseDialog(conte
         const val SPECIAL = 1
     }
 
-    @BindView(R2.id.tv_title)
+    @BindView(R.id.tv_title)
     lateinit var titleText: TextView
 
-    @BindView(R2.id.tv_positive)
+    @BindView(R.id.tv_positive)
     lateinit var positiveText: TextView
 
-    @BindView(R2.id.tv_negative)
+    @BindView(R.id.tv_negative)
     lateinit var negativeText: TextView
 
-    @BindView(R2.id.tv_message)
+    @BindView(R.id.tv_message)
     lateinit var messageText: TextView
 
-    @BindView(R2.id.split_v)
+    @BindView(R.id.split_v)
     lateinit var splitView: View
 
 
-    @BindView(R2.id.message_scroll_view)
+    @BindView(R.id.message_scroll_view)
     lateinit var message_scroll_view: NestedScrollView
 
 

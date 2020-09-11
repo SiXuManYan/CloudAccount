@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import com.blankj.utilcode.util.SizeUtils
 import com.fatcloud.account.R
-import com.fatcloud.account.R2
 import com.fatcloud.account.base.ui.BaseFragment
 import com.fatcloud.account.common.Constants
 import com.fatcloud.account.entity.home.Banners
@@ -46,14 +45,14 @@ open class HomeFragment : BaseFragment<HomePresenter>(), HomeView, OnRefreshLoad
         needMenuControl = true
     }
 
-    @BindView(R2.id.swipe)
+    @BindView(R.id.swipe)
     lateinit var swipeLayout: SmartRefreshLayout
 
-    @BindView(R2.id.recycler)
+    @BindView(R.id.recycler)
     lateinit var easyRecyclerView: EasyRecyclerView
     lateinit var recyclerView: RecyclerView
 
-    @BindView(R2.id.share_iv)
+    @BindView(R.id.share_iv)
     lateinit var share_iv: ImageView
 
     private val handler = Handler()

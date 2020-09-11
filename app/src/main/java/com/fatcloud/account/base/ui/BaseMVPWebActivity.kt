@@ -20,7 +20,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.fatcloud.account.R
-import com.fatcloud.account.R2
 import com.fatcloud.account.base.common.BasePresenter
 import com.fatcloud.account.common.*
 import com.fatcloud.account.view.error.AccidentView
@@ -51,19 +50,19 @@ import java.lang.reflect.Method
 abstract class BaseMVPWebActivity<P : BasePresenter> : BaseMVPActivity<P>(), OnRefreshListener {
 
 
-    @BindView(R2.id.tv_title)
+    @BindView(R.id.tv_title)
     lateinit var tv_title: TextView
 
-    @BindView(R2.id.iv_back)
+    @BindView(R.id.iv_back)
     lateinit var iv_back: ImageView
 
-    @BindView(R2.id.x5_web)
+    @BindView(R.id.x5_web)
     lateinit var x5_web: JsWebViewX5
 
-    @BindView(R2.id.swipe)
+    @BindView(R.id.swipe)
     lateinit var swipeLayout: SmartRefreshLayout
 
-    @BindView(R2.id.accident)
+    @BindView(R.id.accident)
     lateinit var accidentView: AccidentView
 
     protected val jsonParser by lazy { JsonParser() }
