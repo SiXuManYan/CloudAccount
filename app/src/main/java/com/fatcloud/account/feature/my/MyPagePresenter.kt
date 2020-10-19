@@ -98,7 +98,6 @@ class MyPagePresenter @Inject constructor(private val view: MyPageView) : BasePr
 
     private fun removeUserInfo() {
         // 清空用户信息
-        database.userDao().clear()
         User.clearAll()
 
         // 更新登录状态

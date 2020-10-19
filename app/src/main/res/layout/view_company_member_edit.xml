@@ -103,6 +103,7 @@
             android:ellipsize="end"
             android:lineSpacingMultiplier="1.1"
             android:maxWidth="150dp"
+            android:textSize="@dimen/font_size_14"
             android:maxLines="2"
             android:text="姓名"
             android:textColor="@color/color_first_level" />

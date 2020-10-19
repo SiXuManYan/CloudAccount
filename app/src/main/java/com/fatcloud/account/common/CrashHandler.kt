@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * Created by Admin on 2019/4/2 10:17.
+ * Created by wangsw on 2019/4/2 10:17.
  * </br>
  *
  */
@@ -23,7 +23,7 @@ class CrashHandler private constructor() : Thread.UncaughtExceptionHandler {
         private val TAG = "CrashHandler"
         private val DEBUG = true
 
-        private val PATH = Environment.getExternalStorageDirectory().path + "/Cloud/kLog/"
+        private val PATH = Environment.getExternalStorageDirectory().path + "/App/CrashLog/"
         private val FILE_NAME = "crash"
         private val FILE_NAME_SUFFIX = ".txt"
 

@@ -197,10 +197,11 @@ class GalleryActivity : BaseActivity() {
             val pb_loading = view.findViewById<CircularProgressBar>(R.id.cpb_image_progress)
 
             Glide.with(this@GalleryActivity).load(list!![position])
-                    .thumbnail(Glide.with(this@GalleryActivity).load(list!![position].plus(CommonUtils.getThumbnailUriBySize(120))))
+//                    .thumbnail(Glide.with(this@GalleryActivity).load(list!![position]))
                     .into(ProgressImageViewTarget(photo_view, list!![position], object : OnProgressListener {
                         override fun onProgress(isComplete: Boolean, percentage: Int, bytesRead: Long, totalBytes: Long) {
                             LogUtils.d(percentage)
+
                             if (isComplete) {
                                 pb_loading.visibility = View.GONE
                             } else {

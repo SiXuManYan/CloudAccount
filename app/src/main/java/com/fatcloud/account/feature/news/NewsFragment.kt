@@ -61,7 +61,6 @@ class NewsFragment : BaseFragment<NewsPresenter>(), NewsView {
             setViewPager(pager)
             setSelectTextScale(1.0f)
             updateTabSelection(pager.currentItem)
-
         }
 
 /*        presenter.subsribeEventEntity<TabRefreshEvent>(Consumer {

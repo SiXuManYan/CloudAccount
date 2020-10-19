@@ -166,10 +166,7 @@ class PasswordSetActivity : BaseMVPActivity<PasswordSetPresenter>(), PasswordSet
 
         when (view.id) {
             R.id.password_rule_iv -> changeDisplayMethod(password_et, password_rule_iv)
-            R.id.password_confirm_rule_iv -> changeDisplayMethod(
-                confirm_et,
-                password_confirm_rule_iv
-            )
+            R.id.password_confirm_rule_iv -> changeDisplayMethod(confirm_et, password_confirm_rule_iv)
             R.id.next_tv -> {
                 if (CommonUtils.isDoubleClick(view)) {
                     return

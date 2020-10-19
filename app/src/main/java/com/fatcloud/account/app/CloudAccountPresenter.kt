@@ -154,6 +154,7 @@ class CloudAccountPresenter(val view: CloudAccountView) {
 
 
     /**
+     * 上传图片资源至阿里云
      * @see {@see https://github.com/aliyun/aliyun-oss-android-sdk/blob/master/README-CN.md}
      * @param isEncryptFile 是否为加密上传
      */
