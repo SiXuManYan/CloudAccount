@@ -1809,7 +1809,6 @@ public class AndroidUtil {
             return false;
         }
 
-
         // 匹配Luhn算法
         int[] cardNoArr = new int[length];
         for (int i = 0; i < length; i++) {

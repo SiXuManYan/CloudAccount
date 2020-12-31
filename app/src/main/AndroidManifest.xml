@@ -176,19 +176,6 @@
 
             </intent-filter>
 
-            <!-- 用于通过二维码扫描方式连接圈选时，跳转进入App。 -->
-            <!--
-
-                        <intent-filter>
-                            <action android:name="android.intent.action.VIEW" />
-
-                            <category android:name="android.intent.category.DEFAULT" />
-                            <category android:name="android.intent.category.BROWSABLE" />
-
-                            <data android:scheme="mtj5976a52011" />
-                        </intent-filter>
-            -->
-
 
         </activity>
 

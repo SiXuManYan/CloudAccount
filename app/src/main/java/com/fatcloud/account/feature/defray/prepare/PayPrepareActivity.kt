@@ -4,8 +4,8 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.view.View
 import butterknife.OnClick
+import com.bumptech.glide.Glide
 import com.fatcloud.account.R
-import com.fatcloud.account.app.Glide
 import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants

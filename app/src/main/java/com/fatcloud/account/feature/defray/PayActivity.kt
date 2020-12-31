@@ -2,7 +2,6 @@ package com.fatcloud.account.feature.defray
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
@@ -17,7 +16,6 @@ import com.fatcloud.account.base.ui.BaseMVPActivity
 import com.fatcloud.account.common.AndroidUtil
 import com.fatcloud.account.common.CommonUtils
 import com.fatcloud.account.common.Constants
-import com.fatcloud.account.common.ShareUtil
 import com.fatcloud.account.entity.defray.AlipayResultStatus
 import com.fatcloud.account.entity.defray.PayResult
 import com.fatcloud.account.entity.defray.WechatPayInfo
@@ -27,7 +25,6 @@ import com.fatcloud.account.event.entity.OrderPaySuccessEvent
 import com.fatcloud.account.event.entity.WechatPayResultEvent
 import com.fatcloud.account.feature.defray.result.CloudPayResultActivity
 import com.fatcloud.account.feature.defray.unknown.PayUnknownActivity
-import com.fatcloud.account.view.dialog.AlertDialog
 import com.tencent.mm.opensdk.modelpay.PayReq
 import com.tencent.mm.opensdk.openapi.IWXAPI
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
@@ -175,10 +172,6 @@ class PayActivity : BaseMVPActivity<PayPresenter>(), PayView {
      * 异步调用
      */
     override fun doWechatPay(it: WechatPayInfo) {
-//        val wechatRunnable: Runnable = Runnable {
-//
-//        }
-//        Thread(wechatRunnable).start()
 
         api = WXAPIFactory.createWXAPI(this@PayActivity, BuildConfig.WECHAT_APPID, false).apply {
             registerApp(BuildConfig.WECHAT_APPID)

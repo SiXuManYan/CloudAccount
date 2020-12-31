@@ -1,10 +1,5 @@
 package com.fatcloud.account.pushs
 
-import android.content.Context
-import android.util.Log
-import com.alibaba.sdk.android.push.AliyunMessageIntentService
-import com.alibaba.sdk.android.push.notification.CPushMessage
-
 /**
  * Created by Wangsw on 2020/7/28 0028 15:36.
  * </br>
